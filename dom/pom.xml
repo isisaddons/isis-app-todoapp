@@ -27,7 +27,7 @@
     </parent>
 
     <artifactId>todoapp-dom</artifactId>
-    <name>ToDo App DOM</name>
+    <name>Isis Addons ToDoApp DOM</name>
 
     <build>
         <resources>
@@ -122,6 +122,7 @@
             <artifactId>objenesis</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <profiles>

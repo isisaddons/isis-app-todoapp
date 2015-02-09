@@ -26,7 +26,7 @@
     </parent>
 
     <artifactId>todoapp-webapp</artifactId>
-    <name>ToDo App Webapp</name>
+    <name>Isis Addons ToDoApp Webapp</name>
 
     <description>This module runs both the Wicket viewer and the Restfulobjects viewer in a single webapp configured to run using the datanucleus object store.</description>
 
@@ -250,6 +250,26 @@
               <artifactId>slf4j-api</artifactId>
             </exclusion>
           </exclusions>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.isisaddons.module.audit</groupId>
+            <artifactId>isis-module-audit-dom</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.isisaddons.module.command</groupId>
+            <artifactId>isis-module-command-dom</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.isisaddons.module.security</groupId>
+            <artifactId>isis-module-security-dom</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.3m</version>
         </dependency>
 
     </dependencies>

@@ -25,7 +25,7 @@
     <artifactId>todoapp</artifactId>
     <version>1.8.0-SNAPSHOT</version>
 
-    <name>ToDo App</name>
+    <name>Isis Addons ToDoApp</name>
 
     <packaging>pom</packaging>
 
@@ -36,7 +36,10 @@
     <properties>
         <isis.version>1.8.0-SNAPSHOT</isis.version>
         <isis-viewer-wicket.version>1.8.0-SNAPSHOT</isis-viewer-wicket.version>
-
+        <isis-module-audit.version>1.8.0-SNAPSHOT</isis-module-audit.version>
+        <isis-module-command.version>1.8.0-SNAPSHOT</isis-module-command.version>
+        <isis-module-security.version>1.8.0-SNAPSHOT</isis-module-security.version>
+        
         <!-- must be consistent with the versions defined by the JDO Objectstore -->
         <datanucleus-accessplatform-jdo-rdbms.version>3.3.6</datanucleus-accessplatform-jdo-rdbms.version>
         <datanucleus-maven-plugin.version>3.3.2</datanucleus-maven-plugin.version>
@@ -356,7 +359,22 @@
                 <version>${project.version}</version>
             </dependency>
 
-
+            <dependency>
+                <groupId>org.isisaddons.module.audit</groupId>
+                <artifactId>isis-module-audit-dom</artifactId>
+                <version>${isis-module-audit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.isisaddons.module.command</groupId>
+                <artifactId>isis-module-command-dom</artifactId>
+                <version>${isis-module-command.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.isisaddons.module.security</groupId>
+                <artifactId>isis-module-security-dom</artifactId>
+                <version>${isis-module-security.version}</version>
+            </dependency>
+            
         </dependencies>
     </dependencyManagement>
 

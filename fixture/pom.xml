@@ -28,7 +28,7 @@
     </parent>
 
     <artifactId>todoapp-fixture</artifactId>
-    <name>ToDo App Fixtures</name>
+    <name>Isis Addons ToDoApp Fixtures</name>
 
     <dependencies>
         <dependency>

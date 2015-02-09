@@ -28,7 +28,7 @@
     </parent>
 
     <artifactId>todoapp-integtests</artifactId>
-    <name>ToDo App Integration Tests</name>
+    <name>Isis Addons ToDoApp Integration Tests</name>
 
     <build>
         <testResources>
