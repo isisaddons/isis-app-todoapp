@@ -252,20 +252,7 @@
           </exclusions>
         </dependency>
 
-
-        <dependency>
-            <groupId>org.isisaddons.module.audit</groupId>
-            <artifactId>isis-module-audit-dom</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.isisaddons.module.command</groupId>
-            <artifactId>isis-module-command-dom</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.isisaddons.module.security</groupId>
-            <artifactId>isis-module-security-dom</artifactId>
-        </dependency>
-
+        <!-- dependency of security module -->
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>

@@ -35,6 +35,8 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>todoapp-dom</artifactId>
         </dependency>
+
+
     </dependencies>
 
 </project>

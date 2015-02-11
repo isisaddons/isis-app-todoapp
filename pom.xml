@@ -39,7 +39,10 @@
         <isis-module-audit.version>1.8.0-SNAPSHOT</isis-module-audit.version>
         <isis-module-command.version>1.8.0-SNAPSHOT</isis-module-command.version>
         <isis-module-security.version>1.8.0-SNAPSHOT</isis-module-security.version>
-        
+        <isis-module-sessionlogger.version>1.8.0-SNAPSHOT</isis-module-sessionlogger.version>
+        <isis-module-settings.version>1.8.0-SNAPSHOT</isis-module-settings.version>
+        <isis-module-publishing.version>1.8.0-SNAPSHOT</isis-module-publishing.version>
+
         <!-- must be consistent with the versions defined by the JDO Objectstore -->
         <datanucleus-accessplatform-jdo-rdbms.version>3.3.6</datanucleus-accessplatform-jdo-rdbms.version>
         <datanucleus-maven-plugin.version>3.3.2</datanucleus-maven-plugin.version>
@@ -374,7 +377,22 @@
                 <artifactId>isis-module-security-dom</artifactId>
                 <version>${isis-module-security.version}</version>
             </dependency>
-            
+            <dependency>
+                <groupId>org.isisaddons.module.sessionlogger</groupId>
+                <artifactId>isis-module-sessionlogger-dom</artifactId>
+                <version>${isis-module-sessionlogger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.isisaddons.module.settings</groupId>
+                <artifactId>isis-module-settings-dom</artifactId>
+                <version>${isis-module-settings.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.isisaddons.module.publishing</groupId>
+                <artifactId>isis-module-publishing-dom</artifactId>
+                <version>${isis-module-publishing.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
