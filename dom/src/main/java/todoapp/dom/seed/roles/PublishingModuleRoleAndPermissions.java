@@ -16,26 +16,25 @@
  */
 package todoapp.dom.seed.roles;
 
-import org.isisaddons.module.audit.AuditModule;
+import org.isisaddons.module.publishing.PublishingModule;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
-import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-public class AuditModuleRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
+public class PublishingModuleRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
-    public static final String ROLE_NAME = "todoapp-auditing-admin";
+    public static final String ROLE_NAME = "todoapp-publishing-admin";
 
-    public AuditModuleRoleAndPermissions() {
-        super(ROLE_NAME, "Admin access to audit module");
+    public PublishingModuleRoleAndPermissions() {
+        super(ROLE_NAME, "Admin access to publishing module");
     }
 
     @Override
-    protected void execute(final FixtureScript.ExecutionContext executionContext) {
+    protected void execute(final ExecutionContext executionContext) {
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                AuditModule.class.getPackage().getName());
+                PublishingModule.class.getPackage().getName());
     }
 
 }

@@ -41,8 +41,11 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.clock.ClockService;
 
-@DomainServiceLayout(named="ToDos", menuOrder = "10")
 @DomainService(repositoryFor = ToDoItem.class)
+@DomainServiceLayout(
+        named="ToDos",
+        menuOrder = "10"
+)
 public class ToDoItems {
 
     //region > notYetComplete (action)

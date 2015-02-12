@@ -26,7 +26,7 @@ public class CommandModuleRoleAndPermissions extends AbstractRoleAndPermissionsF
     public static final String ROLE_NAME = "todoapp-command-admin";
 
     public CommandModuleRoleAndPermissions() {
-        super(ROLE_NAME, "Admin access to command modules");
+        super(ROLE_NAME, "Admin access to command module");
     }
 
     @Override

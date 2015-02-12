@@ -39,13 +39,19 @@
                         "actions": {
                             "updateCategory": {
                                 "actionLayout": {
-                                    "named": "Update"
+                                    "named": "Update",
+                                    "position1": "PANEL",
+                                    "position2": "PANEL_DROPDOWN",
+                                    "position3": "RIGHT"
                                 }
                             },
                             "analyseCategory": {
                                 "actionLayout": {
                                     "cssClass": "btn-default",
-                                    "cssClassFa": "fa fa-pie-chart"
+                                    "cssClassFa": "fa fa-pie-chart",
+                                    "position1": "PANEL",
+                                    "position2": "PANEL_DROPDOWN",
+                                    "position3": "RIGHT"
                                 }
                             }
                         }
@@ -135,6 +141,15 @@
                                 "actionLayout": {
                                     "named": "Update",
                                     "cssClassFa": "fa fa-dollar"
+                                }
+                            }
+                        }
+                    },
+                    "location": {
+                        "actions": {
+                            "updateLocation": {
+                                "actionLayout": {
+                                    "cssClassFa": "fa fa-map-marker"
                                 }
                             }
                         }

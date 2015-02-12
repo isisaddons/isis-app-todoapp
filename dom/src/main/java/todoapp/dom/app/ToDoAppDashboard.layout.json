@@ -20,6 +20,11 @@
     }
   ],
   "actions": {
+    "exportToWordDoc": {
+      "actionLayout": {
+        "named": "Export items to Word"
+      }
+    },
     "downloadLayout": {},
     "refreshLayout": {}
   }

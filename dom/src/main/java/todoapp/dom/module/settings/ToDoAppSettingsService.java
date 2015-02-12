@@ -21,17 +21,20 @@ package todoapp.dom.module.settings;
 import java.util.List;
 import org.isisaddons.module.settings.dom.ApplicationSetting;
 import org.isisaddons.module.settings.dom.ApplicationSettingsServiceRW;
+import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
 import org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo;
+import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
 /**
- * A wrapper around {@link org.isisaddons.module.settings.dom.ApplicationSettingsService}.
+ * A wrapper around {@link org.isisaddons.module.settings.dom.UserSettingsService}.
  */
 @DomainService(nature = NatureOfService.VIEW_MENU_ONLY)
 @DomainServiceLayout(
@@ -39,19 +42,31 @@ import org.apache.isis.applib.annotation.SemanticsOf;
         named = "Settings",
         menuOrder = "500"
 )
-public class ToDoAppApplicationSettingsService {
+public class ToDoAppSettingsService {
 
-    //region > LOG
-    private final static org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(ToDoAppApplicationSettingsService.class);
+    //region > settings
+    @Action(semantics = SemanticsOf.SAFE)
+    @ActionLayout(
+            named = "Application Settings",
+            cssClassFa = "fa-cog"
+    )
+    @MemberOrder(sequence = "10")
+    public List<ApplicationSetting> listAllSettings() {
+        return applicationSettingsService.listAll();
+    }
     //endregion
 
     //region > settings
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(
-            named = "Application Settings"
+            named = "User Settings",
+            cssClassFa = "fa-cog"
     )
-    public List<ApplicationSetting> listAllSettings() {
-        return applicationSettingsService.listAll();
+    @MemberOrder(sequence = "10")
+    public List<UserSettingJdo> listAllSettings(final String user) {
+        // downcast using raw list
+        final List userSettings = userSettingsService.listAllFor(user);
+        return userSettings;
     }
     //endregion
 
@@ -92,6 +107,9 @@ public class ToDoAppApplicationSettingsService {
     //region > injected services
     @javax.inject.Inject
     private ApplicationSettingsServiceRW applicationSettingsService;
+
+    @javax.inject.Inject
+    private UserSettingsServiceRW userSettingsService;
 
     //endregion
 

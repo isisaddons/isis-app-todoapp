@@ -38,10 +38,15 @@
         <isis-viewer-wicket.version>1.8.0-SNAPSHOT</isis-viewer-wicket.version>
         <isis-module-audit.version>1.8.0-SNAPSHOT</isis-module-audit.version>
         <isis-module-command.version>1.8.0-SNAPSHOT</isis-module-command.version>
+        <isis-module-docx.version>1.8.0-SNAPSHOT</isis-module-docx.version>
         <isis-module-security.version>1.8.0-SNAPSHOT</isis-module-security.version>
         <isis-module-sessionlogger.version>1.8.0-SNAPSHOT</isis-module-sessionlogger.version>
         <isis-module-settings.version>1.8.0-SNAPSHOT</isis-module-settings.version>
         <isis-module-publishing.version>1.8.0-SNAPSHOT</isis-module-publishing.version>
+
+        <isis-wicket-excel.version>1.8.0-SNAPSHOT</isis-wicket-excel.version>
+        <isis-wicket-fullcalendar2.version>1.8.0-SNAPSHOT</isis-wicket-fullcalendar2.version>
+        <isis-wicket-gmap3.version>1.8.0-SNAPSHOT</isis-wicket-gmap3.version>
 
         <!-- must be consistent with the versions defined by the JDO Objectstore -->
         <datanucleus-accessplatform-jdo-rdbms.version>3.3.6</datanucleus-accessplatform-jdo-rdbms.version>
@@ -391,6 +396,27 @@
                 <groupId>org.isisaddons.module.publishing</groupId>
                 <artifactId>isis-module-publishing-dom</artifactId>
                 <version>${isis-module-publishing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.isisaddons.module.docx</groupId>
+                <artifactId>isis-module-docx-dom</artifactId>
+                <version>${isis-module-docx.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.isisaddons.wicket.excel</groupId>
+                <artifactId>isis-wicket-excel-cpt</artifactId>
+                <version>${isis-wicket-excel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.isisaddons.wicket.fullcalendar2</groupId>
+                <artifactId>isis-wicket-fullcalendar2-cpt</artifactId>
+                <version>${isis-wicket-fullcalendar2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.isisaddons.wicket.gmap3</groupId>
+                <artifactId>isis-wicket-gmap3-cpt</artifactId>
+                <version>${isis-wicket-gmap3.version}</version>
             </dependency>
 
         </dependencies>

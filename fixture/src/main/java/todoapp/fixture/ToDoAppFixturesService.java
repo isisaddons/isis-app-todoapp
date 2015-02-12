@@ -41,18 +41,18 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 @DomainServiceLayout(
         named = "Prototyping",
         menuBar = DomainServiceLayout.MenuBar.SECONDARY,
-        menuOrder = "10")
+        menuOrder = "999.1")
 public class ToDoAppFixturesService extends FixtureScripts {
 
     public ToDoAppFixturesService() {
         super(ToDoAppFixturesService.class.getPackage().getName());
     }
 
-    @ActionLayout(
-        cssClassFa="fa fa-bolt"
-    )
     @Action(
             restrictTo = RestrictTo.PROTOTYPING
+    )
+    @ActionLayout(
+            cssClassFa="fa fa-bolt"
     )
     @Override
     public List<FixtureResult> runFixtureScript(
@@ -83,11 +83,11 @@ public class ToDoAppFixturesService extends FixtureScripts {
     // //////////////////////////////////////
 
 
-    @ActionLayout(
-        cssClassFa="fa fa-list"
-    )
     @Action(
             restrictTo = RestrictTo.PROTOTYPING
+    )
+    @ActionLayout(
+        cssClassFa="fa fa-refresh"
     )
     @MemberOrder(sequence="20")
     public Object recreateToDoItemsReturnFirst() {

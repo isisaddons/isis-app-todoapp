@@ -23,10 +23,10 @@ import org.isisaddons.module.settings.SettingsModule;
 
 public class SettingsModuleRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
-    public static final String ROLE_NAME = "todoapp-command-admin";
+    public static final String ROLE_NAME = "todoapp-settings-admin";
 
     public SettingsModuleRoleAndPermissions() {
-        super(ROLE_NAME, "Admin access to command modules");
+        super(ROLE_NAME, "Admin access to settings module");
     }
 
     @Override

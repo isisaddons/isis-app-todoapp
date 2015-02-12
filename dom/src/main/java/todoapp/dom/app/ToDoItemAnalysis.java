@@ -35,10 +35,10 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
+@DomainService
 @DomainServiceLayout(
         named="Analysis",
         menuOrder = "20")
-@DomainService
 public class ToDoItemAnalysis {
 
 

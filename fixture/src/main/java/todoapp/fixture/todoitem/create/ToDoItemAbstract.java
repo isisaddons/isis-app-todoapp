@@ -24,6 +24,7 @@ import todoapp.dom.module.todoitem.ToDoItem.Subcategory;
 import todoapp.dom.module.todoitem.ToDoItems;
 
 import java.math.BigDecimal;
+import org.isisaddons.wicket.gmap3.cpt.applib.Location;
 import org.joda.time.LocalDate;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.clock.ClockService;
@@ -46,7 +47,15 @@ public abstract class ToDoItemAbstract extends FixtureScript {
         // execute
         ToDoItem newToDo = toDoItems.newToDo(
                 description, category, subcategory, ownedBy, dueBy, cost);
+
+        newToDo.setLocation(
+                new Location(51.5172 + random(-0.05, +0.05), 0.1182 + random(-0.05, +0.05)));
+
         return executionContext.addResult(this, newToDo);
+    }
+
+    private static double random(double from, double to) {
+        return Math.random() * (to-from) + from;
     }
 
     protected LocalDate nowPlusDays(int days) {

@@ -54,7 +54,7 @@ import org.apache.isis.viewer.wicket.viewer.integration.wicket.AuthenticatedWebS
  *    &lt;filter-class>org.apache.wicket.protocol.http.WicketFilter&lt;/filter-class>
  *    &lt;init-param>
  *      &lt;param-name>applicationClassName&lt;/param-name>
- *      &lt;param-value>webapp.ToDoApplication&lt;/param-value>
+ *      &lt;param-value>todoapp.webapp.ToDoApplication&lt;/param-value>
  *    &lt;/init-param>
  * &lt;/filter>
  * </pre>
@@ -80,7 +80,10 @@ public class ToDoApplication extends IsisWicketApplication {
 
         final IBootstrapSettings settings = Bootstrap.getSettings();
         settings.setThemeProvider(new BootswatchThemeProvider(BootswatchTheme.Flatly));
+
+        settings.setActiveThemeProvider(new UserSettingsThemeProvider(settings));
     }
+
 
     @Override
     public Session newSession(final Request request, final Response response) {

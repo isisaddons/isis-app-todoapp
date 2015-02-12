@@ -36,7 +36,6 @@
             <artifactId>todoapp-dom</artifactId>
         </dependency>
 
-
     </dependencies>
 
 </project>

@@ -34,6 +34,8 @@ import javax.jdo.annotations.VersionStrategy;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Ordering;
+import org.isisaddons.wicket.gmap3.cpt.applib.Location;
+import org.isisaddons.wicket.gmap3.cpt.service.LocationLookupService;
 import org.joda.time.LocalDate;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.Identifier;
@@ -46,14 +48,15 @@ import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.InvokeOn;
 import org.apache.isis.applib.annotation.InvokedOn;
+import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.security.UserMemento;
@@ -453,6 +456,34 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
     }
     //endregion
 
+    //region > location
+
+    private Double locationLatitude;
+    private Double locationLongitude;
+
+    @Property(
+            optionality = Optionality.OPTIONAL
+    )
+    @MemberOrder(sequence="3")
+    public Location getLocation() {
+        return locationLatitude != null && locationLongitude != null? new Location(locationLatitude, locationLongitude): null;
+    }
+    public void setLocation(final Location location) {
+        locationLongitude = location != null ? location.getLongitude() : null;
+        locationLatitude = location != null ? location.getLatitude() : null;
+    }
+
+    @MemberOrder(name="location", sequence="1")
+    public ToDoItem updateLocation(
+            @ParameterLayout(named="Address")
+            final String address) {
+        final Location location = this.locationLookupService.lookup(address);
+        setLocation(location);
+        return this;
+    }
+
+    //endregion
+
     //region > attachment (property)
     private Blob attachment;
     @javax.jdo.annotations.Persistent(defaultFetchGroup="false", columns = {
@@ -721,7 +752,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
                 // this will trigger an exception (because category cannot be null), causing the xactn to be aborted
                 setCategory(null);
                 container.flush();
-            } catch(Exception e) {
+            } catch(final Exception e) {
                 // it's a programming mistake to throw only a recoverable exception here, because of the xactn's state.
                 // the framework should instead auto-escalate this to a non-recoverable exception
                 throw new RecoverableException("Demo throwing " + type.name(), e);
@@ -731,7 +762,6 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
     //endregion
 
     //region > lifecycle callbacks
-
     public void created() {
         LOG.debug("lifecycle callback: created: " + this.toString());
     }
@@ -759,7 +789,6 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
     //endregion
 
     //region > object-level validation
-
     /**
      * Prevent user from viewing another user's data.
      */
@@ -790,10 +819,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
         }
         return null;
     }
-
-
     //endregion
-
 
     //region > programmatic helpers
     @Programmatic // excluded from the framework's metamodel
@@ -974,6 +1000,8 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
     @javax.inject.Inject
     WrapperFactory wrapperFactory;
 
+    @javax.inject.Inject
+    private LocationLookupService locationLookupService;
     //endregion
 
 }

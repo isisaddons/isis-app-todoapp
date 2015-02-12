@@ -33,7 +33,7 @@ public class ToDoAppRegularRoleAndPermissions extends AbstractRoleAndPermissions
     }
 
     @Override
-    protected void execute(FixtureScript.ExecutionContext executionContext) {
+    protected void execute(final FixtureScript.ExecutionContext executionContext) {
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,

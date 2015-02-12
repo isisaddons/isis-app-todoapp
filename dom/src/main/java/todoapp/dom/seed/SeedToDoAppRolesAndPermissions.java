@@ -18,7 +18,9 @@ package todoapp.dom.seed;
 
 import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
+import todoapp.dom.seed.roles.PublishingModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
+import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppDomainAdminRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppRegularRoleAndPermissions;
@@ -62,6 +64,8 @@ public class SeedToDoAppRolesAndPermissions {
             executionContext.executeChild(this, new AuditModuleRoleAndPermissions());
             executionContext.executeChild(this, new CommandModuleRoleAndPermissions());
             executionContext.executeChild(this, new SessionLoggerModuleRoleAndPermissions());
+            executionContext.executeChild(this, new SettingsModuleRoleAndPermissions());
+            executionContext.executeChild(this, new PublishingModuleRoleAndPermissions());
 
             executionContext.executeChild(this, new ToDoAppAdminUser());
         }

@@ -18,10 +18,7 @@
  */
 package todoapp.dom.module.demo;
 
-import todoapp.dom.module.activity.AuditingMenuService;
-import todoapp.dom.module.activity.CommandsMenuService;
-import todoapp.dom.module.activity.PublishingMenuService;
-import todoapp.dom.module.settings.ToDoAppApplicationSettingsService;
+import todoapp.dom.module.settings.ToDoAppSettingsService;
 import todoapp.dom.module.todoitem.ToDoItem;
 
 import java.util.EventObject;
@@ -32,6 +29,9 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
+import org.isisaddons.module.audit.dom.AuditingServiceMenu;
+import org.isisaddons.module.command.dom.CommandServiceMenu;
+import org.isisaddons.module.publishing.dom.PublishingServiceMenu;
 import org.isisaddons.module.sessionlogger.dom.SessionLoggingServiceMenu;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.NonRecoverableException;
@@ -65,8 +65,13 @@ import static com.google.common.collect.Lists.newArrayList;
  *     vetoing the change).
  * </p>
  */
-@DomainService(nature = NatureOfService.VIEW_MENU_ONLY)
-@DomainServiceLayout(menuBar = DomainServiceLayout.MenuBar.SECONDARY, menuOrder = "30")
+@DomainService(
+        nature = NatureOfService.VIEW_MENU_ONLY
+)
+@DomainServiceLayout(
+        menuBar = DomainServiceLayout.MenuBar.SECONDARY,
+        named = "Prototyping",
+        menuOrder = "999.2")
 public class DemoDomainEventSubscriptions {
 
     //region > LOG
@@ -110,14 +115,15 @@ public class DemoDomainEventSubscriptions {
     /**
      * To demo/test what occurs if a subscriber that might veto an event.
      */
-    @MemberOrder(name = "Prototyping", sequence = "80")
-    @ActionLayout(
-        named="Set subscriber behaviour"
-    )
     @Action(
             semantics = SemanticsOf.IDEMPOTENT,
             restrictTo = RestrictTo.PROTOTYPING
     )
+    @ActionLayout(
+            named="Set subscriber behaviour",
+            cssClassFa="fa phone"
+    )
+    @MemberOrder(sequence = "80")
     public void subscriberBehaviour(
             @ParameterLayout(
                     named="Behaviour"
@@ -193,19 +199,19 @@ public class DemoDomainEventSubscriptions {
 
     @Programmatic
     @Subscribe
-    public void on(final AuditingMenuService.ActionDomainEvent ev) {
+    public void on(final AuditingServiceMenu.ActionDomainEvent ev) {
         vetoIf(ev, DemoBehaviour.ActivityMenuHideAll, DemoBehaviour.ActivityMenuHideAuditing);
     }
 
     @Programmatic
     @Subscribe
-    public void on(final CommandsMenuService.ActionDomainEvent ev) {
+    public void on(final CommandServiceMenu.ActionDomainEvent ev) {
         vetoIf(ev, DemoBehaviour.ActivityMenuHideAll, DemoBehaviour.ActivityMenuHideCommand);
     }
 
     @Programmatic
     @Subscribe
-    public void on(final PublishingMenuService.ActionDomainEvent ev) {
+    public void on(final PublishingServiceMenu.ActionDomainEvent ev) {
         vetoIf(ev, DemoBehaviour.ActivityMenuHideAll, DemoBehaviour.ActivityMenuHidePublishing);
     }
 
@@ -416,7 +422,7 @@ public class DemoDomainEventSubscriptions {
     private EventBusService eventBusService;
 
     @javax.inject.Inject
-    private ToDoAppApplicationSettingsService applicationSettingsService;
+    private ToDoAppSettingsService applicationSettingsService;
     //endregion
 
 }

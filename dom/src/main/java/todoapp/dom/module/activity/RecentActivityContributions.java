@@ -21,6 +21,7 @@ import java.util.List;
 import com.google.common.collect.Lists;
 import org.isisaddons.module.audit.dom.AuditingServiceRepository;
 import org.isisaddons.module.command.dom.CommandServiceJdoRepository;
+import org.isisaddons.module.publishing.dom.PublishingServiceRepository;
 import org.isisaddons.module.sessionlogger.dom.SessionLogEntry;
 import org.joda.time.LocalDate;
 import org.apache.isis.applib.AbstractService;
@@ -43,7 +44,7 @@ import org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract;
 @DomainService(
         nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY
 )
-public class RecentChangesContributions extends AbstractService {
+public class RecentActivityContributions extends AbstractService {
 
     /**
      * Depending on which services are available, returns either a list of {@link org.isisaddons.module.command.dom.CommandJdo command}s that have
@@ -58,7 +59,7 @@ public class RecentChangesContributions extends AbstractService {
             semantics = SemanticsOf.SAFE
     )
     @MemberOrder(sequence="30")
-    public List<? extends DomainChangeJdoAbstract> recentChanges (
+    public List<? extends DomainChangeJdoAbstract> recentActivity (
             final Object targetDomainObject,
             @Parameter(optionality= Optionality.OPTIONAL)
             @ParameterLayout(named="From")
@@ -71,9 +72,9 @@ public class RecentChangesContributions extends AbstractService {
         if(commandServiceRepository != null) {
             changes.addAll(commandServiceRepository.findByTargetAndFromAndTo(targetBookmark, from, to));
         } 
-//        if(publishingServiceRepository != null) {
-//            changes.addAll(publishingServiceRepository.findByTargetAndFromAndTo(targetBookmark, from, to));
-//        }
+        if(publishingServiceRepository != null) {
+            changes.addAll(publishingServiceRepository.findByTargetAndFromAndTo(targetBookmark, from, to));
+        }
         changes.addAll(auditingServiceRepository.findByTargetAndFromAndTo(targetBookmark, from, to));
         Collections.sort(changes, DomainChangeJdoAbstract.compareByTimestampDescThenType());
         return changes;
@@ -81,17 +82,17 @@ public class RecentChangesContributions extends AbstractService {
     /**
      * Hide for commands, audit entries, published events, session log entries, and for {@link org.apache.isis.applib.ViewModel}s.
      */
-    public boolean hideRecentChanges(final Object targetDomainObject, final LocalDate from, final LocalDate to) {
+    public boolean hideRecentActivity(final Object targetDomainObject, final LocalDate from, final LocalDate to) {
         return  targetDomainObject instanceof HasTransactionId ||
                 targetDomainObject instanceof ViewModel ||
                 targetDomainObject instanceof SessionLogEntry ||
                 auditingServiceRepository == null ||
                 bookmarkService == null;
     }
-    public LocalDate default1RecentChanges() {
+    public LocalDate default1RecentActivity() {
         return clockService.now().minusDays(7);
     }
-    public LocalDate default2RecentChanges() {
+    public LocalDate default2RecentActivity() {
         return clockService.now();
     }
 
@@ -105,8 +106,8 @@ public class RecentChangesContributions extends AbstractService {
     @javax.inject.Inject
     private AuditingServiceRepository auditingServiceRepository;
     
-//    @javax.inject.Inject
-//    private PublishingServiceRepository publishingServiceRepository;
+    @javax.inject.Inject
+    private PublishingServiceRepository publishingServiceRepository;
     
     @javax.inject.Inject
     private BookmarkService bookmarkService;
