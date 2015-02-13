@@ -63,9 +63,8 @@ th, td {
             which configures Isis to run a (quite feature rich) &quot;todo&quot; app.
             
             <p>
-            The app itself consists of a single domain class, <tt>ToDoItem</tt>, along with a number of supporting 
-            services.
-            </p>
+            The app itself consists of a single domain class, <tt>ToDoItem</tt>, along with a number of supporting services.
+        </p>
 
             <p>To access the app:</p>
             <ul>
@@ -94,82 +93,16 @@ th, td {
             </ul>
 
             <p>
-                The default user/password is <b><i>sven/pass</i></b> (as configured in the
-                <a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/webapp/src/main/webapp/WEB-INF/shiro.ini" target="_blank">shiro.ini</a> file).
+                The default user/password is <b><i>todoapp-admin/pass</i></b>, as configured in an initial seed file.
             </p>
 
             <p>
                 To build your own app, while you could start with this todo app and remove/rename as required, you are
                 probably better off using the extremely minimal
                 <a href="http://isis.apache.org/intro/getting-started/simpleapp-archetype.html" target="_blank">SimpleApp</a> archetype.
+                Use this app as reference for configuring additional modules.
             </p>
 
-                <h2>App contents</h2>
-            <p>The key files in this &quot;todo&quot; app are:</p>
-            <!-- the hrefs below are partially URL encoded to prevent them from being modified when the archetype is created -->
-            <ul>
-              <li>Domain classes (todo functionality) (in <tt>dom</tt> module)
-                  <ul>
-                  <li><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/dom/src/main/java/dom/todo/ToDoItem.java" target="_blank"><tt>ToDoItem</tt></a> domain entity
-                  </li>
-                  <li><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/dom/src/main/java/dom/todo/ToDoItems.java" target="_blank"><tt>ToDoItems</tt></a> domain service (repository/factory)
-                  </li>
-                  <li><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/dom/src/main/java/app/ToDoItemAnalysis.java" target="_blank"><tt>ToDoItemAnalysis</tt></a> application service analysing todo items
-                  </li>
-                  <li><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/dom/src/main/java/app/ToDoAppDashboard.java" target="_blank"><tt>ToDoAppDashboard</tt></a> dashboard application service
-                  </li>
-                  </ul>
-              </li>
-              <li>Fixture scripts (in <tt>fixture</tt> module)
-                <ul>
-                  <li><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/fixture/src/main/java/fixture/todo/ToDoItemsFixturesService.java" target="_blank"><tt>ToDoItemsFixtureService</tt></a> domain service to install fixtures at run-time
-                  </li>
-                </ul>
-              </li>
-              <li><tt><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/webapp/src/main/webapp/WEB-INF/web.xml" target="_blank">WEB-INF/web.xml</a></tt> (in <tt>webapp</tt> module)
-                <ul>
-                  <li><tt><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/webapp/src/main/webapp/WEB-INF/web.xml#L98" target="_blank">ResourceCachingFilter</a></tt> and <tt><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/webapp/src/main/webapp/WEB-INF/web.xml#L134" target="_blank">ResourceServlet</a></tt> - filter and servlet for serving up static resources.
-                  </li>
-                  <li><tt><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/webapp/src/main/webapp/WEB-INF/web.xml#L174" target="_blank">WicketFilter</a></tt> - filter for the wicket application, mapped to <tt>/wicket/*</tt>
-                  </li>
-                  <li><tt><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/webapp/src/main/webapp/WEB-INF/web.xml#L223" target="_blank">ResteasyBootstrap</a></tt>,
-                      <tt><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/webapp/src/main/webapp/WEB-INF/web.xml#L240" target="_blank">IsisSessionFilterForRestfulObjects</a></tt>,
-                      <tt><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/webapp/src/main/webapp/WEB-INF/web.xml#L271" target="_blank">RestfulObjectsRestEasyDispatcher</a></tt> - listeners, filters and servlets to bootstrap and map restful objects viewer to <tt>/restful/*</tt>.
-                  </li>
-                  <li>commented out <tt><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/webapp/src/main/webapp/WEB-INF/web.xml#L208" target="_blank">IsisWebAppBootstrapper</a></tt> listener; this is NOT required unless wicket viewer config is removed
-                  </li>
-                </ul>
-              </li>
-              <li><tt><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/webapp/src/main/webapp/WEB-INF/isis.properties" target="_blank">WEB-INF/isis.properties</a></tt> (in <tt>webapp</tt> module)
-                <ul>
-                  <li><tt>isis.services</tt> - explicitly loaded framework-provide domain services.  Other services (including <tt>ToDoItems</tt> and <tt>ToDoItemsFixtureService</tt> described above),
-                      are loaded automatically from the classpath.
-                  </li>
-                  <li><tt>isis.persistor</tt> - specifies to use Isis' integration with <a href="http://datanucleus.org">DataNucleus</a> for (JDO-based) persistence.
-                  </li>
-                  <li><tt>isis.authentication</tt> and <tt>isis.authorization</tt> - specifies to use Isis' integration with <a href="http://shiro.apache.org">Apache Shiro</a> for security.
-                  </li>
-                </ul>
-              </li>
-              <li><tt><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/webapp/src/main/webapp/WEB-INF/persistor_datanucleus.properties" target="_blank">WEB-INF/persistor_datanucleus.properties</a></tt> (in <tt>webapp</tt> module)
-                <ul>
-                  <li>configuration for the DataNucleus (JDO) object store
-                  </li>
-                </ul>
-              </li>
-              <li><tt><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/webapp/src/main/webapp/WEB-INF/persistor.properties" target="_blank">WEB-INF/persistor.properties</a></tt> (in <tt>webapp</tt> module)
-                <ul>
-                  <li>JDBC URL for DataNucleus (JDO) object store
-                  </li>
-                </ul>
-              </li>
-              <li><tt><a href="https://github.com/apache/isis/blob/master/example/application/todo%61pp/webapp/src/main/webapp/WEB-INF/shiro.ini" target="_blank">WEB-INF/shiro.ini</a></tt> (in <tt>webapp</tt> module)
-                <ul>
-                  <li>configuration for Shiro security
-                  </li>
-                </ul>
-              </li>
-            </ul>
         </div>
     </body>
 </html>

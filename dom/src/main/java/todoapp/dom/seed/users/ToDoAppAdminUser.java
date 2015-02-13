@@ -23,6 +23,7 @@ import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppDomainAdminRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
+import todoapp.dom.seed.roles.TranslationServicePoMenuRoleAndPermissions;
 
 import java.util.Arrays;
 import org.isisaddons.module.security.dom.user.AccountType;
@@ -45,7 +46,9 @@ public class ToDoAppAdminUser extends AbstractUserAndRolesFixtureScript {
                               SettingsModuleRoleAndPermissions.ROLE_NAME,
                               PublishingModuleRoleAndPermissions.ROLE_NAME,
                               ToDoAppDomainAdminRoleAndPermissions.ROLE_NAME,
-                              ToDoAppFixtureServiceRoleAndPermissions.ROLE_NAME));
+                              ToDoAppFixtureServiceRoleAndPermissions.ROLE_NAME,
+                              TranslationServicePoMenuRoleAndPermissions.ROLE_NAME
+                        ));
     }
 
 

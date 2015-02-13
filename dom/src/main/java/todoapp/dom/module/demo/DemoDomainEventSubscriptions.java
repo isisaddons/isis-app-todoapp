@@ -121,7 +121,7 @@ public class DemoDomainEventSubscriptions {
     )
     @ActionLayout(
             named="Set subscriber behaviour",
-            cssClassFa="fa phone"
+            cssClassFa="phone"
     )
     @MemberOrder(sequence = "80")
     public void subscriberBehaviour(

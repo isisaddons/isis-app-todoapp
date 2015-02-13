@@ -24,6 +24,7 @@ import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppDomainAdminRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppRegularRoleAndPermissions;
+import todoapp.dom.seed.roles.TranslationServicePoMenuRoleAndPermissions;
 import todoapp.dom.seed.users.ToDoAppAdminUser;
 
 import javax.annotation.PostConstruct;
@@ -66,6 +67,8 @@ public class SeedToDoAppRolesAndPermissions {
             executionContext.executeChild(this, new SessionLoggerModuleRoleAndPermissions());
             executionContext.executeChild(this, new SettingsModuleRoleAndPermissions());
             executionContext.executeChild(this, new PublishingModuleRoleAndPermissions());
+
+            executionContext.executeChild(this, new TranslationServicePoMenuRoleAndPermissions());
 
             executionContext.executeChild(this, new ToDoAppAdminUser());
         }
