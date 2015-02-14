@@ -102,6 +102,10 @@
             <groupId>org.apache.isis.core</groupId>
             <artifactId>isis-core-specsupport</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.isis.core</groupId>
+            <artifactId>isis-core-viewer-restfulobjects-rendering</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.hamcrest</groupId>
