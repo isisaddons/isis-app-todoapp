@@ -233,7 +233,7 @@ public class DemoDomainEventSubscriptions {
 
     @Programmatic
     @Subscribe
-    public void on(final ActionDomainEvent<?> ev) {
+    public void on(final org.apache.isis.applib.services.eventbus.ActionDomainEvent<?> ev) {
         recordEvent(ev);
         switch(ev.getEventPhase()) {
             case HIDE:
@@ -267,7 +267,7 @@ public class DemoDomainEventSubscriptions {
 
     @Programmatic
     @Subscribe
-    public void on(PropertyDomainEvent<?,?> ev) {
+    public void on(org.apache.isis.applib.services.eventbus.PropertyDomainEvent<?,?> ev) {
         recordEvent(ev);
         switch(ev.getEventPhase()) {
             case HIDE:
@@ -306,7 +306,7 @@ public class DemoDomainEventSubscriptions {
 
     @Programmatic
     @Subscribe
-    public void on(CollectionDomainEvent<?,?> ev) {
+    public void on(org.apache.isis.applib.services.eventbus.CollectionDomainEvent<?,?> ev) {
         recordEvent(ev);
         switch (ev.getEventPhase()) {
             case HIDE:

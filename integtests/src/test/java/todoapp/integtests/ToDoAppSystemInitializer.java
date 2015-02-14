@@ -47,18 +47,16 @@ public class ToDoAppSystemInitializer {
             with(new DataNucleusPersistenceMechanismInstaller());
 
             // services annotated with @DomainService
-            withServicesIn("app"
-                            ,"dom.todo"
-                            ,"fixture.todo"
-                            ,"webapp.admin"
-                            ,"webapp.prototyping"
-                            ,"org.apache.isis.core.wrapper"
-                            ,"org.apache.isis.applib"
-                            ,"org.apache.isis.core.metamodel.services"
-                            ,"org.apache.isis.core.runtime.services"
-                            ,"org.apache.isis.objectstore.jdo.datanucleus.service.support" // IsisJdoSupportImpl
-                            ,"org.apache.isis.objectstore.jdo.datanucleus.service.eventbus" // EventBusServiceJdo
-                            );
+            withServicesIn(  "todoapp"
+                            ,"org.isisaddons.module.security"
+                            ,"org.isisaddons.module.audit"
+                            ,"org.isisaddons.module.command"
+                            ,"org.isisaddons.module.docx"
+                            ,"org.isisaddons.module.publishing"
+                            ,"org.isisaddons.module.sessionlogger"
+                            ,"org.isisaddons.module.settings"
+                        );
+
         }
 
         private static IsisConfiguration testConfiguration() {

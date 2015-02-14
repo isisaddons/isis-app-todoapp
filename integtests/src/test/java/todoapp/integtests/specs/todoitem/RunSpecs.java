@@ -30,7 +30,7 @@ import org.junit.runner.RunWith;
                 "html:target/cucumber-html-report"
                 ,"json:target/cucumber.json"
         },
-        glue={"classpath:integration.glue"},
+        glue={"classpath:todoapp.integtests.glue"},
         strict = true,
         tags = { "~@backlog", "~@ignore" })
 public class RunSpecs {
