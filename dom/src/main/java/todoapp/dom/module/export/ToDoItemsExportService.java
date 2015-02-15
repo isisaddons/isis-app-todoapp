@@ -109,7 +109,7 @@ public class ToDoItemsExportService {
 
         final Element table = addTable(body, "ToDoItems");
         for(final ToDoItem item: items) {
-            addTableRow(table, new String[]{item.getDescription(), item.getCost().toString(), "" + item.getDueBy()});
+            addTableRow(table, new String[]{item.getDescription(), item.getCost() != null? item.getCost().toString(): "", item.getDueBy() != null ? item.getDueBy().toString("dd-MMM"): ""});
         }
         return document;
     }
