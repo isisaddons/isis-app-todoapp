@@ -19,8 +19,8 @@
 package todoapp.integtests.tests;
 
 import todoapp.dom.module.demo.DemoBehaviour;
-import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.dom.module.demo.DemoDomainEventSubscriptions;
+import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.dom.module.todoitem.ToDoItems;
 import todoapp.fixture.scenarios.ToDoItemsRecreateAndCompleteSeveral;
 
@@ -45,7 +45,7 @@ import org.apache.isis.applib.RecoverableException;
 import org.apache.isis.applib.clock.Clock;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.clock.ClockService;
-import org.apache.isis.applib.services.eventbus.AbstractInteractionEvent;
+import org.apache.isis.applib.services.eventbus.AbstractDomainEvent;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.CollectionDomainEvent;
 import org.apache.isis.applib.services.eventbus.EventBusService;
@@ -81,13 +81,10 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
     @Before
     public void setUp() throws Exception {
+        toDoItemSubscriptions.reset();
+
         final List<ToDoItem> all = toDoItems.notYetComplete();
         toDoItem = wrap(all.get(0));
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        toDoItemSubscriptions.reset();
     }
 
 
@@ -318,15 +315,15 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 final Sequence busRulesThenExec = context.sequence("busRulesThenExec");
                 // then
                 context.checking(new Expectations() {{
-                    oneOf(mockEventBusService).post(with(completedEvent(AbstractInteractionEvent.Phase.HIDE)));
+                    oneOf(mockEventBusService).post(with(completedEvent(AbstractDomainEvent.Phase.HIDE)));
                     inSequence(busRulesThenExec);
-                    oneOf(mockEventBusService).post(with(completedEvent(AbstractInteractionEvent.Phase.DISABLE)));
+                    oneOf(mockEventBusService).post(with(completedEvent(AbstractDomainEvent.Phase.DISABLE)));
                     inSequence(busRulesThenExec);
-                    oneOf(mockEventBusService).post(with(completedEvent(AbstractInteractionEvent.Phase.VALIDATE)));
+                    oneOf(mockEventBusService).post(with(completedEvent(AbstractDomainEvent.Phase.VALIDATE)));
                     inSequence(busRulesThenExec);
-                    oneOf(mockEventBusService).post(with(completedEvent(AbstractInteractionEvent.Phase.EXECUTING)));
+                    oneOf(mockEventBusService).post(with(completedEvent(AbstractDomainEvent.Phase.EXECUTING)));
                     inSequence(busRulesThenExec);
-                    oneOf(mockEventBusService).post(with(completedEvent(AbstractInteractionEvent.Phase.EXECUTED)));
+                    oneOf(mockEventBusService).post(with(completedEvent(AbstractDomainEvent.Phase.EXECUTED)));
                     inSequence(busRulesThenExec);
                 }});
 
@@ -334,7 +331,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.completed();
             }
 
-            private Matcher<Object> completedEvent(final AbstractInteractionEvent.Phase phase) {
+            private Matcher<Object> completedEvent(final AbstractDomainEvent.Phase phase) {
                 return new TypeSafeMatcher<Object>() {
                     @Override
                     protected boolean matchesSafely(Object item) {
@@ -343,7 +340,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                         }
 
                         final ToDoItem.CompletedEvent completedEvent = (ToDoItem.CompletedEvent) item;
-                        return completedEvent.getPhase() == phase;
+                        return completedEvent.getEventPhase() == phase;
 
                     }
 
@@ -457,7 +454,6 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 @After
                 public void tearDown() throws Exception {
                     unwrap(toDoItem).getDependencies().clear();
-                    super.tearDown();
                 }
 
                 @Test
@@ -598,7 +594,6 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 @After
                 public void tearDown() throws Exception {
                     unwrap(toDoItem).getDependencies().clear();
-                    super.tearDown();
                 }
 
                 @Test

@@ -23,15 +23,7 @@ import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.dom.module.todoitem.ToDoItems;
 
 import java.util.List;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import org.jmock.Expectations;
 import org.junit.Assert;
-import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
-import org.apache.isis.applib.services.eventbus.EventBusService;
-import org.apache.isis.core.specsupport.scenarios.InMemoryDB;
 import org.apache.isis.core.specsupport.specs.CukeGlueAbstract;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -41,14 +33,6 @@ public class ToDoItemGlue extends CukeGlueAbstract {
 
     @Given("^there are a number of incomplete ToDo items$")
     public void there_are_a_number_of_incomplete_ToDo_items() throws Throwable {
-        if(supportsMocks()) {
-            checking(new Expectations() {
-                {
-                    allowing(service(ToDoItems.class)).notYetComplete();
-                    will(returnValue(notYetCompleteItems()));
-                }
-            });
-        }
         try {
             final List<ToDoItem> notYetComplete = service(ToDoItems.class).notYetComplete();
             assertThat(notYetComplete.isEmpty(), is(false));
@@ -71,18 +55,6 @@ public class ToDoItemGlue extends CukeGlueAbstract {
     @When("^mark the item as complete$")
     public void mark_it_as_complete() throws Throwable {
         final ToDoItem toDoItem = getVar(null, "toDoItem", ToDoItem.class);
-        if(supportsMocks()) {
-            final ActionInvocationContext actionInvocationContext = service(ActionInvocationContext.class);
-            final EventBusService eventBusService = service(EventBusService.class);
-            checking(new Expectations() {
-                {
-                    allowing(actionInvocationContext);
-                    allowing(eventBusService);
-                }
-            });
-            toDoItem.actionInvocationContext = actionInvocationContext;
-            toDoItem.eventBusService = eventBusService;
-        }
         wrap(toDoItem).completed();
     }
     
@@ -94,12 +66,6 @@ public class ToDoItemGlue extends CukeGlueAbstract {
 
     @Given("^.*completed .*item$")
     public void a_completed_ToDo_item() throws Throwable {
-        if(supportsMocks()) {
-            checking(new Expectations(){{
-                allowing(service(ToDoItems.class)).allToDos();
-                will(returnValue(findItems(Predicates.<ToDoItem>alwaysTrue()) ));
-            }});
-        }
         try {
             final List<ToDoItem> allToDos = service(ToDoItems.class).allToDos();
             for (ToDoItem toDoItem : allToDos) {
@@ -129,37 +95,11 @@ public class ToDoItemGlue extends CukeGlueAbstract {
     }
 
     private void whetherNotYetCompletedContains(ToDoItem toDoItem, final boolean whetherContained) {
-        if(supportsMocks()) {
-            final List<ToDoItem> notYetCompleteItems = notYetCompleteItems();
-            checking(new Expectations() {
-                {
-                    oneOf(service(ToDoItems.class)).notYetComplete();
-                    will(returnValue(notYetCompleteItems));
-                }
-            });
-        }
         try {
             final List<ToDoItem> notYetComplete = service(ToDoItems.class).notYetComplete();
             assertThat(notYetComplete.contains(toDoItem), is(whetherContained));
         } finally {
             assertMocksSatisfied();
         }
-    }
-
-
-    // helper
-    private List<ToDoItem> notYetCompleteItems() {
-        return findItems(new Predicate<ToDoItem>(){
-            @Override
-            public boolean apply(ToDoItem input) {
-                return !input.isComplete();
-            }
-        });
-    }
-
-    private List<ToDoItem> findItems(final Predicate<ToDoItem> predicate) {
-        final InMemoryDB inMemoryDB = getVar("isis", "in-memory-db", InMemoryDB.class);
-        final List<ToDoItem> items = inMemoryDB.findAll(ToDoItem.class);
-        return Lists.newArrayList(Iterables.filter(items, predicate));
     }
 }
