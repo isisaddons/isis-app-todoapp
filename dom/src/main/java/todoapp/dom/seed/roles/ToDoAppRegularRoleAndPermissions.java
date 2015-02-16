@@ -16,8 +16,7 @@
  */
 package todoapp.dom.seed.roles;
 
-import todoapp.dom.app.ToDoAppDashboard;
-import todoapp.dom.module.todoitem.ToDoItems;
+import todoapp.dom.ToDoAppDomainModule;
 
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
@@ -37,8 +36,9 @@ public class ToDoAppRegularRoleAndPermissions extends AbstractRoleAndPermissions
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                ToDoItems.class.getPackage().getName(),
-                ToDoAppDashboard.class.getPackage().getName());
+                ToDoAppDomainModule.class.getPackage().getName() + ".app",
+                ToDoAppDomainModule.class.getPackage().getName() + ".module"
+                );
     }
 
 }

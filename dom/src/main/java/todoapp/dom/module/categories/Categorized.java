@@ -16,15 +16,17 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.fixture.scenarios;
+package todoapp.dom.module.categories;
 
-import todoapp.fixture.security.users.DickUser;
+/**
+ * Enables {@link UpdateCategoryContributions#updateCategory(Categorized, Category, Subcategory)} to be contributed to
+ * both the {@link todoapp.dom.module.todoitem.ToDoItem} (entity).
+ */
+public interface Categorized {
 
-public final class ToDoItemsRecreateAndCompleteSeveralForDick extends ToDoItemsRecreateAndCompleteSeveral {
+    Category getCategory();
+    void setCategory(Category category);
 
-    public ToDoItemsRecreateAndCompleteSeveralForDick() {
-        withDiscoverability(Discoverability.DISCOVERABLE);
-
-        setOwnedBy(DickUser.USER_NAME);
-    }
+    Subcategory getSubcategory();
+    void setSubcategory(Subcategory subcategory);
 }

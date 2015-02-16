@@ -56,7 +56,7 @@
                             }
                         }
                     },
-                    "ownedBy": {
+                    "atPath": {
                         "propertyLayout": {
                             "hidden": "EVERYWHERE"
                         }
@@ -146,6 +146,9 @@
                         }
                     },
                     "location": {
+                        "propertyLayout": {
+                            "hidden": "ALL_TABLES"
+                        },
                         "actions": {
                             "updateLocation": {
                                 "actionLayout": {
@@ -163,7 +166,7 @@
                     },
                     "attachment": {
                         "propertyLayout": {
-                            "hidden": "STANDALONE_TABLES"
+                            "hidden": "ALL_TABLES"
                         }
                     },
                     "doc": {
@@ -218,7 +221,11 @@
     }
     ],
     "actions": {
-        "totalCost": {},
+        "exportToWordDoc": {
+            "actionLayout": {
+                "cssClassFa": "fa fa-download"
+            }
+        },
         "delete": {
             "actionLayout": {
                 "cssClass": "btn btn-danger",
@@ -232,6 +239,7 @@
                 "cssClass": "btn-warn",
                 "cssClassFa": "fa fa-copy fa-lg"
             }
-        }
+        },
+        "totalCost": {}
     }
 }

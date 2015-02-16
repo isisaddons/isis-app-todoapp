@@ -18,11 +18,14 @@
  */
 package todoapp.dom.module.todoitem;
 
+import todoapp.dom.module.categories.Categorized;
+import todoapp.dom.module.categories.Category;
+import todoapp.dom.module.categories.Subcategory;
+import todoapp.dom.module.export.ToDoItemsExportService;
+
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -34,6 +37,13 @@ import javax.jdo.annotations.VersionStrategy;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Ordering;
+import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
+import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
+import org.isisaddons.module.security.dom.tenancy.WithApplicationTenancy;
+import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
+import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
+import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
+import org.isisaddons.wicket.gmap3.cpt.applib.Locatable;
 import org.isisaddons.wicket.gmap3.cpt.applib.Location;
 import org.isisaddons.wicket.gmap3.cpt.service.LocationLookupService;
 import org.joda.time.LocalDate;
@@ -85,33 +95,33 @@ import org.apache.isis.applib.value.Clob;
 })
 @javax.jdo.annotations.Queries( {
     @javax.jdo.annotations.Query(
-            name = "findByOwnedBy", language = "JDOQL",
+            name = "findByAtPath", language = "JDOQL",
             value = "SELECT "
                     + "FROM todoapp.dom.module.todoitem.ToDoItem "
-                    + "WHERE ownedBy == :ownedBy"),
+                    + "WHERE atPath == :atPath"),
     @javax.jdo.annotations.Query(
-            name = "findByOwnedByAndCompleteIsFalse", language = "JDOQL",
+            name = "findByAtPathAndCompleteIsFalse", language = "JDOQL",
             value = "SELECT "
                     + "FROM todoapp.dom.module.todoitem.ToDoItem "
-                    + "WHERE ownedBy == :ownedBy "
+                    + "WHERE atPath == :atPath "
                     + "   && complete == false"),
     @javax.jdo.annotations.Query(
-            name = "findByOwnedByAndCompleteIsTrue", language = "JDOQL",
+            name = "findByAtPathAndCompleteIsTrue", language = "JDOQL",
             value = "SELECT "
                     + "FROM todoapp.dom.module.todoitem.ToDoItem "
-                    + "WHERE ownedBy == :ownedBy "
+                    + "WHERE atPath == :atPath "
                     + "&& complete == true"),
     @javax.jdo.annotations.Query(
-            name = "findByOwnedByAndCategory", language = "JDOQL",
+            name = "findByAtPathAndCategory", language = "JDOQL",
             value = "SELECT "
                     + "FROM todoapp.dom.module.todoitem.ToDoItem "
-                    + "WHERE ownedBy == :ownedBy "
+                    + "WHERE atPath == :atPath "
                     + "&& category == :category"),
     @javax.jdo.annotations.Query(
-            name = "findByOwnedByAndDescriptionContains", language = "JDOQL",
+            name = "findByAtPathAndDescriptionContains", language = "JDOQL",
             value = "SELECT "
                     + "FROM todoapp.dom.module.todoitem.ToDoItem "
-                    + "WHERE ownedBy == :ownedBy && "
+                    + "WHERE atPath == :atPath && "
                     + "description.indexOf(:description) >= 0")
 })
 @DomainObject(
@@ -123,7 +133,7 @@ import org.apache.isis.applib.value.Clob;
 @DomainObjectLayout(
         bookmarking = BookmarkPolicy.AS_ROOT
 )
-public class ToDoItem implements Categorized, Comparable<ToDoItem> {
+public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, CalendarEventable, WithApplicationTenancy {
 
     //region > LOG
     /**
@@ -181,13 +191,28 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
     }
     //endregion
 
-    //region > dueBy (property)
+    //region > dueBy (property), Calendarable impl
     @javax.jdo.annotations.Persistent(defaultFetchGroup="true")
     private LocalDate dueBy;
 
     @javax.jdo.annotations.Column(allowsNull="true")
     public LocalDate getDueBy() {
         return dueBy;
+    }
+
+    @Programmatic
+    @Override
+    public String getCalendarName() {
+        return "dueBy";
+    }
+
+    @Programmatic
+    @Override
+    public CalendarEvent toCalendarEvent() {
+        return getDueBy() != null
+                ? new CalendarEvent(
+                getDueBy().toDateTimeAtStartOfDay(), "dueBy", title())
+                : null;
     }
 
     /**
@@ -219,59 +244,6 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
     //endregion
 
     //region > category and subcategory (property)
-
-    public static enum Category {
-        Professional {
-            @Override
-            public List<Subcategory> subcategories() {
-                return Arrays.asList(null, Subcategory.OpenSource, Subcategory.Consulting, Subcategory.Education, Subcategory.Marketing);
-            }
-        }, Domestic {
-            @Override
-            public List<Subcategory> subcategories() {
-                return Arrays.asList(null, Subcategory.Shopping, Subcategory.Housework, Subcategory.Garden, Subcategory.Chores);
-            }
-        }, Other {
-            @Override
-            public List<Subcategory> subcategories() {
-                return Arrays.asList(null, Subcategory.Other);
-            }
-        };
-        
-        public abstract List<Subcategory> subcategories();
-    }
-
-    public static enum Subcategory {
-        // professional
-        OpenSource, Consulting, Education, Marketing,
-        // domestic
-        Shopping, Housework, Garden, Chores,
-        // other
-        Other;
-
-        public static List<Subcategory> listFor(final Category category) {
-            return category != null? category.subcategories(): Collections.<Subcategory>emptyList();
-        }
-
-        static String validate(final Category category, final Subcategory subcategory) {
-            if(category == null) {
-                return "Enter category first";
-            }
-            return !category.subcategories().contains(subcategory) 
-                    ? "Invalid subcategory for category '" + category + "'" 
-                    : null;
-        }
-        
-        public static Predicate<Subcategory> thoseFor(final Category category) {
-            return new Predicate<Subcategory>() {
-
-                @Override
-                public boolean apply(final Subcategory subcategory) {
-                    return category.subcategories().contains(subcategory);
-                }
-            };
-        }
-    }
 
     // //////////////////////////////////////
 
@@ -307,18 +279,29 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
     }
     //endregion
 
-    //region > ownedBy (property)
+    //region > atPath (property)
 
-    private String ownedBy;
+    private String atPath;
 
     @javax.jdo.annotations.Column(allowsNull="false")
-    public String getOwnedBy() {
-        return ownedBy;
+    @Property(
+            // TODO: reinstate
+            // hidden = Where.EVERYWHERE
+    )
+    public String getAtPath() {
+        return atPath;
     }
 
-    public void setOwnedBy(final String ownedBy) {
-        this.ownedBy = ownedBy;
+    public void setAtPath(final String atPath) {
+        this.atPath = atPath;
     }
+
+
+    @Programmatic
+    public ApplicationTenancy getApplicationTenancy() {
+        return applicationTenancies.findTenancyByName(getAtPath());
+    }
+
     //endregion
 
     //region > complete (property), completed (action), notYetCompleted (action)
@@ -456,7 +439,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
     }
     //endregion
 
-    //region > location
+    //region > location (property), Locatable impl
 
     private Double locationLatitude;
     private Double locationLongitude;
@@ -680,7 +663,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
     }
     public String validateDuplicate(
             final String description, 
-            final Category category, final Subcategory subcategory, 
+            final Category category, final Subcategory subcategory,
             final LocalDate dueBy, final BigDecimal cost) {
         return toDoItems.validateNewToDo(description, category, subcategory, dueBy, cost);
     }
@@ -804,8 +787,8 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
     public String disabled(final Identifier.Type identifierType){
         final UserMemento currentUser = container.getUser();
         final String currentUserName = currentUser.getName();
-        if(Objects.equal(getOwnedBy(), currentUserName)) { return null; }
-        return "This object is owned by '" + getOwnedBy() + "' and cannot be modified by you";
+        if(Objects.equal(getAtPath(), GlobalTenancy.TENANCY_PATH + currentUserName)) { return null; }
+        return "This object is owned by '" + getAtPath() + "' and cannot be modified by you";
     }
 
     /**
@@ -835,17 +818,11 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
 
     public static abstract class AbstractActionDomainEvent extends ActionDomainEvent<ToDoItem> {
         private static final long serialVersionUID = 1L;
-        private final String description;
         public AbstractActionDomainEvent(
-                final String description,
                 final ToDoItem source,
                 final Identifier identifier,
                 final Object... arguments) {
             super(source, identifier, arguments);
-            this.description = description;
-        }
-        public String getEventDescription() {
-            return description;
         }
     }
 
@@ -855,7 +832,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
                 final ToDoItem source, 
                 final Identifier identifier, 
                 final Object... arguments) {
-            super("completed", source, identifier, arguments);
+            super(source, identifier, arguments);
         }
     }
 
@@ -865,7 +842,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
                 final ToDoItem source, 
                 final Identifier identifier, 
                 final Object... arguments) {
-            super("no longer completed", source, identifier, arguments);
+            super(source, identifier, arguments);
         }
     }
 
@@ -875,7 +852,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
                 final ToDoItem source, 
                 final Identifier identifier, 
                 final Object... arguments) {
-            super("deleted", source, identifier, arguments);
+            super(source, identifier, arguments);
         }
     }
 
@@ -889,7 +866,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
             return new Predicate<ToDoItem>() {
                 @Override
                 public boolean apply(final ToDoItem toDoItem) {
-                    return Objects.equal(toDoItem.getOwnedBy(), currentUser);
+                    return Objects.equal(toDoItem.getAtPath(), GlobalTenancy.TENANCY_PATH + currentUser);
                 }
             };
         }
@@ -902,23 +879,6 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
                     return Objects.equal(t.isComplete(), completed);
                 }
             };
-        }
-
-        public static Predicate<ToDoItem> thoseWithSimilarDescription(final String description) {
-            return new Predicate<ToDoItem>() {
-                @Override
-                public boolean apply(final ToDoItem t) {
-                    return t.getDescription().contains(description);
-                }
-            };
-        }
-
-        @SuppressWarnings("unchecked")
-        public static Predicate<ToDoItem> thoseSimilarTo(final ToDoItem toDoItem) {
-            return com.google.common.base.Predicates.and(
-                    thoseNot(toDoItem),
-                    thoseOwnedBy(toDoItem.getOwnedBy()),
-                    thoseCategorised(toDoItem.getCategory()));
         }
 
         public static Predicate<ToDoItem> thoseNot(final ToDoItem toDoItem) {
@@ -963,7 +923,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
     //region > toString, compareTo
     @Override
     public String toString() {
-        return ObjectContracts.toString(this, "description,complete,dueBy,ownedBy");
+        return ObjectContracts.toString(this, "description,complete,dueBy,atPath");
     }
 
     /**
@@ -1002,6 +962,9 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem> {
 
     @javax.inject.Inject
     private LocationLookupService locationLookupService;
+
+    @javax.inject.Inject
+    private ApplicationTenancies applicationTenancies;
     //endregion
 
 }

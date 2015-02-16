@@ -16,15 +16,29 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.fixture.scenarios;
+package todoapp.dom.app.dashboard;
 
-import todoapp.fixture.security.users.SvenUser;
+import javax.inject.Inject;
+import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.HomePage;
+import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.SemanticsOf;
 
-public final class ToDoItemsRecreateAndCompleteSeveralForSven extends ToDoItemsRecreateAndCompleteSeveral {
+@DomainService(nature = NatureOfService.DOMAIN)
+public class ToDoAppDashboardService  {
 
-    public ToDoItemsRecreateAndCompleteSeveralForSven() {
-        withDiscoverability(Discoverability.DISCOVERABLE);
-
-        setOwnedBy(SvenUser.USER_NAME);
+    @Action(
+            semantics = SemanticsOf.SAFE
+            //hidden = Where.EVERYWHERE
+    )
+    @HomePage
+    public ToDoAppDashboard lookup() {
+        return container.injectServicesInto(new ToDoAppDashboard());
     }
+
+    @Inject
+    private DomainObjectContainer container;
+
 }

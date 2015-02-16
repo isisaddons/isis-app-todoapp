@@ -16,9 +16,9 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.dom.app;
+package todoapp.dom.app.analysis;
 
-import todoapp.dom.module.todoitem.ToDoItem.Category;
+import todoapp.dom.module.categories.Category;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,26 +32,17 @@ import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
-@DomainService
+@DomainService(
+        nature = NatureOfService.VIEW_MENU_ONLY
+)
 @DomainServiceLayout(
         named="Analysis",
         menuOrder = "20")
-public class ToDoItemAnalysis {
-
-
-    //region > identification in the UI
-    public String getId() {
-        return "analysis";
-    }
-
-    public String iconName() {
-        return "ToDoItem";
-    }
-    //endregion
-
+public class ToDoItemAnalysisMenu {
 
     //region > byCategory (action)
     @ActionLayout(

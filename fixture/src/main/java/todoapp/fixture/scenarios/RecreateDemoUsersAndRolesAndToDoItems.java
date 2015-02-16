@@ -18,32 +18,30 @@
  */
 package todoapp.fixture.scenarios;
 
-import todoapp.fixture.security.userrole.AllUserRoles;
-import todoapp.fixture.security.users.AllUsers;
+import todoapp.fixture.scenarios.sub.RecreateBobUserAndRolesAndToDoItems;
+import todoapp.fixture.scenarios.sub.RecreateDickUserAndRolesAndToDoItems;
+import todoapp.fixture.scenarios.sub.RecreateJoeUserAndRolesAndToDoItems;
+import todoapp.fixture.scenarios.sub.RecreateSvenUserAndRolesAndToDoItems;
 
+import javax.inject.Inject;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
-public class DemoUsers extends FixtureScript {
+public class RecreateDemoUsersAndRolesAndToDoItems extends FixtureScript {
 
-    public DemoUsers() {
+    public RecreateDemoUsersAndRolesAndToDoItems() {
         withDiscoverability(Discoverability.DISCOVERABLE);
     }
 
-    //region > ownedBy (optional)
-    private String ownedBy;
-
-    public String getOwnedBy() {
-        return ownedBy;
-    }
-
-    public void setOwnedBy(final String ownedBy) {
-        this.ownedBy = ownedBy;
-    }
-    //endregion
-
     @Override
     protected void execute(final ExecutionContext executionContext) {
-       executionContext.executeChild(this, new AllUsers());
-       executionContext.executeChild(this, new AllUserRoles());
+        executionContext.executeChild(this, new RecreateBobUserAndRolesAndToDoItems());
+        executionContext.executeChild(this, new RecreateDickUserAndRolesAndToDoItems());
+        executionContext.executeChild(this, new RecreateJoeUserAndRolesAndToDoItems());
+        executionContext.executeChild(this, new RecreateSvenUserAndRolesAndToDoItems());
     }
+
+    @Inject
+    private IsisJdoSupport isisJdoSupport;
+
 }

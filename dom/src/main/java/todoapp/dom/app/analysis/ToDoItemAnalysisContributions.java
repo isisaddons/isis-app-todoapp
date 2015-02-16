@@ -16,29 +16,35 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.dom.app;
+package todoapp.dom.app.analysis;
 
-import javax.inject.Inject;
-import org.apache.isis.applib.DomainObjectContainer;
+import todoapp.dom.module.todoitem.ToDoItem;
+
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
+import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.HomePage;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
-@DomainService(nature = NatureOfService.DOMAIN)
-public class ToDoAppDashboardService  {
+@DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
+public class ToDoItemAnalysisContributions {
 
+
+    //region > analyseCategory (action)
+    @ActionLayout(contributed = Contributed.AS_ACTION)
     @Action(
             semantics = SemanticsOf.SAFE
-            //hidden = Where.EVERYWHERE
     )
-    @HomePage
-    public ToDoAppDashboard lookup() {
-        return container.injectServicesInto(new ToDoAppDashboard());
+    public ToDoItemsByCategoryViewModel analyseCategory(final ToDoItem item) {
+        return toDoAppAnalysis.toDoItemsForCategory(item.getCategory());
     }
+    //endregion
 
-    @Inject
-    private DomainObjectContainer container;
+    //region > injected services
+    @javax.inject.Inject
+    private ToDoItemAnalysisMenu toDoAppAnalysis;
+
+    //endregion
 
 }

@@ -16,9 +16,9 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.dom.app;
+package todoapp.dom.app.analysis;
 
-import todoapp.dom.app.ToDoItemAnalysis.DateRange;
+import todoapp.dom.app.analysis.ToDoItemAnalysisMenu.DateRange;
 import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.dom.module.todoitem.ToDoItems;
 

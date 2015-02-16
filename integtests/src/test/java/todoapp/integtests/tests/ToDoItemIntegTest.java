@@ -18,8 +18,8 @@
  */
 package todoapp.integtests.tests;
 
-import todoapp.dom.module.demo.DemoBehaviour;
-import todoapp.dom.module.demo.DemoDomainEventSubscriptions;
+import todoapp.dom.app.demoeventsubscriber.DemoBehaviour;
+import todoapp.dom.app.demoeventsubscriber.DemoDomainEventSubscriptions;
 import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.dom.module.todoitem.ToDoItems;
 import todoapp.fixture.scenarios.ToDoItemsRecreateAndCompleteSeveral;
@@ -711,7 +711,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // when, then
                 expectedExceptions.expectMessage(containsString("Reason: Use action to update both category and subcategory."));
-                toDoItem.setCategory(ToDoItem.Category.Professional);
+                toDoItem.setCategory(todoapp.dom.module.categories.Category.Professional);
             }
         }
 
@@ -1028,7 +1028,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // when, then
                 expectedExceptions.expectMessage("Reason: Hidden on Everywhere. Identifier: todoapp.dom.module.todoitem.ToDoItem#ownedBy()");
-                toDoItem.setOwnedBy("other");
+                toDoItem.setAtPath("other");
             }
 
 
@@ -1041,7 +1041,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // when, then
                 expectedExceptions.expectMessage(containsString("Reason: Use action to update both category and subcategory."));
-                toDoItem.setSubcategory(ToDoItem.Subcategory.Chores);
+                toDoItem.setSubcategory(todoapp.dom.module.categories.Subcategory.Chores);
             }
         }
 

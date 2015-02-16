@@ -83,8 +83,8 @@ public class RecentActivityContributions extends AbstractService {
      * Hide for commands, audit entries, published events, session log entries, and for {@link org.apache.isis.applib.ViewModel}s.
      */
     public boolean hideRecentActivity(final Object targetDomainObject, final LocalDate from, final LocalDate to) {
-        return  targetDomainObject instanceof HasTransactionId ||
-                targetDomainObject instanceof ViewModel ||
+        return  getContainer().isViewModel(targetDomainObject) ||
+                targetDomainObject instanceof HasTransactionId ||
                 targetDomainObject instanceof SessionLogEntry ||
                 auditingServiceRepository == null ||
                 bookmarkService == null;

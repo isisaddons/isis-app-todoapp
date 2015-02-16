@@ -23,7 +23,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import com.google.common.base.Function;
 import com.google.common.io.Resources;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
@@ -40,6 +39,7 @@ import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.clock.ClockService;
 import org.apache.isis.applib.value.Blob;
@@ -50,17 +50,6 @@ import org.apache.isis.applib.value.Blob;
         menuOrder = "30"
 )
 public class ToDoItemsExportService {
-
-    //region > init
-
-    private WordprocessingMLPackage wordprocessingMLPackage;
-
-    @PostConstruct
-    public void init() throws IOException, LoadTemplateException {
-        final byte[] bytes = Resources.toByteArray(Resources.getResource(this.getClass(), "ToDoItemsExport.docx"));
-        wordprocessingMLPackage = docxService.loadPackage(new ByteArrayInputStream(bytes));
-    }
-    //endregion
 
     //region > exportToWordDoc (action)
 
@@ -74,16 +63,34 @@ public class ToDoItemsExportService {
     public Blob exportToWordDoc() throws IOException, JDOMException, MergeException {
 
         final List<ToDoItem> notYetComplete = toDoItems.notYetComplete();
-        final org.w3c.dom.Document w3cDocument = asInputW3cDocument(notYetComplete);
+        return exportToWordDoc(notYetComplete);
+    }
 
-        final ByteArrayOutputStream docxTarget = new ByteArrayOutputStream();
-        docxService.merge(w3cDocument, wordprocessingMLPackage, docxTarget, DocxService.MatchingPolicy.LAX);
+    //endregion
 
-        final String blobName = "todoItems-" + timestamp() + ".docx";
-        final String blobMimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-        final byte[] blobBytes = docxTarget.toByteArray();
+    //region > exportToWordDoc (programmatic)
+    @Programmatic
+    public Blob exportToWordDoc(final List<ToDoItem> items) {
+        return exportToWordDocCatchExceptions(items);
+    }
 
-        return new Blob(blobName, blobMimeType, blobBytes);
+    private Blob exportToWordDocCatchExceptions(final List<ToDoItem> items)  {
+        final org.w3c.dom.Document w3cDocument;
+        try {
+            w3cDocument = asInputW3cDocument(items);
+
+            final ByteArrayOutputStream docxTarget = new ByteArrayOutputStream();
+            docxService.merge(w3cDocument, getWordprocessingMLPackage(), docxTarget, DocxService.MatchingPolicy.LAX);
+
+            final String blobName = "todoItems-" + timestamp() + ".docx";
+            final String blobMimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+            final byte[] blobBytes = docxTarget.toByteArray();
+
+            return new Blob(blobName, blobMimeType, blobBytes);
+
+        } catch (JDOMException | MergeException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private String timestamp() {
@@ -115,6 +122,28 @@ public class ToDoItemsExportService {
     }
 
     //endregion (
+
+    //region > helper: getWordprocessingMLPackage
+
+    private WordprocessingMLPackage wordprocessingMLPackage;
+
+    // lazily initialized to speed up bootstrapping (at cost of not failing fast).
+    private WordprocessingMLPackage getWordprocessingMLPackage() {
+        initializeIfNecessary();
+        return wordprocessingMLPackage;
+    }
+
+    private void initializeIfNecessary() {
+        if(wordprocessingMLPackage == null) {
+            try {
+                final byte[] bytes = Resources.toByteArray(Resources.getResource(this.getClass(), "ToDoItemsExport.docx"));
+                wordprocessingMLPackage = docxService.loadPackage(new ByteArrayInputStream(bytes));
+            } catch (IOException | LoadTemplateException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    //endregion
 
     //region > helpers
 
@@ -189,6 +218,8 @@ public class ToDoItemsExportService {
 
     @javax.inject.Inject
     private ClockService clockService;
+
     //endregion
+
 
 }

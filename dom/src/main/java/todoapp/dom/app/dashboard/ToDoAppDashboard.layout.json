@@ -1,0 +1,42 @@
+{
+    "columns": [
+        {
+            "span": 0,
+            "memberGroups": {}
+        },
+        {
+            "span": 0,
+            "memberGroups": {}
+        },
+        {
+            "span": 0,
+            "memberGroups": {}
+        },
+        {
+            "span": 12,
+            "collections": {
+                "notYetComplete": {
+                    "collectionLayout": {
+                        "render": "EAGERLY"
+                    },
+                    "actions": {
+                        "exportToWordDoc": {
+                            "actionLayout": {
+                                "named": "Export to Word"
+                            }
+                        }
+                    }
+                },
+                "complete": {
+                    "collectionLayout": {
+                        "render": "EAGERLY"
+                    }
+                }
+            }
+        }
+    ],
+    "actions": {
+        "downloadLayout": {},
+        "refreshLayout": {}
+    }
+}

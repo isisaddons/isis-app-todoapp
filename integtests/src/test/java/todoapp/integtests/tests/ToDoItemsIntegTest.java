@@ -18,6 +18,8 @@
  */
 package todoapp.integtests.tests;
 
+import todoapp.dom.module.categories.Category;
+import todoapp.dom.module.categories.Subcategory;
 import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.dom.module.todoitem.ToDoItems;
 import todoapp.integtests.fixture.ToDoItemsIntegTestFixture;
@@ -107,12 +109,12 @@ public class ToDoItemsIntegTest extends AbstractToDoIntegTest {
             nextTransaction();
 
             // when
-            final ToDoItem newToDo = toDoItems.newToDo("new todo", ToDoItem.Category.Professional, ToDoItem.Subcategory.OpenSource, null, null);
+            final ToDoItem newToDo = toDoItems.newToDo("new todo", Category.Professional, Subcategory.OpenSource, null, null);
             nextTransaction();
 
             // then
             assertThat(newToDo.getDescription(), is("new todo"));
-            assertThat(newToDo.getCategory(), is(ToDoItem.Category.Professional));
+            assertThat(newToDo.getCategory(), is(Category.Professional));
             assertThat(wrap(toDoItems).notYetComplete().size(), is(size+1));
             assertThat(container().isPersistent(newToDo), is(true));
             assertThat(container().isPersistent(wrap(newToDo)), is(true));

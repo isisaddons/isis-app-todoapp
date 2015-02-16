@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.dom.module.demo;
+package todoapp.dom.app.demoeventsubscriber;
 
 import todoapp.dom.module.settings.ToDoAppSettingsService;
 import todoapp.dom.module.todoitem.ToDoItem;

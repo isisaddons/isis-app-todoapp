@@ -18,12 +18,15 @@
  */
 package todoapp.dom.module.todoitem;
 
-import todoapp.dom.module.todoitem.ToDoItem.Category;
-import todoapp.dom.module.todoitem.ToDoItem.Subcategory;
+import todoapp.dom.module.categories.Category;
+import todoapp.dom.module.categories.Subcategory;
 
 import java.math.BigDecimal;
 import java.util.List;
 import com.google.common.base.Predicates;
+import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
+import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
+import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 import org.joda.time.LocalDate;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Action;
@@ -31,12 +34,12 @@ import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
-import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Programmatic;
+import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.clock.ClockService;
@@ -67,8 +70,8 @@ public class ToDoItems {
     public List<ToDoItem> notYetCompleteNoUi() {
         return container.allMatches(
                 new QueryDefault<>(ToDoItem.class,
-                        "findByOwnedByAndCompleteIsFalse", 
-                        "ownedBy", currentUserName()));
+                        "findByAtPathAndCompleteIsFalse",
+                        "atPath", GlobalTenancy.TENANCY_PATH + currentUserName()));
     }
     //endregion
 
@@ -90,8 +93,8 @@ public class ToDoItems {
     public List<ToDoItem> completeNoUi() {
         return container.allMatches(
             new QueryDefault<>(ToDoItem.class,
-                    "findByOwnedByAndCompleteIsTrue", 
-                    "ownedBy", currentUserName()));
+                    "findByAtPathAndCompleteIsTrue",
+                    "atPath", GlobalTenancy.TENANCY_PATH + currentUserName()));
     }
     //endregion
 
@@ -104,10 +107,10 @@ public class ToDoItems {
     )
     @MemberOrder(sequence = "40")
     public List<ToDoItem> categorized(
-    		@ParameterLayout(named="Category") final Category category,
-    		@ParameterLayout(named="Subcategory") final Subcategory subcategory,
-    		@ParameterLayout(named="Completed?") final boolean completed) {
-    	// an example "naive" implementation (filtered in Java code, not DBMS)
+            @ParameterLayout(named="Category") final Category category,
+            @ParameterLayout(named="Subcategory") final Subcategory subcategory,
+            @ParameterLayout(named="Completed?") final boolean completed) {
+            // an example "naive" implementation (filtered in Java code, not DBMS)
         return container.allMatches(ToDoItem.class, 
                 Predicates.and(
                     ToDoItem.Predicates.thoseOwnedBy(currentUserName()), 
@@ -188,8 +191,8 @@ public class ToDoItems {
     public List<ToDoItem> allToDos() {
         final List<ToDoItem> items = container.allMatches(
                 new QueryDefault<>(ToDoItem.class,
-                        "findByOwnedBy", 
-                        "ownedBy", currentUserName()));
+                        "findByAtPath",
+                        "atPath", GlobalTenancy.TENANCY_PATH + currentUserName()));
         if(items.isEmpty()) {
             container.warnUser("No to-do items found.");
         }
@@ -197,13 +200,18 @@ public class ToDoItems {
     }
     //endregion
 
+    @Programmatic
+    public List<ToDoItem> findByAtPath(final String atPath) {
+        return null;
+    }
+
     //region > autoComplete (programmatic)
     @Programmatic // not part of metamodel
     public List<ToDoItem> autoComplete(final String description) {
         return container.allMatches(
                 new QueryDefault<>(ToDoItem.class,
-                        "findByOwnedByAndDescriptionContains", 
-                        "ownedBy", currentUserName(), 
+                        "findByAtPathAndDescriptionContains",
+                        "atPath", GlobalTenancy.TENANCY_PATH + currentUserName(),
                         "description", description));
     }
     //endregion
@@ -220,7 +228,16 @@ public class ToDoItems {
         toDoItem.setDescription(description);
         toDoItem.setCategory(category);
         toDoItem.setSubcategory(subcategory);
-        toDoItem.setOwnedBy(userName);
+
+        final String atPath = GlobalTenancy.TENANCY_PATH + userName;
+
+        final ApplicationTenancy applicationTenancy = applicationTenancies.findTenancyByPath(atPath);
+        if(applicationTenancy == null) {
+            final ApplicationTenancy globalTenancy = applicationTenancies.findTenancyByPath(GlobalTenancy.TENANCY_PATH);
+            applicationTenancies.newTenancy(userName, atPath, globalTenancy);
+        }
+
+        toDoItem.setAtPath(atPath);
         toDoItem.setDueBy(dueBy);
         toDoItem.setCost(cost);
 
@@ -235,6 +252,7 @@ public class ToDoItems {
     }
 
     //endregion
+
 
     //region > common validation
     private static final long ONE_WEEK_IN_MILLIS = 7 * 24 * 60 * 60 * 1000L;
@@ -252,6 +270,9 @@ public class ToDoItems {
     //region > injected services
     @javax.inject.Inject
     private DomainObjectContainer container;
+
+    @javax.inject.Inject
+    private ApplicationTenancies applicationTenancies;
 
     @javax.inject.Inject
     private ClockService clockService;

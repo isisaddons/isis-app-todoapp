@@ -16,15 +16,19 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.fixture.scenarios;
+package todoapp.fixture.security.teardown;
 
 import todoapp.fixture.security.users.BobUser;
 
-public final class ToDoItemsRecreateAndCompleteSeveralForBob extends ToDoItemsRecreateAndCompleteSeveral {
+public class DeleteBobUserAndToDoItems extends AbstractDeleteUserAndToDoItems {
 
-    public ToDoItemsRecreateAndCompleteSeveralForBob() {
-        withDiscoverability(Discoverability.DISCOVERABLE);
-
-        setOwnedBy(BobUser.USER_NAME);
+    public DeleteBobUserAndToDoItems() {
+        super(BobUser.USER_NAME);
     }
+
+    @Override
+    protected void execute(final ExecutionContext executionContext) {
+        delete(executionContext);
+    }
+
 }

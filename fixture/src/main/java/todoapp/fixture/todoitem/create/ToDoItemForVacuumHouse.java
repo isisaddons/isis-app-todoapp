@@ -18,8 +18,8 @@
  */
 package todoapp.fixture.todoitem.create;
 
-import todoapp.dom.module.todoitem.ToDoItem.Category;
-import todoapp.dom.module.todoitem.ToDoItem.Subcategory;
+import todoapp.dom.module.categories.Category;
+import todoapp.dom.module.categories.Subcategory;
 
 public class ToDoItemForVacuumHouse extends ToDoItemAbstract {
 

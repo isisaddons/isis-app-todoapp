@@ -14,31 +14,28 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.fixture.security.userrole;
+package todoapp.fixture.scenarios.sub;
 
-import org.apache.isis.applib.fixturescripts.FixtureScript;
+import todoapp.fixture.security.teardown.DeleteBobUserAndToDoItems;
+import todoapp.fixture.security.userrole.DickUser_Has_IsisSecurityModuleRegularRole;
+import todoapp.fixture.security.userrole.DickUser_Has_ToDoAppFixturesServiceRole;
+import todoapp.fixture.security.userrole.DickUser_Has_ToDoAppRegularRole;
+import todoapp.fixture.security.users.AbstractUserFixtureScript;
+import todoapp.fixture.security.users.BobUser;
 
-public class AllUserRoles extends FixtureScript {
+public class RecreateDickUserAndRolesAndToDoItems extends AbstractUserFixtureScript {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
 
-        // all-powerful superuser (security and todoapp)
-        executionContext.executeChild(this, new SvenUser_Has_IsisSecurityAdminAndRegularUserRole());
-        executionContext.executeChild(this, new SvenUser_Has_ToDoAppAdminRoles());
+        executionContext.executeChild(this, new DeleteBobUserAndToDoItems());
 
-        // admin for todoapp
-        executionContext.executeChild(this, new BobUser_Has_IsisSecurityModuleRegularRole());
-        executionContext.executeChild(this, new BobUser_Has_ToDoAppAdminRoles());
+        executionContext.executeChild(this, new BobUser());
 
         // dev for todoapp (can run fixtures)
         executionContext.executeChild(this, new DickUser_Has_IsisSecurityModuleRegularRole());
         executionContext.executeChild(this, new DickUser_Has_ToDoAppRegularRole());
         executionContext.executeChild(this, new DickUser_Has_ToDoAppFixturesServiceRole());
-
-        // end-user of todoapp
-        executionContext.executeChild(this, new JoeUser_Has_IsisSecurityModuleRegularRole());
-        executionContext.executeChild(this, new JoeUser_Has_ToDoAppRegularRole());
     }
 
 }

@@ -18,8 +18,9 @@
  */
 package todoapp.integtests.tests;
 
+import todoapp.dom.app.relativepriority.RelativePriorityContributions;
+import todoapp.dom.module.categories.UpdateCategoryContributions;
 import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItemContributions;
 import todoapp.dom.module.todoitem.ToDoItems;
 import todoapp.fixture.scenarios.ToDoItemsRecreateAndCompleteSeveral;
 
@@ -29,13 +30,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public abstract class ToDoItemContributionsIntegTest extends AbstractToDoIntegTest {
+public abstract class RelativePriorityContributionsIntegTest extends AbstractToDoIntegTest {
 
     ToDoItemsRecreateAndCompleteSeveral fixtureScript;
 
@@ -50,9 +50,15 @@ public abstract class ToDoItemContributionsIntegTest extends AbstractToDoIntegTe
     @Inject
     ToDoItems toDoItems;
     @Inject
-    ToDoItemContributions toDoItemContributions;
+    UpdateCategoryContributions updateCategoryContributions;
 
-    ToDoItemContributions toDoItemContributionsWrapped;
+    UpdateCategoryContributions updateCategoryContributionsWrapped;
+
+    @Inject
+    RelativePriorityContributions relativePriorityContributions;
+
+    RelativePriorityContributions relativePriorityContributionsWrapped;
+
     ToDoItem toDoItem;
 
     @Before
@@ -61,72 +67,13 @@ public abstract class ToDoItemContributionsIntegTest extends AbstractToDoIntegTe
         toDoItem = wrap(fixtureScript.lookup("to-do-items-recreate-and-complete-several/to-do-item-complete-for-buy-stamps/item-1", ToDoItem.class));
         assertThat(toDoItem, is(not(nullValue())));
 
-        toDoItemContributionsWrapped = wrap(toDoItemContributions);
-    }
+        updateCategoryContributionsWrapped = wrap(updateCategoryContributions);
 
-    public static class Actions {
-        public static class UpdateCategory extends ToDoItemContributionsIntegTest {
-
-            @Test
-            public void happyCase() throws Exception {
-
-                // when
-                toDoItemContributionsWrapped.updateCategory(toDoItem, ToDoItem.Category.Professional, ToDoItem.Subcategory.Consulting);
-
-                // then
-                assertThat(toDoItem.getCategory(), is(ToDoItem.Category.Professional));
-                assertThat(toDoItem.getSubcategory(), is(ToDoItem.Subcategory.Consulting));
-
-                // when
-                toDoItemContributionsWrapped.updateCategory(toDoItem, ToDoItem.Category.Domestic, ToDoItem.Subcategory.Chores);
-
-                // then
-                assertThat(toDoItem.getCategory(), is(ToDoItem.Category.Domestic));
-                assertThat(toDoItem.getSubcategory(), is(ToDoItem.Subcategory.Chores));
-            }
-
-
-            @Test
-            public void categoryCannotBeNull() throws Exception {
-
-                // when, then
-                expectedExceptions.expectMessage("'Category' is mandatory");
-                toDoItemContributionsWrapped.updateCategory(toDoItem, null, ToDoItem.Subcategory.Chores);
-            }
-
-            @Test
-            public void subcategoryCanBeNull() throws Exception {
-
-                // when, then
-                toDoItemContributionsWrapped.updateCategory(toDoItem, ToDoItem.Category.Professional, null);
-            }
-
-            @Test
-            public void subcategoryMustBelongToCategory() throws Exception {
-
-                // when, then
-                expectedExceptions.expectMessage(containsString("Invalid subcategory"));
-                toDoItemContributionsWrapped.updateCategory(toDoItem, ToDoItem.Category.Professional, ToDoItem.Subcategory.Chores);
-            }
-        }
-
-        public static class SimilarTo extends ToDoItemContributionsIntegTest {
-
-            @Test
-            public void happyCase() throws Exception {
-
-                // when
-                List<ToDoItem> similarItems = toDoItemContributionsWrapped.similarTo(toDoItem);
-
-                // then
-                assertThat(similarItems.size(), is(6));
-            }
-
-        }
+        relativePriorityContributionsWrapped = wrap(relativePriorityContributions);
     }
 
     public static class Properties {
-        public static class Priority extends ToDoItemContributionsIntegTest {
+        public static class Priority extends RelativePriorityContributionsIntegTest {
 
             private List<ToDoItem> notYetComplete;
 
@@ -150,7 +97,7 @@ public abstract class ToDoItemContributionsIntegTest extends AbstractToDoIntegTe
             }
 
             private void assertPriority(final int n, final int priority) {
-                assertThat(toDoItemContributions.relativePriority(notYetComplete.get(n)), is(Integer.valueOf(priority)));
+                assertThat(relativePriorityContributions.relativePriority(notYetComplete.get(n)), is(Integer.valueOf(priority)));
             }
         }
     }

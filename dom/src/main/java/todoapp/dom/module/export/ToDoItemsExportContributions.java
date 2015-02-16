@@ -16,43 +16,13 @@
  */
 package todoapp.dom.module.export;
 
-import todoapp.dom.app.ToDoAppDashboard;
-
-import java.io.IOException;
-import org.isisaddons.module.docx.dom.MergeException;
-import org.jdom2.JDOMException;
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.value.Blob;
 
 @DomainService(
         nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY
 )
 public class ToDoItemsExportContributions {
 
-    //region > exportToWordDoc (action)
-
-    @Action(
-            semantics = SemanticsOf.SAFE
-    )
-    @ActionLayout(
-            cssClassFa = "fa-download"
-    )
-    @MemberOrder(sequence = "10")
-    public Blob exportToWordDoc(final ToDoAppDashboard dashboard) throws IOException, JDOMException, MergeException {
-        return toDoItemsExportService.exportToWordDoc();
-    }
-
-    //endregion
-
-    //region > injected services
-
-    @javax.inject.Inject
-    private ToDoItemsExportService toDoItemsExportService;
-    //endregion
 
 }

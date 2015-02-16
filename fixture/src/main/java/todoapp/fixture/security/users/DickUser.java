@@ -16,6 +16,10 @@
  */
 package todoapp.fixture.security.users;
 
+import todoapp.fixture.security.userrole.DickUser_Has_IsisSecurityModuleRegularRole;
+import todoapp.fixture.security.userrole.DickUser_Has_ToDoAppFixturesServiceRole;
+import todoapp.fixture.security.userrole.DickUser_Has_ToDoAppRegularRole;
+
 import org.isisaddons.module.security.dom.user.AccountType;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 

@@ -1,8 +1,5 @@
-package todoapp.dom.module.demo;
+package todoapp.dom.app.demoeventsubscriber;
 
-/**
-* Created by Dan on 11/02/2015.
-*/
 public enum DemoBehaviour {
     ActivityMenuHideAll,
     ActivityMenuHideSessionLogger,

@@ -16,14 +16,15 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.dom.module.todoitem;
+package todoapp.dom.app.relativepriority;
+
+import todoapp.dom.module.todoitem.ToDoItem;
+import todoapp.dom.module.todoitem.ToDoItems;
 
 import java.util.List;
 import java.util.concurrent.Callable;
+import javax.inject.Inject;
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import org.joda.time.LocalDate;
 import org.apache.isis.applib.AbstractFactoryAndRepository;
@@ -33,20 +34,16 @@ import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.Optionality;
-import org.apache.isis.applib.annotation.Parameter;
-import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
-import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.queryresultscache.QueryResultsCache;
-import org.apache.isis.applib.value.Clob;
 
 @DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
-public class ToDoItemContributions extends AbstractFactoryAndRepository {
+public class RelativePriorityContributions extends AbstractFactoryAndRepository {
 
-    //region > priority (contributed property)
+    //region > relativePriority (contributed property)
     @Action(
             semantics = SemanticsOf.SAFE,
             hidden = Where.ALL_TABLES
@@ -76,7 +73,7 @@ public class ToDoItemContributions extends AbstractFactoryAndRepository {
                     i++;
                 }
                 return null;
-            }}, ToDoItemContributions.class, "relativePriority", toDoItem);
+            }}, RelativePriorityContributions.class, "relativePriority", toDoItem);
     }
 
     private List<ToDoItem> sortedNotYetComplete() {
@@ -168,99 +165,37 @@ public class ToDoItemContributions extends AbstractFactoryAndRepository {
         }
         return priority>=0 && items.size()>=priority? items.get(priority-1): itemElse;
     }
+
     //endregion
 
-    //region > similarTo (contributed collection)
-    @ActionLayout(
-            contributed = Contributed.AS_ASSOCIATION
-    )
-    @Action(semantics = SemanticsOf.SAFE)
-    public List<ToDoItem> similarTo(final ToDoItem toDoItem) {
-        final List<ToDoItem> similarToDoItems = allMatches(
-                new QueryDefault<ToDoItem>(ToDoItem.class,
-                        "findByOwnedByAndCategory", 
-                        "ownedBy", currentUserName(), 
-                        "category", toDoItem.getCategory()));
-        return Lists.newArrayList(Iterables.filter(similarToDoItems, excluding(toDoItem)));
+
+    //region > comparator (programmatic)
+
+    @Programmatic
+    public java.util.Comparator<ToDoItem> comparator() {
+        final java.util.Comparator<ToDoItem> comparator = new Comparator();
+        getContainer().injectServicesInto(comparator);
+        return comparator;
     }
 
+    public static class Comparator implements java.util.Comparator<ToDoItem> {
 
-    private static Predicate<ToDoItem> excluding(final ToDoItem toDoItem) {
-        return new Predicate<ToDoItem>() {
-            @Override
-            public boolean apply(ToDoItem input) {
-                return input != toDoItem;
-            }
-        };
-    }
-    //endregion
-
-    //region > updateCategory (contributed action)
-
-    @ActionLayout(
-            describedAs = "Update category and subcategory"
-    )
-    @Action(semantics = SemanticsOf.IDEMPOTENT)
-    public Categorized updateCategory(
-            final Categorized item,
-            final @ParameterLayout(named="Category") ToDoItem.Category category,
-            final @Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named="Subcategory") ToDoItem.Subcategory subcategory) {
-        item.setCategory(category);
-        item.setSubcategory(subcategory);
-        return item;
-    }
-    public ToDoItem.Category default1UpdateCategory(
-            final Categorized item) {
-        return item != null? item.getCategory(): null;
-    }
-    public ToDoItem.Subcategory default2UpdateCategory(
-            final Categorized item) {
-        return item != null? item.getSubcategory(): null;
-    }
-
-    public List<ToDoItem.Subcategory> choices2UpdateCategory(
-            final Categorized item, final ToDoItem.Category category) {
-        return ToDoItem.Subcategory.listFor(category);
-    }
-    
-    public String validateUpdateCategory(
-            final Categorized item, final ToDoItem.Category category, final ToDoItem.Subcategory subcategory) {
-        return ToDoItem.Subcategory.validate(category, subcategory);
-    }
-    //endregion
-
-    // region > exportAsJson (action)
-    /**
-     * Demonstrates functionality of streaming back Clob/Blob result within an action with a prompt, i.e. Ajax request
-     */
-    @Action(semantics = SemanticsOf.SAFE)
-    public Clob exportAsJson(
-            final ToDoItem toDoItem,
-            @ParameterLayout(named = "File name") String fileName
-    ) {
-        if(!fileName.endsWith(".json")) {
-            fileName += ".json";
+        @Override
+        public int compare(final ToDoItem o1, final ToDoItem o2) {
+            final Integer p1 = relativePriorityContributions.relativePriority(o1);
+            final Integer p2 = relativePriorityContributions.relativePriority(o2);
+            if(p1 == null && p2 != null) { return -1; }
+            if(p1 != null && p2 == null) { return +1; }
+            if(p1 == null && p2 == null) { return 0; }
+            return p1.intValue() - p2.intValue();
         }
-        return new Clob(
-                fileName,
-                "application/json",
-                "{" +
-                "\"description\": \"" + toDoItem.getDescription()+"\"" +
-                ",\"complete\": " + ""+toDoItem.isComplete() +
-                "}");
-    }
 
-    public String default1ExportAsJson() {
-        return "todo";
+        @Inject
+        private RelativePriorityContributions relativePriorityContributions;
+
     }
     //endregion
 
-
-    //region > helpers
-    protected String currentUserName() {
-        return getContainer().getUser().getName();
-    }
-    //endregion
 
     //region > injected services
     @javax.inject.Inject
@@ -268,6 +203,7 @@ public class ToDoItemContributions extends AbstractFactoryAndRepository {
 
     @javax.inject.Inject
     private QueryResultsCache queryResultsCache;
+
     //endregion
 
 }

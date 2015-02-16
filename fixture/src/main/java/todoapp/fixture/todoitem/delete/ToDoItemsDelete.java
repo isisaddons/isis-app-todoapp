@@ -18,6 +18,7 @@
  */
 package todoapp.fixture.todoitem.delete;
 
+import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
@@ -26,7 +27,7 @@ public class ToDoItemsDelete extends FixtureScript {
     //region > execute
     protected void execute(ExecutionContext executionContext) {
         final String ownedBy = executionContext.getParameter("ownedBy");
-        isisJdoSupport.executeUpdate("delete from \"ToDoItem\" where \"ownedBy\" = '" + ownedBy + "'");
+        isisJdoSupport.executeUpdate("delete from \"ToDoItem\" where \"atPath\" = '" + GlobalTenancy.TENANCY_PATH + ownedBy + "'");
     }
     //endregion
 

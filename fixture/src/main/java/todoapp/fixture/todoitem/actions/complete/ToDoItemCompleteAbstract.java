@@ -24,6 +24,7 @@ import java.util.Collection;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
+import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 public abstract class ToDoItemCompleteAbstract extends FixtureScript {
@@ -43,7 +44,7 @@ public abstract class ToDoItemCompleteAbstract extends FixtureScript {
             @Override
             public boolean apply(ToDoItem input) {
                 return Objects.equal(description, input.getDescription()) &&
-                       Objects.equal(ownedBy, input.getOwnedBy());
+                       Objects.equal(GlobalTenancy.TENANCY_PATH + ownedBy, input.getAtPath());
             }
         });
         return filtered.isEmpty()? null: filtered.iterator().next();

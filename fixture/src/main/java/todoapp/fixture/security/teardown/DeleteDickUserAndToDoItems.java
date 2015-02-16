@@ -16,24 +16,19 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.fixture.todoitem.create;
+package todoapp.fixture.security.teardown;
 
-import todoapp.dom.module.categories.Category;
-import todoapp.dom.module.categories.Subcategory;
+import todoapp.fixture.security.users.DickUser;
 
-public class ToDoItemForBuyStamps extends ToDoItemAbstract {
+public class DeleteDickUserAndToDoItems extends AbstractDeleteUserAndToDoItems {
 
-    public static final String DESCRIPTION = "Buy stamps";
+    public DeleteDickUserAndToDoItems() {
+        super(DickUser.USER_NAME);
+    }
 
     @Override
-    protected void execute(ExecutionContext executionContext) {
-
-        createToDoItem(
-                DESCRIPTION,
-                Category.Domestic, Subcategory.Shopping,
-                nowPlusDays(0),
-                BD("10.00"),
-                executionContext);
+    protected void execute(final ExecutionContext executionContext) {
+        delete(executionContext);
     }
 
 }

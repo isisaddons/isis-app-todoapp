@@ -16,10 +16,11 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.dom.app;
+package todoapp.dom.app.analysis;
 
+import todoapp.dom.module.categories.Subcategory;
 import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItem.Category;
+import todoapp.dom.module.categories.Category;
 import todoapp.dom.module.todoitem.ToDoItems;
 
 import java.util.Arrays;
@@ -93,20 +94,20 @@ public class ToDoItemsByCategoryViewModel
 
     // //////////////////////////////////////
 
-    private Iterable<ToDoItem.Subcategory> subcategories() {
-        return Iterables.filter(Arrays.asList(ToDoItem.Subcategory.values()), ToDoItem.Subcategory.thoseFor(getCategory()));
+    private Iterable<Subcategory> subcategories() {
+        return Iterables.filter(Arrays.asList(Subcategory.values()), Subcategory.thoseFor(getCategory()));
     }
 
-    private Function<ToDoItem.Subcategory, String> summarizeBySubcategory(final Iterable<ToDoItem> itemsInCategory) {
-        return new Function<ToDoItem.Subcategory, String>() {
+    private Function<Subcategory, String> summarizeBySubcategory(final Iterable<ToDoItem> itemsInCategory) {
+        return new Function<Subcategory, String>() {
             @Override
-            public String apply(final ToDoItem.Subcategory subcategory) {
+            public String apply(final Subcategory subcategory) {
                 return subcategory + ": " + countIn(itemsInCategory, subcategory);
             }
         };
     }
 
-    private static int countIn(final Iterable<ToDoItem> items, final ToDoItem.Subcategory subcategory) {
+    private static int countIn(final Iterable<ToDoItem> items, final Subcategory subcategory) {
         return Iterables.size(Iterables.filter(items,
                 ToDoItem.Predicates.thoseSubcategorised(subcategory)));
     }

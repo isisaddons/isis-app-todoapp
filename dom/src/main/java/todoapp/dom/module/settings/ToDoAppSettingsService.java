@@ -19,7 +19,6 @@
 package todoapp.dom.module.settings;
 
 import java.util.List;
-import org.isisaddons.module.settings.dom.ApplicationSetting;
 import org.isisaddons.module.settings.dom.ApplicationSettingsServiceRW;
 import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
 import org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo;
@@ -44,25 +43,22 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 )
 public class ToDoAppSettingsService {
 
-    //region > settings
+    //region > listAllSettings (for application)
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(
             named = "Application Settings",
             cssClassFa = "fa-cog"
     )
     @MemberOrder(sequence = "10")
-    public List<ApplicationSetting> listAllSettings() {
-        return applicationSettingsService.listAll();
+    public List<ApplicationSettingJdo> listAllSettings() {
+        // downcast using raw list
+        final List applicationSettings = applicationSettingsService.listAll();
+        return applicationSettings;
     }
     //endregion
 
-    //region > settings
-    @Action(semantics = SemanticsOf.SAFE)
-    @ActionLayout(
-            named = "User Settings",
-            cssClassFa = "fa-cog"
-    )
-    @MemberOrder(sequence = "10")
+    //region > listAllSettings (for user); programmatic
+    @Programmatic
     public List<UserSettingJdo> listAllSettings(final String user) {
         // downcast using raw list
         final List userSettings = userSettingsService.listAllFor(user);

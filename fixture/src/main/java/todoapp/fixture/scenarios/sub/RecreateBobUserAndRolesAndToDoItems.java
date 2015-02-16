@@ -14,22 +14,26 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.fixture.security.users;
+package todoapp.fixture.scenarios.sub;
 
 import todoapp.fixture.security.teardown.DeleteBobUserAndToDoItems;
 import todoapp.fixture.security.userrole.BobUser_Has_IsisSecurityModuleRegularRole;
 import todoapp.fixture.security.userrole.BobUser_Has_ToDoAppAdminRoles;
+import todoapp.fixture.security.users.AbstractUserFixtureScript;
+import todoapp.fixture.security.users.BobUser;
 
-import org.isisaddons.module.security.dom.user.AccountType;
-import org.apache.isis.applib.fixturescripts.FixtureScript;
-
-public class BobUser extends AbstractUserFixtureScript {
-
-    public static final String USER_NAME = "bob";
+public class RecreateBobUserAndRolesAndToDoItems extends AbstractUserFixtureScript {
 
     @Override
-    protected void execute(FixtureScript.ExecutionContext executionContext) {
-        create(USER_NAME, AccountType.LOCAL, null, executionContext);
+    protected void execute(ExecutionContext executionContext) {
+
+        executionContext.executeChild(this, new DeleteBobUserAndToDoItems());
+
+        executionContext.executeChild(this, new BobUser());
+
+        // admin for todoapp
+        executionContext.executeChild(this, new BobUser_Has_IsisSecurityModuleRegularRole());
+        executionContext.executeChild(this, new BobUser_Has_ToDoAppAdminRoles());
     }
 
 }

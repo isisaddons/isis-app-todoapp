@@ -16,35 +16,45 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.dom.app;
+package todoapp.dom.app.exportjson;
 
 import todoapp.dom.module.todoitem.ToDoItem;
 
+import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
-import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.value.Clob;
 
 @DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
-public class ToDoItemAnalysisContributions {
+public class ExportAsJsonContributions extends AbstractFactoryAndRepository {
 
-
-    //region > analyseCategory (action)
-    @ActionLayout(contributed = Contributed.AS_ACTION)
-    @Action(
-            semantics = SemanticsOf.SAFE
-    )
-    public ToDoItemsByCategoryViewModel analyseCategory(final ToDoItem item) {
-        return toDoAppAnalysis.toDoItemsForCategory(item.getCategory());
+    // region > exportAsJson (action)
+    /**
+     * Demonstrates functionality of streaming back Clob/Blob result within an action with a prompt, i.e. Ajax request
+     */
+    @Action(semantics = SemanticsOf.SAFE)
+    public Clob exportAsJson(
+            final ToDoItem toDoItem,
+            @ParameterLayout(named = "File name") String fileName
+    ) {
+        if(!fileName.endsWith(".json")) {
+            fileName += ".json";
+        }
+        return new Clob(
+                fileName,
+                "application/json",
+                "{" +
+                "\"description\": \"" + toDoItem.getDescription()+"\"" +
+                ",\"complete\": " + ""+toDoItem.isComplete() +
+                "}");
     }
-    //endregion
 
-    //region > injected services
-    @javax.inject.Inject
-    private ToDoItemAnalysis toDoAppAnalysis;
-
+    public String default1ExportAsJson() {
+        return "todo";
+    }
     //endregion
 
 }

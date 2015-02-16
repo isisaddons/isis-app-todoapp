@@ -16,17 +16,19 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.dom.module.todoitem;
+package todoapp.fixture.security.teardown;
 
-/**
- * Enables {@link ToDoItemContributions#updateCategory(Categorized, ToDoItem.Category, ToDoItem.Subcategory)} to be contributed to
- * both the {@link ToDoItem} (entity) and also the {@link app.ToDoItemWizard} (wizard).
- */
-public interface Categorized {
+import todoapp.fixture.security.users.SvenUser;
 
-    ToDoItem.Category getCategory();
-    void setCategory(ToDoItem.Category category);
+public class DeleteSvenUserAndToDoItems extends AbstractDeleteUserAndToDoItems {
 
-    ToDoItem.Subcategory getSubcategory();
-    void setSubcategory(ToDoItem.Subcategory subcategory);
+    public DeleteSvenUserAndToDoItems() {
+        super(SvenUser.USER_NAME);
+    }
+
+    @Override
+    protected void execute(final ExecutionContext executionContext) {
+        delete(executionContext);
+    }
+
 }

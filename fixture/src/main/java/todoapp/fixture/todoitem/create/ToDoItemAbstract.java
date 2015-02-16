@@ -19,8 +19,8 @@
 package todoapp.fixture.todoitem.create;
 
 import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItem.Category;
-import todoapp.dom.module.todoitem.ToDoItem.Subcategory;
+import todoapp.dom.module.categories.Category;
+import todoapp.dom.module.categories.Subcategory;
 import todoapp.dom.module.todoitem.ToDoItems;
 
 import java.math.BigDecimal;

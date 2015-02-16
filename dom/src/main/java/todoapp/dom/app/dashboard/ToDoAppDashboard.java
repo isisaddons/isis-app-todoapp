@@ -16,15 +16,23 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.dom.app;
+package todoapp.dom.app.dashboard;
 
+import todoapp.dom.app.relativepriority.RelativePriorityContributions;
+import todoapp.dom.module.export.ToDoItemsExportService;
+import todoapp.dom.module.todoitem.ToDoItem;
+import todoapp.dom.module.todoitem.ToDoItems;
+
+import java.util.Collections;
 import java.util.List;
+import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Nature;
-import org.apache.isis.applib.annotation.RenderType;
+import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.value.Blob;
 
 @DomainObject(nature = Nature.VIEW_MODEL)
 public class ToDoAppDashboard {
@@ -35,35 +43,50 @@ public class ToDoAppDashboard {
     }
     //endregion
 
-    //region > getAnalysisByCategory (collection)
-    @CollectionLayout(
-            named="By Category",
-            render = RenderType.EAGERLY
-    )
+    //region > notYetComplete (collection)
+
     @Collection(
             editing = Editing.DISABLED
     )
-    public List<ToDoItemsByCategoryViewModel> getAnalysisByCategory() {
-        return toDoItemAnalysis.toDoItemsByCategory();
+    @CollectionLayout(
+            sortedBy = RelativePriorityContributions.Comparator.class
+    )
+    public List<ToDoItem> getNotYetComplete() {
+        return toDoItems.notYetCompleteNoUi();
     }
     //endregion
 
-    //region > getAnalysisByDateRange (collection)
-    @CollectionLayout(
-            named="By Date Range",
-            render = RenderType.EAGERLY
-    )
+    //region > completed (collection)
     @Collection(
             editing = Editing.DISABLED
     )
-    public List<ToDoItemsByDateRangeViewModel> getAnalysisByDateRange() {
-        return toDoItemAnalysis.toDoItemsByDateRange();
+    public List<ToDoItem> getComplete() {
+        return toDoItems.complete();
+    }
+    //endregion
+
+    //region > exportToWordDoc
+    @Action(
+            semantics = SemanticsOf.SAFE
+    )
+    public Blob exportToWordDoc() {
+
+        final List items = getNotYetComplete();
+        Collections.sort(items, relativePriorityContributions.comparator());
+        return toDoItemsExportService.exportToWordDoc(items);
     }
     //endregion
 
     //region > injected services
     @javax.inject.Inject
-    private ToDoItemAnalysis toDoItemAnalysis;
+    private ToDoItems toDoItems;
+
+    @javax.inject.Inject
+    private ToDoItemsExportService toDoItemsExportService;
+
+    @javax.inject.Inject
+    private RelativePriorityContributions relativePriorityContributions;
+
     //endregion
 
 }
