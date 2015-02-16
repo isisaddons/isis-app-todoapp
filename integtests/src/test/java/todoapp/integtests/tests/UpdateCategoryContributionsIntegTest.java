@@ -18,13 +18,12 @@
  */
 package todoapp.integtests.tests;
 
-import todoapp.dom.app.relativepriority.RelativePriorityContributions;
 import todoapp.dom.module.categories.Category;
 import todoapp.dom.module.categories.Subcategory;
 import todoapp.dom.module.categories.UpdateCategoryContributions;
 import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.dom.module.todoitem.ToDoItems;
-import todoapp.fixture.scenarios.ToDoItemsRecreateAndCompleteSeveral;
+import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
 import javax.inject.Inject;
 import org.junit.Before;
@@ -39,11 +38,11 @@ import static org.junit.Assert.assertThat;
 
 public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoIntegTest {
 
-    ToDoItemsRecreateAndCompleteSeveral fixtureScript;
+    RecreateToDoItemsForCurrentUser fixtureScript;
 
     @Before
     public void setUpData() throws Exception {
-        fixtureScript = new ToDoItemsRecreateAndCompleteSeveral();
+        fixtureScript = new RecreateToDoItemsForCurrentUser();
         fixtureScripts.runFixtureScript(fixtureScript, null);
     }
 

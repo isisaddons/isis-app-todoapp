@@ -259,7 +259,9 @@ public class DemoDomainEventSubscriptions {
             case EXECUTING:
                 break;
             case EXECUTED:
-                LOG.info("Received ActionDomainEvent, " + ev.getSource().toString() + ", invoked " + ev.getIdentifier().getMemberName());
+                final Object source = ev.getSource();
+                //container.is
+                //LOG.info("Received ActionDomainEvent, " + source.toString() + ", invoked " + ev.getIdentifier().getMemberName());
                 onExecutedThrowExceptionIfSet(ev);
                 break;
         }

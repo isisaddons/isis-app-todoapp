@@ -18,18 +18,18 @@
  */
 package todoapp.fixture;
 
-import todoapp.fixture.scenarios.ToDoItemsRecreateAndCompleteSeveral;
+import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
 import java.util.List;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
-import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
+import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.fixturescripts.FixtureResult;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
@@ -45,7 +45,9 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 public class ToDoAppFixturesService extends FixtureScripts {
 
     public ToDoAppFixturesService() {
-        super(ToDoAppFixturesService.class.getPackage().getName());
+        super(
+                ToDoAppFixturesService.class.getPackage().getName(),
+                MultipleExecutionStrategy.EXECUTE);
     }
 
     @Action(
@@ -68,7 +70,7 @@ public class ToDoAppFixturesService extends FixtureScripts {
 
     @Override
     public FixtureScript default0RunFixtureScript() {
-        return findFixtureScriptFor(ToDoItemsRecreateAndCompleteSeveral.class);
+        return findFixtureScriptFor(RecreateToDoItemsForCurrentUser.class);
     }
 
     /**
@@ -91,7 +93,7 @@ public class ToDoAppFixturesService extends FixtureScripts {
     )
     @MemberOrder(sequence="20")
     public Object recreateToDoItemsReturnFirst() {
-        final List<FixtureResult> run = findFixtureScriptFor(ToDoItemsRecreateAndCompleteSeveral.class).run(null);
-        return run.get(0).getObject();
+        final List<FixtureResult> results = findFixtureScriptFor(RecreateToDoItemsForCurrentUser.class).run(null);
+        return results.get(0).getObject();
     }
 }

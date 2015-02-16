@@ -18,18 +18,13 @@
  */
 package todoapp.fixture.scenarios;
 
-import todoapp.fixture.scenarios.sub.RecreateBobUserAndRolesAndToDoItems;
-import todoapp.fixture.scenarios.sub.RecreateDickUserAndRolesAndToDoItems;
-import todoapp.fixture.scenarios.sub.RecreateJoeUserAndRolesAndToDoItems;
-import todoapp.fixture.scenarios.sub.RecreateSvenUserAndRolesAndToDoItems;
-
 import javax.inject.Inject;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
-public class RecreateDemoUsersAndRolesAndToDoItems extends FixtureScript {
+public class RecreateAllUsersAndRolesAndToDoItems extends FixtureScript {
 
-    public RecreateDemoUsersAndRolesAndToDoItems() {
+    public RecreateAllUsersAndRolesAndToDoItems() {
         withDiscoverability(Discoverability.DISCOVERABLE);
     }
 

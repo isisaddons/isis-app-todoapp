@@ -19,7 +19,7 @@
 
 package todoapp.integtests.fixture;
 
-import todoapp.fixture.scenarios.ToDoItemsRecreateAndCompleteSeveral;
+import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
@@ -31,7 +31,7 @@ public class ToDoItemsIntegTestFixture extends FixtureScript {
 
     @Override
     protected void execute(ExecutionContext executionContext) {
-        executionContext.executeChild(this, new ToDoItemsRecreateAndCompleteSeveral());
+        executionContext.executeChild(this, new RecreateToDoItemsForCurrentUser());
     }
 
 }

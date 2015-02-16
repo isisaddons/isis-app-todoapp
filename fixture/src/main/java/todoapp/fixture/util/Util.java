@@ -22,11 +22,10 @@ public final class Util {
     
     private Util(){}
 
-    public static String coalesce(final String... strings) {
-        for (String str : strings) {
-            if(str != null) { return str; }
+    public static <T> T coalesce(final T... values) {
+        for (T t : values) {
+            if(t != null) { return t; }
         }
         return null;
     }
-
 }

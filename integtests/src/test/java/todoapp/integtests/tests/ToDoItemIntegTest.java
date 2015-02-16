@@ -22,7 +22,7 @@ import todoapp.dom.app.demoeventsubscriber.DemoBehaviour;
 import todoapp.dom.app.demoeventsubscriber.DemoDomainEventSubscriptions;
 import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.dom.module.todoitem.ToDoItems;
-import todoapp.fixture.scenarios.ToDoItemsRecreateAndCompleteSeveral;
+import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
@@ -62,11 +62,11 @@ import static org.junit.Assert.assertThat;
 
 public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
-    ToDoItemsRecreateAndCompleteSeveral fixtureScript;
+    RecreateToDoItemsForCurrentUser fixtureScript;
 
     @Before
     public void setUpData() throws Exception {
-        fixtureScript = new ToDoItemsRecreateAndCompleteSeveral();
+        fixtureScript = new RecreateToDoItemsForCurrentUser();
         fixtureScripts.runFixtureScript(fixtureScript, null);
     }
 

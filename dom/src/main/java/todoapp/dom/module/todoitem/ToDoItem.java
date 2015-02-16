@@ -21,7 +21,6 @@ package todoapp.dom.module.todoitem;
 import todoapp.dom.module.categories.Categorized;
 import todoapp.dom.module.categories.Category;
 import todoapp.dom.module.categories.Subcategory;
-import todoapp.dom.module.export.ToDoItemsExportService;
 
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
@@ -862,7 +861,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     public static class Predicates {
         
-        public static Predicate<ToDoItem> thoseOwnedBy(final String currentUser) {
+        public static Predicate<ToDoItem> thoseWithAtPath(final String currentUser) {
             return new Predicate<ToDoItem>() {
                 @Override
                 public boolean apply(final ToDoItem toDoItem) {

@@ -24,8 +24,10 @@ import todoapp.dom.module.categories.Subcategory;
 import java.math.BigDecimal;
 import java.util.List;
 import com.google.common.base.Predicates;
+import org.isisaddons.module.security.app.user.MeService;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
+import org.isisaddons.module.security.dom.user.ApplicationUser;
 import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 import org.joda.time.LocalDate;
 import org.apache.isis.applib.DomainObjectContainer;
@@ -71,8 +73,9 @@ public class ToDoItems {
         return container.allMatches(
                 new QueryDefault<>(ToDoItem.class,
                         "findByAtPathAndCompleteIsFalse",
-                        "atPath", GlobalTenancy.TENANCY_PATH + currentUserName()));
+                        "atPath", currentUsersAtPath()));
     }
+
     //endregion
 
     //region > complete (action)
@@ -94,7 +97,7 @@ public class ToDoItems {
         return container.allMatches(
             new QueryDefault<>(ToDoItem.class,
                     "findByAtPathAndCompleteIsTrue",
-                    "atPath", GlobalTenancy.TENANCY_PATH + currentUserName()));
+                    "atPath", currentUsersAtPath()));
     }
     //endregion
 
@@ -113,7 +116,7 @@ public class ToDoItems {
             // an example "naive" implementation (filtered in Java code, not DBMS)
         return container.allMatches(ToDoItem.class, 
                 Predicates.and(
-                    ToDoItem.Predicates.thoseOwnedBy(currentUserName()), 
+                    ToDoItem.Predicates.thoseWithAtPath(currentUsersAtPath()),
                     ToDoItem.Predicates.thoseCompleted(completed),
                     ToDoItem.Predicates.thoseCategorised(category, subcategory)));
     }
@@ -192,7 +195,7 @@ public class ToDoItems {
         final List<ToDoItem> items = container.allMatches(
                 new QueryDefault<>(ToDoItem.class,
                         "findByAtPath",
-                        "atPath", GlobalTenancy.TENANCY_PATH + currentUserName()));
+                        "atPath", currentUsersAtPath()));
         if(items.isEmpty()) {
             container.warnUser("No to-do items found.");
         }
@@ -211,7 +214,7 @@ public class ToDoItems {
         return container.allMatches(
                 new QueryDefault<>(ToDoItem.class,
                         "findByAtPathAndDescriptionContains",
-                        "atPath", GlobalTenancy.TENANCY_PATH + currentUserName(),
+                        "atPath", currentUsersAtPath(),
                         "description", description));
     }
     //endregion
@@ -246,7 +249,15 @@ public class ToDoItems {
 
         return toDoItem;
     }
-    
+
+    protected String currentUsersAtPath() {
+        final ApplicationUser me = meService.me();
+        final ApplicationTenancy tenancy = me.getTenancy();
+        if(tenancy == null) {
+            throw new IllegalStateException("No application tenancy defined");
+        }
+        return tenancy.getPath();
+    }
     private String currentUserName() {
         return container.getUser().getName();
     }
@@ -273,6 +284,9 @@ public class ToDoItems {
 
     @javax.inject.Inject
     private ApplicationTenancies applicationTenancies;
+
+    @javax.inject.Inject
+    private MeService meService;
 
     @javax.inject.Inject
     private ClockService clockService;

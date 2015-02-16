@@ -22,7 +22,7 @@ import todoapp.dom.app.relativepriority.RelativePriorityContributions;
 import todoapp.dom.module.categories.UpdateCategoryContributions;
 import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.dom.module.todoitem.ToDoItems;
-import todoapp.fixture.scenarios.ToDoItemsRecreateAndCompleteSeveral;
+import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
 import java.util.List;
 import javax.inject.Inject;
@@ -37,11 +37,11 @@ import static org.junit.Assert.assertThat;
 
 public abstract class RelativePriorityContributionsIntegTest extends AbstractToDoIntegTest {
 
-    ToDoItemsRecreateAndCompleteSeveral fixtureScript;
+    RecreateToDoItemsForCurrentUser fixtureScript;
 
     @Before
     public void setUpData() throws Exception {
-        fixtureScript = new ToDoItemsRecreateAndCompleteSeveral();
+        fixtureScript = new RecreateToDoItemsForCurrentUser();
         fixtureScripts.runFixtureScript(fixtureScript, null);
     }
 
