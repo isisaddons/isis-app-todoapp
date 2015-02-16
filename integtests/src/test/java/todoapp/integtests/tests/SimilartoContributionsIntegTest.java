@@ -58,7 +58,7 @@ public abstract class SimilartoContributionsIntegTest extends AbstractToDoIntegT
     @Before
     public void setUp() throws Exception {
 
-        toDoItem = wrap(fixtureScript.lookup("to-do-items-recreate-and-complete-several/to-do-item-complete-for-buy-stamps/item-1", ToDoItem.class));
+        toDoItem = wrap(fixtureScript.getToDoItems().get(0));
         assertThat(toDoItem, is(not(nullValue())));
 
         similarToContributionsWrapped = wrap(similarToContributions);

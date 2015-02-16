@@ -30,12 +30,6 @@ import java.util.EventObject;
 import java.util.List;
 import javax.activation.MimeType;
 import javax.inject.Inject;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
-import org.jmock.Expectations;
-import org.jmock.Sequence;
-import org.jmock.auto.Mock;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
@@ -45,10 +39,8 @@ import org.apache.isis.applib.RecoverableException;
 import org.apache.isis.applib.clock.Clock;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.clock.ClockService;
-import org.apache.isis.applib.services.eventbus.AbstractDomainEvent;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.CollectionDomainEvent;
-import org.apache.isis.applib.services.eventbus.EventBusService;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.value.Blob;
 
@@ -90,20 +82,16 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
     public static class Title extends ToDoItemIntegTest {
 
-        private LocalDate dueBy;
 
         @Before
         public void setUp() throws Exception {
             super.setUp();
-            final List<ToDoItem> all = wrap(toDoItems).notYetComplete();
-            toDoItem = wrap(all.get(0));
 
-            toDoItem = wrap(fixtureScript.lookup("to-do-items-recreate-and-complete-several/to-do-item-for-buy-bread/item-1", ToDoItem.class));
+            toDoItem = wrap(fixtureScript.getNotYetComplete().get(0));
             assertThat(toDoItem, is(not(nullValue())));
 
             nextTransaction();
 
-            dueBy = toDoItem.getDueBy();
         }
 
 
@@ -111,19 +99,21 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
         public void includesDescription() throws Exception {
 
             // given
-            assertThat(container().titleOf(toDoItem), containsString("Buy bread due by"));
+            final String description = toDoItem.getDescription();
+            assertThat(container().titleOf(toDoItem), containsString(description));
 
             // when
-            unwrap(toDoItem).setDescription("Buy bread and butter");
+            unwrap(toDoItem).setDescription("Foobar");
 
             // then
-            assertThat(container().titleOf(toDoItem), containsString("Buy bread and butter due by"));
+            assertThat(container().titleOf(toDoItem), containsString("Foobar"));
         }
 
         @Test
         public void includesDueDateIfAny() throws Exception {
 
             // given
+            LocalDate dueBy = toDoItem.getDueBy();
             assertThat(container().titleOf(toDoItem), containsString("due by " + dueBy.toString("yyyy-MM-dd")));
 
             // when
@@ -157,7 +147,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
             // then
             assertThat(container().titleOf(toDoItem), not(containsString("due by")));
-            assertThat(container().titleOf(toDoItem), containsString("Buy bread - Completed!"));
+            assertThat(container().titleOf(toDoItem), containsString("Completed!"));
         }
     }
 
@@ -273,82 +263,6 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // when
                 toDoItem.completed();
-            }
-
-        }
-
-        /**
-         * This test demonstrates how a single service can be replaced, eg to use a mock.
-         */
-        public static class Completed_withMockService extends ToDoItemIntegTest {
-
-            private EventBusService originalEventBusService;
-            @Mock
-            private EventBusService mockEventBusService;
-
-            @Before
-            public void setUpMockEventBusService() throws Exception {
-                originalEventBusService = scenarioExecution().service(EventBusService.class);
-
-                context.checking(new Expectations() {{
-                    ignoring(mockEventBusService).register(with(any(Object.class)));
-                    ignoring(mockEventBusService).unregister(with(any(Object.class)));
-                }});
-
-                scenarioExecution().replaceService(originalEventBusService, mockEventBusService);
-                scenarioExecution().closeSession();
-                scenarioExecution().openSession();
-
-                final List<ToDoItem> all = toDoItems.notYetComplete();
-                toDoItem = wrap(all.get(0));
-            }
-
-
-            @After
-            public void reinstateOriginalEventBusService() throws Exception {
-                scenarioExecution().replaceService(mockEventBusService, originalEventBusService);
-            }
-
-            @Test
-            public void raisesEvent() throws Exception {
-
-                final Sequence busRulesThenExec = context.sequence("busRulesThenExec");
-                // then
-                context.checking(new Expectations() {{
-                    oneOf(mockEventBusService).post(with(completedEvent(AbstractDomainEvent.Phase.HIDE)));
-                    inSequence(busRulesThenExec);
-                    oneOf(mockEventBusService).post(with(completedEvent(AbstractDomainEvent.Phase.DISABLE)));
-                    inSequence(busRulesThenExec);
-                    oneOf(mockEventBusService).post(with(completedEvent(AbstractDomainEvent.Phase.VALIDATE)));
-                    inSequence(busRulesThenExec);
-                    oneOf(mockEventBusService).post(with(completedEvent(AbstractDomainEvent.Phase.EXECUTING)));
-                    inSequence(busRulesThenExec);
-                    oneOf(mockEventBusService).post(with(completedEvent(AbstractDomainEvent.Phase.EXECUTED)));
-                    inSequence(busRulesThenExec);
-                }});
-
-                // when
-                toDoItem.completed();
-            }
-
-            private Matcher<Object> completedEvent(final AbstractDomainEvent.Phase phase) {
-                return new TypeSafeMatcher<Object>() {
-                    @Override
-                    protected boolean matchesSafely(Object item) {
-                        if (!(item instanceof ToDoItem.CompletedEvent)) {
-                            return false;
-                        }
-
-                        final ToDoItem.CompletedEvent completedEvent = (ToDoItem.CompletedEvent) item;
-                        return completedEvent.getEventPhase() == phase;
-
-                    }
-
-                    @Override
-                    public void describeTo(Description description) {
-                        description.appendText(" instance of a ToDoItem.CompletedEvent, " + phase);
-                    }
-                };
             }
         }
 
@@ -753,7 +667,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void canBeNull() throws Exception {
 
                 // when
-                toDoItem.updateCost((BigDecimal)null);
+                toDoItem.updateCost(null);
 
                 // then
                 assertThat(toDoItem.getCost(), is((BigDecimal)null));
@@ -774,13 +688,13 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void happyCase() throws Exception {
 
                 // given
-                assertThat(toDoItem.getDescription(), is("Buy bread"));
+                final String description = toDoItem.getDescription();
 
                 // when
-                toDoItem.setDescription("Buy bread and butter");
+                toDoItem.setDescription(description + " foobar");
 
                 // then
-                assertThat(toDoItem.getDescription(), is("Buy bread and butter"));
+                assertThat(toDoItem.getDescription(), is(description + " foobar"));
             }
 
 
@@ -806,13 +720,13 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 expectedExceptions.expectMessage("Cannot invoke supporting method for 'Description'; use only property accessor/mutator");
 
                 // given
-                assertThat(toDoItem.getDescription(), is("Buy bread"));
+                final String description = toDoItem.getDescription();
 
                 // when
-                toDoItem.modifyDescription("Buy bread and butter");
+                toDoItem.modifyDescription(description + " foobar!");
 
                 // then
-                assertThat(toDoItem.getDescription(), is("Buy bread"));
+                assertThat(toDoItem.getDescription(), is(description));
             }
 
             @Test
@@ -821,13 +735,13 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 expectedExceptions.expectMessage("Cannot invoke supporting method for 'Description'; use only property accessor/mutator");
 
                 // given
-                assertThat(toDoItem.getDescription(), is("Buy bread"));
+                final String description = toDoItem.getDescription();
 
                 // when
                 toDoItem.clearDescription();
 
                 // then
-                assertThat(toDoItem.getDescription(), is("Buy bread"));
+                assertThat(toDoItem.getDescription(), is(description));
             }
 
 
@@ -854,10 +768,10 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // given
                 assertThat(toDoItemSubscriptions.getSubscriberBehaviour(), is(DemoBehaviour.AnyExecuteAccept));
-                assertThat(toDoItem.getDescription(), is("Buy bread"));
+                final String description = toDoItem.getDescription();
 
                 // when
-                toDoItem.setDescription("Buy bread and butter");
+                toDoItem.setDescription(description + " foobar");
 
                 // then published and received
                 @SuppressWarnings("unchecked")
@@ -867,8 +781,8 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 ToDoItem source = ev.getSource();
                 assertThat(source, is(equalTo(unwrap(toDoItem))));
                 assertThat(ev.getIdentifier().getMemberName(), is("description"));
-                assertThat(ev.getOldValue(), is("Buy bread"));
-                assertThat(ev.getNewValue(), is("Buy bread and butter"));
+                assertThat(ev.getOldValue(), is(description));
+                assertThat(ev.getNewValue(), is(description + " foobar"));
             }
 
             @Test
@@ -1027,7 +941,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void cannotModify() throws Exception {
 
                 // when, then
-                expectedExceptions.expectMessage("Reason: Hidden on Everywhere. Identifier: todoapp.dom.module.todoitem.ToDoItem#ownedBy()");
+                expectedExceptions.expectMessage("Reason: Hidden. Identifier: todoapp.dom.module.todoitem.ToDoItem#atPath()");
                 toDoItem.setAtPath("other");
             }
 

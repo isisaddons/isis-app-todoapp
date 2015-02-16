@@ -19,6 +19,7 @@ package todoapp.integtests;
 import org.apache.isis.core.commons.config.IsisConfiguration;
 import org.apache.isis.core.integtestsupport.IsisSystemForTest;
 import org.apache.isis.core.runtime.persistence.PersistenceConstants;
+import org.apache.isis.core.security.authentication.AuthenticationRequestNameOnly;
 import org.apache.isis.objectstore.jdo.datanucleus.DataNucleusPersistenceMechanismInstaller;
 import org.apache.isis.objectstore.jdo.datanucleus.IsisConfigurationForJdoIntegTests;
 
@@ -45,6 +46,8 @@ public class ToDoAppSystemInitializer {
             withLoggingAt(org.apache.log4j.Level.INFO);
             with(testConfiguration());
             with(new DataNucleusPersistenceMechanismInstaller());
+
+            with(new AuthenticationRequestNameOnly("todoapp-admin"));
 
             // services annotated with @DomainService
             withServicesIn(  "todoapp"

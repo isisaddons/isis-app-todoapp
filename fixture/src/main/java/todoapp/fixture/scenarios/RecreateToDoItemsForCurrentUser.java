@@ -33,6 +33,7 @@ import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
 public class RecreateToDoItemsForCurrentUser extends FixtureScript {
 
+
     public RecreateToDoItemsForCurrentUser() {
         withDiscoverability(Discoverability.DISCOVERABLE);
     }
@@ -100,6 +101,44 @@ public class RecreateToDoItemsForCurrentUser extends FixtureScript {
     //endregion
 
 
+    //region > toDoItems (output)
+    private List<ToDoItem> toDoItems;
+
+    /**
+     * The items that were created (output).
+     */
+    public List<ToDoItem> getToDoItems() {
+        return toDoItems;
+    }
+
+    private void setToDoItems(final List<ToDoItem> toDoItems) {
+        this.toDoItems = toDoItems;
+    }
+    //endregion
+
+    //region > notYetComplete (output)
+    private List<ToDoItem> notYetComplete;
+
+    /**
+     * The items that were created and were not marked as completed (output).
+     */
+    public List<ToDoItem> getNotYetComplete() {
+        return notYetComplete;
+    }
+    //endregion
+
+
+    //region > complete (output)
+    private List<ToDoItem> complete;
+
+    /**
+     * The items that were created and were marked as completed (output).
+     */
+    public List<ToDoItem> getComplete() {
+        return complete;
+    }
+    //endregion
+
     @Override
     protected void execute(final ExecutionContext ec) {
 
@@ -137,7 +176,7 @@ public class RecreateToDoItemsForCurrentUser extends FixtureScript {
         //
         // create items
         //
-        List<ToDoItem> newToDoItems = Lists.newArrayList();
+        toDoItems = Lists.newArrayList();
         for (int i = 0; i < numberToCreate; i++) {
             final int index = i;
             final ToDoItemCreate script = new ToDoItemCreate() {{
@@ -145,16 +184,22 @@ public class RecreateToDoItemsForCurrentUser extends FixtureScript {
                 setIndex(index);
             }};
             ec.executeChild(this, script);
-            newToDoItems.add(script.getToDoItem());
+            toDoItems.add(script.getToDoItem());
         }
+
+        notYetComplete = Lists.newArrayList(toDoItems);
+        complete = Lists.newArrayList();
 
         //
         // complete some
         //
-        Collections.shuffle(newToDoItems);
+        Collections.shuffle(notYetComplete);
         for (int i = 0; i < numberToComplete; i++) {
-            final ToDoItem toDoItem = newToDoItems.get(i);
+            final ToDoItem toDoItem = notYetComplete.get(i);
             toDoItem.setComplete(true);
+
+            notYetComplete.remove(toDoItem);
+            complete.add(toDoItem);
         }
     }
 
