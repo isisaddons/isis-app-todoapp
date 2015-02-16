@@ -3,6 +3,7 @@ package todoapp.webapp;
 import de.agilecoders.wicket.core.settings.ActiveThemeProvider;
 import de.agilecoders.wicket.core.settings.IBootstrapSettings;
 import de.agilecoders.wicket.core.settings.ITheme;
+import de.agilecoders.wicket.core.settings.SessionThemeProvider;
 import de.agilecoders.wicket.core.settings.ThemeProvider;
 
 import java.util.concurrent.Callable;
@@ -28,16 +29,19 @@ public class UserSettingsThemeProvider implements ActiveThemeProvider {
 
     @Override
     public ITheme getActiveTheme() {
-        final String themeName = IsisContext.doInSession(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                final Class<UserSettingsService> serviceClass = UserSettingsService.class;
-                final UserSettingsService userSettingsService = lookupService(serviceClass);
-                final UserSetting activeTheme = userSettingsService.find(IsisContext.getAuthenticationSession().getUserName(), ACTIVE_THEME);
-                return activeTheme != null ? activeTheme.valueAsString() : null;
-            }
-        });
-        return themeFor(themeName);
+        if(IsisContext.getSpecificationLoader().isInitialized()) {
+            final String themeName = IsisContext.doInSession(new Callable<String>() {
+                @Override
+                public String call() throws Exception {
+                    final Class<UserSettingsService> serviceClass = UserSettingsService.class;
+                    final UserSettingsService userSettingsService = lookupService(serviceClass);
+                    final UserSetting activeTheme = userSettingsService.find(IsisContext.getAuthenticationSession().getUserName(), ACTIVE_THEME);
+                    return activeTheme != null ? activeTheme.valueAsString() : null;
+                }
+            });
+            return themeFor(themeName);
+        }
+        return new SessionThemeProvider().getActiveTheme();
     }
 
     @Override

@@ -16,6 +16,8 @@
  */
 package todoapp.dom.module.appuser;
 
+import todoapp.dom.seed.tenancies.UsersTenancy;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import com.google.common.eventbus.Subscribe;
@@ -23,7 +25,6 @@ import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
 import org.isisaddons.module.security.dom.user.ApplicationUsers;
-import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 import org.apache.isis.applib.AbstractService;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
@@ -79,10 +80,10 @@ public class ApplicationUserAndTenancySubscriptions extends AbstractService {
 
     protected void createTenancyIfRequired(final ApplicationUser newUser) {
         final String username = newUser.getName();
-        final String atPath = GlobalTenancy.TENANCY_PATH + username;  // eg "/fred"
+        final String atPath = UsersTenancy.TENANCY_PATH + username;  // eg "/users/fred"
         ApplicationTenancy applicationTenancy = applicationTenancies.findTenancyByName(atPath);
         if(applicationTenancy == null) {
-            final ApplicationTenancy globalTenancy = applicationTenancies.findTenancyByPath(GlobalTenancy.TENANCY_PATH);
+            final ApplicationTenancy globalTenancy = applicationTenancies.findTenancyByPath(UsersTenancy.TENANCY_PATH);
             applicationTenancy = applicationTenancies.newTenancy(username, atPath, globalTenancy);
         }
         newUser.setTenancy(applicationTenancy);
@@ -103,7 +104,7 @@ public class ApplicationUserAndTenancySubscriptions extends AbstractService {
 
     protected void deleteTenancyIfRequired(final ApplicationUser newUser) {
         final String username = newUser.getName();
-        final String atPath = GlobalTenancy.TENANCY_PATH + username;
+        final String atPath = UsersTenancy.TENANCY_PATH + username;
         final ApplicationTenancy applicationTenancy = applicationTenancies.findTenancyByPath(atPath);
         if(applicationTenancy != null) {
             applicationTenancy.delete(true);

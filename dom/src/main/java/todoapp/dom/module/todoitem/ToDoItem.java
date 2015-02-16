@@ -21,6 +21,7 @@ package todoapp.dom.module.todoitem;
 import todoapp.dom.module.categories.Categorized;
 import todoapp.dom.module.categories.Category;
 import todoapp.dom.module.categories.Subcategory;
+import todoapp.dom.seed.tenancies.UsersTenancy;
 
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
@@ -36,10 +37,10 @@ import javax.jdo.annotations.VersionStrategy;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Ordering;
+import org.isisaddons.module.security.app.user.MeService;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
 import org.isisaddons.module.security.dom.tenancy.WithApplicationTenancy;
-import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 import org.isisaddons.wicket.gmap3.cpt.applib.Locatable;
@@ -97,31 +98,31 @@ import org.apache.isis.applib.value.Clob;
             name = "findByAtPath", language = "JDOQL",
             value = "SELECT "
                     + "FROM todoapp.dom.module.todoitem.ToDoItem "
-                    + "WHERE atPath == :atPath"),
+                    + "WHERE atPath.indexOf(:atPath) == 0 "),
     @javax.jdo.annotations.Query(
             name = "findByAtPathAndCompleteIsFalse", language = "JDOQL",
             value = "SELECT "
                     + "FROM todoapp.dom.module.todoitem.ToDoItem "
-                    + "WHERE atPath == :atPath "
+                    + "WHERE atPath.indexOf(:atPath) == 0 "
                     + "   && complete == false"),
     @javax.jdo.annotations.Query(
             name = "findByAtPathAndCompleteIsTrue", language = "JDOQL",
             value = "SELECT "
                     + "FROM todoapp.dom.module.todoitem.ToDoItem "
-                    + "WHERE atPath == :atPath "
-                    + "&& complete == true"),
+                    + "WHERE atPath.indexOf(:atPath) == 0 "
+                    + "   && complete == true"),
     @javax.jdo.annotations.Query(
             name = "findByAtPathAndCategory", language = "JDOQL",
             value = "SELECT "
                     + "FROM todoapp.dom.module.todoitem.ToDoItem "
-                    + "WHERE atPath == :atPath "
-                    + "&& category == :category"),
+                    + "WHERE atPath.indexOf(:atPath) == 0 "
+                    + "   && category == :category"),
     @javax.jdo.annotations.Query(
             name = "findByAtPathAndDescriptionContains", language = "JDOQL",
             value = "SELECT "
                     + "FROM todoapp.dom.module.todoitem.ToDoItem "
-                    + "WHERE atPath == :atPath && "
-                    + "description.indexOf(:description) >= 0")
+                    + "WHERE atPath.indexOf(:atPath) == 0 "
+                    + "   && description.indexOf(:description) >= 0")
 })
 @DomainObject(
         autoCompleteRepository = ToDoItems.class, // for drop-downs, unless autoCompleteNXxx() is present
@@ -284,8 +285,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     @javax.jdo.annotations.Column(allowsNull="false")
     @Property(
-            // TODO: reinstate
-            // hidden = Where.EVERYWHERE
+            editing = Editing.DISABLED
     )
     public String getAtPath() {
         return atPath;
@@ -295,10 +295,15 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
         this.atPath = atPath;
     }
 
+    public boolean hideAtPath() {
+        final ApplicationTenancy userTenancy = meService.me().getTenancy();
+        final ApplicationTenancy objectTenancy = getApplicationTenancy();
+        return Objects.equal(userTenancy, objectTenancy);
+    }
 
     @Programmatic
     public ApplicationTenancy getApplicationTenancy() {
-        return applicationTenancies.findTenancyByName(getAtPath());
+        return applicationTenancies.findTenancyByPath(getAtPath());
     }
 
     //endregion
@@ -784,10 +789,9 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
      * Prevent user from modifying any other user's data.
      */
     public String disabled(final Identifier.Type identifierType){
-        final UserMemento currentUser = container.getUser();
-        final String currentUserName = currentUser.getName();
-        if(Objects.equal(getAtPath(), GlobalTenancy.TENANCY_PATH + currentUserName)) { return null; }
-        return "This object is owned by '" + getAtPath() + "' and cannot be modified by you";
+        // previously we manually checked that the user couldn't modify an object owned by some other user.
+        // however, with application tenancy support this is automatically taken care of by Isis.
+        return null;
     }
 
     /**
@@ -865,7 +869,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
             return new Predicate<ToDoItem>() {
                 @Override
                 public boolean apply(final ToDoItem toDoItem) {
-                    return Objects.equal(toDoItem.getAtPath(), GlobalTenancy.TENANCY_PATH + currentUser);
+                    return Objects.equal(toDoItem.getAtPath(), UsersTenancy.TENANCY_PATH + currentUser);
                 }
             };
         }
@@ -964,6 +968,9 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     @javax.inject.Inject
     private ApplicationTenancies applicationTenancies;
+
+    @javax.inject.Inject
+    private MeService meService;
     //endregion
 
 }

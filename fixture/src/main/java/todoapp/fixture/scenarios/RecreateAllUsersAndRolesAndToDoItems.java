@@ -30,6 +30,11 @@ public class RecreateAllUsersAndRolesAndToDoItems extends FixtureScript {
 
     @Override
     protected void execute(final ExecutionContext executionContext) {
+
+        // for the current user (eg if logged in as todoapp-admin)
+        executionContext.executeChild(this, new RecreateToDoItemsForCurrentUser());
+
+        // for other pre-canned users
         executionContext.executeChild(this, new RecreateBobUserAndRolesAndToDoItems());
         executionContext.executeChild(this, new RecreateDickUserAndRolesAndToDoItems());
         executionContext.executeChild(this, new RecreateJoeUserAndRolesAndToDoItems());

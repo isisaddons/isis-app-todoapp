@@ -16,10 +16,8 @@
  */
 package todoapp.dom.seed.roles;
 
-import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
-import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
-import org.apache.isis.core.metamodel.services.i18n.TranslationServicePoMenu;
+//import org.apache.isis.core.metamodel.services.i18n.TranslationServicePoMenu;
 
 public class TranslationServicePoMenuRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
@@ -31,10 +29,10 @@ public class TranslationServicePoMenuRoleAndPermissions extends AbstractRoleAndP
 
     @Override
     protected void execute(final ExecutionContext executionContext) {
-        newPackagePermissions(
-                ApplicationPermissionRule.ALLOW,
-                ApplicationPermissionMode.CHANGING,
-                TranslationServicePoMenu.class.getPackage().getName());
+//        newPackagePermissions(
+//                ApplicationPermissionRule.ALLOW,
+//                ApplicationPermissionMode.CHANGING,
+//                TranslationServicePoMenu.class.getPackage().getName());
     }
 
 }

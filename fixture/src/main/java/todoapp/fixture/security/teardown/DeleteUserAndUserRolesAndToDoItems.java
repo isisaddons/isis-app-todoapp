@@ -18,12 +18,12 @@
  */
 package todoapp.fixture.security.teardown;
 
+import todoapp.dom.seed.tenancies.UsersTenancy;
 import todoapp.fixture.util.Util;
 
 import javax.inject.Inject;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
 import org.isisaddons.module.security.dom.user.ApplicationUsers;
-import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
@@ -60,7 +60,7 @@ public class DeleteUserAndUserRolesAndToDoItems extends FixtureScript {
             return;
         }
 
-        final String atPath = GlobalTenancy.TENANCY_PATH + username;
+        final String atPath = UsersTenancy.TENANCY_PATH + username;
 
         // execute
         isisJdoSupport.executeUpdate(
@@ -70,7 +70,7 @@ public class DeleteUserAndUserRolesAndToDoItems extends FixtureScript {
         isisJdoSupport.executeUpdate(
                 "DELETE FROM \"IsisSecurityApplicationUser\" WHERE \"username\" = '" + username + "'");
         isisJdoSupport.executeUpdate(
-                "DELETE FROM \"IsisSecurityApplicationTenancy\" WHERE \"path\" = '" + GlobalTenancy.TENANCY_PATH + username + "'");
+                "DELETE FROM \"IsisSecurityApplicationTenancy\" WHERE \"path\" = '" + UsersTenancy.TENANCY_PATH + username + "'");
     }
 
     @Inject

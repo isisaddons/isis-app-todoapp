@@ -23,22 +23,24 @@ import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppDomainAdminRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
-import todoapp.dom.seed.roles.TranslationServicePoMenuRoleAndPermissions;
+import todoapp.dom.seed.tenancies.ToDoAppAdminUserTenancy;
+import todoapp.dom.seed.tenancies.UsersTenancy;
 
 import java.util.Arrays;
 import org.isisaddons.module.security.dom.user.AccountType;
 import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureScript;
-import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
 
 public class ToDoAppAdminUser extends AbstractUserAndRolesFixtureScript {
 
     public static final String USER_NAME = "todoapp-admin";
-    public static final String PASSWORD = "pass";
+    public static final String TENANCY_PATH = UsersTenancy.TENANCY_PATH + USER_NAME;
+
+    private static final String PASSWORD = "pass";
 
     public ToDoAppAdminUser() {
         super(USER_NAME, PASSWORD, null,
-                GlobalTenancy.TENANCY_PATH, AccountType.LOCAL,
+                ToDoAppAdminUserTenancy.TENANCY_PATH, AccountType.LOCAL,
                 Arrays.asList(IsisModuleSecurityAdminRoleAndPermissions.ROLE_NAME,
                               AuditModuleRoleAndPermissions.ROLE_NAME,
                               CommandModuleRoleAndPermissions.ROLE_NAME,
@@ -46,8 +48,8 @@ public class ToDoAppAdminUser extends AbstractUserAndRolesFixtureScript {
                               SettingsModuleRoleAndPermissions.ROLE_NAME,
                               PublishingModuleRoleAndPermissions.ROLE_NAME,
                               ToDoAppDomainAdminRoleAndPermissions.ROLE_NAME,
-                              ToDoAppFixtureServiceRoleAndPermissions.ROLE_NAME,
-                              TranslationServicePoMenuRoleAndPermissions.ROLE_NAME
+                              ToDoAppFixtureServiceRoleAndPermissions.ROLE_NAME
+//                              TranslationServicePoMenuRoleAndPermissions.ROLE_NAME
                         ));
     }
 

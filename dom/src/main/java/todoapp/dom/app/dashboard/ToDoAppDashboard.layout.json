@@ -24,6 +24,11 @@
                             "actionLayout": {
                                 "named": "Export to Word"
                             }
+                        },
+                        "exportAsXml": {
+                            "actionLayout": {
+                                "cssClassFa": "fa fa-file-o"
+                            }
                         }
                     }
                 },

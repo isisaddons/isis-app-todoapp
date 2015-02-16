@@ -25,7 +25,9 @@ import java.util.List;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
+import org.isisaddons.module.security.app.user.MeService;
+import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
+import org.isisaddons.module.security.dom.user.ApplicationUser;
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -48,7 +50,7 @@ public class SimilarToContributions extends AbstractFactoryAndRepository {
         final List<ToDoItem> similarToDoItems = allMatches(
                 new QueryDefault<>(ToDoItem.class,
                         "findByAtPathAndCategory",
-                        "atPath", GlobalTenancy.TENANCY_PATH + currentUserName(),
+                        "atPath", currentUsersAtPath(),
                         "category", toDoItem.getCategory()));
         return Lists.newArrayList(Iterables.filter(similarToDoItems, excluding(toDoItem)));
     }
@@ -65,14 +67,23 @@ public class SimilarToContributions extends AbstractFactoryAndRepository {
     //endregion
 
     //region > helpers
-    protected String currentUserName() {
-        return getContainer().getUser().getName();
+    protected String currentUsersAtPath() {
+        final ApplicationUser me = meService.me();
+        final ApplicationTenancy tenancy = me.getTenancy();
+        if(tenancy == null) {
+            throw new IllegalStateException("No application tenancy defined");
+        }
+        return tenancy.getPath();
     }
     //endregion
 
     //region > injected services
+
     @javax.inject.Inject
     private ToDoItems toDoItems;
+
+    @javax.inject.Inject
+    private MeService meService;
 
     @javax.inject.Inject
     private QueryResultsCache queryResultsCache;

@@ -28,7 +28,7 @@ import org.isisaddons.module.security.app.user.MeService;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
-import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
+import org.isisaddons.module.security.dom.user.ApplicationUsers;
 import org.joda.time.LocalDate;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Action;
@@ -41,7 +41,6 @@ import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Programmatic;
-import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.clock.ClockService;
@@ -182,32 +181,6 @@ public class ToDoItems {
     }
     //endregion
 
-    //region > allToDos (action)
-    @ActionLayout(
-        cssClassFa = "fa fa-globe"
-    )
-    @Action(
-            semantics = SemanticsOf.SAFE,
-            restrictTo = RestrictTo.PROTOTYPING
-    )
-    @MemberOrder(sequence = "50")
-    public List<ToDoItem> allToDos() {
-        final List<ToDoItem> items = container.allMatches(
-                new QueryDefault<>(ToDoItem.class,
-                        "findByAtPath",
-                        "atPath", currentUsersAtPath()));
-        if(items.isEmpty()) {
-            container.warnUser("No to-do items found.");
-        }
-        return items;
-    }
-    //endregion
-
-    @Programmatic
-    public List<ToDoItem> findByAtPath(final String atPath) {
-        return null;
-    }
-
     //region > autoComplete (programmatic)
     @Programmatic // not part of metamodel
     public List<ToDoItem> autoComplete(final String description) {
@@ -225,22 +198,20 @@ public class ToDoItems {
             final String description, 
             final Category category, 
             final Subcategory subcategory,
-            final String userName, 
+            final String username,
             final LocalDate dueBy, final BigDecimal cost) {
         final ToDoItem toDoItem = container.newTransientInstance(ToDoItem.class);
         toDoItem.setDescription(description);
         toDoItem.setCategory(category);
         toDoItem.setSubcategory(subcategory);
 
-        final String atPath = GlobalTenancy.TENANCY_PATH + userName;
-
-        final ApplicationTenancy applicationTenancy = applicationTenancies.findTenancyByPath(atPath);
+        final ApplicationUser applicationUser = applicationUsers.findUserByUsername(username);
+        final ApplicationTenancy applicationTenancy = applicationUser.getTenancy();
         if(applicationTenancy == null) {
-            final ApplicationTenancy globalTenancy = applicationTenancies.findTenancyByPath(GlobalTenancy.TENANCY_PATH);
-            applicationTenancies.newTenancy(userName, atPath, globalTenancy);
+            throw new IllegalStateException(String.format("No application tenancy defined for user '%s'", username));
         }
 
-        toDoItem.setAtPath(atPath);
+        toDoItem.setAtPath(applicationTenancy.getPath());
         toDoItem.setDueBy(dueBy);
         toDoItem.setCost(cost);
 
@@ -287,6 +258,9 @@ public class ToDoItems {
 
     @javax.inject.Inject
     private MeService meService;
+
+    @javax.inject.Inject
+    private ApplicationUsers applicationUsers;
 
     @javax.inject.Inject
     private ClockService clockService;

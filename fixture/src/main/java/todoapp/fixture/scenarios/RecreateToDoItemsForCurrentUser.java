@@ -26,7 +26,6 @@ import java.util.List;
 import com.google.common.collect.Lists;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
 import org.isisaddons.module.security.dom.user.ApplicationUsers;
-import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
@@ -130,7 +129,7 @@ public class RecreateToDoItemsForCurrentUser extends FixtureScript {
         //
         // execute...
         //
-        final String atPath = GlobalTenancy.TENANCY_PATH + username;
+        final String atPath = "/users/" + username;
 
         // delete
         isisJdoSupport.executeUpdate("delete from \"ToDoItem\" where \"atPath\" = '" + atPath + "'");

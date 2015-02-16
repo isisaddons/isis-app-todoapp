@@ -56,11 +56,6 @@
                             }
                         }
                     },
-                    "atPath": {
-                        "propertyLayout": {
-                            "hidden": "EVERYWHERE"
-                        }
-                    },
                     "complete": {
                         "propertyLayout": {
                             "named": "Whether this todo item has been <i>completed</i> or not.",
@@ -95,12 +90,16 @@
             },
             "Misc": {
                 "members": {
+                    "atPath": {
+                        "propertyLayout": {
+                            "hidden": "ALL_TABLES"
+                        }
+                    },
                     "versionSequence": {
                         "propertyLayout": {
                             "named": "Version",
                             "hidden": "ALL_TABLES"
-                        },
-                        "disabled": {}
+                        }
                     }
                 }
             }
@@ -221,11 +220,6 @@
     }
     ],
     "actions": {
-        "exportToWordDoc": {
-            "actionLayout": {
-                "cssClassFa": "fa fa-download"
-            }
-        },
         "delete": {
             "actionLayout": {
                 "cssClass": "btn btn-danger",
@@ -238,6 +232,16 @@
                 "describedAs": "Create a new todo item from this one",
                 "cssClass": "btn-warn",
                 "cssClassFa": "fa fa-copy fa-lg"
+            }
+        },
+        "exportToWordDoc": {
+            "actionLayout": {
+                "cssClassFa": "fa fa-file-word-o"
+            }
+        },
+        "exportAsXml": {
+            "actionLayout": {
+                "cssClassFa": "fa fa-file-o"
             }
         },
         "totalCost": {}
