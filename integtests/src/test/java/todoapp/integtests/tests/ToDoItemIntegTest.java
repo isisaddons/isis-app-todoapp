@@ -54,14 +54,6 @@ import static org.junit.Assert.assertThat;
 
 public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
-    RecreateToDoItemsForCurrentUser fixtureScript;
-
-    @Before
-    public void setUpData() throws Exception {
-        fixtureScript = new RecreateToDoItemsForCurrentUser();
-        fixtureScripts.runFixtureScript(fixtureScript, null);
-    }
-
     @Inject
     FixtureScripts fixtureScripts;
     @Inject
@@ -69,16 +61,18 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
     @Inject
     DemoDomainEventSubscriptions toDoItemSubscriptions;
 
+    RecreateToDoItemsForCurrentUser fixtureScript;
     ToDoItem toDoItem;
 
     @Before
     public void setUp() throws Exception {
-        toDoItemSubscriptions.reset();
+        fixtureScript = new RecreateToDoItemsForCurrentUser();
+        fixtureScripts.runFixtureScript(fixtureScript, null);
 
+        toDoItemSubscriptions.reset();
         final List<ToDoItem> all = toDoItems.notYetComplete();
         toDoItem = wrap(all.get(0));
     }
-
 
     public static class Title extends ToDoItemIntegTest {
 
@@ -174,8 +168,10 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 // given
                 unwrap(toDoItem).setComplete(true);
 
-                // when, then should fail
+                // expect
                 expectedExceptions.expectMessage("Already completed");
+
+                // when
                 toDoItem.completed();
 
                 // and then
@@ -187,10 +183,10 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             @Test
             public void cannotSetPropertyDirectly() throws Exception {
 
-                // given
-
-                // when, then should fail
+                // expect
                 expectedExceptions.expectMessage("Always disabled");
+
+                // when
                 toDoItem.setComplete(true);
 
                 // and then
@@ -625,7 +621,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // when, then
                 expectedExceptions.expectMessage(containsString("Reason: Use action to update both category and subcategory."));
-                toDoItem.setCategory(todoapp.dom.module.categories.Category.Professional);
+                toDoItem.setCategory(todoapp.dom.module.categories.Category.PROFESSIONAL);
             }
         }
 
@@ -955,7 +951,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // when, then
                 expectedExceptions.expectMessage(containsString("Reason: Use action to update both category and subcategory."));
-                toDoItem.setSubcategory(todoapp.dom.module.categories.Subcategory.Chores);
+                toDoItem.setSubcategory(todoapp.dom.module.categories.Subcategory.CHORES);
             }
         }
 

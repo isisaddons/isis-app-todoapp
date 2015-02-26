@@ -34,19 +34,19 @@
     </prerequisites>
 
     <properties>
-        <isis.version>1.8.0-SNAPSHOT</isis.version>
-        <isis-viewer-wicket.version>1.8.0-SNAPSHOT</isis-viewer-wicket.version>
-        <isis-module-audit.version>1.8.0-SNAPSHOT</isis-module-audit.version>
-        <isis-module-command.version>1.8.0-SNAPSHOT</isis-module-command.version>
-        <isis-module-docx.version>1.8.0-SNAPSHOT</isis-module-docx.version>
-        <isis-module-security.version>1.8.0-SNAPSHOT</isis-module-security.version>
-        <isis-module-sessionlogger.version>1.8.0-SNAPSHOT</isis-module-sessionlogger.version>
-        <isis-module-settings.version>1.8.0-SNAPSHOT</isis-module-settings.version>
-        <isis-module-publishing.version>1.8.0-SNAPSHOT</isis-module-publishing.version>
+        <isis.version>1.8.0</isis.version>
 
-        <isis-wicket-excel.version>1.8.0-SNAPSHOT</isis-wicket-excel.version>
-        <isis-wicket-fullcalendar2.version>1.8.0-SNAPSHOT</isis-wicket-fullcalendar2.version>
-        <isis-wicket-gmap3.version>1.8.0-SNAPSHOT</isis-wicket-gmap3.version>
+        <isis-module-audit.version>1.8.1</isis-module-audit.version>
+        <isis-module-command.version>1.8.1</isis-module-command.version>
+        <isis-module-docx.version>1.8.1</isis-module-docx.version>
+        <isis-module-publishing.version>1.8.0</isis-module-publishing.version>
+        <isis-module-security.version>1.8.0</isis-module-security.version>
+        <isis-module-sessionlogger.version>1.8.1</isis-module-sessionlogger.version>
+        <isis-module-settings.version>1.8.0</isis-module-settings.version>
+
+        <isis-wicket-excel.version>1.8.0</isis-wicket-excel.version>
+        <isis-wicket-fullcalendar2.version>1.8.0</isis-wicket-fullcalendar2.version>
+        <isis-wicket-gmap3.version>1.8.0</isis-wicket-gmap3.version>
 
         <!-- must be consistent with the versions defined by the JDO Objectstore -->
         <datanucleus-accessplatform-jdo-rdbms.version>3.3.6</datanucleus-accessplatform-jdo-rdbms.version>
@@ -207,8 +207,7 @@
                 <plugin>
                     <groupId>org.simplericity.jettyconsole</groupId>
                     <artifactId>jetty-console-maven-plugin</artifactId>
-                    <!-- update to 1.54 reversed,since seems compiled against 1.7 (major.minor version 51.0) -->
-                    <version>1.43</version>
+                    <version>1.56</version>
                 </plugin>
 
                 <!-- Apache Release Audit Tool -->
@@ -344,7 +343,7 @@
             <dependency>
                 <groupId>org.apache.isis.viewer</groupId>
                 <artifactId>isis-viewer-wicket</artifactId>
-                <version>${isis-viewer-wicket.version}</version>
+                <version>${isis.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

@@ -73,18 +73,18 @@ public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoI
             public void happyCase() throws Exception {
 
                 // when
-                updateCategoryContributionsWrapped.updateCategory(toDoItem, Category.Professional, Subcategory.Consulting);
+                updateCategoryContributionsWrapped.updateCategory(toDoItem, Category.PROFESSIONAL, Subcategory.CONSULTING);
 
                 // then
-                assertThat(toDoItem.getCategory(), is(Category.Professional));
-                assertThat(toDoItem.getSubcategory(), is(Subcategory.Consulting));
+                assertThat(toDoItem.getCategory(), is(Category.PROFESSIONAL));
+                assertThat(toDoItem.getSubcategory(), is(Subcategory.CONSULTING));
 
                 // when
-                updateCategoryContributionsWrapped.updateCategory(toDoItem, Category.Domestic, Subcategory.Chores);
+                updateCategoryContributionsWrapped.updateCategory(toDoItem, Category.DOMESTIC, Subcategory.CHORES);
 
                 // then
-                assertThat(toDoItem.getCategory(), is(Category.Domestic));
-                assertThat(toDoItem.getSubcategory(), is(Subcategory.Chores));
+                assertThat(toDoItem.getCategory(), is(Category.DOMESTIC));
+                assertThat(toDoItem.getSubcategory(), is(Subcategory.CHORES));
             }
 
 
@@ -93,14 +93,14 @@ public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoI
 
                 // when, then
                 expectedExceptions.expectMessage("'Category' is mandatory");
-                updateCategoryContributionsWrapped.updateCategory(toDoItem, null, Subcategory.Chores);
+                updateCategoryContributionsWrapped.updateCategory(toDoItem, null, Subcategory.CHORES);
             }
 
             @Test
             public void subcategoryCanBeNull() throws Exception {
 
                 // when, then
-                updateCategoryContributionsWrapped.updateCategory(toDoItem, Category.Professional, null);
+                updateCategoryContributionsWrapped.updateCategory(toDoItem, Category.PROFESSIONAL, null);
             }
 
             @Test
@@ -108,7 +108,7 @@ public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoI
 
                 // when, then
                 expectedExceptions.expectMessage(containsString("Invalid subcategory"));
-                updateCategoryContributionsWrapped.updateCategory(toDoItem, Category.Professional, Subcategory.Chores);
+                updateCategoryContributionsWrapped.updateCategory(toDoItem, Category.PROFESSIONAL, Subcategory.CHORES);
             }
         }
 

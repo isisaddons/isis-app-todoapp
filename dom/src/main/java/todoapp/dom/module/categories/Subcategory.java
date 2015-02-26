@@ -6,11 +6,11 @@ import com.google.common.base.Predicate;
 
 public enum Subcategory {
     // professional
-    OpenSource, Consulting, Education, Marketing,
+    OPEN_SOURCE, CONSULTING, EDUCATION, MARKETING,
     // domestic
-    Shopping, Housework, Garden, Chores,
+    SHOPPING, HOUSEWORK, GARDEN, CHORES,
     // other
-    Other;
+    OTHER;
 
     public static List<Subcategory> listFor(final Category category) {
         return category != null? category.subcategories(): Collections.<Subcategory>emptyList();
@@ -34,4 +34,9 @@ public enum Subcategory {
             }
         };
     }
+
+    public String title() {
+        return org.apache.isis.applib.util.Enums.getFriendlyNameOf(this);
+    }
+
 }

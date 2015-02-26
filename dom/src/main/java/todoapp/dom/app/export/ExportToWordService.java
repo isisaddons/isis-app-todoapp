@@ -14,7 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.dom.module.export;
+package todoapp.dom.app.export;
 
 import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.dom.module.todoitem.ToDoItems;
@@ -49,7 +49,7 @@ import org.apache.isis.applib.value.Blob;
         named="ToDos",
         menuOrder = "30"
 )
-public class ToDoItemsExportService {
+public class ExportToWordService {
 
     //region > exportToWordDoc (action)
 

@@ -19,7 +19,7 @@
 package todoapp.dom.app.dashboard;
 
 import todoapp.dom.app.relativepriority.RelativePriorityContributions;
-import todoapp.dom.module.export.ToDoItemsExportService;
+import todoapp.dom.app.export.ExportToWordService;
 import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.dom.module.todoitem.ToDoItems;
 
@@ -82,7 +82,7 @@ public class ToDoAppDashboard {
     private ToDoItems toDoItems;
 
     @javax.inject.Inject
-    private ToDoItemsExportService toDoItemsExportService;
+    private ExportToWordService toDoItemsExportService;
 
     @javax.inject.Inject
     private RelativePriorityContributions relativePriorityContributions;

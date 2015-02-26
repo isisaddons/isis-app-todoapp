@@ -4,22 +4,26 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Category {
-    Professional {
+    PROFESSIONAL {
         @Override
         public List<Subcategory> subcategories() {
-            return Arrays.asList(null, Subcategory.OpenSource, Subcategory.Consulting, Subcategory.Education, Subcategory.Marketing);
+            return Arrays.asList(null, Subcategory.OPEN_SOURCE, Subcategory.CONSULTING, Subcategory.EDUCATION, Subcategory.MARKETING);
         }
-    }, Domestic {
+    }, DOMESTIC {
         @Override
         public List<Subcategory> subcategories() {
-            return Arrays.asList(null, Subcategory.Shopping, Subcategory.Housework, Subcategory.Garden, Subcategory.Chores);
+            return Arrays.asList(null, Subcategory.SHOPPING, Subcategory.HOUSEWORK, Subcategory.GARDEN, Subcategory.CHORES);
         }
-    }, Other {
+    }, OTHER {
         @Override
         public List<Subcategory> subcategories() {
-            return Arrays.asList(null, Subcategory.Other);
+            return Arrays.asList(null, Subcategory.OTHER);
         }
     };
 
     public abstract List<Subcategory> subcategories();
+
+    public String title() {
+        return org.apache.isis.applib.util.Enums.getFriendlyNameOf(this);
+    }
 }

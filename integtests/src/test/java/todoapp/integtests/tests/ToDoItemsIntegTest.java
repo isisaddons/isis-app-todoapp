@@ -109,12 +109,12 @@ public class ToDoItemsIntegTest extends AbstractToDoIntegTest {
             nextTransaction();
 
             // when
-            final ToDoItem newToDo = toDoItems.newToDo("new todo", Category.Professional, Subcategory.OpenSource, null, null);
+            final ToDoItem newToDo = toDoItems.newToDo("new todo", Category.PROFESSIONAL, Subcategory.OPEN_SOURCE, null, null);
             nextTransaction();
 
             // then
             assertThat(newToDo.getDescription(), is("new todo"));
-            assertThat(newToDo.getCategory(), is(Category.Professional));
+            assertThat(newToDo.getCategory(), is(Category.PROFESSIONAL));
             assertThat(wrap(toDoItems).notYetComplete().size(), is(size+1));
             assertThat(container().isPersistent(newToDo), is(true));
             assertThat(container().isPersistent(wrap(newToDo)), is(true));

@@ -120,7 +120,7 @@ public class ToDoItems {
                     ToDoItem.Predicates.thoseCategorised(category, subcategory)));
     }
     public Category default0Categorized() {
-        return Category.Professional;
+        return Category.PROFESSIONAL;
     }
     public Subcategory default1Categorized() {
         return default0Categorized().subcategories().get(0);
@@ -161,10 +161,10 @@ public class ToDoItems {
         return newToDo(description, category, subcategory, currentUserName(), dueBy, cost);
     }
     public Category default1NewToDo() {
-        return Category.Professional;
+        return Category.PROFESSIONAL;
     }
     public Subcategory default2NewToDo() {
-        return Category.Professional.subcategories().get(0);
+        return Category.PROFESSIONAL.subcategories().get(0);
     }
     public LocalDate default3NewToDo() {
         return clockService.now().plusDays(14);

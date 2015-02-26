@@ -684,8 +684,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
         container.informUser("Deleted " + container.titleOf(this));
         
-        // invalid to return 'this' (cannot render a deleted object)
-        return toDoItems.notYetComplete();
+        return actionInvocationContext.isLast()?toDoItems.notYetComplete(): null;
     }
     //endregion
 
@@ -780,8 +779,8 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
      * Prevent user from viewing another user's data.
      */
     public boolean hidden() {
-        // uncomment to enable.  As things stand, the disabled() method below instead will make object "read-only".
-        //return !Objects.equal(getOwnedBy(), container.getUser().getName());
+        // previously we manually checked that the user couldn't modify an object owned by some other user.
+        // however, with application tenancy support this is automatically taken care of by Isis.
         return false;
     }
 

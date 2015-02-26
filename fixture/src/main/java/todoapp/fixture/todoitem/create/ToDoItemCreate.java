@@ -38,18 +38,18 @@ public class ToDoItemCreate extends FixtureScript {
 
     private Object[][] canned() {
         return new Object[][]{
-                {"Buy bread", Category.Domestic, Subcategory.Shopping, nowPlusDays(0), BD("1.75")},
-                {"Buy milk", Category.Domestic, Subcategory.Shopping, nowPlusDays(0), BD("0.75")},
-                {DESCRIPTION_BUY_STAMPS, Category.Domestic, Subcategory.Shopping, nowPlusDays(0), BD("10.00")},
-                {"Mow lawn", Category.Domestic, Subcategory.Garden, nowPlusDays(6), null},
-                {"Organize brown bag", Category.Professional, Subcategory.Consulting, nowPlusDays(14), null},
-                {"Pick up laundry", Category.Domestic, Subcategory.Chores, nowPlusDays(6), BD("7.50")},
-                {"Sharpen knives", Category.Domestic, Subcategory.Chores, nowPlusDays(14), null},
-                {"Stage Isis release", Category.Professional, Subcategory.OpenSource, null, null},
-                {"Submit conference session", Category.Professional, Subcategory.Education, nowPlusDays(21), null},
-                {"Vacuum house", Category.Domestic, Subcategory.Housework, nowPlusDays(3), null},
-                {DESCRIPTION_WRITE_BLOG_POST, Category.Professional, Subcategory.Marketing, nowPlusDays(7), null},
-                {"Write to penpal", Category.Other, Subcategory.Other, null, null},
+                {"Buy bread", Category.DOMESTIC, Subcategory.SHOPPING, nowPlusDays(0), BD("1.75")},
+                {"Buy milk", Category.DOMESTIC, Subcategory.SHOPPING, nowPlusDays(0), BD("0.75")},
+                {DESCRIPTION_BUY_STAMPS, Category.DOMESTIC, Subcategory.SHOPPING, nowPlusDays(0), BD("10.00")},
+                {"Mow lawn", Category.DOMESTIC, Subcategory.GARDEN, nowPlusDays(6), null},
+                {"Organize brown bag", Category.PROFESSIONAL, Subcategory.CONSULTING, nowPlusDays(14), null},
+                {"Pick up laundry", Category.DOMESTIC, Subcategory.CHORES, nowPlusDays(6), BD("7.50")},
+                {"Sharpen knives", Category.DOMESTIC, Subcategory.CHORES, nowPlusDays(14), null},
+                {"Stage Isis release", Category.PROFESSIONAL, Subcategory.OPEN_SOURCE, null, null},
+                {"Submit conference session", Category.PROFESSIONAL, Subcategory.EDUCATION, nowPlusDays(21), null},
+                {"Vacuum house", Category.DOMESTIC, Subcategory.HOUSEWORK, nowPlusDays(3), null},
+                {DESCRIPTION_WRITE_BLOG_POST, Category.PROFESSIONAL, Subcategory.MARKETING, nowPlusDays(7), null},
+                {"Write to penpal", Category.OTHER, Subcategory.OTHER, null, null},
         };
     }
 

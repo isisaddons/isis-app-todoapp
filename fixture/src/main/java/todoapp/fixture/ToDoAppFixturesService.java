@@ -18,9 +18,11 @@
  */
 package todoapp.fixture;
 
+import todoapp.dom.app.dashboard.ToDoAppDashboardService;
 import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
 import java.util.List;
+import javax.inject.Inject;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
@@ -44,7 +46,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 @DomainServiceLayout(
         named = "Prototyping",
         menuBar = DomainServiceLayout.MenuBar.SECONDARY,
-        menuOrder = "999.1")
+        menuOrder = "400.1")
 public class ToDoAppFixturesService extends FixtureScripts {
 
     public ToDoAppFixturesService() {
@@ -95,8 +97,11 @@ public class ToDoAppFixturesService extends FixtureScripts {
         cssClassFa="fa fa-refresh"
     )
     @MemberOrder(sequence="20")
-    public Object recreateToDoItemsReturnFirst() {
+    public Object recreateToDoItemsThenOpenDashboard() {
         final List<FixtureResult> results = findFixtureScriptFor(RecreateToDoItemsForCurrentUser.class).run(null);
-        return results.get(0).getObject();
+        return toDoAppDashboardService.lookup();
     }
+
+    @Inject
+    private ToDoAppDashboardService toDoAppDashboardService;
 }
