@@ -226,13 +226,8 @@ Finally, you can also run the app by deploying to a standalone servlet container
 
 The app provides a welcome page that explains the classes and files generated, and provides detailed guidance and what to do next.
 
-The app itself is configured to run using shiro security, as configured in the `WEB-INF/shiro.ini` config file.  To log in, use `sven/pass`.
+The app itself is configured to run using shiro security, as configured in the `WEB-INF/shiro.ini` config file.  To log in, use `todoapp-admin/pass`.
 
-## Modifying the App
-
-Once you are familiar with the generated app, you'll want to start modifying it.  There is plenty of guidance on this site; check out the 'programming model how-tos' section on the main [documentation](../../documentation.html) page first).
-
-If you use Eclipse, do also install the [Eclipse templates](../resources/editor-templates.html); these will help you follow the Isis naming conventions.
 
 ## App Structure
 
