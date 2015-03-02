@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.isisaddons.app</groupId>
         <artifactId>todoapp</artifactId>
-        <version>1.8.0-SNAPSHOT</version>
+        <version>1.8.0</version>
     </parent>
 
     <artifactId>todoapp-dom</artifactId>
@@ -191,7 +191,7 @@
                             <dependency>
                                 <groupId>org.isisaddons.app</groupId>
                                 <artifactId>todoapp-dom</artifactId>
-                                <version>1.8.0-SNAPSHOT</version>
+                                <version>1.8.0</version>
                             </dependency>
                             <!--
                             ... workaround to avoid conflict with plexus-default
