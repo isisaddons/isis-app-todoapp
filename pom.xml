@@ -38,9 +38,10 @@
 
         <isis-module-audit.version>1.8.1</isis-module-audit.version>
         <isis-module-command.version>1.8.1</isis-module-command.version>
+        <isis-module-devutils.version>1.8.0</isis-module-devutils.version>
         <isis-module-docx.version>1.8.1</isis-module-docx.version>
-        <isis-module-publishing.version>1.8.0</isis-module-publishing.version>
-        <isis-module-security.version>1.8.0</isis-module-security.version>
+        <isis-module-publishing.version>1.8.1</isis-module-publishing.version>
+        <isis-module-security.version>1.8.1</isis-module-security.version>
         <isis-module-sessionlogger.version>1.8.2</isis-module-sessionlogger.version>
         <isis-module-settings.version>1.8.0</isis-module-settings.version>
 
@@ -375,6 +376,11 @@
                 <groupId>org.isisaddons.module.command</groupId>
                 <artifactId>isis-module-command-dom</artifactId>
                 <version>${isis-module-command.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.isisaddons.module.devutils</groupId>
+                <artifactId>isis-module-devutils-dom</artifactId>
+                <version>${isis-module-devutils.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.isisaddons.module.security</groupId>
