@@ -23,6 +23,7 @@ import todoapp.dom.module.categories.Subcategory;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.Callable;
 import com.google.common.base.Predicates;
 import org.isisaddons.module.security.app.user.MeService;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
@@ -44,6 +45,7 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.clock.ClockService;
+import org.apache.isis.applib.services.queryresultscache.QueryResultsCache;
 
 @DomainService(repositoryFor = ToDoItem.class)
 @DomainServiceLayout(
@@ -69,10 +71,19 @@ public class ToDoItems {
 
     @Programmatic
     public List<ToDoItem> notYetCompleteNoUi() {
-        return container.allMatches(
-                new QueryDefault<>(ToDoItem.class,
-                        "findByAtPathAndCompleteIsFalse",
-                        "atPath", currentUsersAtPath()));
+        return notYetCompleteFor(currentUsersAtPath());
+    }
+
+    private List<ToDoItem> notYetCompleteFor(final String atPath) {
+        return queryResultsCache.execute(new Callable<List<ToDoItem>>() {
+            @Override
+            public List<ToDoItem> call() throws Exception {
+                return container.allMatches(
+                        new QueryDefault<>(ToDoItem.class,
+                                "findByAtPathAndCompleteIsFalse",
+                                "atPath", atPath));
+            }
+        }, ToDoItems.class, "notYetCompleteFor", atPath);
     }
 
     //endregion
@@ -264,6 +275,9 @@ public class ToDoItems {
 
     @javax.inject.Inject
     private ClockService clockService;
+
+    @javax.inject.Inject
+    private QueryResultsCache queryResultsCache;
     //endregion
 
 }

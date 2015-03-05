@@ -71,7 +71,7 @@ import static com.google.common.collect.Lists.newArrayList;
 @DomainServiceLayout(
         menuBar = DomainServiceLayout.MenuBar.SECONDARY,
         named = "Prototyping",
-        menuOrder = "999.2")
+        menuOrder = "500.20")
 public class DemoDomainEventSubscriptions {
 
     //region > LOG
@@ -123,7 +123,7 @@ public class DemoDomainEventSubscriptions {
             named="Set subscriber behaviour",
             cssClassFa="phone"
     )
-    @MemberOrder(sequence = "80")
+    @MemberOrder(sequence = "500.20.1")
     public void subscriberBehaviour(
             @ParameterLayout(
                     named="Behaviour"

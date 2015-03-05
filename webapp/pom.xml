@@ -218,7 +218,7 @@
             <artifactId>hsqldb</artifactId>
         </dependency>
 
-        <!-- 
+        <!--
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -233,7 +233,7 @@
                                  -Dversion=4.0 \
                                  -Dpackaging=jar
          -->
-         <!-- 
+         <!--
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>sqljdbc4</artifactId>

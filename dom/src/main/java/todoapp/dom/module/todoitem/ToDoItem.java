@@ -81,7 +81,8 @@ import org.apache.isis.applib.util.TitleBuffer;
 import org.apache.isis.applib.value.Blob;
 import org.apache.isis.applib.value.Clob;
 
-@javax.jdo.annotations.PersistenceCapable(identityType=IdentityType.DATASTORE)
+@javax.jdo.annotations.PersistenceCapable(
+        identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
          column="id")
@@ -679,10 +680,13 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
             invokeOn = InvokeOn.OBJECT_AND_COLLECTION
     )
     public List<ToDoItem> delete() {
-        
+
+        // obtain title first, because cannot reference object after deleted
+        final String title = container.titleOf(this);
+
         container.removeIfNotAlready(this);
 
-        container.informUser("Deleted " + container.titleOf(this));
+        container.informUser("Deleted " + title);
         
         return actionInvocationContext.isLast()?toDoItems.notYetComplete(): null;
     }

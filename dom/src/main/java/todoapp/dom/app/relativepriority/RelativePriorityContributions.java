@@ -79,7 +79,7 @@ public class RelativePriorityContributions extends AbstractFactoryAndRepository 
     private List<ToDoItem> sortedNotYetComplete() {
         return ORDERING_DUE_BY
         .compound(ORDERING_DESCRIPTION)
-        .sortedCopy(toDoItems.notYetComplete());
+        .sortedCopy(toDoItems.notYetCompleteNoUi());
     }
 
     private static final Ordering<ToDoItem> ORDERING_DUE_BY =

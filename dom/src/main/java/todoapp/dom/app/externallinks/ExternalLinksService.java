@@ -14,7 +14,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package todoapp.webapp.prototyping;
+package todoapp.dom.app.externallinks;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -32,8 +32,9 @@ import org.apache.isis.applib.annotation.SemanticsOf;
         nature = NatureOfService.VIEW_MENU_ONLY
 )
 @DomainServiceLayout(
+        named = "Prototyping",
         menuBar = DomainServiceLayout.MenuBar.SECONDARY,
-        menuOrder = "20"
+        menuOrder = "500.30"
 )
 public class ExternalLinksService {
 
@@ -65,8 +66,8 @@ public class ExternalLinksService {
             semantics = SemanticsOf.SAFE,
             restrictTo = RestrictTo.PROTOTYPING
     )
-    @MemberOrder(name="Prototyping", sequence="91.1")
-    public URL goToDocs(@ParameterLayout(named="Link") ExternalLink link) throws MalformedURLException {
+    @MemberOrder(sequence="500.30.1")
+    public URL goToDocs(@ParameterLayout(named="Link") final ExternalLink link) throws MalformedURLException {
         return link.open();
     }
 

@@ -66,11 +66,11 @@ public class DeleteUserAndUserRolesAndToDoItems extends FixtureScript {
         isisJdoSupport.executeUpdate(
                 "DELETE FROM \"ToDoItem\" WHERE \"atPath\" = '" + atPath + "'");
         isisJdoSupport.executeUpdate(
-                "DELETE FROM \"IsisSecurityApplicationUserRoles\" WHERE \"userId\" IN (SELECT \"id\" FROM \"IsisSecurityApplicationUser\" WHERE \"username\" = '" + username + "')");
+                "DELETE FROM \"IsisAddonsSecurity\".\"ApplicationUserRoles\" WHERE \"userId\" IN (SELECT \"id\" FROM \"IsisAddonsSecurity\".\"ApplicationUser\" WHERE \"username\" = '" + username + "')");
         isisJdoSupport.executeUpdate(
-                "DELETE FROM \"IsisSecurityApplicationUser\" WHERE \"username\" = '" + username + "'");
+                "DELETE FROM \"IsisAddonsSecurity\".\"ApplicationUser\" WHERE \"username\" = '" + username + "'");
         isisJdoSupport.executeUpdate(
-                "DELETE FROM \"IsisSecurityApplicationTenancy\" WHERE \"path\" = '" + UsersTenancy.TENANCY_PATH + username + "'");
+                "DELETE FROM \"IsisAddonsSecurity\".\"ApplicationTenancy\" WHERE \"path\" = '" + UsersTenancy.TENANCY_PATH + username + "'");
     }
 
     @Inject

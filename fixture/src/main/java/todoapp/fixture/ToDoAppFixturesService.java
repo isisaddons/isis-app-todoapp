@@ -46,7 +46,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 @DomainServiceLayout(
         named = "Prototyping",
         menuBar = DomainServiceLayout.MenuBar.SECONDARY,
-        menuOrder = "400.1")
+        menuOrder = "500.10")
 public class ToDoAppFixturesService extends FixtureScripts {
 
     public ToDoAppFixturesService() {
@@ -61,6 +61,7 @@ public class ToDoAppFixturesService extends FixtureScripts {
     @ActionLayout(
             cssClassFa="fa fa-bolt"
     )
+    @MemberOrder(sequence = "500.10.1")
     @Override
     public List<FixtureResult> runFixtureScript(
             final FixtureScript fixtureScript,
@@ -96,7 +97,7 @@ public class ToDoAppFixturesService extends FixtureScripts {
     @ActionLayout(
         cssClassFa="fa fa-refresh"
     )
-    @MemberOrder(sequence="20")
+    @MemberOrder(sequence = "500.10.2")
     public Object recreateToDoItemsThenOpenDashboard() {
         final List<FixtureResult> results = findFixtureScriptFor(RecreateToDoItemsForCurrentUser.class).run(null);
         return toDoAppDashboardService.lookup();
