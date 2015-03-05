@@ -684,11 +684,13 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
         // obtain title first, because cannot reference object after deleted
         final String title = container.titleOf(this);
 
+        final List<ToDoItem> returnList = actionInvocationContext.isLast() ? toDoItems.notYetComplete() : null;
+
         container.removeIfNotAlready(this);
 
         container.informUser("Deleted " + title);
-        
-        return actionInvocationContext.isLast()?toDoItems.notYetComplete(): null;
+
+        return returnList;
     }
     //endregion
 

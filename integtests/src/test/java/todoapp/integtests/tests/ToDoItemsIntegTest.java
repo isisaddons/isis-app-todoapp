@@ -122,7 +122,7 @@ public class ToDoItemsIntegTest extends AbstractToDoIntegTest {
             nextTransaction();
 
             // when
-            newToDo.delete();
+            wrap(newToDo).delete();
             nextTransaction();
 
             // then

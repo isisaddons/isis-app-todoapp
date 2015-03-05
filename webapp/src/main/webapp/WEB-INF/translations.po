@@ -398,7 +398,7 @@ msgid "Export As Xml"
 msgstr ""
 
 
-#: todoapp.dom.module.export.ToDoItemsExportService#exportToWordDoc()
+#: todoapp.dom.app.export.ExportToWordService#exportToWordDoc()
 msgid "Export To Word Doc"
 msgstr ""
 
@@ -439,9 +439,7 @@ msgstr ""
 
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdo#find()
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdoHidden#find()
-#: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdo#find()
-#: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdoHidden#find()
-msgid "Find"
+msgid "Find Application Setting"
 msgstr ""
 
 
@@ -460,8 +458,25 @@ msgid "Find Commands"
 msgstr ""
 
 
+#: org.isisaddons.module.settings.dom.jdo.ApplicationSettingPreviousNextContributions#findNext()
+#: org.isisaddons.module.settings.dom.jdo.UserSettingPreviousNextContributions#findNext()
+msgid "Find Next"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.jdo.ApplicationSettingPreviousNextContributions#findPrevious()
+#: org.isisaddons.module.settings.dom.jdo.UserSettingPreviousNextContributions#findPrevious()
+msgid "Find Previous"
+msgstr ""
+
+
 #: org.isisaddons.module.publishing.dom.PublishingServiceMenu#findPublishedEvents()
 msgid "Find Published Events"
+msgstr ""
+
+
+#: org.isisaddons.module.publishing.dom.PublishingServiceMenu#findPublishedEventsByTransactionId()
+msgid "Find Published Events By Transaction Id"
 msgstr ""
 
 
@@ -475,8 +490,24 @@ msgid "Find Sessions"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.tenancy.ApplicationTenancies#findTenancyByName()
+msgid "Find Tenancy By Name"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.tenancy.ApplicationTenancies#findTenancyByPath()
+msgid "Find Tenancy By Path"
+msgstr ""
+
+
 #: org.isisaddons.module.security.dom.user.ApplicationUsers#findUserByUsername()
 msgid "Find User By Username"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdo#find()
+#: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdoHidden#find()
+msgid "Find User Setting"
 msgstr ""
 
 
@@ -504,14 +535,14 @@ msgid "Given Name"
 msgstr ""
 
 
-#: org.isisaddons.module.security.dom.user.ApplicationUsers#newDelegateUser(java.lang.String,org.isisaddons.module.security.dom.role.ApplicationRole,java.lang.Boolean)
-#: org.isisaddons.module.security.dom.user.ApplicationUsers#newLocalUser(java.lang.String,org.apache.isis.applib.value.Password,org.apache.isis.applib.value.Password,org.isisaddons.module.security.dom.role.ApplicationRole,java.lang.Boolean,java.lang.String)
-msgid "Initial role"
+#: todoapp.dom.app.externallinks.ExternalLinksService#goToDocs()
+msgid "Go To Docs"
 msgstr ""
 
 
-#: org.apache.isis.core.metamodel.services.container.DomainObjectContainerDefault#isViewModel()
-msgid "Is View Model"
+#: org.isisaddons.module.security.dom.user.ApplicationUsers#newDelegateUser(java.lang.String,org.isisaddons.module.security.dom.role.ApplicationRole,java.lang.Boolean)
+#: org.isisaddons.module.security.dom.user.ApplicationUsers#newLocalUser(java.lang.String,org.apache.isis.applib.value.Password,org.apache.isis.applib.value.Password,org.isisaddons.module.security.dom.role.ApplicationRole,java.lang.Boolean,java.lang.String)
+msgid "Initial role"
 msgstr ""
 
 
@@ -548,17 +579,26 @@ msgid "Known As"
 msgstr ""
 
 
+#: todoapp.dom.app.externallinks.ExternalLinksService#goToDocs(todoapp.dom.app.externallinks.ExternalLinksService$ExternalLink)
+msgid "Link"
+msgstr ""
+
+
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdo#listAll()
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdoHidden#listAll()
-#: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdo#listAll()
-#: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdoHidden#listAll()
-msgid "List All"
+msgid "List All Application Settings"
 msgstr ""
 
 
 #: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdo#listAllFor()
 #: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdoHidden#listAllFor()
-msgid "List All For"
+msgid "List All Settings For User"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdo#listAll()
+#: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdoHidden#listAll()
+msgid "List All User Settings"
 msgstr ""
 
 
@@ -598,6 +638,7 @@ msgstr ""
 #: org.isisaddons.module.security.dom.role.ApplicationRole#updateName(java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRoles#findRoleByName(java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRoles#newRole(java.lang.String,java.lang.String)
+#: org.isisaddons.module.security.dom.tenancy.ApplicationTenancies#findTenancyByName(java.lang.String)
 #: org.isisaddons.module.security.dom.tenancy.ApplicationTenancies#newTenancy(java.lang.String,java.lang.String,org.isisaddons.module.security.dom.tenancy.ApplicationTenancy)
 #: org.isisaddons.module.security.dom.tenancy.ApplicationTenancy#updateName(java.lang.String)
 #: org.isisaddons.module.security.dom.user.ApplicationUsers#findUsersByName(java.lang.String)
@@ -685,6 +726,8 @@ msgstr ""
 
 
 #: org.isisaddons.module.sessionlogger.dom.SessionLogEntry#next()
+#: org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo#findNext()
+#: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#findNext()
 #: todoapp.dom.app.relativepriority.RelativePriorityContributions#next()
 #: todoapp.dom.module.todoitem.ToDoItem#next()
 msgid "Next"
@@ -750,6 +793,7 @@ msgid "Password"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.tenancy.ApplicationTenancies#findTenancyByPath(java.lang.String)
 #: org.isisaddons.module.security.dom.tenancy.ApplicationTenancies#newTenancy(java.lang.String,java.lang.String,org.isisaddons.module.security.dom.tenancy.ApplicationTenancy)
 msgid "Path"
 msgstr ""
@@ -767,6 +811,8 @@ msgstr ""
 
 
 #: org.isisaddons.module.sessionlogger.dom.SessionLogEntry#previous()
+#: org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo#findPrevious()
+#: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#findPrevious()
 #: todoapp.dom.app.relativepriority.RelativePriorityContributions#previous()
 #: todoapp.dom.module.todoitem.ToDoItem#previous()
 msgid "Previous"
@@ -785,6 +831,7 @@ msgstr ""
 
 #: org.apache.isis.core.runtime.services.i18n.po.TranslationServicePoMenu
 #: todoapp.dom.app.demoeventsubscriber.DemoDomainEventSubscriptions
+#: todoapp.dom.app.externallinks.ExternalLinksService
 #: todoapp.fixture.ToDoAppFixturesService
 msgid "Prototyping"
 msgstr ""
@@ -850,8 +897,8 @@ msgid "Recent Activity"
 msgstr ""
 
 
-#: todoapp.fixture.ToDoAppFixturesService#recreateToDoItemsReturnFirst()
-msgid "Recreate To Do Items Return First"
+#: todoapp.fixture.ToDoAppFixturesService#recreateToDoItemsThenOpenDashboard()
+msgid "Recreate To Do Items Then Open Dashboard"
 msgstr ""
 
 
@@ -1031,7 +1078,7 @@ msgid "To"
 msgstr ""
 
 
-#: todoapp.dom.module.export.ToDoItemsExportService
+#: todoapp.dom.app.export.ExportToWordService
 #: todoapp.dom.module.todoitem.ToDoItems
 msgid "ToDos"
 msgstr ""
@@ -1074,12 +1121,6 @@ msgstr ""
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo#updateAsLong()
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo#updateAsString()
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo#updateDescription()
-#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateAsBoolean()
-#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateAsInt()
-#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateAsLocalDate()
-#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateAsLong()
-#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateAsString()
-#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateDescription()
 #: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#updateAsBoolean()
 #: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#updateAsInt()
 #: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#updateAsLocalDate()
@@ -1097,6 +1138,31 @@ msgid "Update Account Type"
 msgstr ""
 
 
+#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateAsBoolean()
+msgid "Update As Boolean"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateAsInt()
+msgid "Update As Int"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateAsLocalDate()
+msgid "Update As Local Date"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateAsLong()
+msgid "Update As Long"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateAsString()
+msgid "Update As String"
+msgstr ""
+
+
 #: todoapp.dom.module.categories.Subcategory#updateCategory()
 #: todoapp.dom.module.categories.UpdateCategoryContributions#updateCategory()
 msgid "Update Category"
@@ -1104,6 +1170,7 @@ msgstr ""
 
 
 #: org.isisaddons.module.security.dom.role.ApplicationRole#updateDescription()
+#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateDescription()
 msgid "Update Description"
 msgstr ""
 
@@ -1208,10 +1275,6 @@ msgstr ""
 
 
 #: org.isisaddons.module.settings.dom.SettingAbstract#valueAsBoolean
-#: org.isisaddons.module.settings.dom.SettingAbstract#valueAsInt
-#: org.isisaddons.module.settings.dom.SettingAbstract#valueAsLocalDate
-#: org.isisaddons.module.settings.dom.SettingAbstract#valueAsLong
-#: org.isisaddons.module.settings.dom.SettingAbstract#valueAsString
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo#updateAsBoolean(java.lang.Boolean)
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo#updateAsInt(java.lang.Integer)
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo#updateAsLocalDate(org.joda.time.LocalDate)
@@ -1238,10 +1301,6 @@ msgstr ""
 #: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateAsLong(java.lang.Long)
 #: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateAsString(java.lang.String)
 #: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#valueAsBoolean
-#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#valueAsInt
-#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#valueAsLocalDate
-#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#valueAsLong
-#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#valueAsString
 #: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#updateAsBoolean(java.lang.Boolean)
 #: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#updateAsInt(java.lang.Integer)
 #: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#updateAsLocalDate(org.joda.time.LocalDate)
