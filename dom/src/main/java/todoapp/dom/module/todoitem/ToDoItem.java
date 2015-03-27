@@ -18,11 +18,6 @@
  */
 package todoapp.dom.module.todoitem;
 
-import todoapp.dom.module.categories.Categorized;
-import todoapp.dom.module.categories.Category;
-import todoapp.dom.module.categories.Subcategory;
-import todoapp.dom.seed.tenancies.UsersTenancy;
-
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -73,6 +68,7 @@ import org.apache.isis.applib.security.UserMemento;
 import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.EventBusService;
+import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.scratchpad.Scratchpad;
 import org.apache.isis.applib.services.wrapper.HiddenException;
 import org.apache.isis.applib.services.wrapper.WrapperFactory;
@@ -80,6 +76,10 @@ import org.apache.isis.applib.util.ObjectContracts;
 import org.apache.isis.applib.util.TitleBuffer;
 import org.apache.isis.applib.value.Blob;
 import org.apache.isis.applib.value.Clob;
+import todoapp.dom.module.categories.Categorized;
+import todoapp.dom.module.categories.Category;
+import todoapp.dom.module.categories.Subcategory;
+import todoapp.dom.seed.tenancies.UsersTenancy;
 
 @javax.jdo.annotations.PersistenceCapable(
         identityType=IdentityType.DATASTORE)
@@ -688,7 +688,8 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
         container.removeIfNotAlready(this);
 
-        container.informUser("Deleted " + title);
+        container.informUser(
+                TranslatableString.tr("Deleted {title}", "title", title), this.getClass(), "delete");
 
         return returnList;
     }
@@ -924,6 +925,14 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
                     thoseSubcategorised(subcategory)); 
         }
 
+        public static Predicate<ToDoItem> thoseWithDueByDate() {
+            return new Predicate<ToDoItem>() {
+                @Override
+                public boolean apply(final ToDoItem input) {
+                    return input.getDueBy() != null;
+                }
+            };
+        }
     }
 
     //endregion

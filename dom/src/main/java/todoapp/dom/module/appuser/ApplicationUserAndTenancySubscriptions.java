@@ -16,11 +16,8 @@
  */
 package todoapp.dom.module.appuser;
 
-import todoapp.dom.seed.tenancies.UsersTenancy;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import com.google.common.eventbus.Subscribe;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
@@ -31,6 +28,7 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.eventbus.EventBusService;
+import todoapp.dom.seed.tenancies.UsersTenancy;
 
 
 @DomainService(
@@ -57,7 +55,8 @@ public class ApplicationUserAndTenancySubscriptions extends AbstractService {
 
     //region > on NewXxxUser
     @Programmatic
-    @Subscribe
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final ApplicationUsers.NewLocalUserDomainEvent ev) {
         switch(ev.getEventPhase()) {
             case EXECUTED:
@@ -68,7 +67,8 @@ public class ApplicationUserAndTenancySubscriptions extends AbstractService {
     }
 
     @Programmatic
-    @Subscribe
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final ApplicationUsers.NewDelegateUserDomainEvent ev) {
         switch(ev.getEventPhase()) {
             case EXECUTED:
@@ -92,7 +92,8 @@ public class ApplicationUserAndTenancySubscriptions extends AbstractService {
 
     //region > on DeleteXxxUser
     @Programmatic
-    @Subscribe
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final ApplicationUser.DeleteDomainEvent ev) {
         switch(ev.getEventPhase()) {
             case EXECUTING:
@@ -114,7 +115,8 @@ public class ApplicationUserAndTenancySubscriptions extends AbstractService {
 
     //region > on DeleteTenancy
     @Programmatic
-    @Subscribe
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final ApplicationTenancy.DeleteDomainEvent ev) {
         switch(ev.getEventPhase()) {
             case DISABLE:

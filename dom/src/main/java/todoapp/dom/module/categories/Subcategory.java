@@ -35,8 +35,4 @@ public enum Subcategory {
         };
     }
 
-    public String title() {
-        return org.apache.isis.applib.util.Enums.getFriendlyNameOf(this);
-    }
-
 }

@@ -22,8 +22,4 @@ public enum Category {
     };
 
     public abstract List<Subcategory> subcategories();
-
-    public String title() {
-        return org.apache.isis.applib.util.Enums.getFriendlyNameOf(this);
-    }
 }

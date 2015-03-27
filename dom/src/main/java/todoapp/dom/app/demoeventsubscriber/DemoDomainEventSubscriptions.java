@@ -18,9 +18,6 @@
  */
 package todoapp.dom.app.demoeventsubscriber;
 
-import todoapp.dom.module.settings.ToDoAppSettingsService;
-import todoapp.dom.module.todoitem.ToDoItem;
-
 import java.util.EventObject;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -28,7 +25,6 @@ import javax.annotation.PreDestroy;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
-import com.google.common.eventbus.Subscribe;
 import org.isisaddons.module.audit.dom.AuditingServiceMenu;
 import org.isisaddons.module.command.dom.CommandServiceMenu;
 import org.isisaddons.module.publishing.dom.PublishingServiceMenu;
@@ -50,10 +46,12 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.CollectionDomainEvent;
 import org.apache.isis.applib.services.eventbus.EventBusService;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
-
+import org.apache.isis.applib.services.i18n.TranslatableString;
 import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterables.transform;
 import static com.google.common.collect.Lists.newArrayList;
+import todoapp.dom.module.settings.ToDoAppSettingsService;
+import todoapp.dom.module.todoitem.ToDoItem;
 
 /**
  * Subscribes to changes made to  the {@link todoapp.dom.module.todoitem.ToDoItem} entity.
@@ -157,13 +155,17 @@ public class DemoDomainEventSubscriptions {
 
 
     private void onExecutedThrowExceptionIfSet() {
-        if(getSubscriberBehaviour() == DemoBehaviour.AnyExecuteVetoWithRecoverableException) {
-            throw new RecoverableException("Rejecting event (recoverable exception thrown)");
+        if(getSubscriberBehaviour() == DemoBehaviour.ANY_EXECUTE_VETO_WITH_RECOVERABLE_EXCEPTION) {
+            throw new RecoverableException(
+                    TranslatableString.tr("Rejecting event (recoverable exception thrown)"),
+                    this.getClass(), "on(ActionDomainEvent)");
         }
-        if(getSubscriberBehaviour() == DemoBehaviour.AnyExecuteVetoWithNonRecoverableException) {
-            throw new NonRecoverableException("Rejecting event (non-recoverable exception thrown)");
+        if(getSubscriberBehaviour() == DemoBehaviour.ANY_EXECUTE_VETO_WITH_NON_RECOVERABLE_EXCEPTION) {
+            throw new NonRecoverableException(
+                    TranslatableString.tr("Rejecting event (non-recoverable exception thrown)"),
+                    this.getClass(), "on(ActionDomainEvent)");
         }
-        if(getSubscriberBehaviour() == DemoBehaviour.AnyExecuteVetoWithOtherException) {
+        if(getSubscriberBehaviour() == DemoBehaviour.ANY_EXECUTE_VETO_WITH_OTHER_EXCEPTION) {
             throw new RuntimeException("Throwing some other exception");
         }
     }
@@ -171,7 +173,8 @@ public class DemoDomainEventSubscriptions {
 
     //region > on(Event) for ToDoItem-specific events
     @Programmatic
-    @Subscribe
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final ToDoItem.CompletedEvent ev) {
         recordEvent(ev);
         switch(ev.getEventPhase()) {
@@ -192,27 +195,31 @@ public class DemoDomainEventSubscriptions {
 
     //region > on(Event) for sessionlogger, auditing, command, publishing events
     @Programmatic
-    @Subscribe
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final SessionLoggingServiceMenu.ActionDomainEvent ev) {
-        vetoIf(ev, DemoBehaviour.ActivityMenuHideAll, DemoBehaviour.ActivityMenuHideSessionLogger);
+        vetoIf(ev, DemoBehaviour.ACTIVITY_MENU_HIDE_ALL, DemoBehaviour.ACTIVITY_MENU_HIDE_SESSION_LOGGER);
     }
 
     @Programmatic
-    @Subscribe
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final AuditingServiceMenu.ActionDomainEvent ev) {
-        vetoIf(ev, DemoBehaviour.ActivityMenuHideAll, DemoBehaviour.ActivityMenuHideAuditing);
+        vetoIf(ev, DemoBehaviour.ACTIVITY_MENU_HIDE_ALL, DemoBehaviour.ACTIVITY_MENU_HIDE_AUDITING);
     }
 
     @Programmatic
-    @Subscribe
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final CommandServiceMenu.ActionDomainEvent ev) {
-        vetoIf(ev, DemoBehaviour.ActivityMenuHideAll, DemoBehaviour.ActivityMenuHideCommand);
+        vetoIf(ev, DemoBehaviour.ACTIVITY_MENU_HIDE_ALL, DemoBehaviour.ACTIVITY_MENU_HIDE_COMMAND);
     }
 
     @Programmatic
-    @Subscribe
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final PublishingServiceMenu.ActionDomainEvent ev) {
-        vetoIf(ev, DemoBehaviour.ActivityMenuHideAll, DemoBehaviour.ActivityMenuHidePublishing);
+        vetoIf(ev, DemoBehaviour.ACTIVITY_MENU_HIDE_ALL, DemoBehaviour.ACTIVITY_MENU_HIDE_PUBLISHING);
     }
 
     private void vetoIf(
@@ -232,26 +239,27 @@ public class DemoDomainEventSubscriptions {
     //region > on(Event) ... general purpose
 
     @Programmatic
-    @Subscribe
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final org.apache.isis.applib.services.eventbus.ActionDomainEvent<?> ev) {
         recordEvent(ev);
         switch(ev.getEventPhase()) {
             case HIDE:
-                if(getSubscriberBehaviour() == DemoBehaviour.UpdateCostActionHide) {
+                if(getSubscriberBehaviour() == DemoBehaviour.UPDATE_COST_ACTION_HIDE) {
                     if(ev.getIdentifier().getMemberName().equals("updateCost")) {
                         ev.hide();
                     }
                 }
                 break;
             case DISABLE:
-                if(getSubscriberBehaviour() == DemoBehaviour.UpdateCostActionDisable) {
+                if(getSubscriberBehaviour() == DemoBehaviour.UPDATE_COST_ACTION_DISABLE) {
                     if(ev.getIdentifier().getMemberName().equals("updateCost")) {
                         ev.disable("ToDoItemSubscriptions says: updateCost action disabled!");
                     }
                 }
                 break;
             case VALIDATE:
-                if(getSubscriberBehaviour() == DemoBehaviour.UpdateCostActionInvalidate &&
+                if(getSubscriberBehaviour() == DemoBehaviour.UPDATE_COST_ACTION_INVALIDATE &&
                         ev.getIdentifier().getMemberName().equals("updateCost")) {
                     ev.invalidate("ToDoItemSubscriptions says: can't invoke updateCost action with these args!");
                 }
@@ -268,24 +276,25 @@ public class DemoDomainEventSubscriptions {
     }
 
     @Programmatic
-    @Subscribe
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
     public void on(org.apache.isis.applib.services.eventbus.PropertyDomainEvent<?,?> ev) {
         recordEvent(ev);
         switch(ev.getEventPhase()) {
             case HIDE:
-                if(getSubscriberBehaviour() == DemoBehaviour.DescriptionPropertyHide &&
+                if(getSubscriberBehaviour() == DemoBehaviour.DESCRIPTION_PROPERTY_HIDE &&
                     ev.getIdentifier().getMemberName().equals("description")) {
                     ev.veto("");
                 }
                 break;
             case DISABLE:
-                if(getSubscriberBehaviour() == DemoBehaviour.DescriptionPropertyDisable &&
+                if(getSubscriberBehaviour() == DemoBehaviour.DESCRIPTION_PROPERTY_DISABLE &&
                     ev.getIdentifier().getMemberName().equals("description")) {
                     ev.veto("ToDoItemSubscriptions says: description property disabled!");
                 }
                 break;
             case VALIDATE:
-                if(getSubscriberBehaviour() == DemoBehaviour.DescriptionPropertyInvalidate &&
+                if(getSubscriberBehaviour() == DemoBehaviour.DESCRIPTION_PROPERTY_INVALIDATE &&
                     ev.getIdentifier().getMemberName().equals("description")) {
                     ev.veto("ToDoItemSubscriptions says: can't change description property to this value!");
                 }
@@ -307,33 +316,34 @@ public class DemoDomainEventSubscriptions {
     }
 
     @Programmatic
-    @Subscribe
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
     public void on(org.apache.isis.applib.services.eventbus.CollectionDomainEvent<?,?> ev) {
         recordEvent(ev);
         switch (ev.getEventPhase()) {
             case HIDE:
-                if(getSubscriberBehaviour() == DemoBehaviour.DependenciesCollectionHide &&
+                if(getSubscriberBehaviour() == DemoBehaviour.DEPENDENCIES_COLLECTION_HIDE &&
                     ev.getIdentifier().getMemberName().equals("dependencies")) {
                     ev.veto("");
                 }
-                if (getSubscriberBehaviour() == DemoBehaviour.SimilarToCollectionHide &&
+                if (getSubscriberBehaviour() == DemoBehaviour.SIMILAR_TO_COLLECTION_HIDE &&
                     ev.getIdentifier().getMemberName().equals("similarTo")) {
                     ev.veto("");
                 }
                 break;
             case DISABLE:
-                if (getSubscriberBehaviour() == DemoBehaviour.DependenciesCollectionDisable &&
+                if (getSubscriberBehaviour() == DemoBehaviour.DEPENDENCIES_COLLECTION_DISABLE &&
                     ev.getIdentifier().getMemberName().equals("dependencies")) {
                     ev.veto("ToDoItemSubscriptions says: dependencies collection disabled!");
                 }
                 break;
             case VALIDATE:
-                if(getSubscriberBehaviour() == DemoBehaviour.DependenciesCollectionInvalidateAdd &&
+                if(getSubscriberBehaviour() == DemoBehaviour.DEPENDENCIES_COLLECTION_INVALIDATE_ADD &&
                     ev.getIdentifier().getMemberName().equals("dependencies") &&
                     ev.getOf() == CollectionDomainEvent.Of.ADD_TO ) {
                     ev.veto("ToDoItemSubscriptions says: can't add this object to dependencies collection!");
                 }
-                if(getSubscriberBehaviour() == DemoBehaviour.DependenciesCollectionInvalidateRemove &&
+                if(getSubscriberBehaviour() == DemoBehaviour.DEPENDENCIES_COLLECTION_INVALIDATE_REMOVE &&
                     ev.getIdentifier().getMemberName().equals("dependencies") &&
                     ev.getOf() == CollectionDomainEvent.Of.REMOVE_FROM ) {
                     ev.veto("ToDoItemSubscriptions says: can't remove this object from dependencies collection!");
@@ -412,7 +422,7 @@ public class DemoDomainEventSubscriptions {
     @Programmatic
     public void reset() {
         receivedEvents.clear();
-        subscriberBehaviour(DemoBehaviour.AnyExecuteAccept);
+        subscriberBehaviour(DemoBehaviour.ANY_EXECUTE_ACCEPT);
     }
     //endregion
 

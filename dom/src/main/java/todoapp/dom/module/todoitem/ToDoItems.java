@@ -18,9 +18,6 @@
  */
 package todoapp.dom.module.todoitem;
 
-import todoapp.dom.module.categories.Category;
-import todoapp.dom.module.categories.Subcategory;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -45,7 +42,10 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.clock.ClockService;
+import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.queryresultscache.QueryResultsCache;
+import todoapp.dom.module.categories.Category;
+import todoapp.dom.module.categories.Subcategory;
 
 @DomainService(repositoryFor = ToDoItem.class)
 @DomainServiceLayout(
@@ -64,7 +64,8 @@ public class ToDoItems {
     public List<ToDoItem> notYetComplete() {
         final List<ToDoItem> items = notYetCompleteNoUi();
         if(items.isEmpty()) {
-            container.informUser("All to-do items have been completed :-)");
+            container.informUser(
+                    TranslatableString.tr("All to-do items have been completed :-)"), this.getClass(), "notYetComplete");
         }
         return items;
     }
@@ -97,7 +98,7 @@ public class ToDoItems {
     public List<ToDoItem> complete() {
         final List<ToDoItem> items = completeNoUi();
         if(items.isEmpty()) {
-            container.informUser("No to-do items have yet been completed :-(");
+            container.informUser(TranslatableString.tr("No to-do items have yet been completed :-("), this.getClass(), "complete");
         }
         return items;
     }

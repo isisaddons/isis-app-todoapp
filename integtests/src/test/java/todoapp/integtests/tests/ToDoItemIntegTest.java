@@ -18,22 +18,18 @@
  */
 package todoapp.integtests.tests;
 
-import todoapp.dom.app.demoeventsubscriber.DemoBehaviour;
-import todoapp.dom.app.demoeventsubscriber.DemoDomainEventSubscriptions;
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItems;
-import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
-
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.util.EventObject;
 import java.util.List;
 import javax.activation.MimeType;
 import javax.inject.Inject;
+import com.google.common.collect.Iterables;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.NonRecoverableException;
 import org.apache.isis.applib.RecoverableException;
 import org.apache.isis.applib.clock.Clock;
@@ -43,7 +39,6 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.CollectionDomainEvent;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.value.Blob;
-
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -51,9 +46,16 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+import todoapp.dom.app.demoeventsubscriber.DemoBehaviour;
+import todoapp.dom.app.demoeventsubscriber.DemoDomainEventSubscriptions;
+import todoapp.dom.module.todoitem.ToDoItem;
+import todoapp.dom.module.todoitem.ToDoItems;
+import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
 public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
+    @Inject
+    DomainObjectContainer container;
     @Inject
     FixtureScripts fixtureScripts;
     @Inject
@@ -81,11 +83,12 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
         public void setUp() throws Exception {
             super.setUp();
 
-            toDoItem = wrap(fixtureScript.getNotYetComplete().get(0));
+            final List<ToDoItem> notYetComplete = fixtureScript.getNotYetComplete();
+            final Iterable<ToDoItem> iter = Iterables.filter(notYetComplete, ToDoItem.Predicates.thoseWithDueByDate());
+            toDoItem = wrap(iter.iterator().next());
             assertThat(toDoItem, is(not(nullValue())));
 
             nextTransaction();
-
         }
 
 
@@ -94,28 +97,28 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
             // given
             final String description = toDoItem.getDescription();
-            assertThat(container().titleOf(toDoItem), containsString(description));
+            assertThat(container.titleOf(toDoItem), containsString(description));
 
             // when
             unwrap(toDoItem).setDescription("Foobar");
 
             // then
-            assertThat(container().titleOf(toDoItem), containsString("Foobar"));
+            assertThat(container.titleOf(toDoItem), containsString("Foobar"));
         }
 
         @Test
         public void includesDueDateIfAny() throws Exception {
 
             // given
-            LocalDate dueBy = toDoItem.getDueBy();
-            assertThat(container().titleOf(toDoItem), containsString("due by " + dueBy.toString("yyyy-MM-dd")));
+            final LocalDate dueBy = toDoItem.getDueBy();
+            assertThat(container.titleOf(toDoItem), containsString("due by " + dueBy.toString("yyyy-MM-dd")));
 
             // when
             final LocalDate fiveDaysFromNow = Clock.getTimeAsLocalDate().plusDays(5);
             unwrap(toDoItem).setDueBy(fiveDaysFromNow);
 
             // then
-            assertThat(container().titleOf(toDoItem), containsString("due by " + fiveDaysFromNow.toString("yyyy-MM-dd")));
+            assertThat(container.titleOf(toDoItem), containsString("due by " + fiveDaysFromNow.toString("yyyy-MM-dd")));
         }
 
 
@@ -127,21 +130,21 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             toDoItem.setDueBy(null);
 
             // then
-            assertThat(container().titleOf(toDoItem), not(containsString("due by")));
+            assertThat(container.titleOf(toDoItem), not(containsString("due by")));
         }
 
         @Test
         public void usesWhetherCompleted() throws Exception {
 
             // given
-            assertThat(container().titleOf(toDoItem), not(containsString("Completed!")));
+            assertThat(container.titleOf(toDoItem), not(containsString("Completed!")));
 
             // when
             toDoItem.completed();
 
             // then
-            assertThat(container().titleOf(toDoItem), not(containsString("due by")));
-            assertThat(container().titleOf(toDoItem), containsString("Completed!"));
+            assertThat(container.titleOf(toDoItem), not(containsString("due by")));
+            assertThat(container.titleOf(toDoItem), containsString("Completed!"));
         }
     }
 
@@ -199,7 +202,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // given
                 toDoItemSubscriptions.reset();
-                assertThat(toDoItemSubscriptions.getSubscriberBehaviour(), is(DemoBehaviour.AnyExecuteAccept));
+                assertThat(toDoItemSubscriptions.getSubscriberBehaviour(), is(DemoBehaviour.ANY_EXECUTE_ACCEPT));
                 assertThat(unwrap(toDoItem).isComplete(), is(false));
 
                 // when
@@ -217,7 +220,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 assertThat(receivedEvents.size(), is(5*2));
                 final ToDoItem.CompletedEvent ev = receivedEvents.get(0);
 
-                ToDoItem source = ev.getSource();
+                final ToDoItem source = ev.getSource();
                 assertThat(source, is(equalTo(unwrap(toDoItem))));
                 assertThat(ev.getIdentifier().getMemberName(), is("completed"));
             }
@@ -226,10 +229,11 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void subscriberVetoesEventWithRecoverableException() throws Exception {
 
                 // given
-                toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.AnyExecuteVetoWithRecoverableException);
+                toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.ANY_EXECUTE_VETO_WITH_RECOVERABLE_EXCEPTION);
 
                 // then
                 expectedExceptions.expect(RecoverableException.class);
+                expectedExceptions.expectMessage("Rejecting event (recoverable exception thrown)");
 
                 // when
                 toDoItem.completed();
@@ -239,10 +243,11 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void subscriberVetoesEventWithNonRecoverableException() throws Exception {
 
                 // given
-                toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.AnyExecuteVetoWithNonRecoverableException);
+                toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.ANY_EXECUTE_VETO_WITH_NON_RECOVERABLE_EXCEPTION);
 
                 // then
                 expectedExceptions.expect(NonRecoverableException.class);
+                expectedExceptions.expectMessage("Rejecting event (non-recoverable exception thrown)");
 
                 // when
                 toDoItem.completed();
@@ -252,10 +257,11 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void subscriberVetoesEventWithAnyOtherException() throws Exception {
 
                 // given
-                toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.AnyExecuteVetoWithOtherException);
+                toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.ANY_EXECUTE_VETO_WITH_OTHER_EXCEPTION);
 
                 // then
                 expectedExceptions.expect(RuntimeException.class);
+                expectedExceptions.expectMessage("Throwing some other exception");
 
                 // when
                 toDoItem.completed();
@@ -319,15 +325,11 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.notYetCompleted();
             }
 
-            /**
-             * Even though {@link todoapp.dom.module.todoitem.ToDoItem#notYetCompleted()} is not annotated with
-             * {@link org.apache.isis.applib.annotation.ActionInteraction}, an event is still raised.
-             */
             @Test
             public void subscriberReceivesEvent() throws Exception {
 
                 // given
-                assertThat(toDoItemSubscriptions.getSubscriberBehaviour(), is(DemoBehaviour.AnyExecuteAccept));
+                assertThat(toDoItemSubscriptions.getSubscriberBehaviour(), is(DemoBehaviour.ANY_EXECUTE_ACCEPT));
                 unwrap(toDoItem).setComplete(true);
 
                 // when
@@ -340,7 +342,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 final ActionDomainEvent<ToDoItem> ev = toDoItemSubscriptions.mostRecentlyReceivedEvent(ActionDomainEvent.class);
                 assertThat(ev, is(not(nullValue())));
 
-                ToDoItem source = ev.getSource();
+                final ToDoItem source = ev.getSource();
                 assertThat(source, is(equalTo(unwrap(toDoItem))));
                 assertThat(ev.getIdentifier().getMemberName(), is("notYetCompleted"));
             }
@@ -451,7 +453,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 public void subscriberVetoesEventWithRecoverableException() throws Exception {
 
                     // given
-                    toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.AnyExecuteVetoWithRecoverableException);
+                    toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.ANY_EXECUTE_VETO_WITH_RECOVERABLE_EXCEPTION);
 
                     // then
                     expectedExceptions.expect(RecoverableException.class);
@@ -464,7 +466,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 public void subscriberVetoesEventWithNonRecoverableException() throws Exception {
 
                     // given
-                    toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.AnyExecuteVetoWithNonRecoverableException);
+                    toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.ANY_EXECUTE_VETO_WITH_NON_RECOVERABLE_EXCEPTION);
 
                     // then
                     expectedExceptions.expect(NonRecoverableException.class);
@@ -477,7 +479,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 public void subscriberVetoesEventWithAnyOtherException() throws Exception {
 
                     // given
-                    toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.AnyExecuteVetoWithOtherException);
+                    toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.ANY_EXECUTE_VETO_WITH_OTHER_EXCEPTION);
 
                     // then
                     expectedExceptions.expect(RuntimeException.class);
@@ -547,7 +549,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 public void subscriberVetoesEventWithRecoverableException() throws Exception {
 
                     // given
-                    toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.AnyExecuteVetoWithRecoverableException);
+                    toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.ANY_EXECUTE_VETO_WITH_RECOVERABLE_EXCEPTION);
 
                     // then
                     expectedExceptions.expect(RecoverableException.class);
@@ -560,7 +562,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 public void subscriberVetoesEventWithNonRecoverableException() throws Exception {
 
                     // given
-                    toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.AnyExecuteVetoWithNonRecoverableException);
+                    toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.ANY_EXECUTE_VETO_WITH_NON_RECOVERABLE_EXCEPTION);
 
                     // then
                     expectedExceptions.expect(NonRecoverableException.class);
@@ -573,7 +575,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 public void subscriberVetoesEventWithAnyOtherException() throws Exception {
 
                     // given
-                    toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.AnyExecuteVetoWithOtherException);
+                    toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.ANY_EXECUTE_VETO_WITH_OTHER_EXCEPTION);
 
                     // then
                     expectedExceptions.expect(RuntimeException.class);
@@ -593,7 +595,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             @Test
             public void happyCase() throws Exception {
 
-                byte[] bytes = "{\"foo\": \"bar\"}".getBytes(Charset.forName("UTF-8"));
+                final byte[] bytes = "{\"foo\": \"bar\"}".getBytes(Charset.forName("UTF-8"));
                 final Blob newAttachment = new Blob("myfile.json", new MimeType("application/json"), bytes);
 
                 // when
@@ -607,7 +609,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void canBeNull() throws Exception {
 
                 // when
-                toDoItem.setAttachment((Blob)null);
+                toDoItem.setAttachment(null);
 
                 // then
                 assertThat(toDoItem.getAttachment(), is((Blob)null));
@@ -706,7 +708,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void cannotBeNull() throws Exception {
 
                 // when, then
-                expectedExceptions.expectMessage("Mandatory");
+                expectedExceptions.expectMessage("'Description' is mandatory");
                 toDoItem.setDescription(null);
             }
 
@@ -763,7 +765,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void subscriberReceivesEvent() throws Exception {
 
                 // given
-                assertThat(toDoItemSubscriptions.getSubscriberBehaviour(), is(DemoBehaviour.AnyExecuteAccept));
+                assertThat(toDoItemSubscriptions.getSubscriberBehaviour(), is(DemoBehaviour.ANY_EXECUTE_ACCEPT));
                 final String description = toDoItem.getDescription();
 
                 // when
@@ -774,7 +776,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 final PropertyDomainEvent<ToDoItem,String> ev = toDoItemSubscriptions.mostRecentlyReceivedEvent(PropertyDomainEvent.class);
                 assertThat(ev, is(not(nullValue())));
 
-                ToDoItem source = ev.getSource();
+                final ToDoItem source = ev.getSource();
                 assertThat(source, is(equalTo(unwrap(toDoItem))));
                 assertThat(ev.getIdentifier().getMemberName(), is("description"));
                 assertThat(ev.getOldValue(), is(description));
@@ -785,7 +787,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void subscriberVetoesEventWithRecoverableException() throws Exception {
 
                 // given
-                toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.AnyExecuteVetoWithRecoverableException);
+                toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.ANY_EXECUTE_VETO_WITH_RECOVERABLE_EXCEPTION);
 
                 // then
                 expectedExceptions.expect(RecoverableException.class);
@@ -799,7 +801,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void subscriberVetoesEventWithNonRecoverableException() throws Exception {
 
                 // given
-                toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.AnyExecuteVetoWithNonRecoverableException);
+                toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.ANY_EXECUTE_VETO_WITH_NON_RECOVERABLE_EXCEPTION);
 
                 // then
                 expectedExceptions.expect(NonRecoverableException.class);
@@ -813,7 +815,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void subscriberVetoesEventWithAnyOtherException() throws Exception {
 
                 // given
-                toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.AnyExecuteVetoWithOtherException);
+                toDoItemSubscriptions.subscriberBehaviour(DemoBehaviour.ANY_EXECUTE_VETO_WITH_OTHER_EXCEPTION);
 
                 // then
                 expectedExceptions.expect(RuntimeException.class);
@@ -824,7 +826,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
 
             private static String characters(final int n) {
-                StringBuffer buf = new StringBuffer();
+                final StringBuffer buf = new StringBuffer();
                 for(int i=0; i<n; i++) {
                     buf.append("a");
                 }
@@ -853,7 +855,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void canBeNull() throws Exception {
 
                 // when
-                toDoItem.setDueBy((LocalDate)null);
+                toDoItem.setDueBy(null);
 
                 // then
                 assertThat(toDoItem.getDueBy(), is((LocalDate)null));
@@ -902,7 +904,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void canBeNull() throws Exception {
 
                 // when
-                toDoItem.setNotes((String)null);
+                toDoItem.setNotes(null);
 
                 // then
                 assertThat(toDoItem.getNotes(), is((String)null));

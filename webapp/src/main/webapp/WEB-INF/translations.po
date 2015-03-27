@@ -10,6 +10,11 @@
 #     /WEB-INF/translations-fr.po
 #     /WEB-INF/translations.po
 #
+# If the app uses TranslatableString (eg for internationalized validation
+# messages), or if the app calls the TranslationService directly, then ensure
+# that all text to be translated has been captured by running a full
+# integration test suite that exercises all relevant behaviour
+#
 ##############################################################################
 
 #: org.apache.isis.core.runtime.services.i18n.po.TranslationServicePoMenu#downloadTranslations(java.lang.String)
@@ -17,12 +22,33 @@ msgid ".pot file name"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.user.ApplicationUser#accountType
+msgid "Account Type"
+msgstr ""
+
+
 #: org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract#targetAction
 #: org.isisaddons.module.audit.dom.AuditEntry#targetAction
 #: org.isisaddons.module.command.dom.CommandJdo#targetAction
 #: org.isisaddons.module.publishing.dom.PublishedEvent#targetAction
+#: org.isisaddons.module.security.dom.feature.ApplicationMemberType#ACTION
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addAction(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String,java.lang.String)
 msgid "Action"
+msgstr ""
+
+
+#: org.apache.isis.applib.services.publish.EventType#ACTION_INVOCATION
+msgid "Action Invocation"
+msgstr ""
+
+
+#: org.isisaddons.module.security.app.feature.ApplicationClassAction#actionSemantics
+msgid "Action Semantics"
+msgstr ""
+
+
+#: org.isisaddons.module.security.app.feature.ApplicationClass#actions
+msgid "Actions"
 msgstr ""
 
 
@@ -41,6 +67,31 @@ msgstr ""
 #: org.isisaddons.module.publishing.dom.PublishingServiceMenu
 #: org.isisaddons.module.sessionlogger.dom.SessionLoggingServiceMenu
 msgid "Activity"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#ACTIVITY_MENU_HIDE_ALL
+msgid "Activity Menu Hide All"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#ACTIVITY_MENU_HIDE_AUDITING
+msgid "Activity Menu Hide Auditing"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#ACTIVITY_MENU_HIDE_COMMAND
+msgid "Activity Menu Hide Command"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#ACTIVITY_MENU_HIDE_PUBLISHING
+msgid "Activity Menu Hide Publishing"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#ACTIVITY_MENU_HIDE_SESSION_LOGGER
+msgid "Activity Menu Hide Session Logger"
 msgstr ""
 
 
@@ -134,6 +185,7 @@ msgstr ""
 
 
 #: org.isisaddons.module.security.dom.permission.ApplicationPermission#allow()
+#: org.isisaddons.module.security.dom.permission.ApplicationPermissionRule#ALLOW
 msgid "Allow"
 msgstr ""
 
@@ -146,6 +198,26 @@ msgstr ""
 
 #: todoapp.dom.app.analysis.ToDoItemAnalysisMenu
 msgid "Analysis"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#ANY_EXECUTE_ACCEPT
+msgid "Any Execute Accept"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#ANY_EXECUTE_VETO_WITH_NON_RECOVERABLE_EXCEPTION
+msgid "Any Execute Veto With Non Recoverable Exception"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#ANY_EXECUTE_VETO_WITH_OTHER_EXCEPTION
+msgid "Any Execute Veto With Other Exception"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#ANY_EXECUTE_VETO_WITH_RECOVERABLE_EXCEPTION
+msgid "Any Execute Veto With Recoverable Exception"
 msgstr ""
 
 
@@ -170,6 +242,21 @@ msgid "Are you sure?"
 msgstr ""
 
 
+#: org.isisaddons.module.command.dom.CommandJdo#arguments
+msgid "Arguments"
+msgstr ""
+
+
+#: todoapp.dom.module.todoitem.ToDoItem#atPath
+msgid "At Path"
+msgstr ""
+
+
+#: todoapp.dom.module.todoitem.ToDoItem#attachment
+msgid "Attachment"
+msgstr ""
+
+
 #: org.isisaddons.module.audit.dom.AuditEntry#auditEntries()
 #: org.isisaddons.module.audit.dom.AuditingServiceContributions#auditEntries()
 #: org.isisaddons.module.command.dom.CommandJdo#auditEntries()
@@ -178,8 +265,24 @@ msgid "Audit Entries"
 msgstr ""
 
 
+#: org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract$ChangeType#AUDIT_ENTRY
+msgid "Audit Entry"
+msgstr ""
+
+
+#: org.apache.isis.applib.annotation.Command$ExecuteIn#BACKGROUND
+#: org.apache.isis.applib.services.command.Command$Executor#BACKGROUND
+msgid "Background"
+msgstr ""
+
+
 #: todoapp.dom.app.demoeventsubscriber.DemoDomainEventSubscriptions#subscriberBehaviour(todoapp.dom.app.demoeventsubscriber.DemoBehaviour)
 msgid "Behaviour"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.SettingType#BOOLEAN
+msgid "Boolean"
 msgstr ""
 
 
@@ -195,13 +298,14 @@ msgid "By Date Range"
 msgstr ""
 
 
-#: todoapp.dom.module.categories.Subcategory#categorized()
 #: todoapp.dom.module.todoitem.ToDoItems#categorized()
 msgid "Categorized"
 msgstr ""
 
 
+#: todoapp.dom.app.analysis.ToDoItemsByCategoryViewModel#category
 #: todoapp.dom.module.categories.UpdateCategoryContributions#updateCategory(todoapp.dom.module.categories.Categorized,todoapp.dom.module.categories.Category,todoapp.dom.module.categories.Subcategory)
+#: todoapp.dom.module.todoitem.ToDoItem#category
 #: todoapp.dom.module.todoitem.ToDoItem#duplicate(java.lang.String,todoapp.dom.module.categories.Category,todoapp.dom.module.categories.Subcategory,org.joda.time.LocalDate,java.math.BigDecimal)
 #: todoapp.dom.module.todoitem.ToDoItems#categorized(todoapp.dom.module.categories.Category,todoapp.dom.module.categories.Subcategory,boolean)
 #: todoapp.dom.module.todoitem.ToDoItems#newToDo(java.lang.String,todoapp.dom.module.categories.Category,todoapp.dom.module.categories.Subcategory,org.joda.time.LocalDate,java.math.BigDecimal)
@@ -209,8 +313,24 @@ msgid "Category"
 msgstr ""
 
 
+#: org.isisaddons.module.sessionlogger.dom.SessionLogEntry#causedBy
+msgid "Caused By"
+msgstr ""
+
+
+#: org.isisaddons.module.command.dom.CommandJdo#causedException
+msgid "Caused Exception"
+msgstr ""
+
+
 #: org.isisaddons.module.security.dom.permission.ApplicationPermission#changing()
+#: org.isisaddons.module.security.dom.permission.ApplicationPermissionMode#CHANGING
 msgid "Changing"
+msgstr ""
+
+
+#: org.isisaddons.module.security.app.user.UserPermissionViewModel#changingPermission
+msgid "Changing Permission"
 msgstr ""
 
 
@@ -220,16 +340,38 @@ msgid "Child Commands"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.tenancy.ApplicationTenancy#children
+msgid "Children"
+msgstr ""
+
+
+#: todoapp.dom.module.categories.Subcategory#CHORES
+msgid "Chores"
+msgstr ""
+
+
 #: org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract#targetClass
 #: org.isisaddons.module.audit.dom.AuditEntry#targetClass
 #: org.isisaddons.module.command.dom.CommandJdo#targetClass
 #: org.isisaddons.module.publishing.dom.PublishedEvent#targetClass
 #: org.isisaddons.module.security.app.user.UserPermissionViewModelContributions#filterPermissions(org.isisaddons.module.security.dom.user.ApplicationUser,java.lang.String,java.lang.String)
+#: org.isisaddons.module.security.dom.feature.ApplicationFeatureType$2#CLASS
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addAction(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String,java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addClass(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addCollection(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String,java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addProperty(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String,java.lang.String)
 msgid "Class"
+msgstr ""
+
+
+#: org.isisaddons.module.security.app.feature.ApplicationClass#className
+#: org.isisaddons.module.security.app.feature.ApplicationClassAction#className
+#: org.isisaddons.module.security.app.feature.ApplicationClassCollection#className
+#: org.isisaddons.module.security.app.feature.ApplicationClassMember#className
+#: org.isisaddons.module.security.app.feature.ApplicationClassProperty#className
+#: org.isisaddons.module.security.app.feature.ApplicationFeatureViewModel#className
+#: org.isisaddons.module.security.app.feature.ApplicationPackage#className
+msgid "Class Name"
 msgstr ""
 
 
@@ -243,11 +385,18 @@ msgid "Clone"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.feature.ApplicationMemberType#COLLECTION
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addCollection(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String,java.lang.String)
 msgid "Collection"
 msgstr ""
 
 
+#: org.isisaddons.module.security.app.feature.ApplicationClass#collections
+msgid "Collections"
+msgstr ""
+
+
+#: org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract$ChangeType#COMMAND
 #: org.isisaddons.module.audit.dom.AuditEntry#command()
 #: org.isisaddons.module.command.dom.CommandJdo
 #: org.isisaddons.module.command.dom.CommandJdo#command()
@@ -257,6 +406,9 @@ msgid "Command"
 msgstr ""
 
 
+#: org.isisaddons.module.command.dom.CommandJdo#complete
+#: todoapp.dom.app.analysis.ToDoItemsByCategoryViewModel#complete
+#: todoapp.dom.app.dashboard.ToDoAppDashboard#complete
 #: todoapp.dom.module.todoitem.ToDoItems#complete()
 msgid "Complete"
 msgstr ""
@@ -267,19 +419,61 @@ msgid "Complete Slowly"
 msgstr ""
 
 
+#: org.isisaddons.module.command.dom.CommandJdo#completedAt
+msgid "Completed At"
+msgstr ""
+
+
 #: todoapp.dom.module.todoitem.ToDoItems#categorized(todoapp.dom.module.categories.Category,todoapp.dom.module.categories.Subcategory,boolean)
 msgid "Completed?"
 msgstr ""
 
 
+#: todoapp.dom.module.categories.Subcategory#CONSULTING
+msgid "Consulting"
+msgstr ""
+
+
+#: org.isisaddons.module.security.app.feature.ApplicationPackage#contents
+msgid "Contents"
+msgstr ""
+
+
+#: org.isisaddons.module.security.app.feature.ApplicationClass#contributed
+#: org.isisaddons.module.security.app.feature.ApplicationClassAction#contributed
+#: org.isisaddons.module.security.app.feature.ApplicationClassCollection#contributed
+#: org.isisaddons.module.security.app.feature.ApplicationClassMember#contributed
+#: org.isisaddons.module.security.app.feature.ApplicationClassProperty#contributed
+#: org.isisaddons.module.security.app.feature.ApplicationFeatureViewModel#contributed
+#: org.isisaddons.module.security.app.feature.ApplicationPackage#contributed
+msgid "Contributed"
+msgstr ""
+
+
+#: todoapp.dom.module.todoitem.ToDoItem#cost
 #: todoapp.dom.module.todoitem.ToDoItem#duplicate(java.lang.String,todoapp.dom.module.categories.Category,todoapp.dom.module.categories.Subcategory,org.joda.time.LocalDate,java.math.BigDecimal)
 #: todoapp.dom.module.todoitem.ToDoItems#newToDo(java.lang.String,todoapp.dom.module.categories.Category,todoapp.dom.module.categories.Subcategory,org.joda.time.LocalDate,java.math.BigDecimal)
 msgid "Cost"
 msgstr ""
 
 
+#: todoapp.dom.app.analysis.ToDoItemsByDateRangeViewModel#count
+msgid "Count"
+msgstr ""
+
+
 #: todoapp.dom.module.todoitem.ToDoItem#duplicate()
 msgid "Create a new todo item from this one"
+msgstr ""
+
+
+#: todoapp.dom.app.analysis.ToDoItemsByDateRangeViewModel#dateRange
+msgid "Date Range"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.user.AccountType#DELEGATED
+msgid "Delegated"
 msgstr ""
 
 
@@ -297,13 +491,46 @@ msgid "Delete"
 msgstr ""
 
 
+#: todoapp.dom.module.todoitem.ToDoItem#delete
+msgid "Deleted {title}"
+msgstr ""
+
+
 #: todoapp.dom.module.todoitem.ToDoItem#demoException()
 msgid "Demo Exception"
 msgstr ""
 
 
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#DEPENDENCIES_COLLECTION_DISABLE
+msgid "Dependencies Collection Disable"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#DEPENDENCIES_COLLECTION_HIDE
+msgid "Dependencies Collection Hide"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#DEPENDENCIES_COLLECTION_INVALIDATE_ADD
+msgid "Dependencies Collection Invalidate Add"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#DEPENDENCIES_COLLECTION_INVALIDATE_REMOVE
+msgid "Dependencies Collection Invalidate Remove"
+msgstr ""
+
+
+#: org.isisaddons.module.security.app.feature.ApplicationClassCollection#derived
+#: org.isisaddons.module.security.app.feature.ApplicationClassProperty#derived
+msgid "Derived"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.role.ApplicationRole#description
 #: org.isisaddons.module.security.dom.role.ApplicationRole#updateDescription(java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRoles#newRole(java.lang.String,java.lang.String)
+#: org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo#description
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo#updateDescription(java.lang.String)
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdo#newBoolean(java.lang.String,java.lang.String,java.lang.Boolean)
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdo#newInt(java.lang.String,java.lang.String,java.lang.Integer)
@@ -315,7 +542,9 @@ msgstr ""
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdoHidden#newLocalDate(java.lang.String,java.lang.String,org.joda.time.LocalDate)
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdoHidden#newLong(java.lang.String,java.lang.String,java.lang.Long)
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdoHidden#newString(java.lang.String,java.lang.String,java.lang.String)
+#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#description
 #: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#updateDescription(java.lang.String)
+#: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#description
 #: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#updateDescription(java.lang.String)
 #: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdo#newBoolean(java.lang.String,java.lang.String,java.lang.String,java.lang.Boolean)
 #: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdo#newInt(java.lang.String,java.lang.String,java.lang.String,java.lang.Integer)
@@ -327,9 +556,25 @@ msgstr ""
 #: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdoHidden#newLocalDate(java.lang.String,java.lang.String,java.lang.String,org.joda.time.LocalDate)
 #: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdoHidden#newLong(java.lang.String,java.lang.String,java.lang.String,java.lang.Long)
 #: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdoHidden#newString(java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+#: todoapp.dom.module.todoitem.ToDoItem#description
 #: todoapp.dom.module.todoitem.ToDoItem#duplicate(java.lang.String,todoapp.dom.module.categories.Category,todoapp.dom.module.categories.Subcategory,org.joda.time.LocalDate,java.math.BigDecimal)
 #: todoapp.dom.module.todoitem.ToDoItems#newToDo(java.lang.String,todoapp.dom.module.categories.Category,todoapp.dom.module.categories.Subcategory,org.joda.time.LocalDate,java.math.BigDecimal)
 msgid "Description"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#DESCRIPTION_PROPERTY_DISABLE
+msgid "Description Property Disable"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#DESCRIPTION_PROPERTY_HIDE
+msgid "Description Property Hide"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#DESCRIPTION_PROPERTY_INVALIDATE
+msgid "Description Property Invalidate"
 msgstr ""
 
 
@@ -338,9 +583,34 @@ msgid "Disable"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.user.ApplicationUserStatus#DISABLED
+msgid "Disabled"
+msgstr ""
+
+
+#: org.apache.isis.applib.fixturescripts.FixtureScript#discoverable
+msgid "Discoverable"
+msgstr ""
+
+
+#: todoapp.dom.module.todoitem.ToDoItem#doc
+msgid "Doc"
+msgstr ""
+
+
 #: org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract
 #: org.isisaddons.module.audit.dom.AuditEntry
 msgid "Domain Change"
+msgstr ""
+
+
+#: org.apache.isis.applib.fixtures.FixtureType#DOMAIN_OBJECTS
+msgid "Domain Objects"
+msgstr ""
+
+
+#: todoapp.dom.module.categories.Category$2#DOMESTIC
+msgid "Domestic"
 msgstr ""
 
 
@@ -351,6 +621,11 @@ msgstr ""
 
 #: org.apache.isis.core.runtime.services.i18n.po.TranslationServicePoMenu#downloadTranslations()
 msgid "Download Translations"
+msgstr ""
+
+
+#: todoapp.dom.module.todoitem.ToDoItem#dueBy
+msgid "Due By"
 msgstr ""
 
 
@@ -365,11 +640,22 @@ msgid "Duration"
 msgstr ""
 
 
+#: todoapp.dom.module.categories.Subcategory#EDUCATION
+msgid "Education"
+msgstr ""
+
+
+#: org.isisaddons.module.security.app.feature.ApplicationClassCollection#elementType
+msgid "Element Type"
+msgstr ""
+
+
 #: org.isisaddons.module.security.dom.user.ApplicationUser#updateEmailAddress(java.lang.String)
 msgid "Email"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.user.ApplicationUser#emailAddress
 #: org.isisaddons.module.security.dom.user.ApplicationUsers#newLocalUser(java.lang.String,org.apache.isis.applib.value.Password,org.apache.isis.applib.value.Password,org.isisaddons.module.security.dom.role.ApplicationRole,java.lang.Boolean,java.lang.String)
 msgid "Email Address"
 msgstr ""
@@ -380,9 +666,29 @@ msgid "Enable"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.user.ApplicationUserStatus#ENABLED
+msgid "Enabled"
+msgstr ""
+
+
 #: org.isisaddons.module.security.dom.user.ApplicationUsers#newDelegateUser(java.lang.String,org.isisaddons.module.security.dom.role.ApplicationRole,java.lang.Boolean)
 #: org.isisaddons.module.security.dom.user.ApplicationUsers#newLocalUser(java.lang.String,org.apache.isis.applib.value.Password,org.apache.isis.applib.value.Password,org.isisaddons.module.security.dom.role.ApplicationRole,java.lang.Boolean,java.lang.String)
 msgid "Enabled?"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.user.ApplicationUser#encryptedPassword
+msgid "Encrypted Password"
+msgstr ""
+
+
+#: org.isisaddons.module.publishing.dom.PublishedEvent#eventType
+msgid "Event Type"
+msgstr ""
+
+
+#: org.isisaddons.module.command.dom.CommandJdo#executeIn
+msgid "Execute In"
 msgstr ""
 
 
@@ -408,6 +714,7 @@ msgid "Export to Word"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.user.ApplicationUser#familyName
 #: org.isisaddons.module.security.dom.user.ApplicationUser#updateName(java.lang.String,java.lang.String,java.lang.String)
 msgid "Family Name"
 msgstr ""
@@ -418,7 +725,13 @@ msgid "Fax"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.user.ApplicationUser#faxNumber
+msgid "Fax Number"
+msgstr ""
+
+
 #: org.isisaddons.module.security.app.feature.ApplicationFeatureViewModelContributions#feature()
+#: org.isisaddons.module.security.app.user.UserPermissionViewModel#feature
 #: org.isisaddons.module.security.dom.permission.ApplicationPermission#feature()
 #: org.isisaddons.module.security.dom.role.ApplicationRole#removePermission(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.feature.ApplicationFeatureType,java.lang.String)
 msgid "Feature"
@@ -521,6 +834,16 @@ msgid "Fixture script"
 msgstr ""
 
 
+#: org.apache.isis.applib.annotation.Command$ExecuteIn#FOREGROUND
+msgid "Foreground"
+msgstr ""
+
+
+#: org.apache.isis.applib.fixturescripts.FixtureScript#friendlyName
+msgid "Friendly Name"
+msgstr ""
+
+
 #: org.isisaddons.module.audit.dom.AuditingServiceMenu#findAuditEntries(org.joda.time.LocalDate,org.joda.time.LocalDate)
 #: org.isisaddons.module.command.dom.CommandServiceMenu#findCommands(org.joda.time.LocalDate,org.joda.time.LocalDate)
 #: org.isisaddons.module.publishing.dom.PublishingServiceMenu#findPublishedEvents(org.joda.time.LocalDate,org.joda.time.LocalDate)
@@ -530,6 +853,12 @@ msgid "From"
 msgstr ""
 
 
+#: todoapp.dom.module.categories.Subcategory#GARDEN
+msgid "Garden"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.user.ApplicationUser#givenName
 #: org.isisaddons.module.security.dom.user.ApplicationUser#updateName(java.lang.String,java.lang.String,java.lang.String)
 msgid "Given Name"
 msgstr ""
@@ -540,12 +869,54 @@ msgid "Go To Docs"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.user.ApplicationUser#hasPassword
+msgid "Has Password"
+msgstr ""
+
+
+#: todoapp.dom.module.categories.Subcategory#HOUSEWORK
+msgid "Housework"
+msgstr ""
+
+
+#: org.apache.isis.applib.annotation.ActionSemantics$Of#IDEMPOTENT
+msgid "Idempotent"
+msgstr ""
+
+
+#: org.apache.isis.applib.annotation.Command$Persistence#IF_HINTED
+msgid "If Hinted"
+msgstr ""
+
+
 #: org.isisaddons.module.security.dom.user.ApplicationUsers#newDelegateUser(java.lang.String,org.isisaddons.module.security.dom.role.ApplicationRole,java.lang.Boolean)
 #: org.isisaddons.module.security.dom.user.ApplicationUsers#newLocalUser(java.lang.String,org.apache.isis.applib.value.Password,org.apache.isis.applib.value.Password,org.isisaddons.module.security.dom.role.ApplicationRole,java.lang.Boolean,java.lang.String)
 msgid "Initial role"
 msgstr ""
 
 
+#: org.isisaddons.module.settings.dom.SettingType#INT
+msgid "Int"
+msgstr ""
+
+
+#: todoapp.dom.app.externallinks.ExternalLinksService$ExternalLink#ISIS_DOCUMENTATION
+msgid "Isis Documentation"
+msgstr ""
+
+
+#: todoapp.dom.app.analysis.ToDoItemsByCategoryViewModel#itemsComplete
+msgid "Items Complete"
+msgstr ""
+
+
+#: todoapp.dom.app.analysis.ToDoItemsByCategoryViewModel#itemsNotYetComplete
+#: todoapp.dom.app.analysis.ToDoItemsByDateRangeViewModel#itemsNotYetComplete
+msgid "Items Not Yet Complete"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo#key
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdo#find(java.lang.String)
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdo#newBoolean(java.lang.String,java.lang.String,java.lang.Boolean)
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdo#newInt(java.lang.String,java.lang.String,java.lang.Integer)
@@ -558,6 +929,8 @@ msgstr ""
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdoHidden#newLocalDate(java.lang.String,java.lang.String,org.joda.time.LocalDate)
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdoHidden#newLong(java.lang.String,java.lang.String,java.lang.Long)
 #: org.isisaddons.module.settings.dom.jdo.ApplicationSettingsServiceJdoHidden#newString(java.lang.String,java.lang.String,java.lang.String)
+#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#key
+#: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#key
 #: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdo#find(java.lang.String,java.lang.String)
 #: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdo#newBoolean(java.lang.String,java.lang.String,java.lang.String,java.lang.Boolean)
 #: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdo#newInt(java.lang.String,java.lang.String,java.lang.String,java.lang.Integer)
@@ -574,8 +947,14 @@ msgid "Key"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.user.ApplicationUser#knownAs
 #: org.isisaddons.module.security.dom.user.ApplicationUser#updateName(java.lang.String,java.lang.String,java.lang.String)
 msgid "Known As"
+msgstr ""
+
+
+#: todoapp.dom.app.analysis.ToDoItemAnalysisMenu$DateRange#Later
+msgid "Later"
 msgstr ""
 
 
@@ -602,6 +981,41 @@ msgid "List All User Settings"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.user.AccountType#LOCAL
+msgid "Local"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.SettingType#LOCAL_DATE
+msgid "Local Date"
+msgstr ""
+
+
+#: org.apache.isis.applib.fixturescripts.FixtureScript#localName
+msgid "Local Name"
+msgstr ""
+
+
+#: todoapp.dom.module.todoitem.ToDoItem#location
+msgid "Location"
+msgstr ""
+
+
+#: org.isisaddons.module.sessionlogger.dom.SessionLogEntry#loginTimestamp
+msgid "Login Timestamp"
+msgstr ""
+
+
+#: org.isisaddons.module.sessionlogger.dom.SessionLogEntry#logoutTimestamp
+msgid "Logout Timestamp"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.SettingType#LONG
+msgid "Long"
+msgstr ""
+
+
 #: org.isisaddons.module.security.app.user.MeService#me()
 msgid "Looks up ApplicationUser entity corresponding to your user account"
 msgstr ""
@@ -610,14 +1024,17 @@ msgstr ""
 #: org.apache.isis.applib.fixturescripts.FixtureScript#lookup()
 #: org.apache.isis.applib.services.bookmark.BookmarkHolderActionContributions#lookup()
 #: todoapp.dom.app.dashboard.ToDoAppDashboardService#lookup()
-#: todoapp.fixture.scenarios.RecreateAllUsersAndRolesAndToDoItems#lookup()
-#: todoapp.fixture.scenarios.RecreateBobUserAndRolesAndToDoItems#lookup()
-#: todoapp.fixture.scenarios.RecreateDickUserAndRolesAndToDoItems#lookup()
-#: todoapp.fixture.scenarios.RecreateJoeUserAndRolesAndToDoItems#lookup()
-#: todoapp.fixture.scenarios.RecreateSvenUserAndRolesAndToDoItems#lookup()
-#: todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser#lookup()
-#: todoapp.fixture.security.users.CreateUserFixtureScript#lookup()
 msgid "Lookup"
+msgstr ""
+
+
+#: todoapp.dom.module.categories.Subcategory#MARKETING
+msgid "Marketing"
+msgstr ""
+
+
+#: org.isisaddons.module.security.app.feature.ApplicationClassProperty#maxLength
+msgid "Max Length"
 msgstr ""
 
 
@@ -626,6 +1043,35 @@ msgid "Me"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.feature.ApplicationFeatureType$3#MEMBER
+msgid "Member"
+msgstr ""
+
+
+#: org.isisaddons.module.audit.dom.AuditEntry#memberIdentifier
+#: org.isisaddons.module.command.dom.CommandJdo#memberIdentifier
+#: org.isisaddons.module.publishing.dom.PublishedEvent#memberIdentifier
+msgid "Member Identifier"
+msgstr ""
+
+
+#: org.isisaddons.module.security.app.feature.ApplicationClass#memberName
+#: org.isisaddons.module.security.app.feature.ApplicationClassAction#memberName
+#: org.isisaddons.module.security.app.feature.ApplicationClassCollection#memberName
+#: org.isisaddons.module.security.app.feature.ApplicationClassMember#memberName
+#: org.isisaddons.module.security.app.feature.ApplicationClassProperty#memberName
+#: org.isisaddons.module.security.app.feature.ApplicationFeatureViewModel#memberName
+#: org.isisaddons.module.security.app.feature.ApplicationPackage#memberName
+msgid "Member Name"
+msgstr ""
+
+
+#: org.isisaddons.module.command.dom.CommandJdo#memento
+msgid "Memento"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.permission.ApplicationPermission#mode
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addAction(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String,java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addClass(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addCollection(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String,java.lang.String)
@@ -635,12 +1081,15 @@ msgid "Mode"
 msgstr ""
 
 
+#: org.isisaddons.module.security.dom.role.ApplicationRole#name
 #: org.isisaddons.module.security.dom.role.ApplicationRole#updateName(java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRoles#findRoleByName(java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRoles#newRole(java.lang.String,java.lang.String)
 #: org.isisaddons.module.security.dom.tenancy.ApplicationTenancies#findTenancyByName(java.lang.String)
 #: org.isisaddons.module.security.dom.tenancy.ApplicationTenancies#newTenancy(java.lang.String,java.lang.String,org.isisaddons.module.security.dom.tenancy.ApplicationTenancy)
+#: org.isisaddons.module.security.dom.tenancy.ApplicationTenancy#name
 #: org.isisaddons.module.security.dom.tenancy.ApplicationTenancy#updateName(java.lang.String)
+#: org.isisaddons.module.security.dom.user.ApplicationUser#name
 #: org.isisaddons.module.security.dom.user.ApplicationUsers#findUsersByName(java.lang.String)
 #: org.isisaddons.module.security.dom.user.ApplicationUsers#newDelegateUser(java.lang.String,org.isisaddons.module.security.dom.role.ApplicationRole,java.lang.Boolean)
 #: org.isisaddons.module.security.dom.user.ApplicationUsers#newLocalUser(java.lang.String,org.apache.isis.applib.value.Password,org.apache.isis.applib.value.Password,org.isisaddons.module.security.dom.role.ApplicationRole,java.lang.Boolean,java.lang.String)
@@ -708,7 +1157,6 @@ msgid "New Tenancy"
 msgstr ""
 
 
-#: todoapp.dom.module.categories.Subcategory#newToDo()
 #: todoapp.dom.module.todoitem.ToDoItems#newToDo()
 msgid "New To Do"
 msgstr ""
@@ -734,6 +1182,23 @@ msgid "Next"
 msgstr ""
 
 
+#: org.apache.isis.applib.annotation.ActionSemantics$Of#NON_IDEMPOTENT
+msgid "Non Idempotent"
+msgstr ""
+
+
+#: todoapp.dom.module.todoitem.ToDoItem$DemoExceptionType#NonRecoverableException
+msgid "Nonrecoverableexception"
+msgstr ""
+
+
+#: org.apache.isis.applib.annotation.Command$Persistence#NOT_PERSISTED
+msgid "Not Persisted"
+msgstr ""
+
+
+#: todoapp.dom.app.analysis.ToDoItemsByCategoryViewModel#notYetComplete
+#: todoapp.dom.app.dashboard.ToDoAppDashboard#notYetComplete
 #: todoapp.dom.module.todoitem.ToDoItems#notYetComplete()
 msgid "Not Yet Complete"
 msgstr ""
@@ -741,6 +1206,11 @@ msgstr ""
 
 #: todoapp.dom.module.todoitem.ToDoItem#notYetCompleted()
 msgid "Not done"
+msgstr ""
+
+
+#: todoapp.dom.module.todoitem.ToDoItem#notes
+msgid "Notes"
 msgstr ""
 
 
@@ -753,12 +1223,39 @@ msgid "Object"
 msgstr ""
 
 
+#: org.apache.isis.applib.services.publish.EventType#OBJECT_CREATED
+msgid "Object Created"
+msgstr ""
+
+
+#: org.apache.isis.applib.services.publish.EventType#OBJECT_DELETED
+msgid "Object Deleted"
+msgstr ""
+
+
+#: org.apache.isis.applib.services.publish.EventType#OBJECT_UPDATED
+msgid "Object Updated"
+msgstr ""
+
+
 #: org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract#openTargetObject()
+#: org.isisaddons.module.audit.dom.AuditEntry#open()
 #: org.isisaddons.module.audit.dom.AuditEntry#openTargetObject()
+#: org.isisaddons.module.command.dom.CommandJdo#open()
 #: org.isisaddons.module.command.dom.CommandJdo#openResultObject()
 #: org.isisaddons.module.command.dom.CommandJdo#openTargetObject()
+#: org.isisaddons.module.publishing.dom.PublishedEvent#open()
 #: org.isisaddons.module.publishing.dom.PublishedEvent#openTargetObject()
+#: org.isisaddons.module.security.dom.user.ApplicationUser#open()
+#: org.isisaddons.module.security.dom.user.HasUsernameContributions#open()
+#: org.isisaddons.module.sessionlogger.dom.SessionLogEntry#open()
+#: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#open()
 msgid "Open"
+msgstr ""
+
+
+#: todoapp.dom.module.categories.Subcategory#OPEN_SOURCE
+msgid "Open Source"
 msgstr ""
 
 
@@ -767,7 +1264,21 @@ msgid "Open Source Code On Github"
 msgstr ""
 
 
+#: org.apache.isis.applib.fixtures.FixtureType#OTHER
+#: org.apache.isis.applib.services.command.Command$Executor#OTHER
+#: todoapp.dom.module.categories.Category$3#OTHER
+#: todoapp.dom.module.categories.Subcategory#OTHER
+msgid "Other"
+msgstr ""
+
+
+#: todoapp.dom.app.analysis.ToDoItemAnalysisMenu$DateRange#OverDue
+msgid "Overdue"
+msgstr ""
+
+
 #: org.isisaddons.module.security.app.user.UserPermissionViewModelContributions#filterPermissions(org.isisaddons.module.security.dom.user.ApplicationUser,java.lang.String,java.lang.String)
+#: org.isisaddons.module.security.dom.feature.ApplicationFeatureType$1#PACKAGE
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addAction(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String,java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addClass(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addCollection(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String,java.lang.String)
@@ -777,14 +1288,39 @@ msgid "Package"
 msgstr ""
 
 
+#: org.isisaddons.module.security.app.feature.ApplicationClass#packageName
+#: org.isisaddons.module.security.app.feature.ApplicationClassAction#packageName
+#: org.isisaddons.module.security.app.feature.ApplicationClassCollection#packageName
+#: org.isisaddons.module.security.app.feature.ApplicationClassMember#packageName
+#: org.isisaddons.module.security.app.feature.ApplicationClassProperty#packageName
+#: org.isisaddons.module.security.app.feature.ApplicationFeatureViewModel#packageName
+#: org.isisaddons.module.security.app.feature.ApplicationPackage#packageName
+msgid "Package Name"
+msgstr ""
+
+
 #: org.apache.isis.applib.fixturescripts.FixtureScripts#runFixtureScript(org.apache.isis.applib.fixturescripts.FixtureScript,java.lang.String)
 #: todoapp.fixture.ToDoAppFixturesService#runFixtureScript(org.apache.isis.applib.fixturescripts.FixtureScript,java.lang.String)
 msgid "Parameters"
 msgstr ""
 
 
+#: org.isisaddons.module.command.dom.CommandJdo#parent
+#: org.isisaddons.module.security.app.feature.ApplicationClass#parent
+#: org.isisaddons.module.security.app.feature.ApplicationClassAction#parent
+#: org.isisaddons.module.security.app.feature.ApplicationClassCollection#parent
+#: org.isisaddons.module.security.app.feature.ApplicationClassMember#parent
+#: org.isisaddons.module.security.app.feature.ApplicationClassProperty#parent
+#: org.isisaddons.module.security.app.feature.ApplicationFeatureViewModel#parent
+#: org.isisaddons.module.security.app.feature.ApplicationPackage#parent
 #: org.isisaddons.module.security.dom.tenancy.ApplicationTenancies#newTenancy(java.lang.String,java.lang.String,org.isisaddons.module.security.dom.tenancy.ApplicationTenancy)
+#: org.isisaddons.module.security.dom.tenancy.ApplicationTenancy#parent
 msgid "Parent"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.feature.ApplicationFeatureId#parentClassId
+msgid "Parent Class Id"
 msgstr ""
 
 
@@ -795,18 +1331,53 @@ msgstr ""
 
 #: org.isisaddons.module.security.dom.tenancy.ApplicationTenancies#findTenancyByPath(java.lang.String)
 #: org.isisaddons.module.security.dom.tenancy.ApplicationTenancies#newTenancy(java.lang.String,java.lang.String,org.isisaddons.module.security.dom.tenancy.ApplicationTenancy)
+#: org.isisaddons.module.security.dom.tenancy.ApplicationTenancy#path
 msgid "Path"
 msgstr ""
 
 
+#: org.isisaddons.module.security.app.feature.ApplicationClass#permissions
+#: org.isisaddons.module.security.app.feature.ApplicationClassAction#permissions
+#: org.isisaddons.module.security.app.feature.ApplicationClassCollection#permissions
+#: org.isisaddons.module.security.app.feature.ApplicationClassMember#permissions
+#: org.isisaddons.module.security.app.feature.ApplicationClassProperty#permissions
+#: org.isisaddons.module.security.app.feature.ApplicationFeatureViewModel#permissions
+#: org.isisaddons.module.security.app.feature.ApplicationPackage#permissions
 #: org.isisaddons.module.security.app.user.UserPermissionViewModelContributions#permissions()
+#: org.isisaddons.module.security.dom.role.ApplicationRole#permissions
 #: org.isisaddons.module.security.dom.user.ApplicationUser#permissions()
 msgid "Permissions"
 msgstr ""
 
 
+#: org.apache.isis.applib.annotation.Command$Persistence#PERSISTED
+msgid "Persisted"
+msgstr ""
+
+
 #: org.isisaddons.module.security.dom.user.ApplicationUser#updatePhoneNumber(java.lang.String)
 msgid "Phone"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.user.ApplicationUser#phoneNumber
+msgid "Phone Number"
+msgstr ""
+
+
+#: org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract#postValue
+#: org.isisaddons.module.audit.dom.AuditEntry#postValue
+#: org.isisaddons.module.command.dom.CommandJdo#postValue
+#: org.isisaddons.module.publishing.dom.PublishedEvent#postValue
+msgid "Post Value"
+msgstr ""
+
+
+#: org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract#preValue
+#: org.isisaddons.module.audit.dom.AuditEntry#preValue
+#: org.isisaddons.module.command.dom.CommandJdo#preValue
+#: org.isisaddons.module.publishing.dom.PublishedEvent#preValue
+msgid "Pre Value"
 msgstr ""
 
 
@@ -820,12 +1391,37 @@ msgstr ""
 
 
 #: org.isisaddons.module.publishing.dom.PublishedEvent#processed()
+#: org.isisaddons.module.publishing.dom.PublishedEvent$State#PROCESSED
 msgid "Processed"
 msgstr ""
 
 
+#: todoapp.dom.module.categories.Category$1#PROFESSIONAL
+msgid "Professional"
+msgstr ""
+
+
+#: todoapp.dom.app.externallinks.ExternalLinksService$ExternalLink#PROJECT_ON_GITHUB
+msgid "Project On Github"
+msgstr ""
+
+
+#: org.isisaddons.module.security.app.feature.ApplicationClass#properties
+msgid "Properties"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.feature.ApplicationMemberType#PROPERTY
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addProperty(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String,java.lang.String)
 msgid "Property"
+msgstr ""
+
+
+#: org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract#propertyId
+#: org.isisaddons.module.audit.dom.AuditEntry#propertyId
+#: org.isisaddons.module.command.dom.CommandJdo#propertyId
+#: org.isisaddons.module.publishing.dom.PublishedEvent#propertyId
+msgid "Property Id"
 msgstr ""
 
 
@@ -837,6 +1433,7 @@ msgid "Prototyping"
 msgstr ""
 
 
+#: org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract$ChangeType#PUBLISHED_EVENT
 #: org.isisaddons.module.publishing.dom.PublishedEvent
 msgid "Published Event"
 msgstr ""
@@ -852,6 +1449,11 @@ msgstr ""
 
 #: org.isisaddons.module.publishing.dom.PublishingServiceMenu#purgeProcessedEvents()
 msgid "Purge Processed Events"
+msgstr ""
+
+
+#: org.isisaddons.module.publishing.dom.PublishedEvent$State#QUEUED
+msgid "Queued"
 msgstr ""
 
 
@@ -894,6 +1496,38 @@ msgstr ""
 #: todoapp.dom.module.activity.RecentActivityContributions#recentActivity()
 #: todoapp.dom.module.todoitem.ToDoItem#recentActivity()
 msgid "Recent Activity"
+msgstr ""
+
+
+#: org.isisaddons.module.audit.dom.AuditEntry#recentCommandsByUser()
+#: org.isisaddons.module.command.dom.CommandJdo#recentCommandsByUser()
+#: org.isisaddons.module.command.dom.HasUsernameContributions#recentCommandsByUser()
+#: org.isisaddons.module.publishing.dom.PublishedEvent#recentCommandsByUser()
+#: org.isisaddons.module.security.dom.user.ApplicationUser#recentCommandsByUser()
+#: org.isisaddons.module.sessionlogger.dom.SessionLogEntry#recentCommandsByUser()
+#: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#recentCommandsByUser()
+msgid "Recent Commands By User"
+msgstr ""
+
+
+#: org.isisaddons.module.audit.dom.AuditEntry#recentSessionsForUser()
+#: org.isisaddons.module.command.dom.CommandJdo#recentSessionsForUser()
+#: org.isisaddons.module.publishing.dom.PublishedEvent#recentSessionsForUser()
+#: org.isisaddons.module.security.dom.user.ApplicationUser#recentSessionsForUser()
+#: org.isisaddons.module.sessionlogger.dom.HasUsernameContributions#recentSessionsForUser()
+#: org.isisaddons.module.sessionlogger.dom.SessionLogEntry#recentSessionsForUser()
+#: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#recentSessionsForUser()
+msgid "Recent Sessions For User"
+msgstr ""
+
+
+#: todoapp.dom.module.todoitem.ToDoItem$DemoExceptionType#RecoverableException
+msgid "Recoverableexception"
+msgstr ""
+
+
+#: todoapp.dom.module.todoitem.ToDoItem$DemoExceptionType#RecoverableExceptionAutoEscalated
+msgid "Recoverableexceptionautoescalated"
 msgstr ""
 
 
@@ -954,6 +1588,23 @@ msgid "Result key"
 msgstr ""
 
 
+#: org.isisaddons.module.security.app.feature.ApplicationClassAction#returnType
+#: org.isisaddons.module.security.app.feature.ApplicationClassProperty#returnType
+msgid "Return Type"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.permission.ApplicationPermission#role
+msgid "Role"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.user.ApplicationUser#roles
+msgid "Roles"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.permission.ApplicationPermission#rule
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addAction(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String,java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addClass(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String)
 #: org.isisaddons.module.security.dom.role.ApplicationRole#addCollection(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.permission.ApplicationPermissionMode,java.lang.String,java.lang.String,java.lang.String)
@@ -970,14 +1621,12 @@ msgid "Run Fixture Script"
 msgstr ""
 
 
+#: org.apache.isis.applib.annotation.ActionSemantics$Of#SAFE
+msgid "Safe"
+msgstr ""
+
+
 #: org.apache.isis.applib.fixturescripts.FixtureScript
-#: todoapp.fixture.scenarios.RecreateAllUsersAndRolesAndToDoItems
-#: todoapp.fixture.scenarios.RecreateBobUserAndRolesAndToDoItems
-#: todoapp.fixture.scenarios.RecreateDickUserAndRolesAndToDoItems
-#: todoapp.fixture.scenarios.RecreateJoeUserAndRolesAndToDoItems
-#: todoapp.fixture.scenarios.RecreateSvenUserAndRolesAndToDoItems
-#: todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser
-#: todoapp.fixture.security.users.CreateUserFixtureScript
 msgid "Script"
 msgstr ""
 
@@ -998,6 +1647,26 @@ msgstr ""
 #: org.isisaddons.module.security.dom.tenancy.ApplicationTenancies
 #: org.isisaddons.module.security.dom.user.ApplicationUsers
 msgid "Security"
+msgstr ""
+
+
+#: org.isisaddons.module.publishing.dom.PublishedEvent#sequence
+msgid "Sequence"
+msgstr ""
+
+
+#: org.isisaddons.module.publishing.dom.PublishedEvent#serializedForm
+msgid "Serialized Form"
+msgstr ""
+
+
+#: org.apache.isis.applib.services.session.SessionLoggingService$CausedBy#SESSION_EXPIRATION
+msgid "Session Expiration"
+msgstr ""
+
+
+#: org.isisaddons.module.sessionlogger.dom.SessionLogEntry#sessionId
+msgid "Session Id"
 msgstr ""
 
 
@@ -1022,6 +1691,11 @@ msgid "Settings"
 msgstr ""
 
 
+#: todoapp.dom.module.categories.Subcategory#SHOPPING
+msgid "Shopping"
+msgstr ""
+
+
 #: org.isisaddons.module.command.dom.CommandJdo#showException()
 msgid "Show Exception"
 msgstr ""
@@ -1038,8 +1712,34 @@ msgid "Similar To"
 msgstr ""
 
 
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#SIMILAR_TO_COLLECTION_HIDE
+msgid "Similar To Collection Hide"
+msgstr ""
+
+
+#: org.isisaddons.module.command.dom.CommandJdo#startedAt
+msgid "Started At"
+msgstr ""
+
+
+#: org.isisaddons.module.publishing.dom.PublishedEvent#state
+msgid "State"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.user.ApplicationUser#status
+msgid "Status"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.SettingType#STRING
+msgid "String"
+msgstr ""
+
+
 #: todoapp.dom.module.categories.UpdateCategoryContributions#updateCategory(todoapp.dom.module.categories.Categorized,todoapp.dom.module.categories.Category,todoapp.dom.module.categories.Subcategory)
 #: todoapp.dom.module.todoitem.ToDoItem#duplicate(java.lang.String,todoapp.dom.module.categories.Category,todoapp.dom.module.categories.Subcategory,org.joda.time.LocalDate,java.math.BigDecimal)
+#: todoapp.dom.module.todoitem.ToDoItem#subcategory
 #: todoapp.dom.module.todoitem.ToDoItems#categorized(todoapp.dom.module.categories.Category,todoapp.dom.module.categories.Subcategory,boolean)
 #: todoapp.dom.module.todoitem.ToDoItems#newToDo(java.lang.String,todoapp.dom.module.categories.Category,todoapp.dom.module.categories.Subcategory,org.joda.time.LocalDate,java.math.BigDecimal)
 msgid "Subcategory"
@@ -1048,6 +1748,21 @@ msgstr ""
 
 #: todoapp.dom.admin.TenancySwitcher#switchTenancy()
 msgid "Switch Tenancy"
+msgstr ""
+
+
+#: org.apache.isis.core.runtime.services.i18n.po.TranslationServicePoMenu#switchToReadingTranslations()
+msgid "Switch To Reading Translations"
+msgstr ""
+
+
+#: org.apache.isis.core.runtime.services.i18n.po.TranslationServicePoMenu#switchToWritingTranslations()
+msgid "Switch To Writing Translations"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.user.ApplicationUser#tenancy
+msgid "Tenancy"
 msgstr ""
 
 
@@ -1069,6 +1784,24 @@ msgid "The relative priority of this item compared to others not yet complete (u
 msgstr ""
 
 
+#: todoapp.dom.app.analysis.ToDoItemAnalysisMenu$DateRange#ThisWeek
+msgid "Thisweek"
+msgstr ""
+
+
+#: org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract#timestamp
+#: org.isisaddons.module.audit.dom.AuditEntry#timestamp
+#: org.isisaddons.module.command.dom.CommandJdo#timestamp
+#: org.isisaddons.module.publishing.dom.PublishedEvent#timestamp
+msgid "Timestamp"
+msgstr ""
+
+
+#: org.isisaddons.module.publishing.dom.PublishedEvent#title
+msgid "Title"
+msgstr ""
+
+
 #: org.isisaddons.module.audit.dom.AuditingServiceMenu#findAuditEntries(org.joda.time.LocalDate,org.joda.time.LocalDate)
 #: org.isisaddons.module.command.dom.CommandServiceMenu#findCommands(org.joda.time.LocalDate,org.joda.time.LocalDate)
 #: org.isisaddons.module.publishing.dom.PublishingServiceMenu#findPublishedEvents(org.joda.time.LocalDate,org.joda.time.LocalDate)
@@ -1081,6 +1814,11 @@ msgstr ""
 #: todoapp.dom.app.export.ExportToWordService
 #: todoapp.dom.module.todoitem.ToDoItems
 msgid "ToDos"
+msgstr ""
+
+
+#: todoapp.dom.app.analysis.ToDoItemAnalysisMenu$DateRange#Today
+msgid "Today"
 msgstr ""
 
 
@@ -1099,19 +1837,48 @@ msgid "Todo items that must be completed before this one"
 msgstr ""
 
 
+#: todoapp.dom.app.analysis.ToDoItemAnalysisMenu$DateRange#Tomorrow
+msgid "Tomorrow"
+msgstr ""
+
+
 #: todoapp.dom.module.todoitem.ToDoItem#totalCost()
 msgid "Total Cost"
 msgstr ""
 
 
+#: org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract#transactionId
+#: org.isisaddons.module.audit.dom.AuditEntry#transactionId
+#: org.isisaddons.module.command.dom.CommandJdo#transactionId
 #: org.isisaddons.module.command.dom.CommandServiceMenu#findCommandById(java.util.UUID)
+#: org.isisaddons.module.publishing.dom.PublishedEvent#transactionId
 msgid "Transaction Id"
 msgstr ""
 
 
+#: org.apache.isis.applib.fixturescripts.FixtureScript#type
+#: org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract#type
+#: org.isisaddons.module.audit.dom.AuditEntry#type
+#: org.isisaddons.module.command.dom.CommandJdo#type
+#: org.isisaddons.module.publishing.dom.PublishedEvent#type
+#: org.isisaddons.module.security.dom.feature.ApplicationFeatureId#type
+#: org.isisaddons.module.security.dom.permission.ApplicationPermission#type
 #: org.isisaddons.module.security.dom.role.ApplicationRole#removePermission(org.isisaddons.module.security.dom.permission.ApplicationPermissionRule,org.isisaddons.module.security.dom.feature.ApplicationFeatureType,java.lang.String)
+#: org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo#type
+#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#type
+#: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#type
 #: todoapp.dom.module.todoitem.ToDoItem#demoException(todoapp.dom.module.todoitem.ToDoItem$DemoExceptionType)
 msgid "Type"
+msgstr ""
+
+
+#: org.isisaddons.module.security.app.feature.ApplicationClassProperty#typicalLength
+msgid "Typical Length"
+msgstr ""
+
+
+#: todoapp.dom.app.analysis.ToDoItemAnalysisMenu$DateRange#Unknown
+msgid "Unknown"
 msgstr ""
 
 
@@ -1163,9 +1930,23 @@ msgid "Update As String"
 msgstr ""
 
 
-#: todoapp.dom.module.categories.Subcategory#updateCategory()
 #: todoapp.dom.module.categories.UpdateCategoryContributions#updateCategory()
 msgid "Update Category"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#UPDATE_COST_ACTION_DISABLE
+msgid "Update Cost Action Disable"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#UPDATE_COST_ACTION_HIDE
+msgid "Update Cost Action Hide"
+msgstr ""
+
+
+#: todoapp.dom.app.demoeventsubscriber.DemoBehaviour#UPDATE_COST_ACTION_INVALIDATE
+msgid "Update Cost Action Invalidate"
 msgstr ""
 
 
@@ -1227,7 +2008,6 @@ msgid "Update Username"
 msgstr ""
 
 
-#: todoapp.dom.module.categories.Subcategory#updateCategory()
 #: todoapp.dom.module.categories.UpdateCategoryContributions#updateCategory()
 #: todoapp.dom.module.todoitem.ToDoItem#updateCategory()
 msgid "Update category and subcategory"
@@ -1244,6 +2024,16 @@ msgid "Update this todo item as not yet complete"
 msgstr ""
 
 
+#: org.apache.isis.applib.services.command.Command$Executor#USER
+#: org.apache.isis.applib.services.session.SessionLoggingService$CausedBy#USER
+#: org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract#user
+#: org.isisaddons.module.audit.dom.AuditEntry#user
+#: org.isisaddons.module.command.dom.CommandJdo#user
+#: org.isisaddons.module.publishing.dom.PublishedEvent#user
+#: org.isisaddons.module.security.app.user.UserPermissionViewModel#user
+#: org.isisaddons.module.sessionlogger.dom.SessionLogEntry#user
+#: org.isisaddons.module.sessionlogger.dom.SessionLoggingServiceMenu#findSessions(java.lang.String,org.joda.time.LocalDate,org.joda.time.LocalDate)
+#: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#user
 #: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdo#find(java.lang.String,java.lang.String)
 #: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdo#listAllFor(java.lang.String)
 #: org.isisaddons.module.settings.dom.jdo.UserSettingsServiceJdo#newBoolean(java.lang.String,java.lang.String,java.lang.String,java.lang.Boolean)
@@ -1268,9 +2058,15 @@ msgstr ""
 
 
 #: org.isisaddons.module.security.dom.user.ApplicationUser#updateUsername(java.lang.String)
+#: org.isisaddons.module.security.dom.user.ApplicationUser#username
 #: org.isisaddons.module.security.dom.user.ApplicationUsers#findUserByUsername(java.lang.String)
-#: org.isisaddons.module.sessionlogger.dom.SessionLoggingServiceMenu#findSessions(java.lang.String,org.joda.time.LocalDate,org.joda.time.LocalDate)
 msgid "Username"
+msgstr ""
+
+
+#: org.isisaddons.module.security.dom.role.ApplicationRole#users
+#: org.isisaddons.module.security.dom.tenancy.ApplicationTenancy#users
+msgid "Users"
 msgstr ""
 
 
@@ -1325,18 +2121,61 @@ msgid "Value"
 msgstr ""
 
 
+#: org.isisaddons.module.settings.dom.SettingAbstract#valueAsInt
+#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#valueAsInt
+msgid "Value As Int"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.SettingAbstract#valueAsLocalDate
+#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#valueAsLocalDate
+msgid "Value As Local Date"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.SettingAbstract#valueAsLong
+#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#valueAsLong
+msgid "Value As Long"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.SettingAbstract#valueAsString
+#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#valueAsString
+msgid "Value As String"
+msgstr ""
+
+
+#: org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo#valueRaw
+#: org.isisaddons.module.settings.dom.jdo.SettingAbstractJdo#valueRaw
+#: org.isisaddons.module.settings.dom.jdo.UserSettingJdo#valueRaw
+msgid "Value Raw"
+msgstr ""
+
+
+#: org.isisaddons.module.security.app.user.UserPermissionViewModel#verb
+msgid "Verb"
+msgstr ""
+
+
 #: todoapp.dom.module.todoitem.ToDoItem#versionSequence
 msgid "Version"
 msgstr ""
 
 
 #: org.isisaddons.module.security.dom.permission.ApplicationPermission#veto()
+#: org.isisaddons.module.security.dom.permission.ApplicationPermissionRule#VETO
 msgid "Veto"
 msgstr ""
 
 
 #: org.isisaddons.module.security.dom.permission.ApplicationPermission#viewing()
+#: org.isisaddons.module.security.dom.permission.ApplicationPermissionMode#VIEWING
 msgid "Viewing"
+msgstr ""
+
+
+#: org.isisaddons.module.security.app.user.UserPermissionViewModel#viewingPermission
+msgid "Viewing Permission"
 msgstr ""
 
 
@@ -1347,18 +2186,6 @@ msgstr ""
 
 #: todoapp.dom.module.todoitem.ToDoItem#complete
 msgid "Whether this todo item has been completed, or not."
-msgstr ""
-
-
-#: org.apache.isis.applib.fixturescripts.FixtureScript#withDiscoverability()
-#: todoapp.fixture.scenarios.RecreateAllUsersAndRolesAndToDoItems#withDiscoverability()
-#: todoapp.fixture.scenarios.RecreateBobUserAndRolesAndToDoItems#withDiscoverability()
-#: todoapp.fixture.scenarios.RecreateDickUserAndRolesAndToDoItems#withDiscoverability()
-#: todoapp.fixture.scenarios.RecreateJoeUserAndRolesAndToDoItems#withDiscoverability()
-#: todoapp.fixture.scenarios.RecreateSvenUserAndRolesAndToDoItems#withDiscoverability()
-#: todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser#withDiscoverability()
-#: todoapp.fixture.security.users.CreateUserFixtureScript#withDiscoverability()
-msgid "With Discoverability"
 msgstr ""
 
 

@@ -20,7 +20,6 @@ package todoapp.dom.module.settings;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import com.google.common.eventbus.Subscribe;
 import org.isisaddons.module.settings.SettingsModule;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
@@ -54,7 +53,8 @@ public class HideIsisAddonsSettingsFunctionality {
     //endregion
 
     @Programmatic
-    @Subscribe
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final SettingsModule.ActionDomainEvent<?> event) {
         if(event.getEventPhase() == AbstractDomainEvent.Phase.HIDE) {
             event.hide();
