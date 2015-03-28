@@ -34,8 +34,6 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Ordering;
 import org.isisaddons.module.security.app.user.MeService;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
-import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
-import org.isisaddons.module.security.dom.tenancy.WithApplicationTenancy;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 import org.isisaddons.wicket.gmap3.cpt.applib.Locatable;
@@ -128,13 +126,12 @@ import todoapp.dom.seed.tenancies.UsersTenancy;
 @DomainObject(
         autoCompleteRepository = ToDoItems.class, // for drop-downs, unless autoCompleteNXxx() is present
         autoCompleteAction = "autoComplete",
-        // bounded = true,  // for drop-downs if only a small number of instances only (overrides autoComplete)
         objectType = "TODO"
 )
 @DomainObjectLayout(
         bookmarking = BookmarkPolicy.AS_ROOT
 )
-public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, CalendarEventable, WithApplicationTenancy {
+public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, CalendarEventable {
 
     //region > LOG
     /**
@@ -287,6 +284,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     @javax.jdo.annotations.Column(allowsNull="false")
     @Property(
             editing = Editing.DISABLED
+            //hidden = Where.EVERYWHERE
     )
     public String getAtPath() {
         return atPath;
@@ -294,17 +292,6 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     public void setAtPath(final String atPath) {
         this.atPath = atPath;
-    }
-
-    public boolean hideAtPath() {
-        final ApplicationTenancy userTenancy = meService.me().getTenancy();
-        final ApplicationTenancy objectTenancy = getApplicationTenancy();
-        return Objects.equal(userTenancy, objectTenancy);
-    }
-
-    @Programmatic
-    public ApplicationTenancy getApplicationTenancy() {
-        return applicationTenancies.findTenancyByPath(getAtPath());
     }
 
     //endregion

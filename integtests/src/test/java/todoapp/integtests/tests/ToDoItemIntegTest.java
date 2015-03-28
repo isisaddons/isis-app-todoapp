@@ -939,7 +939,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void cannotModify() throws Exception {
 
                 // when, then
-                expectedExceptions.expectMessage("Reason: Hidden. Identifier: todoapp.dom.module.todoitem.ToDoItem#atPath()");
+                expectedExceptions.expectMessage("Reason: Always disabled. Identifier: todoapp.dom.module.todoitem.ToDoItem#atPath()");
                 toDoItem.setAtPath("other");
             }
 

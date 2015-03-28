@@ -92,7 +92,7 @@
                 "members": {
                     "atPath": {
                         "propertyLayout": {
-                            "hidden": "ALL_TABLES"
+                            "hidden": "NOWHERE"
                         }
                     },
                     "versionSequence": {
