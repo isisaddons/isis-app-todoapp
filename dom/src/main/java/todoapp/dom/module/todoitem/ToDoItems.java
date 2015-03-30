@@ -206,12 +206,13 @@ public class ToDoItems {
 
     //region > helpers
     @Programmatic // for use by fixtures
-    public ToDoItem newToDo(
+    private ToDoItem newToDo(
             final String description, 
             final Category category, 
             final Subcategory subcategory,
             final String username,
-            final LocalDate dueBy, final BigDecimal cost) {
+            final LocalDate dueBy,
+            final BigDecimal cost) {
         final ToDoItem toDoItem = container.newTransientInstance(ToDoItem.class);
         toDoItem.setDescription(description);
         toDoItem.setCategory(category);

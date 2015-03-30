@@ -16,19 +16,19 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.fixture.todoitem.create;
-
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.categories.Category;
-import todoapp.dom.module.categories.Subcategory;
-import todoapp.dom.module.todoitem.ToDoItems;
-import todoapp.fixture.util.Util;
+package todoapp.fixture.module.todoitem;
 
 import java.math.BigDecimal;
+import java.util.concurrent.Callable;
 import org.isisaddons.wicket.gmap3.cpt.applib.Location;
 import org.joda.time.LocalDate;
+import org.apache.isis.applib.services.sudo.SudoService;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.clock.ClockService;
+import todoapp.dom.module.categories.Category;
+import todoapp.dom.module.categories.Subcategory;
+import todoapp.dom.module.todoitem.ToDoItem;
+import todoapp.dom.module.todoitem.ToDoItems;
 
 public class ToDoItemCreate extends FixtureScript {
 
@@ -107,36 +107,36 @@ public class ToDoItemCreate extends FixtureScript {
     protected void execute(final ExecutionContext ec) {
 
         // required
-        Integer index = Util.coalesce(ec.getParameterAsInteger("index"), getIndex());
-        if(index == null) {
-            throw new IllegalArgumentException("Index of object to create is required");
-        }
+        this.checkParam("index", ec, Integer.class);
 
         final int numCanned = canned().length;
-        if(index < 0 || index >= numCanned) {
-            throw new IllegalArgumentException(String.format("Index of object to create must be in range [0, %d)", numCanned));
+        if(getIndex() < 0 || getIndex() >= numCanned) {
+            throw new IllegalArgumentException(String.format(
+                    "Index of object to create must be in range [0, %d)", numCanned));
         }
 
         // defaults
-        final String username = Util.coalesce(ec.getParameter("username"), getUsername(), getContainer().getUser().getName());
+        this.defaultParam("username", ec, getContainer().getUser().getName());
 
 
         // execute
-        final Object[] objects = canned()[((int) index)];
+        final Object[] objects = canned()[getIndex()];
         final String description = (String) objects[0];
         final Category category = (Category) objects[1];
         final Subcategory subcategory = (Subcategory) objects[2];
         final LocalDate dueBy = (LocalDate) objects[3];
         final BigDecimal cost = (BigDecimal) objects[4];
 
-        // validate parameters
-        // execute
-
-
-        this.toDoItem = toDoItems.newToDo(
-                description, category, subcategory, username, dueBy, cost);
-
-        toDoItem.setLocation(new Location(51.5172 + random(-0.05, +0.05), 0.1182 + random(-0.05, +0.05)));
+        toDoItem = sudoService.sudo(username,
+                new Callable<ToDoItem>() {
+                    @Override
+                    public ToDoItem call() {
+                        final ToDoItem toDoItem = wrap(toDoItems).newToDo(
+                                description, category, subcategory, dueBy, cost);
+                        wrap(toDoItem).setLocation(new Location(51.5172 + random(-0.05, +0.05), 0.1182 + random(-0.05, +0.05)));
+                        return toDoItem;
+                    }
+                });
 
         ec.addResult(this, toDoItem);
     }
@@ -161,6 +161,8 @@ public class ToDoItemCreate extends FixtureScript {
     @javax.inject.Inject
     protected ClockService clockService;
 
+    @javax.inject.Inject
+    private SudoService sudoService;
 
     //endregion
 

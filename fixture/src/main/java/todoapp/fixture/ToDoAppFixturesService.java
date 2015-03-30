@@ -18,9 +18,6 @@
  */
 package todoapp.fixture;
 
-import todoapp.dom.app.dashboard.ToDoAppDashboardService;
-import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
-
 import java.util.List;
 import javax.inject.Inject;
 import org.apache.isis.applib.annotation.Action;
@@ -36,6 +33,9 @@ import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.fixturescripts.FixtureResult;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
+import todoapp.dom.app.dashboard.ToDoAppDashboardService;
+import todoapp.fixture.scenarios.RecreateAllUsersAndRolesAndToDoItems;
+import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
 /**
  * Enables fixtures to be installed from the application.
@@ -76,7 +76,7 @@ public class ToDoAppFixturesService extends FixtureScripts {
 
     @Override
     public FixtureScript default0RunFixtureScript() {
-        return findFixtureScriptFor(RecreateToDoItemsForCurrentUser.class);
+        return findFixtureScriptFor(RecreateAllUsersAndRolesAndToDoItems.class);
     }
 
     /**

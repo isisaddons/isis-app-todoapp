@@ -323,7 +323,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
         //
         @SuppressWarnings("unused")
         final List<Object> allObjects = actionInvocationContext.getDomainObjects();
-        
+
         LOG.debug("completed: "
                 + actionInvocationContext.getIndex() +
                 " [" + actionInvocationContext.getSize() + "]"
@@ -331,8 +331,8 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
                 + (actionInvocationContext.isLast() ? " (last)" : ""));
 
         // if invoked as a regular action, return this object;
-        // otherwise (if invoked as bulk), return null (so go back to the list)
-        return actionInvocationContext.getInvokedOn() == InvokedOn.OBJECT? this: null;
+        // otherwise return null (so go back to the list)
+        return actionInvocationContext.getInvokedOn() == InvokedOn.COLLECTION? null: this;
     }
     // disable action dependent on state of object
     public String disableCompleted() {

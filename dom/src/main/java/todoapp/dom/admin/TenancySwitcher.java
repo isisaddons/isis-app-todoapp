@@ -28,6 +28,8 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import todoapp.dom.app.dashboard.ToDoAppDashboard;
+import todoapp.dom.app.dashboard.ToDoAppDashboardService;
 
 
 @DomainService(
@@ -46,13 +48,14 @@ public class TenancySwitcher extends AbstractService {
     @ActionLayout(
             cssClassFa = "fa-exchange"
     )
-    public void switchTenancy(final ApplicationTenancy applicationTenancy) {
+    public ToDoAppDashboard switchTenancy(final ApplicationTenancy applicationTenancy) {
         final ApplicationUser applicationUser = meService.me();
         applicationUser.updateTenancy(applicationTenancy);
+        return toDoAppDashboardService.lookup();
     }
 
-    public List<ApplicationTenancy> autoComplete0SwitchTenancy(final String search) {
-        return applicationTenancies.autoComplete(search);
+    public List<ApplicationTenancy> choices0SwitchTenancy() {
+        return applicationTenancies.allTenancies();
     }
 
     public ApplicationTenancy default0SwitchTenancy() {
@@ -67,6 +70,9 @@ public class TenancySwitcher extends AbstractService {
 
     @javax.inject.Inject
     private ApplicationTenancies applicationTenancies;
+
+    @javax.inject.Inject
+    private ToDoAppDashboardService toDoAppDashboardService;
     //endregion
 
 }

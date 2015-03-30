@@ -18,9 +18,6 @@
  */
 package todoapp.fixture.scenarios;
 
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.fixture.todoitem.create.ToDoItemCreate;
-
 import java.util.Collections;
 import java.util.List;
 import com.google.common.collect.Lists;
@@ -30,9 +27,11 @@ import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
+import todoapp.dom.module.todoitem.ToDoItem;
+import todoapp.fixture.module.todoitem.ToDoItemComplete;
+import todoapp.fixture.module.todoitem.ToDoItemCreate;
 
 public class RecreateToDoItemsForCurrentUser extends FixtureScript {
-
 
     public RecreateToDoItemsForCurrentUser() {
         withDiscoverability(Discoverability.DISCOVERABLE);
@@ -147,7 +146,6 @@ public class RecreateToDoItemsForCurrentUser extends FixtureScript {
         final Integer numberToCreate = defaultParam("numberToCreate", ec, 12);
         final Integer numberToComplete = defaultParam("numberToComplete", ec, 2);
 
-
         // validate user
         this.applicationUser = applicationUsers.findUserByUsername(username);
         if(this.applicationUser == null) {
@@ -157,10 +155,13 @@ public class RecreateToDoItemsForCurrentUser extends FixtureScript {
         // validate numberToXxx
         final int maxNumberCanned = ToDoItemCreate.numberCanned();
         if(numberToCreate > maxNumberCanned) {
-            throw new IllegalArgumentException(String.format("Max number to request is %d", maxNumberCanned));
+            throw new IllegalArgumentException(String.format(
+                    "Max number to request is %d", maxNumberCanned));
         }
         if(numberToComplete > numberToCreate) {
-            throw new IllegalArgumentException(String.format("numberToComplete (%d) cannot be greater than numberToCreate (%d)", numberToComplete, numberToCreate));
+            throw new IllegalArgumentException(String.format(
+                    "numberToComplete (%d) cannot be greater than numberToCreate (%d)",
+                    numberToComplete, numberToCreate));
         }
 
 
@@ -196,11 +197,15 @@ public class RecreateToDoItemsForCurrentUser extends FixtureScript {
         Collections.shuffle(notYetComplete);
         for (int i = 0; i < numberToComplete; i++) {
             final ToDoItem toDoItem = notYetComplete.get(i);
-            toDoItem.setComplete(true);
 
-            notYetComplete.remove(toDoItem);
+            ec.executeChild(this, new ToDoItemComplete() {{
+                setToDoItem(toDoItem);
+            }});
+
             complete.add(toDoItem);
         }
+
+        notYetComplete.removeAll(complete);
     }
 
 

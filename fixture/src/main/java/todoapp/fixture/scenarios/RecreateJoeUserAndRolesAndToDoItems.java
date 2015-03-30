@@ -17,9 +17,9 @@
 package todoapp.fixture.scenarios;
 
 import todoapp.dom.seed.roles.ToDoAppRegularRoleAndPermissions;
-import todoapp.fixture.security.teardown.DeleteUserAndUserRolesAndToDoItems;
-import todoapp.fixture.security.userrole.UserRolesFixtureScript;
-import todoapp.fixture.security.users.CreateUserFixtureScript;
+import todoapp.fixture.module.DeleteUserAndUserRolesAndToDoItems;
+import todoapp.fixture.module.security.UserRolesFixtureScript;
+import todoapp.fixture.module.security.CreateUserFixtureScript;
 
 import java.util.Arrays;
 import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityRegularUserRoleAndPermissions;

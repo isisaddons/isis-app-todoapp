@@ -14,9 +14,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.fixture.security.userrole;
-
-import todoapp.fixture.util.Util;
+package todoapp.fixture.module.security;
 
 import java.util.List;
 import javax.annotation.Nullable;
@@ -29,6 +27,7 @@ import org.isisaddons.module.security.dom.role.ApplicationRoles;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
 import org.isisaddons.module.security.dom.user.ApplicationUsers;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+import todoapp.fixture.util.Util;
 
 public class UserRolesFixtureScript extends FixtureScript {
 

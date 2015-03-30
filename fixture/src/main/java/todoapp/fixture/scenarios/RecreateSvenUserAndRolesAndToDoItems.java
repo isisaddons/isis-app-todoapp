@@ -22,9 +22,9 @@ import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppDomainAdminRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
-import todoapp.fixture.security.teardown.DeleteUserAndUserRolesAndToDoItems;
-import todoapp.fixture.security.userrole.UserRolesFixtureScript;
-import todoapp.fixture.security.users.CreateUserFixtureScript;
+import todoapp.fixture.module.DeleteUserAndUserRolesAndToDoItems;
+import todoapp.fixture.module.security.UserRolesFixtureScript;
+import todoapp.fixture.module.security.CreateUserFixtureScript;
 
 import java.util.Arrays;
 import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;

@@ -16,13 +16,13 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.fixture.todoitem.actions.complete;
-
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItems;
+package todoapp.fixture.module.todoitem;
 
 import org.isisaddons.module.security.dom.user.ApplicationUsers;
+import org.apache.isis.applib.services.sudo.SudoService;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+import todoapp.dom.module.todoitem.ToDoItem;
+import todoapp.dom.module.todoitem.ToDoItems;
 
 public class ToDoItemComplete extends FixtureScript {
 
@@ -30,20 +30,34 @@ public class ToDoItemComplete extends FixtureScript {
 
     private ToDoItem toDoItem;
 
-    /**
-     * The item that was completed (output property
-     */
     public ToDoItem getToDoItem() {
         return toDoItem;
     }
-
-    private void setToDoItem(final ToDoItem toDoItem) {
+    public void setToDoItem(final ToDoItem toDoItem) {
         this.toDoItem = toDoItem;
+    }
+    //endregion
+
+    //region > username (optional)
+    private String username;
+
+    /**
+     * User to create items for; optional, defaults to current user.
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(final String username) {
+        this.username = username;
     }
     //endregion
 
     @Override
     protected void execute(final ExecutionContext ec) {
+
+        // defaults
+        this.defaultParam("username", ec, getContainer().getUser().getName());
 
         // find todoitem
         if(this.toDoItem == null) {
@@ -51,7 +65,13 @@ public class ToDoItemComplete extends FixtureScript {
         }
 
         // execute
-        this.toDoItem.completed();
+        sudoService.sudo(getUsername(),
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        wrap(toDoItem).completed();
+                    }
+                });
 
         // make results available
         ec.addResult(this, toDoItem);
@@ -64,5 +84,8 @@ public class ToDoItemComplete extends FixtureScript {
 
     @javax.inject.Inject
     private ApplicationUsers applicationUsers;
+
+    @javax.inject.Inject
+    private SudoService sudoService;
 
 }

@@ -37,8 +37,7 @@ public class RecreateAllUsersAndRolesAndToDoItems extends FixtureScript {
         // for other pre-canned users
         executionContext.executeChild(this, new RecreateBobUserAndRolesAndToDoItems());
         executionContext.executeChild(this, new RecreateDickUserAndRolesAndToDoItems());
-// seems to have problem running this fixture within this suite; haven't yet debugged...
-//        executionContext.executeChild(this, new RecreateJoeUserAndRolesAndToDoItems());
+        executionContext.executeChild(this, new RecreateJoeUserAndRolesAndToDoItems());
         executionContext.executeChild(this, new RecreateSvenUserAndRolesAndToDoItems());
     }
 
