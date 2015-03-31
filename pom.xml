@@ -34,24 +34,26 @@
     </prerequisites>
 
     <properties>
-        <isis.version>1.9.0-SNAPSHOT</isis.version>
+        <isis.version>1.9.0_dn4-SNAPSHOT</isis.version>
 
-        <isis-module-audit.version>1.9.0-SNAPSHOT</isis-module-audit.version>
-        <isis-module-command.version>1.9.0-SNAPSHOT</isis-module-command.version>
+        <isis-module-audit.version>1.9.0_dn4-SNAPSHOT</isis-module-audit.version>
+        <isis-module-command.version>1.9.0_dn4-SNAPSHOT</isis-module-command.version>
+        <isis-module-publishing.version>1.9.0_dn4-SNAPSHOT</isis-module-publishing.version>
+        <isis-module-security.version>1.9.0_dn4-SNAPSHOT</isis-module-security.version>
+        <isis-module-sessionlogger.version>1.9.0_dn4-SNAPSHOT</isis-module-sessionlogger.version>
+        <isis-module-settings.version>1.9.0_dn4-SNAPSHOT</isis-module-settings.version>
+
         <isis-module-devutils.version>1.9.0-SNAPSHOT</isis-module-devutils.version>
         <isis-module-docx.version>1.8.1</isis-module-docx.version>
-        <isis-module-publishing.version>1.9.0-SNAPSHOT</isis-module-publishing.version>
-        <isis-module-security.version>1.9.0-SNAPSHOT</isis-module-security.version>
-        <isis-module-sessionlogger.version>1.9.0-SNAPSHOT</isis-module-sessionlogger.version>
-        <isis-module-settings.version>1.9.0-SNAPSHOT</isis-module-settings.version>
 
         <isis-wicket-excel.version>1.9.0-SNAPSHOT</isis-wicket-excel.version>
         <isis-wicket-fullcalendar2.version>1.9.0-SNAPSHOT</isis-wicket-fullcalendar2.version>
         <isis-wicket-gmap3.version>1.9.0-SNAPSHOT</isis-wicket-gmap3.version>
 
         <!-- must be consistent with the versions defined by the JDO Objectstore -->
-        <datanucleus-accessplatform-jdo-rdbms.version>3.3.6</datanucleus-accessplatform-jdo-rdbms.version>
-        <datanucleus-maven-plugin.version>3.3.2</datanucleus-maven-plugin.version>
+        <datanucleus-accessplatform-jdo-rdbms.version>4.0.4</datanucleus-accessplatform-jdo-rdbms.version>
+        <datanucleus-jodatime.version>4.0.4</datanucleus-jodatime.version>
+        <datanucleus-maven-plugin.version>4.0.0-release</datanucleus-maven-plugin.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -240,6 +242,9 @@
                             <exclude>**/*.json</exclude>
                             <exclude>**/*.min.js</exclude>
                             <exclude>**/*.js</exclude>
+
+                            <exclude>**/translations.pot</exclude>
+                            <exclude>**/translations*.po</exclude>
                         </excludes>
                         <licenses>
                             <license implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
