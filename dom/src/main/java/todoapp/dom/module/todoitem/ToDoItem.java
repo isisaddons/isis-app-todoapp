@@ -90,7 +90,7 @@ import todoapp.dom.seed.tenancies.UsersTenancy;
 @javax.jdo.annotations.Uniques({
     @javax.jdo.annotations.Unique(
             name="ToDoItem_description_must_be_unique", 
-            members={"ownedBy","description"})
+            members={"atPath","description"})
 })
 @javax.jdo.annotations.Queries( {
     @javax.jdo.annotations.Query(
