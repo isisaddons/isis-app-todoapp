@@ -20,12 +20,14 @@ package todoapp.dom.module.settings;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import org.isisaddons.module.settings.SettingsModule;
+
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.eventbus.AbstractDomainEvent;
 import org.apache.isis.applib.services.eventbus.EventBusService;
+
+import org.isisaddons.module.settings.SettingsModule;
 
 /**
  * This service simply permanently hides the menus from the {@link org.isisaddons.module.settings.dom.ApplicationSettingsService} and

@@ -17,10 +17,7 @@
 package todoapp.dom.admin;
 
 import java.util.List;
-import org.isisaddons.module.security.app.user.MeService;
-import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
-import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
-import org.isisaddons.module.security.dom.user.ApplicationUser;
+
 import org.apache.isis.applib.AbstractService;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -28,6 +25,12 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
+
+import org.isisaddons.module.security.app.user.MeService;
+import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
+import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
+import org.isisaddons.module.security.dom.user.ApplicationUser;
+
 import todoapp.dom.app.dashboard.ToDoAppDashboard;
 import todoapp.dom.app.dashboard.ToDoAppDashboardService;
 

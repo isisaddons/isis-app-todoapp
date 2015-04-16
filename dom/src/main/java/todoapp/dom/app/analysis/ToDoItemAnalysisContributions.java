@@ -18,14 +18,14 @@
  */
 package todoapp.dom.app.analysis;
 
-import todoapp.dom.module.todoitem.ToDoItem;
-
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
+
+import todoapp.dom.module.todoitem.ToDoItem;
 
 @DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
 public class ToDoItemAnalysisContributions {

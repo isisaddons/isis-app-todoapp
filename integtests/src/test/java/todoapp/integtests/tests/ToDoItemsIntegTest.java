@@ -19,12 +19,16 @@
 package todoapp.integtests.tests;
 
 import java.util.List;
+
 import javax.inject.Inject;
+
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import todoapp.dom.module.categories.Category;

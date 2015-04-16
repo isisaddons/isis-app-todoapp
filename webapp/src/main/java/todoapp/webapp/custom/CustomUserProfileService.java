@@ -18,16 +18,18 @@
  */
 package todoapp.webapp.custom;
 
-import todoapp.dom.seed.tenancies.UsersTenancy;
-
 import javax.inject.Inject;
-import org.isisaddons.module.security.app.user.MeService;
-import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
-import org.isisaddons.module.security.dom.user.ApplicationUser;
+
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.userprof.UserProfileService;
+
+import org.isisaddons.module.security.app.user.MeService;
+import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
+import org.isisaddons.module.security.dom.user.ApplicationUser;
+
+import todoapp.dom.seed.tenancies.UsersTenancy;
 
 /**
  * Demonstrates how to provide a custom implementation of the {@link org.apache.isis.applib.services.userprof.UserProfileService}.

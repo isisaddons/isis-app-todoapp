@@ -18,10 +18,8 @@
  */
 package todoapp.dom.app.export;
 
-import todoapp.dom.app.dashboard.ToDoAppDashboard;
-import todoapp.dom.module.todoitem.ToDoItem;
-
 import javax.inject.Inject;
+
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainService;
@@ -30,6 +28,9 @@ import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.xmlsnapshot.XmlSnapshotService;
 import org.apache.isis.applib.value.Clob;
+
+import todoapp.dom.app.dashboard.ToDoAppDashboard;
+import todoapp.dom.module.todoitem.ToDoItem;
 
 @DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
 public class ExportAsXmlContributions extends AbstractFactoryAndRepository {

@@ -18,9 +18,11 @@
  */
 package todoapp.fixture.module.todoitem;
 
-import org.isisaddons.module.security.dom.user.ApplicationUsers;
-import org.apache.isis.applib.services.sudo.SudoService;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.services.sudo.SudoService;
+
+import org.isisaddons.module.security.dom.user.ApplicationUsers;
+
 import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.dom.module.todoitem.ToDoItems;
 

@@ -105,6 +105,7 @@
     </build>
 
     <dependencies>
+
         <dependency>
             <groupId>org.apache.isis.core</groupId>
             <artifactId>isis-core-applib</artifactId>
@@ -123,6 +124,11 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.isisaddons.module.audit</groupId>

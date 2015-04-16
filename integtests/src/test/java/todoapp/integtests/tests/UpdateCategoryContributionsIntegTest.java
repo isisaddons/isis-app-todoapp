@@ -18,16 +18,11 @@
  */
 package todoapp.integtests.tests;
 
-import todoapp.dom.module.categories.Category;
-import todoapp.dom.module.categories.Subcategory;
-import todoapp.dom.module.categories.UpdateCategoryContributions;
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItems;
-import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
-
 import javax.inject.Inject;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -35,6 +30,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+import todoapp.dom.module.categories.Category;
+import todoapp.dom.module.categories.Subcategory;
+import todoapp.dom.module.categories.UpdateCategoryContributions;
+import todoapp.dom.module.todoitem.ToDoItem;
+import todoapp.dom.module.todoitem.ToDoItems;
+import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
 public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoIntegTest {
 

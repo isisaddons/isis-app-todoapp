@@ -18,17 +18,14 @@
  */
 package todoapp.dom.app.analysis;
 
-import todoapp.dom.module.categories.Subcategory;
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.categories.Category;
-import todoapp.dom.module.todoitem.ToDoItems;
-
 import java.util.Arrays;
 import java.util.List;
+
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.BookmarkPolicy;
@@ -40,6 +37,11 @@ import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.annotation.Title;
 import org.apache.isis.applib.util.ObjectContracts;
+
+import todoapp.dom.module.categories.Category;
+import todoapp.dom.module.categories.Subcategory;
+import todoapp.dom.module.todoitem.ToDoItem;
+import todoapp.dom.module.todoitem.ToDoItems;
 
 @DomainObjectLayout(
         named="By Category",

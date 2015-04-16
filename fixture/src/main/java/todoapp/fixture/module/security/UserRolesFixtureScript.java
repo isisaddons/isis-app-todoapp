@@ -17,16 +17,21 @@
 package todoapp.fixture.module.security;
 
 import java.util.List;
+
 import javax.annotation.Nullable;
+
 import com.google.common.base.Function;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+
 import org.isisaddons.module.security.dom.role.ApplicationRole;
 import org.isisaddons.module.security.dom.role.ApplicationRoles;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
 import org.isisaddons.module.security.dom.user.ApplicationUsers;
-import org.apache.isis.applib.fixturescripts.FixtureScript;
+
 import todoapp.fixture.util.Util;
 
 public class UserRolesFixtureScript extends FixtureScript {

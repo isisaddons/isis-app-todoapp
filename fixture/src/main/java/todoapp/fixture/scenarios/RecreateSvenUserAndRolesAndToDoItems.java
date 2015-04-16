@@ -16,6 +16,10 @@
  */
 package todoapp.fixture.scenarios;
 
+import java.util.Arrays;
+
+import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
+
 import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
@@ -23,11 +27,8 @@ import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppDomainAdminRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
 import todoapp.fixture.module.DeleteUserAndUserRolesAndToDoItems;
-import todoapp.fixture.module.security.UserRolesFixtureScript;
 import todoapp.fixture.module.security.CreateUserFixtureScript;
-
-import java.util.Arrays;
-import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
+import todoapp.fixture.module.security.UserRolesFixtureScript;
 
 public class RecreateSvenUserAndRolesAndToDoItems extends CreateUserFixtureScript {
 

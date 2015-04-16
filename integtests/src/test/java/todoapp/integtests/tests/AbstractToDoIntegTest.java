@@ -18,11 +18,12 @@
  */
 package todoapp.integtests.tests;
 
-import todoapp.integtests.ToDoAppSystemInitializer;
-
 import org.junit.BeforeClass;
+
 import org.apache.isis.core.integtestsupport.IntegrationTestAbstract;
 import org.apache.isis.core.integtestsupport.scenarios.ScenarioExecutionForIntegration;
+
+import todoapp.integtests.ToDoAppSystemInitializer;
 
 public abstract class AbstractToDoIntegTest extends IntegrationTestAbstract {
     

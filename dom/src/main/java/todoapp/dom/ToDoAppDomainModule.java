@@ -19,6 +19,7 @@
 package todoapp.dom;
 
 import java.util.List;
+
 import org.apache.isis.applib.Identifier;
 
 public final class ToDoAppDomainModule {

@@ -19,7 +19,9 @@
 package todoapp.fixture;
 
 import java.util.List;
+
 import javax.inject.Inject;
+
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
@@ -33,6 +35,7 @@ import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.fixturescripts.FixtureResult;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
+
 import todoapp.dom.app.dashboard.ToDoAppDashboardService;
 import todoapp.fixture.scenarios.RecreateAllUsersAndRolesAndToDoItems;
 import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;

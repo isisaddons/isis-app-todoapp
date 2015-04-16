@@ -16,9 +16,9 @@
  */
 package todoapp.dom.seed.tenancies;
 
-import todoapp.dom.seed.users.ToDoAppAdminUser;
-
 import org.isisaddons.module.security.seed.scripts.AbstractTenancyFixtureScript;
+
+import todoapp.dom.seed.users.ToDoAppAdminUser;
 
 public class ToDoAppAdminUserTenancy extends AbstractTenancyFixtureScript {
 

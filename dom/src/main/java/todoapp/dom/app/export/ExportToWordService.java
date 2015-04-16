@@ -16,23 +16,20 @@
  */
 package todoapp.dom.app.export;
 
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItems;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.List;
+
 import com.google.common.base.Function;
 import com.google.common.io.Resources;
+
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
-import org.isisaddons.module.docx.dom.DocxService;
-import org.isisaddons.module.docx.dom.LoadTemplateException;
-import org.isisaddons.module.docx.dom.MergeException;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.output.DOMOutputter;
+
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -43,6 +40,13 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.clock.ClockService;
 import org.apache.isis.applib.value.Blob;
+
+import org.isisaddons.module.docx.dom.DocxService;
+import org.isisaddons.module.docx.dom.LoadTemplateException;
+import org.isisaddons.module.docx.dom.MergeException;
+
+import todoapp.dom.module.todoitem.ToDoItem;
+import todoapp.dom.module.todoitem.ToDoItems;
 
 @DomainService
 @DomainServiceLayout(

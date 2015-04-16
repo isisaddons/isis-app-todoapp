@@ -19,6 +19,7 @@ package todoapp.dom.seed.roles;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
+
 import todoapp.dom.app.relativepriority.RelativePriorityContributions;
 import todoapp.dom.module.todoitem.ToDoItem;
 

@@ -19,9 +19,9 @@
 
 package todoapp.integtests.fixture;
 
-import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
-
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+
+import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
 public class ToDoItemsIntegTestFixture extends FixtureScript {
 

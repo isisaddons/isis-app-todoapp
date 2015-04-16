@@ -19,10 +19,7 @@
 package todoapp.dom.module.settings;
 
 import java.util.List;
-import org.isisaddons.module.settings.dom.ApplicationSettingsServiceRW;
-import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
-import org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo;
-import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
+
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.DomainService;
@@ -31,6 +28,11 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
+
+import org.isisaddons.module.settings.dom.ApplicationSettingsServiceRW;
+import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
+import org.isisaddons.module.settings.dom.jdo.ApplicationSettingJdo;
+import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
 
 /**
  * A wrapper around {@link org.isisaddons.module.settings.dom.UserSettingsService}.

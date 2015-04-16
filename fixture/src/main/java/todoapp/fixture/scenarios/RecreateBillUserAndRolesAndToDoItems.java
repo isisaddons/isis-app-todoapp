@@ -17,7 +17,9 @@
 package todoapp.fixture.scenarios;
 
 import java.util.Arrays;
+
 import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityRegularUserRoleAndPermissions;
+
 import todoapp.dom.seed.roles.ToDoAppRegularRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppToDoItemVetoSelectedMembersPermissions;
 import todoapp.fixture.module.DeleteUserAndUserRolesAndToDoItems;

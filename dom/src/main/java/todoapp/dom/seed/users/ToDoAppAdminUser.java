@@ -16,6 +16,12 @@
  */
 package todoapp.dom.seed.users;
 
+import java.util.Arrays;
+
+import org.isisaddons.module.security.dom.user.AccountType;
+import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureScript;
+import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
+
 import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.DevUtilsModuleRoleAndPermissions;
@@ -27,11 +33,6 @@ import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
 import todoapp.dom.seed.roles.TranslationServicePoMenuRoleAndPermissions;
 import todoapp.dom.seed.tenancies.ToDoAppAdminUserTenancy;
 import todoapp.dom.seed.tenancies.UsersTenancy;
-
-import java.util.Arrays;
-import org.isisaddons.module.security.dom.user.AccountType;
-import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureScript;
-import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
 
 public class ToDoAppAdminUser extends AbstractUserAndRolesFixtureScript {
 

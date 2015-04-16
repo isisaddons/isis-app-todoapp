@@ -1,19 +1,21 @@
 package todoapp.webapp;
 
+import java.util.concurrent.Callable;
+
+import org.apache.isis.core.metamodel.services.ServicesInjectorSpi;
+import org.apache.isis.core.runtime.system.context.IsisContext;
+import org.apache.isis.core.runtime.system.persistence.PersistenceSession;
+
+import org.isisaddons.module.settings.dom.UserSetting;
+import org.isisaddons.module.settings.dom.UserSettingsService;
+import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
+import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
+
 import de.agilecoders.wicket.core.settings.ActiveThemeProvider;
 import de.agilecoders.wicket.core.settings.IBootstrapSettings;
 import de.agilecoders.wicket.core.settings.ITheme;
 import de.agilecoders.wicket.core.settings.SessionThemeProvider;
 import de.agilecoders.wicket.core.settings.ThemeProvider;
-
-import java.util.concurrent.Callable;
-import org.isisaddons.module.settings.dom.UserSetting;
-import org.isisaddons.module.settings.dom.UserSettingsService;
-import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
-import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
-import org.apache.isis.core.metamodel.services.ServicesInjectorSpi;
-import org.apache.isis.core.runtime.system.context.IsisContext;
-import org.apache.isis.core.runtime.system.persistence.PersistenceSession;
 
 public class UserSettingsThemeProvider implements ActiveThemeProvider {
 

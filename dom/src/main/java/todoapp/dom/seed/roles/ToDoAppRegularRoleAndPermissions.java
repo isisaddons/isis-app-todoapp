@@ -16,12 +16,13 @@
  */
 package todoapp.dom.seed.roles;
 
-import todoapp.dom.ToDoAppDomainModule;
+import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
-import org.apache.isis.applib.fixturescripts.FixtureScript;
+
+import todoapp.dom.ToDoAppDomainModule;
 
 public class ToDoAppRegularRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 

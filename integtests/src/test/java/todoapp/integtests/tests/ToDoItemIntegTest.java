@@ -22,13 +22,17 @@ import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.util.EventObject;
 import java.util.List;
+
 import javax.activation.MimeType;
 import javax.inject.Inject;
+
 import com.google.common.collect.Iterables;
+
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.NonRecoverableException;
 import org.apache.isis.applib.RecoverableException;
@@ -39,6 +43,7 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.CollectionDomainEvent;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.value.Blob;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -643,6 +648,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 final BigDecimal newCost = new BigDecimal("123.45");
 
                 // when
+                final String reason = "";
                 toDoItem.updateCost(newCost);
 
                 // then
@@ -655,6 +661,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 final BigDecimal newCost = new BigDecimal("123.45");
 
                 // when
+                final String reason = "";
                 toDoItem.updateCost(newCost);
 
                 // then
@@ -665,6 +672,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void canBeNull() throws Exception {
 
                 // when
+                final String reason = "";
                 toDoItem.updateCost(null);
 
                 // then

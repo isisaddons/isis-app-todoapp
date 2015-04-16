@@ -18,13 +18,9 @@
  */
 package todoapp.dom.app.dashboard;
 
-import todoapp.dom.app.relativepriority.RelativePriorityContributions;
-import todoapp.dom.app.export.ExportToWordService;
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItems;
-
 import java.util.Collections;
 import java.util.List;
+
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CollectionLayout;
@@ -33,6 +29,11 @@ import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Nature;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.value.Blob;
+
+import todoapp.dom.app.export.ExportToWordService;
+import todoapp.dom.app.relativepriority.RelativePriorityContributions;
+import todoapp.dom.module.todoitem.ToDoItem;
+import todoapp.dom.module.todoitem.ToDoItems;
 
 @DomainObject(nature = Nature.VIEW_MODEL)
 public class ToDoAppDashboard {

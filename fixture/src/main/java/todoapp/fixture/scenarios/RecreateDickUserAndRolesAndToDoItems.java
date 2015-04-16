@@ -16,14 +16,15 @@
  */
 package todoapp.fixture.scenarios;
 
+import java.util.Arrays;
+
+import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityRegularUserRoleAndPermissions;
+
 import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppRegularRoleAndPermissions;
 import todoapp.fixture.module.DeleteUserAndUserRolesAndToDoItems;
-import todoapp.fixture.module.security.UserRolesFixtureScript;
 import todoapp.fixture.module.security.CreateUserFixtureScript;
-
-import java.util.Arrays;
-import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityRegularUserRoleAndPermissions;
+import todoapp.fixture.module.security.UserRolesFixtureScript;
 
 public class RecreateDickUserAndRolesAndToDoItems extends CreateUserFixtureScript {
 

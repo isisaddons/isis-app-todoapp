@@ -19,10 +19,13 @@
 package todoapp.fixture.module;
 
 import javax.inject.Inject;
-import org.isisaddons.module.security.dom.user.ApplicationUser;
-import org.isisaddons.module.security.dom.user.ApplicationUsers;
+
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
+
+import org.isisaddons.module.security.dom.user.ApplicationUser;
+import org.isisaddons.module.security.dom.user.ApplicationUsers;
+
 import todoapp.dom.seed.tenancies.UsersTenancy;
 import todoapp.fixture.util.Util;
 

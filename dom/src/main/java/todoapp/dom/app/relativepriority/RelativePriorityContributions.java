@@ -18,15 +18,16 @@
  */
 package todoapp.dom.app.relativepriority;
 
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItems;
-
 import java.util.List;
 import java.util.concurrent.Callable;
+
 import javax.inject.Inject;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Ordering;
+
 import org.joda.time.LocalDate;
+
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -39,6 +40,9 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.queryresultscache.QueryResultsCache;
+
+import todoapp.dom.module.todoitem.ToDoItem;
+import todoapp.dom.module.todoitem.ToDoItems;
 
 @DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
 public class RelativePriorityContributions extends AbstractFactoryAndRepository {

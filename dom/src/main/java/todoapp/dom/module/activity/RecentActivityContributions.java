@@ -18,14 +18,12 @@ package todoapp.dom.module.activity;
 
 import java.util.Collections;
 import java.util.List;
+
 import com.google.common.collect.Lists;
-import org.isisaddons.module.audit.dom.AuditingServiceRepository;
-import org.isisaddons.module.command.dom.CommandServiceJdoRepository;
-import org.isisaddons.module.publishing.dom.PublishingServiceRepository;
-import org.isisaddons.module.sessionlogger.dom.SessionLogEntry;
+
 import org.joda.time.LocalDate;
+
 import org.apache.isis.applib.AbstractService;
-import org.apache.isis.applib.ViewModel;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.MemberOrder;
@@ -39,6 +37,11 @@ import org.apache.isis.applib.services.bookmark.Bookmark;
 import org.apache.isis.applib.services.bookmark.BookmarkService;
 import org.apache.isis.applib.services.clock.ClockService;
 import org.apache.isis.objectstore.jdo.applib.service.DomainChangeJdoAbstract;
+
+import org.isisaddons.module.audit.dom.AuditingServiceRepository;
+import org.isisaddons.module.command.dom.CommandServiceJdoRepository;
+import org.isisaddons.module.publishing.dom.PublishingServiceRepository;
+import org.isisaddons.module.sessionlogger.dom.SessionLogEntry;
 
 
 @DomainService(

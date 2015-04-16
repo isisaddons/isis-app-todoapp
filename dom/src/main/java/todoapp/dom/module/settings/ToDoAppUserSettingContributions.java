@@ -19,8 +19,7 @@
 package todoapp.dom.module.settings;
 
 import java.util.List;
-import org.isisaddons.module.security.dom.user.ApplicationUser;
-import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
+
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.CollectionLayout;
@@ -29,6 +28,9 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.RenderType;
 import org.apache.isis.applib.annotation.SemanticsOf;
+
+import org.isisaddons.module.security.dom.user.ApplicationUser;
+import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
 @DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
 public class ToDoAppUserSettingContributions {
 

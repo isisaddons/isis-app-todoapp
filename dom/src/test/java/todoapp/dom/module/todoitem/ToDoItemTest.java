@@ -21,10 +21,11 @@ import org.jmock.auto.Mock;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
 import org.apache.isis.applib.DomainObjectContainer;
-import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
 import org.apache.isis.applib.security.RoleMemento;
 import org.apache.isis.applib.security.UserMemento;
+import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
 import org.apache.isis.applib.services.eventbus.EventBusService;
 import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2;
 import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2.Mode;

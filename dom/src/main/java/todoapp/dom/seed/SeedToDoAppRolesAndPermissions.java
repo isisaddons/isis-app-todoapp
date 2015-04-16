@@ -18,11 +18,13 @@ package todoapp.dom.seed;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
+
 import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.DevUtilsModuleRoleAndPermissions;
@@ -32,8 +34,8 @@ import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppDomainAdminRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppRegularRoleAndPermissions;
-import todoapp.dom.seed.roles.TranslationServicePoMenuRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppToDoItemVetoSelectedMembersPermissions;
+import todoapp.dom.seed.roles.TranslationServicePoMenuRoleAndPermissions;
 import todoapp.dom.seed.tenancies.ToDoAppAdminUserTenancy;
 import todoapp.dom.seed.tenancies.UsersTenancy;
 import todoapp.dom.seed.users.ToDoAppAdminUser;

@@ -16,10 +16,11 @@
  */
 package todoapp.dom.seed.roles;
 
+import org.apache.isis.core.runtime.services.i18n.po.TranslationServicePoMenu;
+
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
-import org.apache.isis.core.runtime.services.i18n.po.TranslationServicePoMenu;
 
 public class TranslationServicePoMenuRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 

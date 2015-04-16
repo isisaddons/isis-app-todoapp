@@ -20,13 +20,17 @@ package todoapp.fixture.scenarios;
 
 import java.util.Collections;
 import java.util.List;
+
 import com.google.common.collect.Lists;
-import org.isisaddons.module.security.dom.user.ApplicationUser;
-import org.isisaddons.module.security.dom.user.ApplicationUsers;
+
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
+
+import org.isisaddons.module.security.dom.user.ApplicationUser;
+import org.isisaddons.module.security.dom.user.ApplicationUsers;
+
 import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.fixture.module.todoitem.ToDoItemComplete;
 import todoapp.fixture.module.todoitem.ToDoItemCreate;

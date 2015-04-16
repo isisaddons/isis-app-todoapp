@@ -20,15 +20,14 @@ package todoapp.dom.app.demoeventsubscriber;
 
 import java.util.EventObject;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
-import org.isisaddons.module.audit.dom.AuditingServiceMenu;
-import org.isisaddons.module.command.dom.CommandServiceMenu;
-import org.isisaddons.module.publishing.dom.PublishingServiceMenu;
-import org.isisaddons.module.sessionlogger.dom.SessionLoggingServiceMenu;
+
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.NonRecoverableException;
 import org.apache.isis.applib.RecoverableException;
@@ -47,6 +46,12 @@ import org.apache.isis.applib.services.eventbus.CollectionDomainEvent;
 import org.apache.isis.applib.services.eventbus.EventBusService;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+
+import org.isisaddons.module.audit.dom.AuditingServiceMenu;
+import org.isisaddons.module.command.dom.CommandServiceMenu;
+import org.isisaddons.module.publishing.dom.PublishingServiceMenu;
+import org.isisaddons.module.sessionlogger.dom.SessionLoggingServiceMenu;
+
 import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterables.transform;
 import static com.google.common.collect.Lists.newArrayList;

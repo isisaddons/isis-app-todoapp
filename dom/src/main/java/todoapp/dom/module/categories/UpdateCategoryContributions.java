@@ -18,9 +18,8 @@
  */
 package todoapp.dom.module.categories;
 
-import todoapp.dom.module.todoitem.ToDoItems;
-
 import java.util.List;
+
 import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -31,6 +30,8 @@ import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.queryresultscache.QueryResultsCache;
+
+import todoapp.dom.module.todoitem.ToDoItems;
 
 @DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
 public class UpdateCategoryContributions extends AbstractFactoryAndRepository {

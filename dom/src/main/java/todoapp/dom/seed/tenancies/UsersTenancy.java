@@ -16,9 +16,10 @@
  */
 package todoapp.dom.seed.tenancies;
 
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+
 import org.isisaddons.module.security.seed.scripts.AbstractTenancyFixtureScript;
 import org.isisaddons.module.security.seed.scripts.GlobalTenancy;
-import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 public class UsersTenancy extends AbstractTenancyFixtureScript {
 

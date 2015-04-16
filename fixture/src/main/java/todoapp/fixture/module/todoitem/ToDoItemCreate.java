@@ -20,11 +20,15 @@ package todoapp.fixture.module.todoitem;
 
 import java.math.BigDecimal;
 import java.util.concurrent.Callable;
-import org.isisaddons.wicket.gmap3.cpt.applib.Location;
+
 import org.joda.time.LocalDate;
-import org.apache.isis.applib.services.sudo.SudoService;
+
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.clock.ClockService;
+import org.apache.isis.applib.services.sudo.SudoService;
+
+import org.isisaddons.wicket.gmap3.cpt.applib.Location;
+
 import todoapp.dom.module.categories.Category;
 import todoapp.dom.module.categories.Subcategory;
 import todoapp.dom.module.todoitem.ToDoItem;

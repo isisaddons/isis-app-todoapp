@@ -16,11 +16,13 @@
  */
 package todoapp.dom.module.appuser;
 
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.NatureOfService;
+
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancyPathEvaluator;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.NatureOfService;
+
 import todoapp.dom.module.todoitem.ToDoItem;
 
 

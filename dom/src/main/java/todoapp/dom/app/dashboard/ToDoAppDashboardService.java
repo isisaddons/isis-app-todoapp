@@ -19,6 +19,7 @@
 package todoapp.dom.app.dashboard;
 
 import javax.inject.Inject;
+
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainService;

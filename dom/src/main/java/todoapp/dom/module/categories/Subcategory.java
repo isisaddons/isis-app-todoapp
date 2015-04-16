@@ -2,6 +2,7 @@ package todoapp.dom.module.categories;
 
 import java.util.Collections;
 import java.util.List;
+
 import com.google.common.base.Predicate;
 
 public enum Subcategory {

@@ -19,14 +19,18 @@
 package todoapp.webapp.custom;
 
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import org.isisaddons.module.settings.dom.UserSetting;
+
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.eventbus.EventBusService;
+
+import org.isisaddons.module.settings.dom.UserSetting;
+
 import todoapp.dom.module.settings.ToDoAppSettingsService;
 
 @DomainService(nature = NatureOfService.DOMAIN)

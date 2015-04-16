@@ -16,14 +16,15 @@
  */
 package todoapp.fixture.module.security;
 
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.value.Password;
+
 import org.isisaddons.module.security.dom.role.ApplicationRole;
 import org.isisaddons.module.security.dom.role.ApplicationRoles;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
 import org.isisaddons.module.security.dom.user.AccountType;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
 import org.isisaddons.module.security.dom.user.ApplicationUsers;
-import org.apache.isis.applib.fixturescripts.FixtureScript;
-import org.apache.isis.applib.value.Password;
 
 public class CreateUserFixtureScript extends FixtureScript {
 

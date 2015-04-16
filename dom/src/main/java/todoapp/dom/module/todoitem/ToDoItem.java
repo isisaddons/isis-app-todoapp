@@ -26,20 +26,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
 import javax.jdo.JDOHelper;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
+import javax.validation.constraints.Digits;
+
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Ordering;
-import org.isisaddons.module.security.app.user.MeService;
-import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
-import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
-import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
-import org.isisaddons.wicket.gmap3.cpt.applib.Locatable;
-import org.isisaddons.wicket.gmap3.cpt.applib.Location;
-import org.isisaddons.wicket.gmap3.cpt.service.LocationLookupService;
+
 import org.joda.time.LocalDate;
+
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.NonRecoverableException;
@@ -74,6 +72,15 @@ import org.apache.isis.applib.util.ObjectContracts;
 import org.apache.isis.applib.util.TitleBuffer;
 import org.apache.isis.applib.value.Blob;
 import org.apache.isis.applib.value.Clob;
+
+import org.isisaddons.module.security.app.user.MeService;
+import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
+import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
+import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
+import org.isisaddons.wicket.gmap3.cpt.applib.Locatable;
+import org.isisaddons.wicket.gmap3.cpt.applib.Location;
+import org.isisaddons.wicket.gmap3.cpt.service.LocationLookupService;
+
 import todoapp.dom.module.categories.Categorized;
 import todoapp.dom.module.categories.Category;
 import todoapp.dom.module.categories.Subcategory;
@@ -138,11 +145,12 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
      * It isn't common for entities to log, but they can if required.  
      * Isis uses slf4j API internally (with log4j as implementation), and is the recommended API to use. 
      */
-    private final static org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(ToDoItem.class);
+    final static org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(ToDoItem.class);
     //endregion
 
     // region > title, icon
     public String title() {
+
         final TitleBuffer buf = new TitleBuffer();
         buf.append(getDescription());
         if (isComplete()) {
@@ -392,16 +400,16 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     public ToDoItem updateCost(
             @Parameter(optionality = Optionality.OPTIONAL)
             @ParameterLayout(named = "New cost")
-            @javax.validation.constraints.Digits(integer=10, fraction=2)
+            @Digits(integer = 10, fraction = 2)
             final BigDecimal cost) {
-        LOG.debug("%s: cost updated: %s -> %s", container.titleOf(this), getCost(), cost);
-        
+            LOG.debug("%s: cost updated: %s -> %s", container.titleOf(this), getCost(), cost);
+
         // just to simulate a long-running action
         try {
             Thread.sleep(3000);
         } catch (final InterruptedException ignored) {
         }
-        
+
         setCost(cost);
         return this;
     }
