@@ -27,10 +27,7 @@ import org.junit.Test;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import todoapp.dom.app.similarto.SimilarToContributions;
 import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.dom.module.todoitem.ToDoItems;
@@ -61,7 +58,7 @@ public abstract class SimilartoContributionsIntegTest extends AbstractToDoIntegT
     public void setUp() throws Exception {
 
         toDoItem = wrap(fixtureScript.getToDoItems().get(0));
-        assertThat(toDoItem, is(not(nullValue())));
+        assertThat(toDoItem).isNotNull();
 
         similarToContributionsWrapped = wrap(similarToContributions);
     }
@@ -77,7 +74,7 @@ public abstract class SimilartoContributionsIntegTest extends AbstractToDoIntegT
                 List<ToDoItem> similarItems = similarToContributionsWrapped.similarTo(toDoItem);
 
                 // then
-                assertThat(similarItems.size(), is(6));
+                assertThat(similarItems).hasSize(6);
             }
 
         }

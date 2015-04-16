@@ -25,11 +25,8 @@ import org.junit.Test;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
 import todoapp.dom.module.categories.Category;
 import todoapp.dom.module.categories.Subcategory;
 import todoapp.dom.module.categories.UpdateCategoryContributions;
@@ -62,7 +59,7 @@ public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoI
     public void setUp() throws Exception {
 
         toDoItem = wrap(fixtureScript.getToDoItems().get(0));
-        assertThat(toDoItem, is(not(nullValue())));
+        assertThat(toDoItem).isNotNull();
 
         updateCategoryContributionsWrapped = wrap(updateCategoryContributions);
     }
@@ -77,15 +74,15 @@ public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoI
                 updateCategoryContributionsWrapped.updateCategory(toDoItem, Category.PROFESSIONAL, Subcategory.CONSULTING);
 
                 // then
-                assertThat(toDoItem.getCategory(), is(Category.PROFESSIONAL));
-                assertThat(toDoItem.getSubcategory(), is(Subcategory.CONSULTING));
+                assertThat(toDoItem.getCategory()).isEqualTo(Category.PROFESSIONAL);
+                assertThat(toDoItem.getSubcategory()).isEqualTo(Subcategory.CONSULTING);
 
                 // when
                 updateCategoryContributionsWrapped.updateCategory(toDoItem, Category.DOMESTIC, Subcategory.CHORES);
 
                 // then
-                assertThat(toDoItem.getCategory(), is(Category.DOMESTIC));
-                assertThat(toDoItem.getSubcategory(), is(Subcategory.CHORES));
+                assertThat(toDoItem.getCategory()).isEqualTo(Category.DOMESTIC);
+                assertThat(toDoItem.getSubcategory()).isEqualTo(Subcategory.CHORES);
             }
 
 

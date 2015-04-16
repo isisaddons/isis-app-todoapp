@@ -22,15 +22,13 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import todoapp.dom.module.categories.Category;
 import todoapp.dom.module.categories.Subcategory;
 import todoapp.dom.module.todoitem.ToDoItem;
@@ -69,7 +67,7 @@ public class ToDoItemsIntegTest extends AbstractToDoIntegTest {
             notYetCompletedSize = notYetCompleteItems.size();
             completedSize = completedItems.size();
 
-            assertThat(notYetCompletedSize, is(Matchers.greaterThan(5)));
+            assertThat(notYetCompletedSize).isGreaterThan(5);
         }
 
         @Test
@@ -85,8 +83,8 @@ public class ToDoItemsIntegTest extends AbstractToDoIntegTest {
             nextTransaction();
 
             // then
-            assertThat(wrap(toDoItems).notYetComplete().size(), is(notYetCompletedSize-1));
-            assertThat(wrap(toDoItems).complete().size(), is(completedSize+1));
+            assertThat(wrap(toDoItems).notYetComplete()).hasSize(notYetCompletedSize-1);
+            assertThat(wrap(toDoItems).complete()).hasSize(completedSize+1);
             nextTransaction();
 
             // and when
@@ -94,8 +92,8 @@ public class ToDoItemsIntegTest extends AbstractToDoIntegTest {
             nextTransaction();
 
             // then
-            assertThat(wrap(toDoItems).notYetComplete().size(), is(notYetCompletedSize));
-            assertThat(wrap(toDoItems).complete().size(), is(completedSize));
+            assertThat(wrap(toDoItems).notYetComplete()).hasSize(notYetCompletedSize);
+            assertThat(wrap(toDoItems).complete()).hasSize(completedSize);
         }
     }
 
@@ -118,11 +116,11 @@ public class ToDoItemsIntegTest extends AbstractToDoIntegTest {
             nextTransaction();
 
             // then
-            assertThat(newToDo.getDescription(), is("new todo"));
-            assertThat(newToDo.getCategory(), is(Category.PROFESSIONAL));
-            assertThat(wrap(toDoItems).notYetComplete().size(), is(size+1));
-            assertThat(container.isPersistent(newToDo), is(true));
-            assertThat(container().isPersistent(wrap(newToDo)), is(true));
+            assertThat(newToDo.getDescription()).isEqualTo("new todo");
+            assertThat(newToDo.getCategory()).isEqualTo(Category.PROFESSIONAL);
+            assertThat(wrap(toDoItems).notYetComplete()).hasSize(size+1);
+            assertThat(container.isPersistent(newToDo)).isTrue();
+            assertThat(container().isPersistent(wrap(newToDo))).isTrue();
 
             nextTransaction();
 
@@ -131,7 +129,7 @@ public class ToDoItemsIntegTest extends AbstractToDoIntegTest {
             nextTransaction();
 
             // then
-            assertThat(wrap(toDoItems).notYetComplete().size(), is(size));
+            assertThat(wrap(toDoItems).notYetComplete()).hasSize(size);
         }
 
     }

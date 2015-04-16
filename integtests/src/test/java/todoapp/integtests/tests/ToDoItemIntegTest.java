@@ -44,13 +44,8 @@ import org.apache.isis.applib.services.eventbus.CollectionDomainEvent;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.value.Blob;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
 import todoapp.dom.app.demoeventsubscriber.DemoBehaviour;
 import todoapp.dom.app.demoeventsubscriber.DemoDomainEventSubscriptions;
 import todoapp.dom.module.todoitem.ToDoItem;
@@ -91,7 +86,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             final List<ToDoItem> notYetComplete = fixtureScript.getNotYetComplete();
             final Iterable<ToDoItem> iter = Iterables.filter(notYetComplete, ToDoItem.Predicates.thoseWithDueByDate());
             toDoItem = wrap(iter.iterator().next());
-            assertThat(toDoItem, is(not(nullValue())));
+            assertThat(toDoItem).isNotNull();
 
             nextTransaction();
         }
@@ -102,13 +97,13 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
             // given
             final String description = toDoItem.getDescription();
-            assertThat(container.titleOf(toDoItem), containsString(description));
+            assertThat(container.titleOf(toDoItem)).contains(description);
 
             // when
             unwrap(toDoItem).setDescription("Foobar");
 
             // then
-            assertThat(container.titleOf(toDoItem), containsString("Foobar"));
+            assertThat(container.titleOf(toDoItem)).contains("Foobar");
         }
 
         @Test
@@ -116,14 +111,14 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
             // given
             final LocalDate dueBy = toDoItem.getDueBy();
-            assertThat(container.titleOf(toDoItem), containsString("due by " + dueBy.toString("yyyy-MM-dd")));
+            assertThat(container.titleOf(toDoItem)).contains("due by " + dueBy.toString("yyyy-MM-dd"));
 
             // when
             final LocalDate fiveDaysFromNow = Clock.getTimeAsLocalDate().plusDays(5);
             unwrap(toDoItem).setDueBy(fiveDaysFromNow);
 
             // then
-            assertThat(container.titleOf(toDoItem), containsString("due by " + fiveDaysFromNow.toString("yyyy-MM-dd")));
+            assertThat(container.titleOf(toDoItem)).contains("due by " + fiveDaysFromNow.toString("yyyy-MM-dd"));
         }
 
 
@@ -135,21 +130,21 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             toDoItem.setDueBy(null);
 
             // then
-            assertThat(container.titleOf(toDoItem), not(containsString("due by")));
+            assertThat(container.titleOf(toDoItem)).doesNotContain("due by");
         }
 
         @Test
         public void usesWhetherCompleted() throws Exception {
 
             // given
-            assertThat(container.titleOf(toDoItem), not(containsString("Completed!")));
+            assertThat(container.titleOf(toDoItem)).doesNotContain("Completed!");
 
             // when
             toDoItem.completed();
 
             // then
-            assertThat(container.titleOf(toDoItem), not(containsString("due by")));
-            assertThat(container.titleOf(toDoItem), containsString("Completed!"));
+            assertThat(container.titleOf(toDoItem)).doesNotContain("due by");
+            assertThat(container.titleOf(toDoItem)).contains("Completed!");
         }
     }
 
@@ -161,13 +156,13 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void happyCase() throws Exception {
 
                 // given
-                assertThat(toDoItem.isComplete(), is(false));
+                assertThat(toDoItem.isComplete()).isFalse();
 
                 // when
                 toDoItem.completed();
 
                 // then
-                assertThat(toDoItem.isComplete(), is(true));
+                assertThat(toDoItem.isComplete()).isTrue();
             }
 
             @Test
@@ -184,7 +179,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // and then
                 final EventObject ev = toDoItemSubscriptions.mostRecentlyReceivedEvent(EventObject.class);
-                assertThat(ev, is(nullValue()));
+                assertThat(ev).isNull();
             }
 
 
@@ -199,7 +194,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // and then
                 final EventObject ev = toDoItemSubscriptions.mostRecentlyReceivedEvent(EventObject.class);
-                assertThat(ev, is(nullValue()));
+                assertThat(ev).isNull();
             }
 
             @Test
@@ -207,14 +202,14 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // given
                 toDoItemSubscriptions.reset();
-                assertThat(toDoItemSubscriptions.getSubscriberBehaviour(), is(DemoBehaviour.ANY_EXECUTE_ACCEPT));
-                assertThat(unwrap(toDoItem).isComplete(), is(false));
+                assertThat(toDoItemSubscriptions.getSubscriberBehaviour()).isEqualTo(DemoBehaviour.ANY_EXECUTE_ACCEPT);
+                assertThat(unwrap(toDoItem).isComplete()).isFalse();
 
                 // when
                 toDoItem.completed();
 
                 // then
-                assertThat(unwrap(toDoItem).isComplete(), is(true));
+                assertThat(unwrap(toDoItem).isComplete()).isTrue();
 
                 // and then
                 final List<ToDoItem.CompletedEvent> receivedEvents = toDoItemSubscriptions.receivedEvents(ToDoItem.CompletedEvent.class);
@@ -222,12 +217,12 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 // hide, disable, validate, executing, executed
                 // sent to both the general on(ActionInteractionEvent ev)
                 // and also the specific on(final ToDoItem.CompletedEvent ev)
-                assertThat(receivedEvents.size(), is(5*2));
+                assertThat(receivedEvents).hasSize(5*2);
                 final ToDoItem.CompletedEvent ev = receivedEvents.get(0);
 
                 final ToDoItem source = ev.getSource();
-                assertThat(source, is(equalTo(unwrap(toDoItem))));
-                assertThat(ev.getIdentifier().getMemberName(), is("completed"));
+                assertThat(source).isEqualTo(unwrap(toDoItem));
+                assertThat(ev.getIdentifier().getMemberName()).isEqualTo("completed");
             }
 
             @Test
@@ -297,10 +292,10 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                         new BigDecimal("987.65"));
 
                 // then
-                assertThat(duplicateToDoItem.getDescription(), is(toDoItem.getDescription() + " - Copy"));
-                assertThat(duplicateToDoItem.getCategory(), is(toDoItem.getCategory()));
-                assertThat(duplicateToDoItem.getDueBy(), is(todaysDate));
-                assertThat(duplicateToDoItem.getCost(), is(new BigDecimal("987.65")));
+                assertThat(duplicateToDoItem.getDescription()).isEqualTo(toDoItem.getDescription() + " - Copy");
+                assertThat(duplicateToDoItem.getCategory()).isEqualTo(toDoItem.getCategory());
+                assertThat(duplicateToDoItem.getDueBy()).isEqualTo(todaysDate);
+                assertThat(duplicateToDoItem.getCost()).isEqualTo(new BigDecimal("987.65"));
             }
         }
 
@@ -316,14 +311,14 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.notYetCompleted();
 
                 // then
-                assertThat(toDoItem.isComplete(), is(false));
+                assertThat(toDoItem.isComplete()).isFalse();
             }
 
             @Test
             public void cannotUndoIfNotYetCompleted() throws Exception {
 
                 // given
-                assertThat(toDoItem.isComplete(), is(false));
+                assertThat(toDoItem.isComplete()).isFalse();
 
                 // when, then should fail
                 expectedExceptions.expectMessage("Not yet completed");
@@ -334,22 +329,22 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void subscriberReceivesEvent() throws Exception {
 
                 // given
-                assertThat(toDoItemSubscriptions.getSubscriberBehaviour(), is(DemoBehaviour.ANY_EXECUTE_ACCEPT));
+                assertThat(toDoItemSubscriptions.getSubscriberBehaviour()).isEqualTo(DemoBehaviour.ANY_EXECUTE_ACCEPT);
                 unwrap(toDoItem).setComplete(true);
 
                 // when
                 toDoItem.notYetCompleted();
 
                 // then
-                assertThat(unwrap(toDoItem).isComplete(), is(false));
+                assertThat(unwrap(toDoItem).isComplete()).isFalse();
 
                 // and then
                 final ActionDomainEvent<ToDoItem> ev = toDoItemSubscriptions.mostRecentlyReceivedEvent(ActionDomainEvent.class);
-                assertThat(ev, is(not(nullValue())));
+                assertThat(ev).isNotNull();
 
                 final ToDoItem source = ev.getSource();
-                assertThat(source, is(equalTo(unwrap(toDoItem))));
-                assertThat(ev.getIdentifier().getMemberName(), is("notYetCompleted"));
+                assertThat(source).isEqualTo(unwrap(toDoItem));
+                assertThat(ev.getIdentifier().getMemberName()).isEqualTo("notYetCompleted");
             }
         }
     }
@@ -377,14 +372,14 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 public void happyCase() throws Exception {
 
                     // given
-                    assertThat(toDoItem.getDependencies().size(), is(0));
+                    assertThat(toDoItem.getDependencies()).hasSize(0);
 
                     // when
                     toDoItem.add(otherToDoItem);
 
                     // then
-                    assertThat(toDoItem.getDependencies().size(), is(1));
-                    assertThat(toDoItem.getDependencies().iterator().next(), is(unwrap(otherToDoItem)));
+                    assertThat(toDoItem.getDependencies()).hasSize(1);
+                    assertThat(toDoItem.getDependencies().iterator().next()).isEqualTo(unwrap(otherToDoItem));
                 }
 
 
@@ -425,33 +420,33 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                     @SuppressWarnings("unchecked")
                     final List<EventObject> receivedEvents = toDoItemSubscriptions.receivedEvents();
 
-                    assertThat(receivedEvents.size(), is(7));
-                    assertThat(receivedEvents.get(0) instanceof ActionDomainEvent, is(true)); // ToDoItem#add() executed
-                    assertThat(receivedEvents.get(1) instanceof CollectionDomainEvent, is(true)); // ToDoItem#dependencies add, executed
-                    assertThat(receivedEvents.get(2) instanceof CollectionDomainEvent, is(true)); // ToDoItem#dependencies add, executing
-                    assertThat(receivedEvents.get(3) instanceof ActionDomainEvent, is(true)); // ToDoItem#add executing
-                    assertThat(receivedEvents.get(4) instanceof ActionDomainEvent, is(true)); // ToDoItem#add validate
-                    assertThat(receivedEvents.get(5) instanceof ActionDomainEvent, is(true)); // ToDoItem#add disable
-                    assertThat(receivedEvents.get(6) instanceof ActionDomainEvent, is(true)); // ToDoItem#add hide
+                    assertThat(receivedEvents).hasSize(7);
+                    assertThat(receivedEvents.get(0) instanceof ActionDomainEvent).isTrue(); // ToDoItem#add() executed
+                    assertThat(receivedEvents.get(1) instanceof CollectionDomainEvent).isTrue(); // ToDoItem#dependencies add, executed
+                    assertThat(receivedEvents.get(2) instanceof CollectionDomainEvent).isTrue(); // ToDoItem#dependencies add, executing
+                    assertThat(receivedEvents.get(3) instanceof ActionDomainEvent).isTrue(); // ToDoItem#add executing
+                    assertThat(receivedEvents.get(4) instanceof ActionDomainEvent).isTrue(); // ToDoItem#add validate
+                    assertThat(receivedEvents.get(5) instanceof ActionDomainEvent).isTrue(); // ToDoItem#add disable
+                    assertThat(receivedEvents.get(6) instanceof ActionDomainEvent).isTrue(); // ToDoItem#add hide
 
                     // inspect the collection interaction (posted programmatically in ToDoItem#add)
                     final CollectionDomainEvent<ToDoItem,ToDoItem> ciEv = (CollectionDomainEvent<ToDoItem, ToDoItem>) toDoItemSubscriptions.mostRecentlyReceivedEvent(CollectionDomainEvent.class);
-                    assertThat(ciEv, is(notNullValue()));
+                    assertThat(ciEv).isNotNull();
 
-                    assertThat(ciEv.getSource(), is(equalTo(unwrap(toDoItem))));
-                    assertThat(ciEv.getIdentifier().getMemberName(), is("dependencies"));
-                    assertThat(ciEv.getOf(), is(CollectionDomainEvent.Of.ADD_TO));
-                    assertThat(ciEv.getValue(), is(unwrap(otherToDoItem)));
+                    assertThat(ciEv.getSource()).isEqualTo(unwrap(toDoItem));
+                    assertThat(ciEv.getIdentifier().getMemberName()).isEqualTo("dependencies");
+                    assertThat(ciEv.getOf()).isEqualTo(CollectionDomainEvent.Of.ADD_TO);
+                    assertThat(ciEv.getValue()).isEqualTo(unwrap(otherToDoItem));
 
                     // inspect the action interaction (posted declaratively by framework)
                     final ActionDomainEvent<ToDoItem> aiEv = (ActionDomainEvent<ToDoItem>) toDoItemSubscriptions.mostRecentlyReceivedEvent(ActionDomainEvent.class);
-                    assertThat(aiEv, is(notNullValue()));
+                    assertThat(aiEv).isNotNull();
 
-                    assertThat(aiEv.getSource(), is(equalTo(unwrap(toDoItem))));
-                    assertThat(aiEv.getIdentifier().getMemberName(), is("add"));
-                    assertThat(aiEv.getArguments().size(), is(1));
-                    assertThat(aiEv.getArguments().get(0), is(unwrap((Object)otherToDoItem)));
-                    assertThat(aiEv.getCommand(), is(notNullValue()));
+                    assertThat(aiEv.getSource()).isEqualTo(unwrap(toDoItem));
+                    assertThat(aiEv.getIdentifier().getMemberName()).isEqualTo("add");
+                    assertThat(aiEv.getArguments()).hasSize(1);
+                    assertThat(aiEv.getArguments().get(0)).isEqualTo(unwrap((Object)otherToDoItem));
+                    assertThat(aiEv.getCommand()).isNotNull();
                 }
 
                 @Test
@@ -517,13 +512,13 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 public void happyCase() throws Exception {
 
                     // given
-                    assertThat(toDoItem.getDependencies().size(), is(1));
+                    assertThat(toDoItem.getDependencies()).hasSize(1);
 
                     // when
                     toDoItem.remove(otherToDoItem);
 
                     // then
-                    assertThat(toDoItem.getDependencies().size(), is(0));
+                    assertThat(toDoItem.getDependencies()).hasSize(0);
                 }
 
 
@@ -607,7 +602,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.setAttachment(newAttachment);
 
                 // then
-                assertThat(toDoItem.getAttachment(), is(newAttachment));
+                assertThat(toDoItem.getAttachment()).isEqualTo(newAttachment);
             }
 
             @Test
@@ -617,7 +612,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.setAttachment(null);
 
                 // then
-                assertThat(toDoItem.getAttachment(), is((Blob)null));
+                assertThat(toDoItem.getAttachment()).isEqualTo((Blob)null);
             }
         }
 
@@ -652,7 +647,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.updateCost(newCost);
 
                 // then
-                assertThat(toDoItem.getCost(), is(newCost));
+                assertThat(toDoItem.getCost()).isEqualTo(newCost);
             }
 
             @Test
@@ -665,7 +660,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.updateCost(newCost);
 
                 // then
-                assertThat(toDoItem.getCost(), is(newCost));
+                assertThat(toDoItem.getCost()).isEqualTo(newCost);
             }
 
             @Test
@@ -676,14 +671,14 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.updateCost(null);
 
                 // then
-                assertThat(toDoItem.getCost(), is((BigDecimal)null));
+                assertThat(toDoItem.getCost()).isEqualTo((BigDecimal)null);
             }
 
             @Test
             public void defaultForAction() throws Exception {
 
                 // then
-                assertThat(unwrap(toDoItem).default0UpdateCost(), is(cost));
+                assertThat(unwrap(toDoItem).default0UpdateCost()).isEqualTo(cost);
             }
 
         }
@@ -700,7 +695,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.setDescription(description + " foobar");
 
                 // then
-                assertThat(toDoItem.getDescription(), is(description + " foobar"));
+                assertThat(toDoItem.getDescription()).isEqualTo(description + " foobar");
             }
 
 
@@ -732,7 +727,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.modifyDescription(description + " foobar!");
 
                 // then
-                assertThat(toDoItem.getDescription(), is(description));
+                assertThat(toDoItem.getDescription()).isEqualTo(description);
             }
 
             @Test
@@ -747,7 +742,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.clearDescription();
 
                 // then
-                assertThat(toDoItem.getDescription(), is(description));
+                assertThat(toDoItem.getDescription()).isEqualTo(description);
             }
 
 
@@ -773,7 +768,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void subscriberReceivesEvent() throws Exception {
 
                 // given
-                assertThat(toDoItemSubscriptions.getSubscriberBehaviour(), is(DemoBehaviour.ANY_EXECUTE_ACCEPT));
+                assertThat(toDoItemSubscriptions.getSubscriberBehaviour()).isEqualTo(DemoBehaviour.ANY_EXECUTE_ACCEPT);
                 final String description = toDoItem.getDescription();
 
                 // when
@@ -782,13 +777,13 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 // then published and received
                 @SuppressWarnings("unchecked")
                 final PropertyDomainEvent<ToDoItem,String> ev = toDoItemSubscriptions.mostRecentlyReceivedEvent(PropertyDomainEvent.class);
-                assertThat(ev, is(not(nullValue())));
+                assertThat(ev).isNotNull();
 
                 final ToDoItem source = ev.getSource();
-                assertThat(source, is(equalTo(unwrap(toDoItem))));
-                assertThat(ev.getIdentifier().getMemberName(), is("description"));
-                assertThat(ev.getOldValue(), is(description));
-                assertThat(ev.getNewValue(), is(description + " foobar"));
+                assertThat(source).isEqualTo(unwrap(toDoItem));
+                assertThat(ev.getIdentifier().getMemberName()).isEqualTo("description");
+                assertThat(ev.getOldValue()).isEqualTo(description);
+                assertThat(ev.getNewValue()).isEqualTo(description + " foobar");
             }
 
             @Test
@@ -855,7 +850,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.setDueBy(fiveDaysFromNow);
 
                 // then
-                assertThat(toDoItem.getDueBy(), is(fiveDaysFromNow));
+                assertThat(toDoItem.getDueBy()).isEqualTo(fiveDaysFromNow);
             }
 
 
@@ -866,7 +861,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.setDueBy(null);
 
                 // then
-                assertThat(toDoItem.getDueBy(), is((LocalDate)null));
+                assertThat(toDoItem.getDueBy()).isEqualTo((LocalDate)null);
             }
 
             @Test
@@ -879,7 +874,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.setDueBy(sixDaysAgo);
 
                 // then
-                assertThat(toDoItem.getDueBy(), is(sixDaysAgo));
+                assertThat(toDoItem.getDueBy()).isEqualTo(sixDaysAgo);
             }
 
 
@@ -905,7 +900,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.setNotes(newNotes);
 
                 // then
-                assertThat(toDoItem.getNotes(), is(newNotes));
+                assertThat(toDoItem.getNotes()).isEqualTo(newNotes);
             }
 
             @Test
@@ -915,7 +910,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.setNotes(null);
 
                 // then
-                assertThat(toDoItem.getNotes(), is((String)null));
+                assertThat(toDoItem.getNotes()).isEqualTo((String)null);
             }
 
             @Test
@@ -927,15 +922,15 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.setNotes(newNotes);
 
                 // then
-                assertThat(unwrap(toDoItem).getNotes(), is(newNotes));
+                assertThat(unwrap(toDoItem).getNotes()).isEqualTo(newNotes);
 
                 // and then receive the default event.
                 @SuppressWarnings("unchecked")
                 final PropertyDomainEvent.Default ev = toDoItemSubscriptions.mostRecentlyReceivedEvent(PropertyDomainEvent.Default.class);
-                assertThat(ev, is(notNullValue()));
+                assertThat(ev).isNotNull();
 
-                assertThat(ev.getSource(), is((Object)unwrap(toDoItem)));
-                assertThat(ev.getNewValue(), is((Object)newNotes));
+                assertThat(ev.getSource()).isEqualTo((Object)unwrap(toDoItem));
+                assertThat(ev.getNewValue()).isEqualTo((Object)newNotes);
             }
 
 

@@ -33,7 +33,7 @@ import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2.Mode;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class ToDoItemTest {
 
@@ -72,7 +72,7 @@ public abstract class ToDoItemTest {
 
                 toDoItem.container = mockContainer;
 
-                assertThat(toDoItem.hideDueBy(), is(true));
+                assertThat(toDoItem.hideDueBy()).isTrue();
             }
 
             @Test
@@ -85,7 +85,7 @@ public abstract class ToDoItemTest {
 
                 toDoItem.container = mockContainer;
 
-                assertThat(toDoItem.hideDueBy(), is(false));
+                assertThat(toDoItem.hideDueBy()).isFalse();
             }
         }
 
@@ -100,14 +100,14 @@ public abstract class ToDoItemTest {
 
                 // given
                 toDoItem.setComplete(false);
-                assertThat(toDoItem.disableCompleted(), is(nullValue()));
+                assertThat(toDoItem.disableCompleted()).isNull();
 
                 // when
                 toDoItem.completed();
 
                 // then
-                assertThat(toDoItem.isComplete(), is(true));
-                assertThat(toDoItem.disableCompleted(), is(not(nullValue())));
+                assertThat(toDoItem.isComplete()).isTrue();
+                assertThat(toDoItem.disableCompleted()).isNotNull();
             }
         }
 
@@ -118,14 +118,14 @@ public abstract class ToDoItemTest {
 
                 // given
                 toDoItem.setComplete(true);
-                assertThat(toDoItem.disableNotYetCompleted(), is(nullValue()));
+                assertThat(toDoItem.disableNotYetCompleted()).isNull();
 
                 // when
                 toDoItem.notYetCompleted();
 
                 // then
-                assertThat(toDoItem.isComplete(), is(false));
-                assertThat(toDoItem.disableNotYetCompleted(), is(not(nullValue())));
+                assertThat(toDoItem.isComplete()).isFalse();
+                assertThat(toDoItem.disableNotYetCompleted()).isNotNull();
             }
         }
     }
