@@ -78,6 +78,18 @@
                     </execution>
                 </executions>
             </plugin>  
+        
+            <plugin>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <configuration>
+                    <classes>
+                        <param>org.apache.isis.applib.services.eventbus.PropertyDomainEvent</param>
+                        <param>todoapp.dom.module.todoitem.ToDoItem</param>
+                    </classes>
+                </configuration>
+            </plugin>
             -->
         </plugins>
     </build>
