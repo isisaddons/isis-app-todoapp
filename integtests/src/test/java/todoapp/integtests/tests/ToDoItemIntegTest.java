@@ -18,6 +18,9 @@
  */
 package todoapp.integtests.tests;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.containsString;
+
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.util.EventObject;
@@ -25,13 +28,6 @@ import java.util.List;
 
 import javax.activation.MimeType;
 import javax.inject.Inject;
-
-import com.google.common.collect.Iterables;
-
-import org.joda.time.LocalDate;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.NonRecoverableException;
@@ -43,14 +39,18 @@ import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.CollectionDomainEvent;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.value.Blob;
+import org.joda.time.LocalDate;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.containsString;
 import todoapp.dom.app.demoeventsubscriber.DemoBehaviour;
 import todoapp.dom.app.demoeventsubscriber.DemoDomainEventSubscriptions;
 import todoapp.dom.module.todoitem.ToDoItem;
 import todoapp.dom.module.todoitem.ToDoItems;
 import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
+
+import com.google.common.collect.Iterables;
 
 public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
@@ -79,6 +79,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
     public static class Title extends ToDoItemIntegTest {
 
 
+        @Override
         @Before
         public void setUp() throws Exception {
             super.setUp();
@@ -356,6 +357,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 private ToDoItem otherToDoItem;
 
+                @Override
                 @Before
                 public void setUp() throws Exception {
                     super.setUp();
@@ -378,8 +380,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                     toDoItem.add(otherToDoItem);
 
                     // then
-                    assertThat(toDoItem.getDependencies()).hasSize(1);
-                    assertThat(toDoItem.getDependencies().iterator().next()).isEqualTo(unwrap(otherToDoItem));
+                    assertThat(toDoItem.getDependencies()).containsExactly(unwrap(otherToDoItem));
                 }
 
 
@@ -430,7 +431,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                     assertThat(receivedEvents.get(6) instanceof ActionDomainEvent).isTrue(); // ToDoItem#add hide
 
                     // inspect the collection interaction (posted programmatically in ToDoItem#add)
-                    final CollectionDomainEvent<ToDoItem,ToDoItem> ciEv = (CollectionDomainEvent<ToDoItem, ToDoItem>) toDoItemSubscriptions.mostRecentlyReceivedEvent(CollectionDomainEvent.class);
+                    final CollectionDomainEvent<ToDoItem,ToDoItem> ciEv = toDoItemSubscriptions.mostRecentlyReceivedEvent(CollectionDomainEvent.class);
                     assertThat(ciEv).isNotNull();
 
                     assertThat(ciEv.getSource()).isEqualTo(unwrap(toDoItem));
@@ -439,13 +440,12 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                     assertThat(ciEv.getValue()).isEqualTo(unwrap(otherToDoItem));
 
                     // inspect the action interaction (posted declaratively by framework)
-                    final ActionDomainEvent<ToDoItem> aiEv = (ActionDomainEvent<ToDoItem>) toDoItemSubscriptions.mostRecentlyReceivedEvent(ActionDomainEvent.class);
+                    final ActionDomainEvent<ToDoItem> aiEv = toDoItemSubscriptions.mostRecentlyReceivedEvent(ActionDomainEvent.class);
                     assertThat(aiEv).isNotNull();
 
                     assertThat(aiEv.getSource()).isEqualTo(unwrap(toDoItem));
                     assertThat(aiEv.getIdentifier().getMemberName()).isEqualTo("add");
-                    assertThat(aiEv.getArguments()).hasSize(1);
-                    assertThat(aiEv.getArguments().get(0)).isEqualTo(unwrap((Object)otherToDoItem));
+                    assertThat(aiEv.getArguments()).containsExactly(unwrap((Object)otherToDoItem));
                     assertThat(aiEv.getCommand()).isNotNull();
                 }
 
@@ -493,6 +493,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 private ToDoItem otherToDoItem;
                 private ToDoItem yetAnotherToDoItem;
 
+                @Override
                 @Before
                 public void setUp() throws Exception {
                     super.setUp();
@@ -612,7 +613,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.setAttachment(null);
 
                 // then
-                assertThat(toDoItem.getAttachment()).isEqualTo((Blob)null);
+                assertThat(toDoItem.getAttachment()).isNull();
             }
         }
 
@@ -631,6 +632,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
             private BigDecimal cost;
 
+            @Override
             @Before
             public void setUp() throws Exception {
                 super.setUp();
@@ -643,7 +645,6 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 final BigDecimal newCost = new BigDecimal("123.45");
 
                 // when
-                final String reason = "";
                 toDoItem.updateCost(newCost);
 
                 // then
@@ -656,7 +657,6 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 final BigDecimal newCost = new BigDecimal("123.45");
 
                 // when
-                final String reason = "";
                 toDoItem.updateCost(newCost);
 
                 // then
@@ -667,11 +667,10 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void canBeNull() throws Exception {
 
                 // when
-                final String reason = "";
                 toDoItem.updateCost(null);
 
                 // then
-                assertThat(toDoItem.getCost()).isEqualTo((BigDecimal)null);
+                assertThat(toDoItem.getCost()).isNull();
             }
 
             @Test
@@ -929,8 +928,8 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 final PropertyDomainEvent.Default ev = toDoItemSubscriptions.mostRecentlyReceivedEvent(PropertyDomainEvent.Default.class);
                 assertThat(ev).isNotNull();
 
-                assertThat(ev.getSource()).isEqualTo((Object)unwrap(toDoItem));
-                assertThat(ev.getNewValue()).isEqualTo((Object)newNotes);
+                assertThat(ev.getSource()).isEqualTo(unwrap(toDoItem));
+                assertThat(ev.getNewValue()).isEqualTo(newNotes);
             }
 
 
