@@ -189,6 +189,14 @@ In fact, the domain event is fired not once, but (up to) 5 times.  It is called 
 Moreover, domain events are fired for all properties and collections, not just actions.  Thus, subscribers can therefore switch on or switch off different parts of an application.  Indeed, the example todoapp demonstrates this.
 
 
+## Usage of AssertJ
+
+The example makes some limited use of [AssertJ](http://joel-costigliola.github.io/assertj/) assertions.
+Joel (author/maintainer of AssertJ) was good enough to provide a [pull request](https://github.com/isisaddons/isis-app-todoapp/pull/1) demoing more extensive use of AssertJ, in particular its support for domain-specific assertions.
+
+As I want this repo to primarily be a demonstration of Apache Isis rather than AssertJ, I've chosen to
+his PR but leave it in an unmerged branch.  If you want to explore this feature of AssertJ, check out the [issue-1-assertj-domain-specific-usage](https://github.com/isisaddons/isis-app-todoapp/tree/issue-1-assertj-domain-specific-usage) branch.
+
 ## Building the App
 
 Switch into the root directory of the app, and simply use:

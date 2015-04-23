@@ -45,6 +45,7 @@ import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.value.Blob;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
 import static org.hamcrest.CoreMatchers.containsString;
 import todoapp.dom.app.demoeventsubscriber.DemoBehaviour;
 import todoapp.dom.app.demoeventsubscriber.DemoDomainEventSubscriptions;
@@ -79,6 +80,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
     public static class Title extends ToDoItemIntegTest {
 
 
+        @Override
         @Before
         public void setUp() throws Exception {
             super.setUp();
@@ -103,7 +105,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             unwrap(toDoItem).setDescription("Foobar");
 
             // then
-            assertThat(container.titleOf(toDoItem)).contains("Foobar");
+            then(container.titleOf(toDoItem)).contains("Foobar");
         }
 
         @Test
@@ -118,7 +120,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             unwrap(toDoItem).setDueBy(fiveDaysFromNow);
 
             // then
-            assertThat(container.titleOf(toDoItem)).contains("due by " + fiveDaysFromNow.toString("yyyy-MM-dd"));
+            then(container.titleOf(toDoItem)).contains("due by " + fiveDaysFromNow.toString("yyyy-MM-dd"));
         }
 
 
@@ -130,7 +132,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             toDoItem.setDueBy(null);
 
             // then
-            assertThat(container.titleOf(toDoItem)).doesNotContain("due by");
+            then(container.titleOf(toDoItem)).doesNotContain("due by");
         }
 
         @Test
@@ -143,8 +145,8 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             toDoItem.completed();
 
             // then
-            assertThat(container.titleOf(toDoItem)).doesNotContain("due by");
-            assertThat(container.titleOf(toDoItem)).contains("Completed!");
+            then(container.titleOf(toDoItem)).doesNotContain("due by")
+                                             .contains("Completed!");
         }
     }
 
@@ -179,7 +181,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // and then
                 final EventObject ev = toDoItemSubscriptions.mostRecentlyReceivedEvent(EventObject.class);
-                assertThat(ev).isNull();
+                then(ev).isNull();
             }
 
 
@@ -194,7 +196,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // and then
                 final EventObject ev = toDoItemSubscriptions.mostRecentlyReceivedEvent(EventObject.class);
-                assertThat(ev).isNull();
+                then(ev).isNull();
             }
 
             @Test
@@ -217,12 +219,12 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 // hide, disable, validate, executing, executed
                 // sent to both the general on(ActionInteractionEvent ev)
                 // and also the specific on(final ToDoItem.CompletedEvent ev)
-                assertThat(receivedEvents).hasSize(5*2);
+                then(receivedEvents).hasSize(5*2);
                 final ToDoItem.CompletedEvent ev = receivedEvents.get(0);
 
                 final ToDoItem source = ev.getSource();
-                assertThat(source).isEqualTo(unwrap(toDoItem));
-                assertThat(ev.getIdentifier().getMemberName()).isEqualTo("completed");
+                then(source).isEqualTo(unwrap(toDoItem));
+                then(ev.getIdentifier().getMemberName()).isEqualTo("completed");
             }
 
             @Test
@@ -356,6 +358,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 private ToDoItem otherToDoItem;
 
+                @Override
                 @Before
                 public void setUp() throws Exception {
                     super.setUp();
@@ -421,16 +424,16 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                     final List<EventObject> receivedEvents = toDoItemSubscriptions.receivedEvents();
 
                     assertThat(receivedEvents).hasSize(7);
-                    assertThat(receivedEvents.get(0) instanceof ActionDomainEvent).isTrue(); // ToDoItem#add() executed
-                    assertThat(receivedEvents.get(1) instanceof CollectionDomainEvent).isTrue(); // ToDoItem#dependencies add, executed
-                    assertThat(receivedEvents.get(2) instanceof CollectionDomainEvent).isTrue(); // ToDoItem#dependencies add, executing
-                    assertThat(receivedEvents.get(3) instanceof ActionDomainEvent).isTrue(); // ToDoItem#add executing
-                    assertThat(receivedEvents.get(4) instanceof ActionDomainEvent).isTrue(); // ToDoItem#add validate
-                    assertThat(receivedEvents.get(5) instanceof ActionDomainEvent).isTrue(); // ToDoItem#add disable
-                    assertThat(receivedEvents.get(6) instanceof ActionDomainEvent).isTrue(); // ToDoItem#add hide
+                    assertThat(receivedEvents.get(0)).isInstanceOf(ActionDomainEvent.class); // ToDoItem#add() executed
+                    assertThat(receivedEvents.get(1)).isInstanceOf(CollectionDomainEvent.class); // ToDoItem#dependencies add, executed
+                    assertThat(receivedEvents.get(2)).isInstanceOf(CollectionDomainEvent.class); // ToDoItem#dependencies add, executing
+                    assertThat(receivedEvents.get(3)).isInstanceOf(ActionDomainEvent.class); // ToDoItem#add executing
+                    assertThat(receivedEvents.get(4)).isInstanceOf(ActionDomainEvent.class); // ToDoItem#add validate
+                    assertThat(receivedEvents.get(5)).isInstanceOf(ActionDomainEvent.class); // ToDoItem#add disable
+                    assertThat(receivedEvents.get(6)).isInstanceOf(ActionDomainEvent.class); // ToDoItem#add hide
 
                     // inspect the collection interaction (posted programmatically in ToDoItem#add)
-                    final CollectionDomainEvent<ToDoItem,ToDoItem> ciEv = (CollectionDomainEvent<ToDoItem, ToDoItem>) toDoItemSubscriptions.mostRecentlyReceivedEvent(CollectionDomainEvent.class);
+                    final CollectionDomainEvent<ToDoItem,ToDoItem> ciEv = toDoItemSubscriptions.mostRecentlyReceivedEvent(CollectionDomainEvent.class);
                     assertThat(ciEv).isNotNull();
 
                     assertThat(ciEv.getSource()).isEqualTo(unwrap(toDoItem));
@@ -439,13 +442,12 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                     assertThat(ciEv.getValue()).isEqualTo(unwrap(otherToDoItem));
 
                     // inspect the action interaction (posted declaratively by framework)
-                    final ActionDomainEvent<ToDoItem> aiEv = (ActionDomainEvent<ToDoItem>) toDoItemSubscriptions.mostRecentlyReceivedEvent(ActionDomainEvent.class);
+                    final ActionDomainEvent<ToDoItem> aiEv = toDoItemSubscriptions.mostRecentlyReceivedEvent(ActionDomainEvent.class);
                     assertThat(aiEv).isNotNull();
 
                     assertThat(aiEv.getSource()).isEqualTo(unwrap(toDoItem));
                     assertThat(aiEv.getIdentifier().getMemberName()).isEqualTo("add");
-                    assertThat(aiEv.getArguments()).hasSize(1);
-                    assertThat(aiEv.getArguments().get(0)).isEqualTo(unwrap((Object)otherToDoItem));
+                    assertThat(aiEv.getArguments()).containsExactly(unwrap((Object)otherToDoItem));
                     assertThat(aiEv.getCommand()).isNotNull();
                 }
 
@@ -493,6 +495,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 private ToDoItem otherToDoItem;
                 private ToDoItem yetAnotherToDoItem;
 
+                @Override
                 @Before
                 public void setUp() throws Exception {
                     super.setUp();
@@ -631,6 +634,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
             private BigDecimal cost;
 
+            @Override
             @Before
             public void setUp() throws Exception {
                 super.setUp();
