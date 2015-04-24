@@ -55,6 +55,7 @@ import org.isisaddons.module.sessionlogger.dom.SessionLoggingServiceMenu;
 import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterables.transform;
 import static com.google.common.collect.Lists.newArrayList;
+import todoapp.dom.ToDoAppDomainModule;
 import todoapp.dom.module.settings.ToDoAppSettingsService;
 import todoapp.dom.module.todoitem.ToDoItem;
 
@@ -176,25 +177,32 @@ public class DemoDomainEventSubscriptions {
     }
     //endregion
 
-    //region > on(Event) for ToDoItem-specific events
+    //region > on(Event) for ToDoItem-specific action events
     @Programmatic
     @com.google.common.eventbus.Subscribe
     @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final ToDoItem.CompletedEvent ev) {
         recordEvent(ev);
-        switch(ev.getEventPhase()) {
-            case HIDE:
-                break;
-            case DISABLE:
-                break;
-            case VALIDATE:
-                break;
-            case EXECUTING:
-                break;
-            case EXECUTED:
-                LOG.info("Received ToDoItem.CompletedEvent for : " + ev.getSource().toString());
-                break;
-        }
+        logEvent(ev);
+    }
+
+    @Programmatic
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
+    public void on(final ToDoItem.DescriptionDomainEvent ev) {
+        logEvent(ev);
+    }
+    @Programmatic
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
+    public void on(final ToDoItem.DueByDomainEvent ev) {
+        logEvent(ev);
+    }
+    @Programmatic
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
+    public void on(final ToDoItem.AttachmentDomainEvent ev) {
+        logEvent(ev);
     }
     //endregion
 
@@ -408,6 +416,39 @@ public class DemoDomainEventSubscriptions {
                 return expectedType.isInstance(input);
             }
         };
+    }
+
+
+    void logEvent(final ToDoAppDomainModule.ActionDomainEvent<?> ev) {
+        switch(ev.getEventPhase()) {
+        case HIDE:
+            break;
+        case DISABLE:
+            break;
+        case VALIDATE:
+            break;
+        case EXECUTING:
+            break;
+        case EXECUTED:
+            LOG.info("Received {} for {}", ev.getClass().getName(), ev.getSource().toString());
+            break;
+        }
+    }
+
+    void logEvent(final ToDoAppDomainModule.PropertyDomainEvent<?,?> ev) {
+        switch(ev.getEventPhase()) {
+        case HIDE:
+            break;
+        case DISABLE:
+            break;
+        case VALIDATE:
+            break;
+        case EXECUTING:
+            break;
+        case EXECUTED:
+            LOG.info("Received {} for {}", ev.getClass().getName(), ev.getSource().toString());
+            break;
+        }
     }
 
     /**

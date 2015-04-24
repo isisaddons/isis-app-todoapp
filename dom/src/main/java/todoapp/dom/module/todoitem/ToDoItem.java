@@ -62,7 +62,6 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.security.UserMemento;
 import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
-import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.EventBusService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.scratchpad.Scratchpad;
@@ -81,6 +80,7 @@ import org.isisaddons.wicket.gmap3.cpt.applib.Locatable;
 import org.isisaddons.wicket.gmap3.cpt.applib.Location;
 import org.isisaddons.wicket.gmap3.cpt.service.LocationLookupService;
 
+import todoapp.dom.ToDoAppDomainModule;
 import todoapp.dom.module.categories.Categorized;
 import todoapp.dom.module.categories.Category;
 import todoapp.dom.module.categories.Subcategory;
@@ -176,10 +176,22 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     //endregion
 
     //region > description (property)
+
+    public static class DescriptionDomainEvent extends PropertyDomainEvent<String> {
+        public DescriptionDomainEvent(final ToDoItem source, final Identifier identifier) {
+            super(source, identifier);
+        }
+
+        public DescriptionDomainEvent(final ToDoItem source, final Identifier identifier, final String oldValue, final String newValue) {
+            super(source, identifier, oldValue, newValue);
+        }
+    }
+
     private String description;
 
     @javax.jdo.annotations.Column(allowsNull="false", length=100)
     @Property(
+        domainEvent = DescriptionDomainEvent.class,
         regexPattern = "\\w[@&:\\-\\,\\.\\+ \\w]*"
     )
     public String getDescription() {
@@ -198,9 +210,24 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     //endregion
 
     //region > dueBy (property), Calendarable impl
+
+    public static class DueByDomainEvent extends PropertyDomainEvent<LocalDate> {
+        public DueByDomainEvent(final ToDoItem source, final Identifier identifier) {
+            super(source, identifier);
+        }
+
+        public DueByDomainEvent(final ToDoItem source, final Identifier identifier, final LocalDate oldValue, final LocalDate newValue) {
+            super(source, identifier, oldValue, newValue);
+        }
+    }
+
+
     @javax.jdo.annotations.Persistent(defaultFetchGroup="true")
     private LocalDate dueBy;
 
+    @Property(
+            domainEvent = DueByDomainEvent.class
+    )
     @javax.jdo.annotations.Column(allowsNull="true")
     public LocalDate getDueBy() {
         return dueBy;
@@ -304,8 +331,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     //endregion
 
-    //region > complete (property), completed (action), notYetCompleted (action)
-
+    //region > complete (property)
     private boolean complete;
 
     @Property(
@@ -317,6 +343,19 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     public void setComplete(final boolean complete) {
         this.complete = complete;
+    }
+
+    //endregion
+
+    //region > completed (action)
+    public static class CompletedEvent extends ToDoItem.ActionDomainEvent {
+        private static final long serialVersionUID = 1L;
+        public CompletedEvent(
+                final ToDoItem source,
+                final Identifier identifier,
+                final Object... arguments) {
+            super(source, identifier, arguments);
+        }
     }
 
     @Action(
@@ -347,7 +386,24 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
         return isComplete() ? "Already completed" : null;
     }
 
+
+    //endregion
+
+    //region > notYetCompleted (action)
+
+    public static class NotYetCompletedEvent extends ActionDomainEvent {
+        private static final long serialVersionUID = 1L;
+        public NotYetCompletedEvent(
+                final ToDoItem source,
+                final Identifier identifier,
+                final Object... arguments) {
+            super(source, identifier, arguments);
+        }
+    }
+
+
     @Action(
+        domainEvent = NotYetCompletedEvent.class,
         invokeOn = InvokeOn.OBJECT_AND_COLLECTION
     )
     public ToDoItem notYetCompleted() {
@@ -364,7 +420,6 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     //endregion
 
     //region > completeSlowly (property)
-    // ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Action(
             hidden = Where.EVERYWHERE
     )
@@ -441,10 +496,23 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     //region > location (property), Locatable impl
 
+    public static class LocationDomainEvent extends ToDoItem.PropertyDomainEvent<Location> {
+
+        public LocationDomainEvent(final ToDoItem source, final Identifier identifier) {
+            super(source, identifier);
+        }
+
+        public LocationDomainEvent(final ToDoItem source, final Identifier identifier, final Location oldValue, final Location newValue) {
+            super(source, identifier, oldValue, newValue);
+        }
+    }
+
     private Double locationLatitude;
     private Double locationLongitude;
 
     @Property(
+            //ISIS-1138: Location value type not parsed from string, so fails to locate constructor
+            //domainEvent = LocationDomainEvent.class,
             optionality = Optionality.OPTIONAL
     )
     @MemberOrder(sequence="3")
@@ -468,6 +536,17 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     //endregion
 
     //region > attachment (property)
+    public static class AttachmentDomainEvent extends PropertyDomainEvent<Blob> {
+
+        public AttachmentDomainEvent(final ToDoItem source, final Identifier identifier) {
+            super(source, identifier);
+        }
+
+        public AttachmentDomainEvent(final ToDoItem source, final Identifier identifier, final Blob oldValue, final Blob newValue) {
+            super(source, identifier, oldValue, newValue);
+        }
+    }
+
     private Blob attachment;
     @javax.jdo.annotations.Persistent(defaultFetchGroup="false", columns = {
             @javax.jdo.annotations.Column(name = "attachment_name"),
@@ -475,6 +554,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
             @javax.jdo.annotations.Column(name = "attachment_bytes", jdbcType = "BLOB", sqlType = "BLOB")
     })
     @Property(
+            domainEvent = AttachmentDomainEvent.class,
             optionality = Optionality.OPTIONAL
     )
     public Blob getAttachment() {
@@ -670,8 +750,20 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     //endregion
 
     //region > delete (action)
+
+    public static class DeletedEvent extends ToDoItem.ActionDomainEvent {
+        private static final long serialVersionUID = 1L;
+        public DeletedEvent(
+                final ToDoItem source,
+                final Identifier identifier,
+                final Object... arguments) {
+            super(source, identifier, arguments);
+        }
+    }
+
+
     @Action(
-            domainEvent =DeletedEvent.class,
+            domainEvent = DeletedEvent.class,
             invokeOn = InvokeOn.OBJECT_AND_COLLECTION
     )
     public List<ToDoItem> delete() {
@@ -820,46 +912,26 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     //region > events
 
-    public static abstract class AbstractActionDomainEvent extends ActionDomainEvent<ToDoItem> {
+    public static abstract class PropertyDomainEvent<T> extends ToDoAppDomainModule.PropertyDomainEvent<ToDoItem, T> {
+
+        public PropertyDomainEvent(final ToDoItem source, final Identifier identifier) {
+            super(source, identifier);
+        }
+
+        public PropertyDomainEvent(final ToDoItem source, final Identifier identifier, final T oldValue, final T newValue) {
+            super(source, identifier, oldValue, newValue);
+        }
+    }
+
+    public static abstract class ActionDomainEvent extends ToDoAppDomainModule.ActionDomainEvent<ToDoItem> {
         private static final long serialVersionUID = 1L;
-        public AbstractActionDomainEvent(
+        public ActionDomainEvent(
                 final ToDoItem source,
                 final Identifier identifier,
                 final Object... arguments) {
             super(source, identifier, arguments);
         }
     }
-
-    public static class CompletedEvent extends AbstractActionDomainEvent {
-        private static final long serialVersionUID = 1L;
-        public CompletedEvent(
-                final ToDoItem source, 
-                final Identifier identifier, 
-                final Object... arguments) {
-            super(source, identifier, arguments);
-        }
-    }
-
-    public static class NoLongerCompletedEvent extends AbstractActionDomainEvent {
-        private static final long serialVersionUID = 1L;
-        public NoLongerCompletedEvent(
-                final ToDoItem source, 
-                final Identifier identifier, 
-                final Object... arguments) {
-            super(source, identifier, arguments);
-        }
-    }
-
-    public static class DeletedEvent extends AbstractActionDomainEvent {
-        private static final long serialVersionUID = 1L;
-        public DeletedEvent(
-                final ToDoItem source, 
-                final Identifier identifier, 
-                final Object... arguments) {
-            super(source, identifier, arguments);
-        }
-    }
-
     //endregion
 
     //region > predicates
