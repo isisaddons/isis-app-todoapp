@@ -454,10 +454,9 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     )
     public ToDoItem updateCost(
             @Parameter(optionality = Optionality.OPTIONAL)
-            @ParameterLayout(named = "New cost")
             @Digits(integer = 10, fraction = 2)
-            final BigDecimal cost) {
-            LOG.debug("%s: cost updated: %s -> %s", container.titleOf(this), getCost(), cost);
+            final BigDecimal newCost) {
+        LOG.debug("%s: cost updated: %s -> %s", container.titleOf(this), getCost(), newCost);
 
         // just to simulate a long-running action
         try {
@@ -465,7 +464,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
         } catch (final InterruptedException ignored) {
         }
 
-        setCost(cost);
+        setCost(newCost);
         return this;
     }
 
@@ -526,7 +525,6 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     @MemberOrder(name="location", sequence="1")
     public ToDoItem updateLocation(
-            @ParameterLayout(named="Address")
             final String address) {
         final Location location = this.locationLookupService.lookup(address);
         setLocation(location);
@@ -711,17 +709,12 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     // by the framework
     public ToDoItem duplicate(
             @Parameter(regexPattern = "\\w[@&:\\-\\,\\.\\+ \\w]*" )
-            @ParameterLayout(named="Description")
             final String description,
-            @ParameterLayout(named="Category")
             final Category category,
-            @ParameterLayout(named="Subcategory")
             final Subcategory subcategory,
             @Parameter(optionality = Optionality.OPTIONAL)
-            @ParameterLayout(named="Due by")
             final LocalDate dueBy,
             @Parameter(optionality = Optionality.OPTIONAL)
-            @ParameterLayout(named="Cost")
             final BigDecimal cost) {
         return toDoItems.newToDo(description, category, subcategory, dueBy, cost);
     }

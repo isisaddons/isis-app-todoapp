@@ -65,10 +65,8 @@ public class RecentActivityContributions extends AbstractService {
     public List<? extends DomainChangeJdoAbstract> recentActivity (
             final Object targetDomainObject,
             @Parameter(optionality= Optionality.OPTIONAL)
-            @ParameterLayout(named="From")
             final LocalDate from,
             @Parameter(optionality= Optionality.OPTIONAL)
-            @ParameterLayout(named="To")
             final LocalDate to) {
         final Bookmark targetBookmark = bookmarkService.bookmarkFor(targetDomainObject);
         final List<DomainChangeJdoAbstract> changes = Lists.newArrayList();

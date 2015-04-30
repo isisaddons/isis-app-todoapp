@@ -24,7 +24,6 @@ import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.xmlsnapshot.XmlSnapshotService;
 import org.apache.isis.applib.value.Clob;
@@ -39,7 +38,7 @@ public class ExportAsXmlContributions extends AbstractFactoryAndRepository {
     @Action(semantics = SemanticsOf.SAFE)
     public Clob exportAsXml(
             final ToDoItem toDoItem,
-            @ParameterLayout(named = "File name") String fileName
+            String fileName
     ) {
         if(!fileName.endsWith(".xml")) {
             fileName += ".xml";
@@ -68,7 +67,7 @@ public class ExportAsXmlContributions extends AbstractFactoryAndRepository {
     )
     public Clob exportAsXml(
             final ToDoAppDashboard dashboard,
-            @ParameterLayout(named = "File name") String fileName
+            String fileName
     ) {
         if(!fileName.endsWith(".xml")) {
             fileName += ".xml";

@@ -27,7 +27,6 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
-import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.queryresultscache.QueryResultsCache;
 
@@ -44,8 +43,8 @@ public class UpdateCategoryContributions extends AbstractFactoryAndRepository {
     @Action(semantics = SemanticsOf.IDEMPOTENT)
     public Categorized updateCategory(
             final Categorized item,
-            final @ParameterLayout(named="Category") Category category,
-            final @Parameter(optionality = Optionality.OPTIONAL) @ParameterLayout(named="Subcategory") Subcategory subcategory) {
+            final Category category,
+            final @Parameter(optionality = Optionality.OPTIONAL) Subcategory subcategory) {
         item.setCategory(category);
         item.setSubcategory(subcategory);
         return item;
