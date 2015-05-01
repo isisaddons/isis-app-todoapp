@@ -36,6 +36,8 @@
     <properties>
         <isis.version>1.9.0-SNAPSHOT</isis.version>
 
+        <isis-metamodel-paraname8.version>1.9.0-SNAPSHOT</isis-metamodel-paraname8.version>
+
         <isis-module-audit.version>1.9.0-SNAPSHOT</isis-module-audit.version>
         <isis-module-command.version>1.9.0-SNAPSHOT</isis-module-command.version>
         <isis-module-publishing.version>1.9.0-SNAPSHOT</isis-module-publishing.version>
@@ -124,6 +126,7 @@
                     <configuration>
                         <source>1.8</source>
                         <target>1.8</target>
+                        <compilerArgument>-parameters</compilerArgument>
                     </configuration>
                     <executions>
                         <execution>
@@ -408,6 +411,11 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.isisaddons.metamodel.paraname8</groupId>
+                <artifactId>isis-metamodel-paraname8-dom</artifactId>
+                <version>${isis-metamodel-paraname8.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.isisaddons.module.audit</groupId>
                 <artifactId>isis-module-audit-dom</artifactId>

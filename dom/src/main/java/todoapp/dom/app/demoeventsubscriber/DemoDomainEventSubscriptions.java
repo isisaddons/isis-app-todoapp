@@ -129,9 +129,6 @@ public class DemoDomainEventSubscriptions {
     )
     @MemberOrder(sequence = "500.20.1")
     public void subscriberBehaviour(
-            @ParameterLayout(
-                    named="Behaviour"
-            )
             final DemoBehaviour behaviour) {
         applicationSettingsService.set(DemoBehaviour.class, behaviour);
         container.informUser("Subscriber behaviour set to: " + behaviour);

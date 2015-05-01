@@ -25,7 +25,6 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
@@ -68,7 +67,7 @@ public class ExternalLinksService {
             restrictTo = RestrictTo.PROTOTYPING
     )
     @MemberOrder(sequence="500.30.1")
-    public URL goToDocs(@ParameterLayout(named="Link") final ExternalLink link) throws MalformedURLException {
+    public URL goToDocs(final ExternalLink link) throws MalformedURLException {
         return link.open();
     }
 

@@ -126,8 +126,8 @@ public class ToDoItems {
     )
     @MemberOrder(sequence = "40")
     public List<ToDoItem> categorized(
-            @ParameterLayout(named="Category") final Category category,
-            @ParameterLayout(named="Subcategory") final Subcategory subcategory,
+            final Category category,
+            final Subcategory subcategory,
             @ParameterLayout(named="Completed?") final boolean completed) {
             // an example "naive" implementation (filtered in Java code, not DBMS)
         return container.allMatches(ToDoItem.class, 
@@ -162,18 +162,13 @@ public class ToDoItems {
     @MemberOrder(sequence = "5")
     public ToDoItem newToDo(
             @Parameter(regexPattern = "\\w[@&:\\-\\,\\.\\+ \\w]*")
-            @ParameterLayout(named="Description")
             final String description,
-            @ParameterLayout(named="Category")
             final Category category,
             @Parameter(optionality = Optionality.OPTIONAL)
-            @ParameterLayout(named="Subcategory")
             final Subcategory subcategory,
             @Parameter(optionality = Optionality.OPTIONAL)
-            @ParameterLayout(named="Due by")
             final LocalDate dueBy,
             @Parameter(optionality = Optionality.OPTIONAL)
-            @ParameterLayout(named="Cost")
             final BigDecimal cost) {
         return newToDo(description, category, subcategory, currentUserName(), dueBy, cost);
     }

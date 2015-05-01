@@ -190,6 +190,13 @@
         </dependency>
 
 
+        <!-- enable -parameters support -->
+        <dependency>
+            <groupId>org.isisaddons.metamodel.paraname8</groupId>
+            <artifactId>isis-metamodel-paraname8-dom</artifactId>
+        </dependency>
+
+
         <!-- to run using WebServer (optional) -->
         <dependency>
             <groupId>org.apache.isis.core</groupId>

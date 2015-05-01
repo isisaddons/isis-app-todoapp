@@ -64,13 +64,17 @@ public class ToDoAppSystemInitializer {
 
         private static IsisConfiguration testConfiguration() {
             final IsisConfigurationForJdoIntegTests testConfiguration = new IsisConfigurationForJdoIntegTests();
-            testConfiguration.addRegisterEntitiesPackagePrefix("dom");
+            testConfiguration.addRegisterEntitiesPackagePrefix("todoapp.dom.module");
 
             // enable stricter checking
             //
             // the consequence of this is having to call 'nextTransaction()' between most of the given/when/then's
             // because the command2 only ever refers to the event of the originating action.
             testConfiguration.put(PersistenceConstants.ENFORCE_SAFE_SEMANTICS, "true");
+
+            testConfiguration.put(
+                    "isis.reflector.facets.include",
+                    "org.isisaddons.metamodel.paraname8.NamedFacetOnParameterParaname8Factory");
 
             return testConfiguration;
         }
