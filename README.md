@@ -189,6 +189,63 @@ In fact, the domain event is fired not once, but (up to) 5 times.  It is called 
 Moreover, domain events are fired for all properties and collections, not just actions.  Thus, subscribers can therefore switch on or switch off different parts of an application.  Indeed, the example todoapp demonstrates this.
 
 
+## JDOQL vs Typesafe Queries
+
+DataNucleus provides two ways to query the database; either using the (JDO API) JDOQL language, or using a type-safe API from "Q" classes that are generated as a side-effect of the enhancement process.  You can learn more about type-safe API in [DataNucleus' documentation](http://www.datanucleus.org/products/datanucleus/jdo/jdoql_typesafe.html).
+
+The todoapp demonstrates both approaches.  The `ToDoItems` domain service delegetes to an injected `ToDoItemRepository` to actually query for objects; and we have two implementations to show the alternative approaches:
+
+![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/ToDoItemRepository.png)
+
+generated using [yuml.me](http://yuml.me/edit/852cb3b1):
+<pre>
+[dom.ToDoItems]->[dom.ToDoItemRepository]
+[dom.ToDoItemRepository]^-[domrepo.ToDoItemRepositoryUsingJdoQl]
+[dom.ToDoItemRepository]^-[domrepo.ToDoItemRepositoryUsingTypesafeQueries]
+</pre>
+
+For example, the JDOQL to search for a `ToDoItem` by its `atPath` and `complete` properties requires this JDOQL definition:
+
+    @javax.jdo.annotations.Query(
+            name = "findByAtPathAndComplete", language = "JDOQL",
+            value = "SELECT "
+                    + "FROM todoapp.dom.module.todoitem.ToDoItem "
+                    + "WHERE atPath.indexOf(:atPath) == 0 "
+                    + "   && complete == :complete"),
+
+along with this implementation:
+
+    public class ToDoItemRepositoryUsingTypesafeQueries extends ToDoItemRepository {
+        @Override
+        protected List<ToDoItem> doFindByAtPathAndComplete(final String atPath, final boolean complete) {
+            return container.allMatches(
+                    new QueryDefault<>(ToDoItem.class,
+                            "findByAtPathAndComplete",
+                            "atPath", atPath,
+                            "complete", complete));
+        }
+        ...
+    }
+
+Using the type-safe query approach on the other hand requires no JDOQL, but uses the generated `QToDoItem` class:
+
+    public class ToDoItemRepositoryUsingTypesafeQueries extends ToDoItemRepository {
+    
+        @Override
+        protected List<ToDoItem> doFindByAtPathAndComplete(
+                final String atPath,
+                final boolean complete) {
+            final QToDoItem candidate = QToDoItem.candidate();
+            return newQuery().filter(
+                    candidate.atPath.eq(atPath).and(
+                    candidate.complete.eq(complete))).executeList();
+        }
+        ...
+    }
+    
+Using type-safe queries are type-safe and involve less code overall (though arguably the free-form JDOQL string, being similar to SQL, is easier to understand).  However, type-safe queries do complicate the project a little: the repository implementation must reside in the "down-stream" `domrepo` module, because of the dependency on the generated `QToDoItem` class.  Put another way: the repository implementation can't reside in the same module as the entity, because the entity code must be compiled and then enhanced first.  
+
+
 ## Usage of AssertJ
 
 The example makes some limited use of [AssertJ](http://joel-costigliola.github.io/assertj/) assertions.
@@ -244,7 +301,8 @@ As noted above, the generated app is a reasonably complete application for track
 <table class="table table-striped table-bordered table-condensed">
 <tr><th>Module</th><th>Description</th></tr>
 <tr><td>todoapp</td><td>The parent (aggregator) module</td></tr>
-<tr><td>todoapp-dom</td><td>The domain object model, consisting of <tt>ToDoItem</tt> and <tt>ToDoItems</tt> (repository) domain service.</td></tr>
+<tr><td>todoapp-dom</td><td>The domain object model, consisting of <tt>ToDoItem</tt> and <tt>ToDoItems</tt> domain service.  Also defines the (abstract) <tt>ToDoItemRepository</tt> repository class.</td></tr>
+<tr><td>todoapp-domrepo</td><td>Implementations of the repository class (defined in the <tt>-dom</tt> module, demonstrating queries using either JDOQL or DataNucleus' type-safe queries as a means of querying the database.</td></tr>
 <tr><td>todoapp-fixture</td><td>Domain object fixtures used for initializing the system when being demo'ed or for unit testing.</td></tr>
 <tr><td>todoapp-integtests</td><td>End-to-end integration tests that exercise from the UI through to the database</td></tr>
 <tr><td>todoapp-webapp</td><td>Run as a webapp (from <tt>web.xml</tt>) using either the Wicket viewer or the RestfulObjects viewer</td></tr>
