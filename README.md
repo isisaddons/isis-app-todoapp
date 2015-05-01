@@ -237,8 +237,10 @@ Using the type-safe query approach on the other hand requires no JDOQL, but uses
         }
         ...
     }
+
+You can try out either implementation by commenting in/out the `@DomainService` for these two implementations.  (Isis does not - yet - provide a way to switch dynamically implementations). 
     
-Using type-safe queries are type-safe and involve less code overall (though arguably the free-form JDOQL string, being similar to SQL, is easier to understand).  However, type-safe queries do complicate the project a little: the repository implementation must reside in the "down-stream" `domrepo` module, because of the dependency on the generated `QToDoItem` class.  Put another way: the repository implementation can't reside in the same module as the entity, because the entity code must be compiled and then enhanced first.  
+Type-safe queries have several advantages over JDOQL: they're type-safe (obviously!) and involve less code overall.  But there are some downsides too.  Arguably they are a little harder to understand than the free-form JDOQL string).  Perhaps more significantly, they complicate the project somewhat: the repository implementation must reside in the "down-stream" `domrepo` module, because of the dependency on the `QToDoItem` class that is only generated in the "process-classes" phase of the Maven lifecycle; ie after the code has been compiled.  
 
 
 ## Usage of AssertJ
