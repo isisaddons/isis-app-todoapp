@@ -30,7 +30,9 @@ import todoapp.dom.module.todoitem.ToDoItemRepository;
 public class ToDoItemRepositoryUsingJdoql extends ToDoItemRepository {
 
     @Override
-    protected List<ToDoItem> doFindByAtPathAndComplete(final String atPath, final boolean complete) {
+    protected List<ToDoItem> doFindByAtPathAndComplete(
+            final String atPath,
+            final boolean complete) {
         return container.allMatches(
                 new QueryDefault<>(ToDoItem.class,
                         "findByAtPathAndComplete",
@@ -40,7 +42,9 @@ public class ToDoItemRepositoryUsingJdoql extends ToDoItemRepository {
 
 
     @Override
-    protected List<ToDoItem> doFindByAtPathAndDescriptionContains(final String atPath, final String description) {
+    protected List<ToDoItem> doFindByAtPathAndDescriptionContains(
+            final String atPath,
+            final String description) {
         return container.allMatches(
                 new QueryDefault<>(ToDoItem.class,
                         "findByAtPathAndDescriptionContains",

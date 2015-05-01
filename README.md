@@ -212,7 +212,9 @@ along with this implementation:
 
     public class ToDoItemRepositoryUsingTypesafeQueries extends ToDoItemRepository {
         @Override
-        protected List<ToDoItem> doFindByAtPathAndComplete(final String atPath, final boolean complete) {
+        protected List<ToDoItem> doFindByAtPathAndComplete(
+                final String atPath, 
+                final boolean complete) {
             return container.allMatches(
                     new QueryDefault<>(ToDoItem.class,
                             "findByAtPathAndComplete",
