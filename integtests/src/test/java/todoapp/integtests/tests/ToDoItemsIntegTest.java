@@ -120,7 +120,7 @@ public class ToDoItemsIntegTest extends AbstractToDoIntegTest {
             assertThat(newToDo.getCategory()).isEqualTo(Category.PROFESSIONAL);
             assertThat(wrap(toDoItems).notYetComplete()).hasSize(size+1);
             assertThat(container.isPersistent(newToDo)).isTrue();
-            assertThat(container().isPersistent(wrap(newToDo))).isTrue();
+            assertThat(container.isPersistent(wrap(newToDo))).isTrue();
 
             nextTransaction();
 

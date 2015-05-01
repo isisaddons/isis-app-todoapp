@@ -106,17 +106,11 @@ import todoapp.dom.seed.tenancies.UsersTenancy;
                     + "FROM todoapp.dom.module.todoitem.ToDoItem "
                     + "WHERE atPath.indexOf(:atPath) == 0 "),
     @javax.jdo.annotations.Query(
-            name = "findByAtPathAndCompleteIsFalse", language = "JDOQL",
+            name = "findByAtPathAndComplete", language = "JDOQL",
             value = "SELECT "
                     + "FROM todoapp.dom.module.todoitem.ToDoItem "
                     + "WHERE atPath.indexOf(:atPath) == 0 "
-                    + "   && complete == false"),
-    @javax.jdo.annotations.Query(
-            name = "findByAtPathAndCompleteIsTrue", language = "JDOQL",
-            value = "SELECT "
-                    + "FROM todoapp.dom.module.todoitem.ToDoItem "
-                    + "WHERE atPath.indexOf(:atPath) == 0 "
-                    + "   && complete == true"),
+                    + "   && complete == :complete"),
     @javax.jdo.annotations.Query(
             name = "findByAtPathAndCategory", language = "JDOQL",
             value = "SELECT "

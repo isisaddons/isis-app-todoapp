@@ -20,7 +20,6 @@ package todoapp.dom.module.todoitem;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import com.google.common.base.Predicates;
 
@@ -33,15 +32,14 @@ import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
+import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.query.QueryDefault;
 import org.apache.isis.applib.services.clock.ClockService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
-import org.apache.isis.applib.services.queryresultscache.QueryResultsCache;
 
 import org.isisaddons.module.security.app.user.MeService;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
@@ -52,7 +50,9 @@ import org.isisaddons.module.security.dom.user.ApplicationUsers;
 import todoapp.dom.module.categories.Category;
 import todoapp.dom.module.categories.Subcategory;
 
-@DomainService(repositoryFor = ToDoItem.class)
+@DomainService(
+        nature = NatureOfService.VIEW_MENU_ONLY
+)
 @DomainServiceLayout(
         named="ToDos",
         menuOrder = "10"
@@ -77,19 +77,7 @@ public class ToDoItems {
 
     @Programmatic
     public List<ToDoItem> notYetCompleteNoUi() {
-        return notYetCompleteFor(currentUsersAtPath());
-    }
-
-    private List<ToDoItem> notYetCompleteFor(final String atPath) {
-        return queryResultsCache.execute(new Callable<List<ToDoItem>>() {
-            @Override
-            public List<ToDoItem> call() throws Exception {
-                return container.allMatches(
-                        new QueryDefault<>(ToDoItem.class,
-                                "findByAtPathAndCompleteIsFalse",
-                                "atPath", atPath));
-            }
-        }, ToDoItems.class, "notYetCompleteFor", atPath);
+        return toDoItemRepository.findByAtPathAndComplete(currentUsersAtPath(), false);
     }
 
     //endregion
@@ -110,11 +98,9 @@ public class ToDoItems {
 
     @Programmatic
     public List<ToDoItem> completeNoUi() {
-        return container.allMatches(
-            new QueryDefault<>(ToDoItem.class,
-                    "findByAtPathAndCompleteIsTrue",
-                    "atPath", currentUsersAtPath()));
+        return toDoItemRepository.findByAtPathAndComplete(currentUsersAtPath(), true);
     }
+
     //endregion
 
     //region > categorized (action)
@@ -196,11 +182,7 @@ public class ToDoItems {
     //region > autoComplete (programmatic)
     @Programmatic // not part of metamodel
     public List<ToDoItem> autoComplete(final String description) {
-        return container.allMatches(
-                new QueryDefault<>(ToDoItem.class,
-                        "findByAtPathAndDescriptionContains",
-                        "atPath", currentUsersAtPath(),
-                        "description", description));
+        return toDoItemRepository.findByAtPathAndDescriptionContains(currentUsersAtPath(), description);
     }
     //endregion
 
@@ -248,7 +230,6 @@ public class ToDoItems {
 
     //endregion
 
-
     //region > common validation
     private static final long ONE_WEEK_IN_MILLIS = 7 * 24 * 60 * 60 * 1000L;
 
@@ -279,7 +260,7 @@ public class ToDoItems {
     private ClockService clockService;
 
     @javax.inject.Inject
-    private QueryResultsCache queryResultsCache;
+    private ToDoItemRepository toDoItemRepository;
     //endregion
 
 }
