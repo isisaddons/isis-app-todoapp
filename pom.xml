@@ -364,6 +364,7 @@
 
     <modules>
         <module>dom</module>
+        <module>domrepo</module>
         <module>fixture</module>
         <module>integtests</module>
         <module>webapp</module>
@@ -398,6 +399,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>todoapp-dom</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>todoapp-domrepo</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
