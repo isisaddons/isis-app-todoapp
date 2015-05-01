@@ -24,6 +24,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
+import org.apache.isis.applib.services.wrapper.InvalidException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -90,6 +91,7 @@ public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoI
             public void categoryCannotBeNull() throws Exception {
 
                 // when, then
+                expectedExceptions.expect(InvalidException.class);
                 expectedExceptions.expectMessage("'Category' is mandatory");
                 updateCategoryContributionsWrapped.updateCategory(toDoItem, null, Subcategory.CHORES);
             }

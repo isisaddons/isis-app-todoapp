@@ -72,6 +72,10 @@ public class ToDoAppSystemInitializer {
             // because the command2 only ever refers to the event of the originating action.
             testConfiguration.put(PersistenceConstants.ENFORCE_SAFE_SEMANTICS, "true");
 
+            testConfiguration.put(
+                    "isis.reflector.facets.include",
+                    "org.isisaddons.metamodel.paraname8.NamedFacetOnParameterParaname8Factory");
+
             return testConfiguration;
         }
     }
