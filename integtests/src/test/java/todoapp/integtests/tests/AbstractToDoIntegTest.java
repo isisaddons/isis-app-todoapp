@@ -19,14 +19,20 @@
 package todoapp.integtests.tests;
 
 import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.togglz.junit.TogglzRule;
 
 import org.apache.isis.core.integtestsupport.IntegrationTestAbstract;
 import org.apache.isis.core.integtestsupport.scenarios.ScenarioExecutionForIntegration;
 
+import todoapp.dom.module.featuretoggles.ToDoAppFeature;
 import todoapp.integtests.ToDoAppSystemInitializer;
 
 public abstract class AbstractToDoIntegTest extends IntegrationTestAbstract {
-    
+
+    @Rule
+    public TogglzRule togglzRule = TogglzRule.allEnabled(ToDoAppFeature.class);
+
     @BeforeClass
     public static void initClass() {
         org.apache.log4j.PropertyConfigurator.configure("logging.properties");

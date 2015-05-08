@@ -506,13 +506,17 @@
                 <artifactId>togglz-core</artifactId>
                 <version>${togglz.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.togglz</groupId>
+                <artifactId>togglz-junit</artifactId>
+                <version>${togglz.version}</version>
+                <scope>test</scope>
+            </dependency>
             <dependency>
                 <groupId>org.togglz</groupId>
                 <artifactId>togglz-servlet</artifactId>
                 <version>${togglz.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.togglz</groupId>
                 <artifactId>togglz-console</artifactId>

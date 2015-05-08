@@ -120,6 +120,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.togglz</groupId>
+            <artifactId>togglz-junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>
         </dependency>
