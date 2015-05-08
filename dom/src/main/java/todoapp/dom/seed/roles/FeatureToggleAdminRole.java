@@ -16,27 +16,23 @@
  */
 package todoapp.dom.seed.roles;
 
-
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
-import org.isisaddons.module.sessionlogger.SessionLoggerModule;
 
+public class FeatureToggleAdminRole extends AbstractRoleAndPermissionsFixtureScript {
 
-public class SessionLoggerModuleRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
+    public static final String ROLE_NAME = "todoapp-featuretoggle-admin";
 
-    public static final String ROLE_NAME = "todoapp-sessionlogger-admin";
-
-    public SessionLoggerModuleRoleAndPermissions() {
-        super(ROLE_NAME, "Admin access to sessionlogger module");
+    public FeatureToggleAdminRole() {
+        super(ROLE_NAME, "Admin access to feature toggle");
     }
 
     @Override
     protected void execute(final ExecutionContext executionContext) {
-        newPackagePermissions(
-                ApplicationPermissionRule.ALLOW,
-                ApplicationPermissionMode.CHANGING,
-                SessionLoggerModule.class.getPackage().getName());
+        // no Isis permissions required.
+        // dummy called required in order to set up the role.
+        newPackagePermissions(ApplicationPermissionRule.ALLOW, ApplicationPermissionMode.CHANGING, new String[]{});
     }
 
 }

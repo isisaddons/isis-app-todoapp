@@ -99,12 +99,8 @@ import todoapp.dom.seed.tenancies.UsersTenancy;
             name="ToDoItem_description_must_be_unique", 
             members={"atPath","description"})
 })
+// queries only used if ToDoItemRepositoryImplUsingJdoql is used rather than ToDoItemRepositoryImplUsingTypesafeQueries
 @javax.jdo.annotations.Queries( {
-    @javax.jdo.annotations.Query(
-            name = "findByAtPath", language = "JDOQL",
-            value = "SELECT "
-                    + "FROM todoapp.dom.module.todoitem.ToDoItem "
-                    + "WHERE atPath.indexOf(:atPath) == 0 "),
     @javax.jdo.annotations.Query(
             name = "findByAtPathAndComplete", language = "JDOQL",
             value = "SELECT "

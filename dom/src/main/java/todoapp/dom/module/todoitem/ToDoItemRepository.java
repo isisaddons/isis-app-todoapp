@@ -20,38 +20,66 @@ package todoapp.dom.module.todoitem;
 
 import java.util.List;
 
+import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.queryresultscache.QueryResultsCache;
 
-public abstract class ToDoItemRepository {
+import todoapp.dom.module.categories.Category;
+import todoapp.dom.module.featuretoggles.ToDoAppFeature;
+
+/**
+ * Delegates to underlying implementation and caches result.
+ *
+ * <p>
+ *     Uses the {@link todoapp.dom.module.featuretoggles.FeatureToggleService} to determine which to delegate to.
+ * </p>
+ */
+@DomainService(repositoryFor = ToDoItem.class)
+public class ToDoItemRepository {
+
+    ToDoItemRepositoryImpl getToDoItemRepositoryImpl() {
+        final ToDoItemRepositoryImpl toDoItemRepository =
+                ToDoAppFeature.useTypeSafeQueries.isActive()
+                        ? toDoItemRepositoryImplUsingTypesafeQueries
+                        : toDoItemRepositoryImplUsingJdoql;
+        return toDoItemRepository;
+    }
+
+    @Programmatic
+    public  List<ToDoItem> findByAtPathAndCategory(final String atPath, final Category category) {
+        return queryResultsCache.execute(
+                () -> getToDoItemRepositoryImpl().findByAtPathAndCategory(atPath, category),
+                ToDoItemRepository.class,
+                "findByAtPathAndCategory",
+                atPath, category);
+    }
 
     @Programmatic
     public List<ToDoItem> findByAtPathAndComplete(
             final String atPath, final boolean complete) {
         return queryResultsCache.execute(
-                () -> doFindByAtPathAndComplete(atPath, complete),
+                () -> getToDoItemRepositoryImpl().findByAtPathAndComplete(atPath, complete),
                 ToDoItemRepository.class,
                 "findByAtPathAndComplete",
                 atPath, complete);
     }
 
-    protected abstract List<ToDoItem> doFindByAtPathAndComplete(final String atPath, final boolean complete) ;
-
     @Programmatic
     public List<ToDoItem> findByAtPathAndDescriptionContains(
             final String atPath, final String description) {
         return queryResultsCache.execute(
-                () -> doFindByAtPathAndDescriptionContains(atPath, description),
+                () -> getToDoItemRepositoryImpl().findByAtPathAndDescriptionContains(atPath, description),
                 ToDoItemRepository.class,
                 "findByAtPathAndDescriptionContains",
                 atPath, description);
     }
 
-    protected abstract List<ToDoItem> doFindByAtPathAndDescriptionContains(
-            final String atPath, final String description);
-
-
     //region > injected services
+    @javax.inject.Inject
+    private ToDoItemRepositoryImplUsingJdoql toDoItemRepositoryImplUsingJdoql;
+    @javax.inject.Inject
+    private ToDoItemRepositoryImplUsingTypesafeQueries toDoItemRepositoryImplUsingTypesafeQueries;
+
     @javax.inject.Inject
     protected QueryResultsCache queryResultsCache;
     //endregion

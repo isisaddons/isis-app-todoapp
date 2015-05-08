@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://module.dto.todoapp/todoitem.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://module.dto.todoapp/todoitem.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+    <xs:element name="toDoItemDto">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="oid" type="oidDto"/>
+                <xs:element name="description" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="category" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="subcategory" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                <xs:element name="cost" type="xs:decimal" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="oidDto">
+        <xs:sequence>
+            <xs:element name="objectType" type="xs:string"/>
+            <xs:element name="objectIdentifier" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>

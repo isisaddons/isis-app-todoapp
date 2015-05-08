@@ -51,6 +51,11 @@
     <dependencies>
 
         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>todoapp-canonical</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.isis.core</groupId>
             <artifactId>isis-core-applib</artifactId>
         </dependency>
@@ -119,6 +124,16 @@
         <dependency>
             <groupId>org.isisaddons.wicket.gmap3</groupId>
             <artifactId>isis-wicket-gmap3-cpt</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.togglz</groupId>
+            <artifactId>togglz-core</artifactId>
         </dependency>
 
     </dependencies>

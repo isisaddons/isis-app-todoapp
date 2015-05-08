@@ -38,7 +38,9 @@ import org.isisaddons.module.security.app.user.MeService;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
 
+import todoapp.dom.module.categories.Category;
 import todoapp.dom.module.todoitem.ToDoItem;
+import todoapp.dom.module.todoitem.ToDoItemRepository;
 import todoapp.dom.module.todoitem.ToDoItems;
 
 @DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
@@ -50,14 +52,9 @@ public class SimilarToContributions extends AbstractFactoryAndRepository {
     )
     @Action(semantics = SemanticsOf.SAFE)
     public List<ToDoItem> similarTo(final ToDoItem toDoItem) {
-        final List<ToDoItem> similarToDoItems = allMatches(
-                new QueryDefault<>(ToDoItem.class,
-                        "findByAtPathAndCategory",
-                        "atPath", currentUsersAtPath(),
-                        "category", toDoItem.getCategory()));
+        final List<ToDoItem> similarToDoItems = toDoItemRepository.findByAtPathAndCategory(currentUsersAtPath(), toDoItem.getCategory());
         return Lists.newArrayList(Iterables.filter(similarToDoItems, excluding(toDoItem)));
     }
-
 
     private static Predicate<ToDoItem> excluding(final ToDoItem toDoItem) {
         return new Predicate<ToDoItem>() {
@@ -84,6 +81,9 @@ public class SimilarToContributions extends AbstractFactoryAndRepository {
 
     @javax.inject.Inject
     private ToDoItems toDoItems;
+
+    @javax.inject.Inject
+    private ToDoItemRepository toDoItemRepository;
 
     @javax.inject.Inject
     private MeService meService;

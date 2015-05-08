@@ -33,7 +33,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>todoapp-domrepo</artifactId>
+            <artifactId>todoapp-dom</artifactId>
         </dependency>
 
     </dependencies>

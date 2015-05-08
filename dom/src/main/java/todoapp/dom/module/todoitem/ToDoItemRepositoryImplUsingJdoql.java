@@ -16,21 +16,35 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.domrepo;
+package todoapp.dom.module.todoitem;
 
 import java.util.List;
 
 import org.apache.isis.applib.DomainObjectContainer;
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.query.QueryDefault;
 
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItemRepository;
+import todoapp.dom.module.categories.Category;
 
-//@DomainService(repositoryFor = ToDoItem.class)
-public class ToDoItemRepositoryUsingJdoql extends ToDoItemRepository {
+@DomainService(
+        nature = NatureOfService.DOMAIN
+)
+public class ToDoItemRepositoryImplUsingJdoql implements ToDoItemRepositoryImpl {
+
+    @Programmatic
+    public List<ToDoItem> findByAtPathAndCategory(final String atPath, final Category category) {
+        return container.allMatches(
+                new QueryDefault<>(ToDoItem.class,
+                        "findByAtPathAndCategory",
+                        "atPath", atPath,
+                        "category", category));
+    }
+
 
     @Override
-    protected List<ToDoItem> doFindByAtPathAndComplete(
+    public List<ToDoItem> findByAtPathAndComplete(
             final String atPath,
             final boolean complete) {
         return container.allMatches(
@@ -40,9 +54,8 @@ public class ToDoItemRepositoryUsingJdoql extends ToDoItemRepository {
                         "complete", complete));
     }
 
-
     @Override
-    protected List<ToDoItem> doFindByAtPathAndDescriptionContains(
+    public List<ToDoItem> findByAtPathAndDescriptionContains(
             final String atPath,
             final String description) {
         return container.allMatches(

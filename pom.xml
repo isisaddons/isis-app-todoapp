@@ -52,9 +52,14 @@
         <isis-wicket-fullcalendar2.version>1.9.0-SNAPSHOT</isis-wicket-fullcalendar2.version>
         <isis-wicket-gmap3.version>1.9.0-SNAPSHOT</isis-wicket-gmap3.version>
 
+        <jbcrypt.version>0.3m</jbcrypt.version>
+        <assertj-core.version>2.0.0</assertj-core.version>
+        <orika-core.version>1.4.5</orika-core.version>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <assertj-core.version>2.0.0</assertj-core.version>
+
+        <togglz.version>2.1.0.Final</togglz.version>
     </properties>
 
     <repositories>
@@ -91,7 +96,7 @@
                     <configuration>
                         <rules>
                             <requireMavenVersion>
-                                <version>[3.2.1,)</version>
+                                <version>[3.0.5,)</version>
                             </requireMavenVersion>
                             <requireJavaVersion>
                                 <version>[1.8.0,)</version>
@@ -363,8 +368,8 @@
     </build>
 
     <modules>
+        <module>canonical</module>
         <module>dom</module>
-        <module>domrepo</module>
         <module>fixture</module>
         <module>integtests</module>
         <module>webapp</module>
@@ -396,6 +401,11 @@
             </dependency>
 
             <!-- this project's own modules -->
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>todoapp-canonical</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>todoapp-dom</artifactId>
@@ -479,6 +489,35 @@
                 <version>${isis-wicket-gmap3.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.mindrot</groupId>
+                <artifactId>jbcrypt</artifactId>
+                <version>${jbcrypt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ma.glasnost.orika</groupId>
+                <artifactId>orika-core</artifactId>
+                <version>${orika-core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.togglz</groupId>
+                <artifactId>togglz-core</artifactId>
+                <version>${togglz.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.togglz</groupId>
+                <artifactId>togglz-servlet</artifactId>
+                <version>${togglz.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.togglz</groupId>
+                <artifactId>togglz-console</artifactId>
+                <version>${togglz.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

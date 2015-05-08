@@ -28,6 +28,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.DevUtilsModuleRoleAndPermissions;
+import todoapp.dom.seed.roles.FeatureToggleAdminRole;
 import todoapp.dom.seed.roles.PublishingModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
@@ -70,6 +71,7 @@ public class SeedToDoAppRolesAndPermissions {
             executionContext.executeChild(this, new ToDoAppToDoItemVetoSelectedMembersPermissions());
             executionContext.executeChild(this, new ToDoAppFixtureServiceRoleAndPermissions());
 
+            executionContext.executeChild(this, new FeatureToggleAdminRole());
             executionContext.executeChild(this, new AuditModuleRoleAndPermissions());
             executionContext.executeChild(this, new CommandModuleRoleAndPermissions());
             executionContext.executeChild(this, new SessionLoggerModuleRoleAndPermissions());
