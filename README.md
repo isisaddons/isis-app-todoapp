@@ -193,7 +193,9 @@ Moreover, domain events are fired for all properties and collections, not just a
 
 DataNucleus provides two ways to query the database; either using the (JDO API) JDOQL language, or using a type-safe API from "Q" classes that are generated as a side-effect of the enhancement process.  You can learn more about type-safe API in [DataNucleus' documentation](http://www.datanucleus.org/products/datanucleus/jdo/jdoql_typesafe.html).
 
-The todoapp demonstrates both approaches.  The `ToDoItems` domain service delegetes to an injected `ToDoItemRepository` to actually query for objects; and we have two implementations to show the alternative approaches:
+The todoapp demonstrates both approaches.  The `ToDoItems` domain service delegates to an injected `ToDoItemRepository` to actually query for objects.  This in turn has two responsibilities: use a feature toggle (discussed below) to delegate further to an appropriate implementation of a service that will perform the query; it also cache the result using Isis `QueryResultsCache` service:  
+
+The UML diagram below shows the respect responsibilities:
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/ToDoItemRepository-vertical.png)
 
@@ -210,7 +212,7 @@ For example, the JDOQL to search for a `ToDoItem` by its `atPath` and `complete`
 
 along with this implementation:
 
-    public class ToDoItemRepositoryUsingTypesafeQueries extends ToDoItemRepository {
+    public class ToDoItemRepositoryImplUsingJdoQl extends ToDoItemRepositoryImpl {
         @Override
         protected List<ToDoItem> doFindByAtPathAndComplete(
                 final String atPath, 
@@ -226,7 +228,7 @@ along with this implementation:
 
 Using the type-safe query approach on the other hand requires no JDOQL, but uses the generated `QToDoItem` class:
 
-    public class ToDoItemRepositoryUsingTypesafeQueries extends ToDoItemRepository {
+    public class ToDoItemRepositoryImplUsingTypesafeQueries extends ToDoItemRepositoryImpl {
     
         @Override
         protected List<ToDoItem> doFindByAtPathAndComplete(
@@ -245,13 +247,48 @@ You can try out either implementation by commenting in/out the `@DomainService` 
 Type-safe queries have several advantages over JDOQL: they're type-safe (obviously!) and involve less code overall.  But there are some downsides too.  Arguably they are a little harder to understand than the free-form JDOQL string).  Perhaps more significantly, they complicate the project somewhat: the repository implementation must reside in the "down-stream" `domrepo` module, because of the dependency on the `QToDoItem` class that is only generated in the "process-classes" phase of the Maven lifecycle; ie after the code has been compiled.  
 
 
+## Feature Toggles
+
+The application uses the Isis addons' [togglz module](http://github.com/isisaddons/isis-module-togglz) to determine whether (as discussed above) to use JDOQL or typesafe queries to query the database.  
+
+Just a single feature toggle is defined, as an enum:
+
+    public enum ToDoAppFeature implements org.togglz.core.Feature {
+    
+        @Label("Use DataNucleus type-safe queries to query database rather than JDOQL")
+        @EnabledByDefault
+        useTypeSafeQueries;
+    
+        public boolean isActive() {
+            return FeatureContext.getFeatureManager().isActive(this);
+        }
+    }
+
+
+The feature toggle is used in the `ToDoItemRepository` service:
+
+    ToDoItemRepositoryImpl getToDoItemRepositoryImpl() {
+        final ToDoItemRepositoryImpl toDoItemRepository =
+                ToDoAppFeature.useTypeSafeQueries.isActive()
+                        ? toDoItemRepositoryImplUsingTypesafeQueries
+                        : toDoItemRepositoryImplUsingJdoql;
+        return toDoItemRepository;
+    }
+
+The toggle can be enabled/disabled through the togglz embedded console (accessible at http://localhost:8080/togglz/):
+
+![](https://raw.github.com/apache/isis/master/images/270-togglz-embedded-console.png)
+
+To access this toggle the user requires the "isis-module-togglz-admin" role.
+
+
+
 ## Usage of AssertJ
 
 The example makes some limited use of [AssertJ](http://joel-costigliola.github.io/assertj/) assertions.
 Joel (author/maintainer of AssertJ) was good enough to provide a [pull request](https://github.com/isisaddons/isis-app-todoapp/pull/1) demoing more extensive use of AssertJ, in particular its support for domain-specific assertions.
 
-As I want this repo to primarily be a demonstration of Apache Isis rather than AssertJ, I've chosen to
-his PR but leave it in an unmerged branch.  If you want to explore this feature of AssertJ, check out the [issue-1-assertj-domain-specific-usage](https://github.com/isisaddons/isis-app-todoapp/tree/issue-1-assertj-domain-specific-usage) branch.
+As I want this repo to primarily be a demonstration of Apache Isis rather than AssertJ, I've chosen to pull in his PR but leave it in an unmerged branch.  If you want to explore this feature of AssertJ, check out the [issue-1-assertj-domain-specific-usage](https://github.com/isisaddons/isis-app-todoapp/tree/issue-1-assertj-domain-specific-usage) branch.
 
 ## Building the App
 
@@ -319,9 +356,11 @@ And if you need help or support, join the [mailing lists](http://isis.apache.org
 
 ## Appendix: yuml.me DSL
 
-[edit](http://yuml.me/edit/dd1a264d):
+[edit](http://yuml.me/edit/7adf1c80):
 <pre>
 [dom.ToDoItems]->[dom.ToDoItemRepository]
-[dom.ToDoItemRepository]^-[domrepo.ToDoItemRepositoryUsingJdoQl]
-[dom.ToDoItemRepository]^-[domrepo.ToDoItemRepositoryUsingTypesafeQueries]
+[dom.ToDoItemRepository]->[dom.ToDoItemRepositoryImpl]
+[dom.ToDoItemRepositoryImpl]^-[dom.ToDoItemRepositoryImplUsingJdoQl]
+[dom.ToDoItemRepositoryImpl]^-[dom.ToDoItemRepositoryImplUsingTypesafeQueries]
 </pre>
+

@@ -25,12 +25,12 @@ import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAn
 import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.DevUtilsModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.FeatureToggleAdminRole;
 import todoapp.dom.seed.roles.PublishingModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppDomainAdminRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
+import todoapp.dom.seed.roles.TogglzModuleAdminRole;
 import todoapp.dom.seed.roles.TranslationServicePoMenuRoleAndPermissions;
 import todoapp.dom.seed.tenancies.ToDoAppAdminUserTenancy;
 import todoapp.dom.seed.tenancies.UsersTenancy;
@@ -46,7 +46,7 @@ public class ToDoAppAdminUser extends AbstractUserAndRolesFixtureScript {
         super(USER_NAME, PASSWORD, null,
                 ToDoAppAdminUserTenancy.TENANCY_PATH, AccountType.LOCAL,
                 Arrays.asList(IsisModuleSecurityAdminRoleAndPermissions.ROLE_NAME,
-                              FeatureToggleAdminRole.ROLE_NAME,
+                              TogglzModuleAdminRole.ROLE_NAME, // 'isis-module-togglz-glue' module not on classpath, so copied-n-pasted this class into this app...
                               AuditModuleRoleAndPermissions.ROLE_NAME,
                               CommandModuleRoleAndPermissions.ROLE_NAME,
                               SessionLoggerModuleRoleAndPermissions.ROLE_NAME,

@@ -20,12 +20,6 @@ package todoapp.dom.module.todoitem;
 
 import java.util.List;
 
-import com.google.common.collect.Lists;
-
-import org.datanucleus.api.jdo.JDOPersistenceManager;
-import org.datanucleus.query.typesafe.BooleanExpression;
-import org.datanucleus.query.typesafe.TypesafeQuery;
-
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
@@ -40,54 +34,30 @@ public class ToDoItemRepositoryImplUsingTypesafeQueries implements ToDoItemRepos
 
     @Programmatic
     public List<ToDoItem> findByAtPathAndCategory(final String atPath, final Category category) {
-        final QToDoItem qToDoItem = QToDoItem.candidate();
-        return executeQuery(ToDoItem.class,
-                qToDoItem.atPath.eq(atPath).and(
-                qToDoItem.category.eq(category)));
+        final QToDoItem q = QToDoItem.candidate();
+        return isisJdoSupport.executeQuery(ToDoItem.class,
+                q.atPath.eq(atPath).and(
+                q.category.eq(category)));
     }
 
     @Programmatic
     public List<ToDoItem> findByAtPathAndComplete(
             final String atPath,
             final boolean complete) {
-        final QToDoItem qToDoItem = QToDoItem.candidate();
-        return executeQuery(ToDoItem.class,
-                qToDoItem.atPath.eq(atPath).and(
-                qToDoItem.complete.eq(complete)));
+        final QToDoItem q = QToDoItem.candidate();
+        return isisJdoSupport.executeQuery(ToDoItem.class,
+                q.atPath.eq(atPath).and(
+                q.complete.eq(complete)));
     }
 
     @Programmatic
     public List<ToDoItem> findByAtPathAndDescriptionContains(
             final String atPath,
             final String description) {
-        final QToDoItem qToDoItem = QToDoItem.candidate();
-        return executeQuery(ToDoItem.class,
-                qToDoItem.atPath.eq(atPath).and(
-                qToDoItem.description.indexOf(description).gt(0)));
-    }
-
-
-    /**
-     * Execute the query, taking a safe copy of the result set of the list, and eagerly closes said query.
-     */
-    private <T> List<T> executeQuery(final Class<T> cls, final BooleanExpression expression) {
-        final TypesafeQuery<T> query = newQuery(cls).filter(expression);
-        return executeListAndClose(query);
-    }
-
-    private static <T> List<T> executeListAndClose(final TypesafeQuery<T> query) {
-        final List<T> elements = query.executeList();
-        final List<T> list = Lists.newArrayList(elements);
-        query.closeAll();
-        return list;
-    }
-
-    private <T> TypesafeQuery<T> newQuery(Class<T> cls) {
-        return getJdoPersistenceManager().newTypesafeQuery(cls);
-    }
-
-    private JDOPersistenceManager getJdoPersistenceManager() {
-        return (JDOPersistenceManager) isisJdoSupport.getJdoPersistenceManager();
+        final QToDoItem q = QToDoItem.candidate();
+        return isisJdoSupport.executeQuery(ToDoItem.class,
+                q.atPath.eq(atPath).and(
+                q.description.indexOf(description).gt(0)));
     }
 
 

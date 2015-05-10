@@ -20,11 +20,11 @@ import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-public class FeatureToggleAdminRole extends AbstractRoleAndPermissionsFixtureScript {
+public class TogglzModuleAdminRole extends AbstractRoleAndPermissionsFixtureScript {
 
-    public static final String ROLE_NAME = "todoapp-featuretoggle-admin";
+    public static final String ROLE_NAME = "isis-module-togglz-admin";
 
-    public FeatureToggleAdminRole() {
+    public TogglzModuleAdminRole() {
         super(ROLE_NAME, "Admin access to feature toggle");
     }
 
