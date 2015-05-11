@@ -16,18 +16,20 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package todoapp.dom.api;
+package todoapp.webapp.custom;
+
+import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ws.rs.core.MediaType;
 
-import org.apache.isis.applib.DomainObjectContainer;
-import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.bookmark.Bookmark;
 import org.apache.isis.applib.services.bookmark.BookmarkService;
-import org.apache.isis.applib.services.metamodel.MetaModelService;
+import org.apache.isis.viewer.restfulobjects.applib.RepresentationType;
+import org.apache.isis.viewer.restfulobjects.rendering.service.conmap.ContentMappingService;
 
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
@@ -36,12 +38,13 @@ import todoapp.dto.module.todoitem.OidDto;
 import todoapp.dto.module.todoitem.ToDoItemDto;
 
 @DomainService(
-        nature = NatureOfService.VIEW_REST_ONLY
+        nature = NatureOfService.DOMAIN
 )
-public class ToDoItemRestApi {
+public class CustomContentMappingService implements ContentMappingService {
 
     private MapperFactory mapperFactory;
 
+    @Programmatic
     @PostConstruct
     public void init() {
         mapperFactory = new DefaultMapperFactory.Builder().build();
@@ -54,37 +57,33 @@ public class ToDoItemRestApi {
                         .field("identifier", "objectIdentifier") // customized
                         .byDefault() // all other fields are compatible
                         .toClassMap());
-
     }
 
-    @Action(semantics = SemanticsOf.SAFE)
-    public ToDoItemDto findItem(final String identifier) {
+    @Programmatic
+    @Override
+    public Object map(
+            final Object object,
+            final List<MediaType> acceptableMediaTypes,
+            final RepresentationType representationType) {
 
-        final String objectType = metaModelService.toObjectType(ToDoItem.class);
-        final Bookmark bookmark = new Bookmark(objectType, identifier);
+        if(object instanceof ToDoItem) {
+            final Bookmark bookmark = bookmarkService.bookmarkFor(object);
 
-        final ToDoItem toDoItem = (ToDoItem) bookmarkService.lookup(bookmark);
-        if(toDoItem == null) {
-            return null;
+            final ToDoItemDto dto = mapperFactory.getMapperFacade().map(object, ToDoItemDto.class);
+            final OidDto oidDto = mapperFactory.getMapperFacade().map(bookmark, OidDto.class);
+
+            // manually wire together
+            dto.setOid(oidDto);
+
+            return dto;
         }
 
-        final ToDoItemDto dto = mapperFactory.getMapperFacade().map(toDoItem, ToDoItemDto.class);
-        final OidDto oidDto = mapperFactory.getMapperFacade().map(bookmark, OidDto.class);
-
-        // manually wire togethr
-        dto.setOid(oidDto);
-
-        return dto;
+        return null;
     }
-    //endregion
 
     //region > injected services
     @javax.inject.Inject
-    private MetaModelService metaModelService;
-    @javax.inject.Inject
     private BookmarkService bookmarkService;
-    @javax.inject.Inject
-    private DomainObjectContainer container;
     //endregion
 
 }

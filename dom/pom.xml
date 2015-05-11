@@ -119,6 +119,16 @@
         <dependency>
             <groupId>org.isisaddons.wicket.fullcalendar2</groupId>
             <artifactId>isis-wicket-fullcalendar2-cpt</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.codehaus.jackson</groupId>
+                    <artifactId>jackson-core-asl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.codehaus.jackson</groupId>
+                    <artifactId>jackson-mapper-asl</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.isisaddons.wicket.gmap3</groupId>
