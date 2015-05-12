@@ -189,7 +189,7 @@ the todoapp generates a `ToDoItemDto`.  It also provides an implementation of Is
 
 For example, we get a representation of:
 
-![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/202-rest-accept-json.png)
+![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/202-rest-accept-xml.png)
 
 when the `Accept` header is `application/xml;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.dto.module.todoitem.ToDoItemDto`, and we get a representation of:
 
