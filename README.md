@@ -148,25 +148,117 @@ Apache Isis' Wicket viewer uses [Twitter Bootstrap](http://getbootstrap.com), wh
 
 ## REST API
 
-In addition to Isis' Wicket viewer, it also provides a fully fledged REST API, as an implementation of the [Restful Objects](http://restfulobjects.org) specification.  The screenshot below shows accessing this REST API using a Chrome plugin:
+In addition to Isis' Wicket viewer, it also provides the Restful Objects viewer, a fully fledged REST API that implements of the [Restful Objects](http://restfulobjects.org) v1.0 specification.  As such we call it the The screenshot below shows accessing this REST API using a Chrome plugin:
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/200-rest-api.png)
 
 Like the Wicket viewer, the REST API is generated automatically from the domain objects (entities and view models).
 
+Isis' Restful Objects viewer also (in 1.9.0-SNAPSHOT) implements enhanced content negotiation that goes beyond the RO 1.0 spec (though is discussed in a "future ideas" appendix).  Based on an XSD:
+
+<pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;xs:schema targetNamespace=&quot;http://module.dto.todoapp/todoitem.xsd&quot;
+    elementFormDefault=&quot;qualified&quot;
+    xmlns=&quot;http://module.dto.todoapp/todoitem.xsd&quot;
+    xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+
+    &lt;xs:element name=&quot;toDoItemDto&quot;&gt;
+        &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+                &lt;xs:element name=&quot;oid&quot; type=&quot;oidDto&quot;/&gt;
+                &lt;xs:element name=&quot;description&quot; type=&quot;xs:string&quot; minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;/&gt;
+                &lt;xs:element name=&quot;category&quot; type=&quot;xs:string&quot; minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;/&gt;
+                &lt;xs:element name=&quot;subcategory&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;1&quot;/&gt;
+                &lt;xs:element name=&quot;cost&quot; type=&quot;xs:decimal&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;1&quot;/&gt;
+            &lt;/xs:sequence&gt;
+        &lt;/xs:complexType&gt;
+    &lt;/xs:element&gt;
+
+    &lt;xs:complexType name=&quot;oidDto&quot;&gt;
+        &lt;xs:sequence&gt;
+            &lt;xs:element name=&quot;objectType&quot; type=&quot;xs:string&quot;/&gt;
+            &lt;xs:element name=&quot;objectIdentifier&quot; type=&quot;xs:string&quot;/&gt;
+        &lt;/xs:sequence&gt;
+    &lt;/xs:complexType&gt;
+
+&lt;/xs:schema&gt;
+</pre>
+
+the todoapp generates a `ToDoItemDto`.  It also provides an implementation of Isis' `ContentMappingService` that maps any `ToDoItem` domain object into this corresponding DTO.  This mapping activated based on the HTTP clients' `Accept` header.
+
+For example, we get a representation of:
+
+![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/202-rest-accept-json.png)
+
+when the `Accept` header is `application/xml;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.dto.module.todoitem.ToDoItemDto`, and we get a representation of:
+
+![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/204-rest-accept-json.png)
+
+when the `Accept` header is `application/json;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.dto.module.todoitem.ToDoItemDto`.
+
+If no mapping is available, a 406 (Not Acceptable) response code is returned.
+
+
 ## Integration Testing Support
 
 Earlier on we noted that Apache Isis allows fixtures to be installed through the UI.  These same fixture scripts can be reused within integration tests.  For example, the code snippet below shows how the  `FixtureScripts` service injected into an integration test can then be used to set up data:
 
-![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/210-fixture-scripts.png)
+    public class ToDoItemIntegTest extends AbstractToDoIntegTest {
+    
+        @Inject
+        DomainObjectContainer container;
+        @Inject
+        FixtureScripts fixtureScripts;
+        @Inject
+        ToDoItems toDoItems;
+        @Inject
+        DemoDomainEventSubscriptions toDoItemSubscriptions;
+    
+        RecreateToDoItemsForCurrentUser fixtureScript;
+        ToDoItem toDoItem;
+    
+        @Before
+        public void setUp() throws Exception {
+            fixtureScript = new RecreateToDoItemsForCurrentUser();
+            fixtureScripts.runFixtureScript(fixtureScript, null);
+    
+            toDoItemSubscriptions.reset();
+            final List<ToDoItem> all = toDoItems.notYetComplete();
+            toDoItem = wrap(all.get(0));
+        }
+        ...
+    }
 
 The tests themselves are run in junit.  While these are integration tests (so talking to a real database), they are no more complex than a regular unit test:
 
-![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/220-testing-happy-case.png)
+    @Test
+    public void happyCase() throws Exception {
+
+        // given
+        assertThat(toDoItem.isComplete()).isFalse();
+
+        // when
+        toDoItem.completed();
+
+        // then
+        assertThat(toDoItem.isComplete()).isTrue();
+    }
 
 To simulate the business rules enforced by Apache Isis, the domain object can be "wrapped" in a proxy.  For example, if using the Wicket viewer then Apache Isis will enforce the rule (implemented in the `ToDoItem` class itself) that a completed item cannot have the "completed" action invoked upon it.  The wrapper simulates this by throwing an appropriate exception:
 
-![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/230-testing-wrapper-factory.png)
+    @Test
+    public void cannotCompleteIfAlreadyCompleted() throws Exception {
+
+        // given
+        unwrap(toDoItem).setComplete(true);
+
+        // expect
+        expectedExceptions.expectMessage("Already completed");
+
+        // when
+        toDoItem.completed();
+    }
 
 ## Internal Event Bus
 
@@ -174,15 +266,51 @@ Contributions, discussed earlier, are an important tool in ensuring that the pac
 
 Another important tool to ensure your codebase remains maintainable is Isis' internal event bus.  It is probably best explained by example; the code below says that the "complete" action should emit a `ToDoItem.Completed` event:
 
-![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/240-domain-events.png)
+    @Action(
+            domainEvent =CompletedEvent.class,
+            invokeOn = InvokeOn.OBJECT_AND_COLLECTION
+    )
+    public ToDoItem completed() {
+        ...
+    }
 
 Domain service (application-scoped, stateless) can then subscribe to this event:
 
-![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/250-domain-event-subscriber.png)
+    @Programmatic
+    @com.google.common.eventbus.Subscribe
+    @org.axonframework.eventhandling.annotation.EventHandler
+    public void on(final ToDoItem.CompletedEvent ev) {
+        recordEvent(ev);
+        logEvent(ev);
+    }
+
+(We support either guava's Event Bus or AxonFramework).
 
 And this test verifies that completing an action causes the subscriber to be called:
 
-![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/260-domain-event-test.png)
+        @Test
+        public void subscriberReceivesEvents() throws Exception {
+
+            // given
+            toDoItemSubscriptions.reset();
+            assertThat(toDoItemSubscriptions.getSubscriberBehaviour()).isEqualTo(DemoBehaviour.ANY_EXECUTE_ACCEPT);
+            assertThat(unwrap(toDoItem).isComplete()).isFalse();
+
+            // when
+            toDoItem.completed();
+
+            // then
+            assertThat(unwrap(toDoItem).isComplete()).isTrue();
+
+            // and then
+            final List<ToDoItem.CompletedEvent> receivedEvents = toDoItemSubscriptions.receivedEvents(ToDoItem.CompletedEvent.class);
+
+            final ToDoItem.CompletedEvent ev = receivedEvents.get(0);
+
+            final ToDoItem source = ev.getSource();
+            then(source).isEqualTo(unwrap(toDoItem));
+            then(ev.getIdentifier().getMemberName()).isEqualTo("completed");
+        }
 
 In fact, the domain event is fired not once, but (up to) 5 times.  It is called 3 times prior to execution, to check that the action is visible, enabled and that arguments are valid.  It is then additionally called prior to execution, and also called after execution.  What this means is that a subscriber can in either veto access to an action of some publishing object, and/or it can perform cascading updates if the action is allowed to proceed.
 
