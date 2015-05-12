@@ -148,11 +148,13 @@ Apache Isis' Wicket viewer uses [Twitter Bootstrap](http://getbootstrap.com), wh
 
 ## REST API
 
-In addition to Isis' Wicket viewer, it also provides the Restful Objects viewer, a fully fledged REST API that implements of the [Restful Objects](http://restfulobjects.org) v1.0 specification.  As such we call it the The screenshot below shows accessing this REST API using a Chrome plugin:
+In addition to Isis' Wicket viewer, it also provides the Restful Objects viewer, a fully fledged REST API that implements of the [Restful Objects](http://restfulobjects.org) v1.0 specification. 
+
+The screenshot below shows accessing this REST API using a Chrome plugin:
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/200-rest-api.png)
 
-Like the Wicket viewer, the REST API is generated automatically from the domain objects (entities and view models).
+Like the Wicket viewer, the REST API is generated automatically from the domain objects (entities and view models); the screenshot above shows a representation of a `ToDoItem` instance.
 
 Isis' Restful Objects viewer also (in 1.9.0-SNAPSHOT) implements enhanced content negotiation that goes beyond the RO 1.0 spec (though is discussed in a "future ideas" appendix).  Based on an XSD:
 
@@ -181,11 +183,10 @@ Isis' Restful Objects viewer also (in 1.9.0-SNAPSHOT) implements enhanced conten
             &lt;xs:element name=&quot;objectIdentifier&quot; type=&quot;xs:string&quot;/&gt;
         &lt;/xs:sequence&gt;
     &lt;/xs:complexType&gt;
-
 &lt;/xs:schema&gt;
 </pre>
 
-the todoapp generates a `ToDoItemDto`.  It also provides an implementation of Isis' `ContentMappingService` that maps any `ToDoItem` domain object into this corresponding DTO.  This mapping activated based on the HTTP clients' `Accept` header.
+the todoapp uses a maven plugin to generate a correspoding `ToDoItemDto` class.  It also provides an implementation of Isis' `ContentMappingService` that maps any `ToDoItem` domain object into this corresponding DTO.  This mapping activated based on the HTTP clients' `Accept` header.
 
 For example, we get a representation of:
 
