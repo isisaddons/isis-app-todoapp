@@ -373,6 +373,15 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     }
     // disable action dependent on state of object
     public String disableCompleted() {
+//        try {
+//            setComplete(true);
+//            final String reasonInvalidIfAny = container.validate(this);
+//            if(reasonInvalidIfAny != null) {
+//                return reasonInvalidIfAny;
+//            }
+//        } finally {
+//            setComplete(false);
+//        }
         return isComplete() ? "Already completed" : null;
     }
 
@@ -575,14 +584,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     //region > version (derived property)
     public Long getVersionSequence() {
-        if(!(this instanceof javax.jdo.spi.PersistenceCapable)) {
-            return null;
-        }
-        return (Long) JDOHelper.getVersion((javax.jdo.spi.PersistenceCapable) this);
-    }
-    // hide property (imperatively, based on state of object)
-    public boolean hideVersionSequence() {
-        return !(this instanceof javax.jdo.spi.PersistenceCapable);
+        return (Long) JDOHelper.getVersion(this);
     }
     //endregion
 
@@ -1036,5 +1038,6 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     @javax.inject.Inject
     private MeService meService;
     //endregion
+
 
 }

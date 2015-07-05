@@ -27,6 +27,7 @@ import javax.activation.MimeType;
 import javax.inject.Inject;
 
 import com.google.common.collect.Iterables;
+import com.google.common.eventbus.Subscribe;
 
 import org.joda.time.LocalDate;
 import org.junit.After;
@@ -41,6 +42,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.clock.ClockService;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.CollectionDomainEvent;
+import org.apache.isis.applib.services.eventbus.EventBusService;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.value.Blob;
 
@@ -154,6 +156,9 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
         public static class Completed extends ToDoItemIntegTest {
 
+            @Inject
+            private EventBusService eventBusService;
+
             @Test
             public void happyCase() throws Exception {
 
@@ -203,28 +208,20 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void subscriberReceivesEvents() throws Exception {
 
                 // given
-                toDoItemSubscriptions.reset();
-                assertThat(toDoItemSubscriptions.getSubscriberBehaviour()).isEqualTo(DemoBehaviour.ANY_EXECUTE_ACCEPT);
-                assertThat(unwrap(toDoItem).isComplete()).isFalse();
+                final ToDoItem.CompletedEvent[] evHolder = new ToDoItem.CompletedEvent[1];
+                eventBusService.register(new Object() {
+                    @Subscribe
+                    public void on(final ToDoItem.CompletedEvent ev) {
+                        evHolder[0] = ev;
+                    }
+                });
 
                 // when
                 toDoItem.completed();
 
                 // then
-                assertThat(unwrap(toDoItem).isComplete()).isTrue();
-
-                // and then
-                final List<ToDoItem.CompletedEvent> receivedEvents = toDoItemSubscriptions.receivedEvents(ToDoItem.CompletedEvent.class);
-
-                // hide, disable, validate, executing, executed
-                // sent to both the general on(ActionInteractionEvent ev)
-                // and also the specific on(final ToDoItem.CompletedEvent ev)
-                then(receivedEvents).hasSize(5*2);
-                final ToDoItem.CompletedEvent ev = receivedEvents.get(0);
-
-                final ToDoItem source = ev.getSource();
-                then(source).isEqualTo(unwrap(toDoItem));
-                then(ev.getIdentifier().getMemberName()).isEqualTo("completed");
+                then(evHolder[0].getSource()).isEqualTo(unwrap(toDoItem));
+                then(evHolder[0].getIdentifier().getMemberName()).isEqualTo("completed");
             }
 
             @Test
@@ -268,6 +265,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 // when
                 toDoItem.completed();
             }
+
         }
 
 
