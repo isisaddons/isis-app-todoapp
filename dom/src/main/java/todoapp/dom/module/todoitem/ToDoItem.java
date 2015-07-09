@@ -548,7 +548,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     @javax.jdo.annotations.Persistent(defaultFetchGroup="false", columns = {
             @javax.jdo.annotations.Column(name = "attachment_name"),
             @javax.jdo.annotations.Column(name = "attachment_mimetype"),
-            @javax.jdo.annotations.Column(name = "attachment_bytes", jdbcType = "BLOB", sqlType = "BLOB")
+            @javax.jdo.annotations.Column(name = "attachment_bytes", jdbcType = "BLOB", sqlType = "LONGVARBINARY")
     })
     @Property(
             domainEvent = AttachmentDomainEvent.class,
@@ -568,7 +568,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     @javax.jdo.annotations.Persistent(defaultFetchGroup="false", columns = {
             @javax.jdo.annotations.Column(name = "doc_name"),
             @javax.jdo.annotations.Column(name = "doc_mimetype"),
-            @javax.jdo.annotations.Column(name = "doc_chars", jdbcType = "CLOB", sqlType = "CLOB")
+            @javax.jdo.annotations.Column(name = "doc_chars", jdbcType = "CLOB", sqlType = "LONGVARCHAR")
     })
     @Property(
             optionality = Optionality.OPTIONAL
