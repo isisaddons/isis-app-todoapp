@@ -20,6 +20,8 @@ package todoapp.webapp.custom;
 
 import javax.ws.rs.core.Response;
 
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.viewer.restfulobjects.rendering.service.RepresentationServiceForRestfulObjects;
 
 /**
@@ -39,6 +41,9 @@ import org.apache.isis.viewer.restfulobjects.rendering.service.RepresentationSer
  *     that is, with a menuOrder of 1.
  * </p>
  */
+@DomainService(
+        nature = NatureOfService.DOMAIN
+)
 public class CustomRepresentationService extends RepresentationServiceForRestfulObjects {
 
     @Override

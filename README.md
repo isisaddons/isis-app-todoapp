@@ -6,21 +6,21 @@
 
 The repository contains a TodoApp example app that is a reasonably complete application for tracking to-do items, based around a single domain class `ToDoItem` and repository, `ToDoItems`.
 
-While not quite a "kitchen-sink" example (there is, after all, just a single domain class), the app nevertheless demonstrates a good number of Isis' capabilities: the use of contributed actions/collections/properties is demonstrated by `ToDoItemContributions`; view models are demonstrated by `ToDoItemsByCategoryViewModel` and `ToDoItemsByDateRangeViewModel`; a dashboard is demonstrated by `ToDoAppDashboard`; the use of the internal event bus is demonstrated through the `DemoDomainEventSubscriptions` service.
+While not quite a "kitchen-sink" example (there is, after all, just a single domain class), the app nevertheless demonstrates a good number of Apache Isis' capabilities: the use of contributed actions/collections/properties is demonstrated by `ToDoItemContributions`; view models are demonstrated by `ToDoItemsByCategoryViewModel` and `ToDoItemsByDateRangeViewModel`; a dashboard is demonstrated by `ToDoAppDashboard`; the use of the internal event bus is demonstrated through the `DemoDomainEventSubscriptions` service.
 
-The app also integrates with many of the [Isis Addons](https://www.isisaddons.org), such as [security](https://github.com/isisaddons/isis-module-security), [command profiling](https://github.com/isisaddons/isis-module-command), [auditing](https://github.com/isisaddons/isis-module-audit), [event publishing](https://github.com/isisaddons/isis-module-publishing).  While the Isis Addons are not part of the Apache Software Foundation, they are all licensed under Apache License 2.0 and are maintained by the Isis committers.
+The app also integrates with many of the [Isis Addons](https://www.isisaddons.org), such as [security](https://github.com/isisaddons/isis-module-security), [command profiling](https://github.com/isisaddons/isis-module-command), [auditing](https://github.com/isisaddons/isis-module-audit), [event publishing](https://github.com/isisaddons/isis-module-publishing).  While the Isis Addons are not part of the Apache Software Foundation, they are all licensed under Apache License 2.0 and are maintained by the Apache Isis committers.
 
-Running this app is a good way to get familiar with the structure of a not-too-complex Isis application.  However, to get started with your own application, we generally recommend that you use the [simple archetype](http://isis.apache.org/intro/getting-started/simpleapp-archetype.html).  This will generate a completely stripped back and minimal application for you to refactor and extend; you can then use this example todoapp to guide your own development.
+Running this app is a good way to get familiar with the structure of a not-too-complex Apache Isis application.  However, to get started with your own application, we generally recommend that you use the [simple archetype](http://isis.apache.org/intro/getting-started/simpleapp-archetype.html).  This will generate a completely stripped back and minimal application for you to refactor and extend; you can then use this example todoapp to guide your own development.
 
 
 ## Screenshots
 
-The screenshots below should give you an idea of what Isis is all about.
+The screenshots below should give you an idea of what Apache Isis is all about.
 
 
 ### Sign-in
 
-Apache Isis integrates with [Apache Shiro](http://shiro.apacheorg)™.  The core framework supports file-based realms, while the Isis Addons [security module](http://github.com/isisaddons/isis-module-security) provides a well-features subdomain of users, roles and permissions against features derived from the Isis metamodel.  The example todoapp integrates with the security module.
+Apache Isis integrates with [Apache Shiro](http://shiro.apacheorg)™.  The core framework supports file-based realms, while the Isis Addons [security module](http://github.com/isisaddons/isis-module-security) provides a well-features subdomain of users, roles and permissions against features derived from the Apache Isis metamodel.  The example todoapp integrates with the security module.
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/010-login.png)
 
@@ -32,7 +32,7 @@ Apache Isis has lots of features to help you prototype and then fully test your 
 
 ### Dashboard and View Models
 
-Most of the time the end-user interacts with representations of persistent domain entities, but Isis also supports view models which can aggregate data from multiple sources.  The todoapp example uses a "dashboard" view model to list todo items not yet done vs those completed.
+Most of the time the end-user interacts with representations of persistent domain entities, but Apache Isis also supports view models which can aggregate data from multiple sources.  The todoapp example uses a "dashboard" view model to list todo items not yet done vs those completed.
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/030-dashboard-view-model.png)
 
@@ -68,7 +68,7 @@ In general though, all actions are associated with some object, and are (at leas
 
 ### Contributions
 
-As an alternative to placing actions (business logic) on a domain object, it can instead be placed on an (application-scoped, stateless) domain service.  When an object is rendered by Apache Isis, it will automatically render all "contributed" behaviour; rather like traits or aspect-oriented mix-ins).
+As an alternative to placing actions (business logic) on a domain object, it can instead be placed on an (application-scoped, stateless) domain service.  When an object is rendered by Apache Isis, it will automatically render all "contributed" behaviour; rather like traits or aspect-oriented mix-ins.
 
 In the screenshot below the highlighted "export as xml" action, the "relative priority" property (and "previous" and "next" actions) and also the "similar to" collection are all contributed:
 
@@ -80,7 +80,7 @@ Contributions are defined by the signature of the actions on the contributing se
 
 ## Extensible Views
 
-The Apache Isis viewer is implemented using [Apache Wicket](http://wicket.apache.org)™, and has been architected to be extensible.  For example, when a collection of objects is rendered, this is just one several views, as shown in the selector drop-down:
+The Apache Isis viewer is implemented using [Apache Wicket](http://wicket.apache.org)™, and has been designed to be extensible.  For example, when a collection of objects is rendered, this is just one of several views, as shown in the selector drop-down:
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/070-pluggable-views.png)
 
@@ -92,7 +92,7 @@ Simiarly the Isis Addons' [fullcalendar2 component](https://github.com/isisaddon
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/090-fullcalendar2-view.png)
 
-Yet another "view" (though this one is rather simpler is that provided by the Isis Addons [excel component](https://github.com/isisaddons/isis-wicket-excel).  This provides a download button to the table as a spreadsheet:
+Yet another "view" (though this one is rather simpler) is that provided by the Isis Addons [excel component](https://github.com/isisaddons/isis-wicket-excel).  This provides a download button to the table as a spreadsheet:
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/100-excel-view-and-docx.png)
 
@@ -102,13 +102,13 @@ The screenshot above also shows an "export to Word" action.  This is *not* a vie
 
 ## Security, Auditing and other Services
 
-As well as providing extensions to the UI, the Isis addons provides a rich set of modules to support various cross-cutting concerns.
+As well as providing extensions to the UI, the Isis Addons provide a rich set of modules to support various cross-cutting concerns.
 
 Under the activity menu are four sets of services which provide support for [user session logging/auditing](https://github.com/isisaddons/isis-module-sessionlogger), [command profiling](https://github.com/isisaddons/isis-module-command), [(object change) auditing](https://github.com/isisaddons/isis-module-audit) (shown) and (inter-system) [event publishing](https://github.com/isisaddons/isis-module-publishing):
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/120-auditing.png)
 
-In the security menu is access to the rich set of functionality provided by the Isis addons [security module](https://github.com/isisaddons/isis-module-security):
+In the security menu is access to the rich set of functionality provided by the Isis Addons [security module](https://github.com/isisaddons/isis-module-security):
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/130-security.png)
 
@@ -116,13 +116,13 @@ In the prototyping menu is the ability to download a GNU gettext `.po` file for 
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/140-i18n.png)
 
-The Isis addons also provides a module for managing application and user [settings](https://github.com/isisaddons/isis-module-settings).  Most apps (the todoapp example included) won't expose these services directly, but will usually wrap them in their own app-specific settings service that trivially delegates to the settings module's services:
+The Isis Addons also provides a module for managing application and user [settings](https://github.com/isisaddons/isis-module-settings).  Most apps (the todoapp example included) won't expose these services directly, but will usually wrap them in their own app-specific settings service that trivially delegates to the settings module's services:
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/150-appsettings.png)
 
 ### Multi-tenancy support
 
-Of the various Isis addons, the [security module](https://github.com/isisaddons/isis-module-security) has the most features.  One significant feature is the ability to associate users and objects with a "tenancy".  The todoapp uses this feature so that different users' list of todo items are kept separate from one another.  A user with administrator is able to switch their own "tenancy" to the tenancy of some other user, in order to access the objects in that tenancy:
+Of the various Isis Addons, the [security module](https://github.com/isisaddons/isis-module-security) has the most features.  One significant feature is the ability to associate users and objects with a "tenancy".  The todoapp uses this feature so that different users' list of todo items are kept separate from one another.  A user with administrator is able to switch their own "tenancy" to the tenancy of some other user, in order to access the objects in that tenancy:
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/160-switch-tenancy.png)
 
@@ -138,7 +138,7 @@ Assuming they have been granted permissions, this allows a user to access an ent
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/180-app-user-entity.png)
 
-If not all of these properties are required, then they can be hidden either using security or though Isis' internal event bus (described below).  Conversely, additional properties can be "grafted onto" the user using the contributed properties/collections discussed previously.
+If not all of these properties are required, then they can be hidden either using security or though Apache Isis' internal event bus (described below).  Conversely, additional properties can be "grafted onto" the user using the contributed properties/collections discussed previously.
 
 ### Themes
 
@@ -148,7 +148,7 @@ Apache Isis' Wicket viewer uses [Twitter Bootstrap](http://getbootstrap.com), wh
 
 ## REST API
 
-In addition to Isis' Wicket viewer, it also provides the Restful Objects viewer, a fully fledged REST API that implements of the [Restful Objects](http://restfulobjects.org) v1.0 specification. 
+In addition to Apache Isis' Wicket viewer, it also provides the Restful Objects viewer, a fully fledged REST API that implements of the [Restful Objects](http://restfulobjects.org) v1.0 specification. 
 
 The screenshot below shows accessing this REST API using a Chrome plugin:
 
@@ -156,7 +156,7 @@ The screenshot below shows accessing this REST API using a Chrome plugin:
 
 Like the Wicket viewer, the REST API is generated automatically from the domain objects (entities and view models); the screenshot above shows a representation of a `ToDoItem` instance.
 
-Isis' Restful Objects viewer also (in 1.9.0-SNAPSHOT) implements enhanced content negotiation that goes beyond the RO 1.0 spec (though is discussed in a "future ideas" appendix).  Based on an XSD:
+Apache Isis' Restful Objects viewer also (in 1.9.0-SNAPSHOT) implements enhanced content negotiation that goes beyond the RO 1.0 spec (though is discussed in a "future ideas" appendix).  Based on an XSD:
 
 <pre>
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
@@ -186,7 +186,7 @@ Isis' Restful Objects viewer also (in 1.9.0-SNAPSHOT) implements enhanced conten
 &lt;/xs:schema&gt;
 </pre>
 
-the todoapp uses a maven plugin to generate a correspoding `ToDoItemDto` class.  It also provides an implementation of Isis' `ContentMappingService` that maps any `ToDoItem` domain object into this corresponding DTO.  This mapping activated based on the HTTP clients' `Accept` header.
+the todoapp uses a maven plugin to generate a correspoding `ToDoItemDto` class.  It also provides an implementation of Apache Isis' `ContentMappingService` that maps any `ToDoItem` domain object into this corresponding DTO.  This mapping activated based on the HTTP clients' `Accept` header.
 
 For example, we get a representation of:
 
@@ -263,9 +263,9 @@ To simulate the business rules enforced by Apache Isis, the domain object can be
 
 ## Internal Event Bus
 
-Contributions, discussed earlier, are an important tool in ensuring that the packages within your Isis application are decoupled; by extracting out actions the order of dependency between packages can effectively be reversed.
+Contributions, discussed earlier, are an important tool in ensuring that the packages within your Apache Isis application are decoupled; by extracting out actions the order of dependency between packages can effectively be reversed.
 
-Another important tool to ensure your codebase remains maintainable is Isis' internal event bus.  It is probably best explained by example; the code below says that the "complete" action should emit a `ToDoItem.Completed` event:
+Another important tool to ensure your codebase remains maintainable is Apache Isis' internal event bus.  It is probably best explained by example; the code below says that the "complete" action should emit a `ToDoItem.Completed` event:
 
     @Action(
             domainEvent =CompletedEvent.class,
@@ -322,7 +322,7 @@ Moreover, domain events are fired for all properties and collections, not just a
 
 DataNucleus provides two ways to query the database; either using the (JDO API) JDOQL language, or using a type-safe API from "Q" classes that are generated as a side-effect of the enhancement process.  You can learn more about type-safe API in [DataNucleus' documentation](http://www.datanucleus.org/products/datanucleus/jdo/jdoql_typesafe.html).
 
-The todoapp demonstrates both approaches.  The `ToDoItems` domain service delegates to an injected `ToDoItemRepository` to actually query for objects.  This in turn has two responsibilities: use a feature toggle (discussed below) to delegate further to an appropriate implementation of a service that will perform the query; it also cache the result using Isis `QueryResultsCache` service:  
+The todoapp demonstrates both approaches.  The `ToDoItems` domain service delegates to an injected `ToDoItemRepository` to actually query for objects.  This in turn has two responsibilities: use a feature toggle (discussed below) to delegate further to an appropriate implementation of a service that will perform the query; it also cache the result using Apache Isis `QueryResultsCache` service:  
 
 The UML diagram below shows the respect responsibilities:
 
@@ -371,14 +371,14 @@ Using the type-safe query approach on the other hand requires no JDOQL, but uses
         ...
     }
 
-You can try out either implementation by commenting in/out the `@DomainService` for these two implementations.  (Isis does not - yet - provide a way to switch dynamically implementations). 
+You can try out either implementation by commenting in/out the `@DomainService` for these two implementations.  (Apache Isis does not - yet - provide a way to switch dynamically implementations). 
     
 Type-safe queries have several advantages over JDOQL: they're type-safe (obviously!) and involve less code overall.  But there are some downsides too.  Arguably they are a little harder to understand than the free-form JDOQL string).  Perhaps more significantly, they complicate the project somewhat: the repository implementation must reside in the "down-stream" `domrepo` module, because of the dependency on the `QToDoItem` class that is only generated in the "process-classes" phase of the Maven lifecycle; ie after the code has been compiled.  
 
 
 ## Feature Toggles
 
-The application uses the Isis addons' [togglz module](http://github.com/isisaddons/isis-module-togglz) to determine whether (as discussed above) to use JDOQL or typesafe queries to query the database.  
+The application uses the Apache Isis Addons' [togglz module](http://github.com/isisaddons/isis-module-togglz) to determine whether (as discussed above) to use JDOQL or typesafe queries to query the database.  
 
 Just a single feature toggle is defined, as an enum:
 
@@ -431,7 +431,7 @@ The `todoapp` app generates a single WAR file, configured to run both the [Wicke
 
 Once you've built the app, you can run the WAR in a variety of ways.
 
-The recommended approach when getting started is to run the self-hosting version of the WAR, allowing Isis to run as a standalone app; for example:
+The recommended approach when getting started is to run the self-hosting version of the WAR, allowing Apache Isis to run as a standalone app; for example:
 
     java -jar webapp/target/todoapp-webapp-1.0-SNAPSHOT-jetty-console.jar
 

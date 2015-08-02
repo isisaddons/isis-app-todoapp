@@ -18,6 +18,8 @@
  */
 package todoapp.webapp.custom;
 
+import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.core.runtime.services.memento.MementoServiceDefault;
 
@@ -39,6 +41,9 @@ import org.apache.isis.core.runtime.services.memento.MementoServiceDefault;
  *     that is, with a menuOrder of 1.
  * </p>
  */
+@DomainService(
+        nature = NatureOfService.DOMAIN
+)
 public class CustomMementoService extends MementoServiceDefault {
 
     @Programmatic

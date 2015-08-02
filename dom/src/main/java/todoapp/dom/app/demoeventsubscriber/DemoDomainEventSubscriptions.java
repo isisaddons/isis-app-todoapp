@@ -37,7 +37,6 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
@@ -144,7 +143,7 @@ public class DemoDomainEventSubscriptions {
 
 
     private void onExecutedThrowExceptionIfSet(final ActionDomainEvent<?> ev) {
-        if(ev != null && ev.getSemantics().isSafe()) {
+        if(ev != null && ev.getSemantics().isSafeInNature()) {
             return;
         }
         onExecutedThrowExceptionIfSet();

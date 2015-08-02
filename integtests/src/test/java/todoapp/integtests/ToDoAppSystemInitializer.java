@@ -64,7 +64,14 @@ public class ToDoAppSystemInitializer {
 
         private static IsisConfiguration testConfiguration() {
             final IsisConfigurationForJdoIntegTests testConfiguration = new IsisConfigurationForJdoIntegTests();
-            testConfiguration.addRegisterEntitiesPackagePrefix("todoapp.dom.module");
+            testConfiguration.addRegisterEntitiesPackagePrefix(
+                    "todoapp.dom.module"
+                    ,"org.isisaddons.module.security"
+                    ,"org.isisaddons.module.audit"
+                    ,"org.isisaddons.module.command"
+                    ,"org.isisaddons.module.publishing"
+                    ,"org.isisaddons.module.sessionlogger"
+                    ,"org.isisaddons.module.settings");
 
             // enable stricter checking
             //
