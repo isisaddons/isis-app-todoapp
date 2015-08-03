@@ -66,13 +66,13 @@ public class DeleteUserAndUserRolesAndToDoItems extends FixtureScript {
 
         // execute
         isisJdoSupport.executeUpdate(
-                "DELETE FROM \"ToDoItem\" WHERE \"atPath\" = '" + atPath + "'");
+                "DELETE FROM \"todo\".\"ToDoItem\" WHERE \"atPath\" = '" + atPath + "'");
         isisJdoSupport.executeUpdate(
-                "DELETE FROM isissecurity.\"ApplicationUserRoles\" WHERE \"userId\" IN (SELECT \"id\" FROM isissecurity.\"ApplicationUser\" WHERE \"username\" = '" + username + "')");
+                "DELETE FROM \"isissecurity\".\"ApplicationUserRoles\" WHERE \"userId\" IN (SELECT \"id\" FROM \"isissecurity\".\"ApplicationUser\" WHERE \"username\" = '" + username + "')");
         isisJdoSupport.executeUpdate(
-                "DELETE FROM isissecurity.\"ApplicationUser\" WHERE \"username\" = '" + username + "'");
+                "DELETE FROM \"isissecurity\".\"ApplicationUser\" WHERE \"username\" = '" + username + "'");
         isisJdoSupport.executeUpdate(
-                "DELETE FROM isissecurity.\"ApplicationTenancy\" WHERE \"path\" = '" + UsersTenancy.TENANCY_PATH + username + "'");
+                "DELETE FROM \"isissecurity\".\"ApplicationTenancy\" WHERE \"path\" = '" + UsersTenancy.TENANCY_PATH + username + "'");
     }
 
     @Inject

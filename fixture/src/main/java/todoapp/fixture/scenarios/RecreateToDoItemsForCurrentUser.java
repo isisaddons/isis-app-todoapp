@@ -176,7 +176,7 @@ public class RecreateToDoItemsForCurrentUser extends FixtureScript {
         final String atPath = "/users/" + username;
 
         // delete
-        isisJdoSupport.executeUpdate("delete from \"ToDoItem\" where \"atPath\" = '" + atPath + "'");
+        isisJdoSupport.executeUpdate("delete from \"todo\".\"ToDoItem\" where \"atPath\" = '" + atPath + "'");
 
         //
         // create items

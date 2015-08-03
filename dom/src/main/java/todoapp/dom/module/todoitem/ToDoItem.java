@@ -87,6 +87,7 @@ import todoapp.dom.module.categories.Subcategory;
 import todoapp.dom.seed.tenancies.UsersTenancy;
 
 @javax.jdo.annotations.PersistenceCapable(
+        schema = "todo",
         identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
