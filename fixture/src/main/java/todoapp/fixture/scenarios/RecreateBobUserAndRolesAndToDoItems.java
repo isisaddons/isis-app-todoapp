@@ -26,8 +26,8 @@ import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.ToDoAppDomainAdminRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
+import todoapp.dom.seed.roles.ToDoAppRegularRoleAndPermissions;
 import todoapp.fixture.module.DeleteUserAndUserRolesAndToDoItems;
 import todoapp.fixture.module.security.CreateUserFixtureScript;
 import todoapp.fixture.module.security.UserRolesFixtureScript;
@@ -56,8 +56,7 @@ public class RecreateBobUserAndRolesAndToDoItems extends FixtureScript {
             setRoleNames(Arrays.asList(
                     // security regular user ('me' service)
                     IsisModuleSecurityRegularUserRoleAndPermissions.ROLE_NAME,
-                    // todoapp admin
-                    ToDoAppDomainAdminRoleAndPermissions.ROLE_NAME,
+                    ToDoAppRegularRoleAndPermissions.ROLE_NAME,
                     ToDoAppFixtureServiceRoleAndPermissions.ROLE_NAME,
                     AuditModuleRoleAndPermissions.ROLE_NAME,
                     CommandModuleRoleAndPermissions.ROLE_NAME,

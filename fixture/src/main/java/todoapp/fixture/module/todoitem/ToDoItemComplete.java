@@ -23,8 +23,8 @@ import org.apache.isis.applib.services.sudo.SudoService;
 
 import org.isisaddons.module.security.dom.user.ApplicationUsers;
 
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItems;
+import todoapp.dom.todoitem.ToDoItem;
+import todoapp.dom.todoitem.ToDoItems;
 
 public class ToDoItemComplete extends FixtureScript {
 

@@ -19,7 +19,6 @@ package todoapp.dom.seed.roles;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
-import org.isisaddons.module.settings.SettingsModule;
 
 public class SettingsModuleRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
@@ -34,7 +33,7 @@ public class SettingsModuleRoleAndPermissions extends AbstractRoleAndPermissions
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                SettingsModule.class.getPackage().getName());
+                "org.isisaddons.module.settings");
     }
 
 }

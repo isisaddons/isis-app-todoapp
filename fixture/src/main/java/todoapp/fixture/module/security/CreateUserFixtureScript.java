@@ -73,24 +73,7 @@ public class CreateUserFixtureScript extends FixtureScript {
     }
     //endregion
 
-//    //region > atPath (optional)
-//    private String atPath;
-//
-//    /**
-//     * Application tenancy path (optional).
-//     *
-//     * <p>
-//     *     Defaults to {@value org.isisaddons.module.security.seed.scripts.GlobalTenancy#TENANCY_PATH} + {@link #getUsername()}.
-//     * </p>
-//     */
-//    public String getAtPath() {
-//        return atPath;
-//    }
-//
-//    public void setAtPath(final String atPath) {
-//        this.atPath = atPath;
-//    }
-//    //endregion
+
 
     //region > initialRole (optional)
     private ApplicationRole initialRole;

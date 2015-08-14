@@ -16,7 +16,6 @@
  */
 package todoapp.dom.seed.roles;
 
-import org.isisaddons.module.publishing.PublishingModule;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
@@ -34,7 +33,7 @@ public class PublishingModuleRoleAndPermissions extends AbstractRoleAndPermissio
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                PublishingModule.class.getPackage().getName());
+                "org.isisaddons.module.publishing");
     }
 
 }

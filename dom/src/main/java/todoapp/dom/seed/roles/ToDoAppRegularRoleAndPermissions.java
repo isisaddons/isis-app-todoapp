@@ -37,8 +37,8 @@ public class ToDoAppRegularRoleAndPermissions extends AbstractRoleAndPermissions
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                ToDoAppDomainModule.class.getPackage().getName() + ".app",
-                ToDoAppDomainModule.class.getPackage().getName() + ".module"
+                "todoapp.app",
+                ToDoAppDomainModule.class.getPackage().getName()
                 );
     }
 

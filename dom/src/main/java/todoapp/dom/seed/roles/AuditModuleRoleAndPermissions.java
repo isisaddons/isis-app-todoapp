@@ -18,7 +18,6 @@ package todoapp.dom.seed.roles;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import org.isisaddons.module.audit.AuditModule;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
@@ -36,7 +35,7 @@ public class AuditModuleRoleAndPermissions extends AbstractRoleAndPermissionsFix
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                AuditModule.class.getPackage().getName());
+                "org.isisaddons.module.audit");
     }
 
 }

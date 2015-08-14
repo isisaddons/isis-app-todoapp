@@ -47,7 +47,7 @@
         <isis-module-togglz.version>1.9.0-SNAPSHOT</isis-module-togglz.version>
 
         <isis-module-devutils.version>1.9.0-SNAPSHOT</isis-module-devutils.version>
-        <isis-module-docx.version>1.8.1</isis-module-docx.version>
+        <isis-module-docx.version>1.9.0-SNAPSHOT</isis-module-docx.version>
 
         <isis-wicket-excel.version>1.9.0-SNAPSHOT</isis-wicket-excel.version>
         <isis-wicket-fullcalendar2.version>1.9.0-SNAPSHOT</isis-wicket-fullcalendar2.version>
@@ -358,6 +358,7 @@
     </build>
 
     <modules>
+        <module>app</module>
         <module>canonical</module>
         <module>dom</module>
         <module>fixture</module>
@@ -393,6 +394,11 @@
             <!-- this project's own modules -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>todoapp-app</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>todoapp-canonical</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -403,12 +409,12 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>todoapp-domrepo</artifactId>
+                <artifactId>todoapp-fixture</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>todoapp-fixture</artifactId>
+                <artifactId>todoapp-integtests</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

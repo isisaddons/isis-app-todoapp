@@ -145,25 +145,7 @@
         <!-- other modules in this project -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>todoapp-dom</artifactId>
-            <exclusions>
-                <exclusion>
-                    <!-- so don't pick up transitive dependency to asm 4.0.0 -->
-                    <groupId>org.datanucleus</groupId>
-                    <artifactId>datanucleus-enhancer</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>todoapp-fixture</artifactId>
-            <exclusions>
-                <exclusion>
-                    <!-- so don't pick up transitive dependency to asm 4.0.0 -->
-                    <groupId>org.datanucleus</groupId>
-                    <artifactId>datanucleus-enhancer</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>todoapp-app</artifactId>
         </dependency>
         
         <!-- other isis components -->
@@ -259,12 +241,6 @@
               <artifactId>slf4j-api</artifactId>
             </exclusion>
           </exclusions>
-        </dependency>
-
-        <!-- dependency of security module -->
-        <dependency>
-            <groupId>org.mindrot</groupId>
-            <artifactId>jbcrypt</artifactId>
         </dependency>
 
         <dependency>

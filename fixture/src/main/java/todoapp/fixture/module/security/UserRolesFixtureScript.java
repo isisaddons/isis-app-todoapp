@@ -117,7 +117,9 @@ public class UserRolesFixtureScript extends FixtureScript {
                         Iterables.transform(getRoleNames(), roleNameToRole()),
                         Predicates.notNull()));
 
-        if(this.applicationRoleList.size() != getRoleNames().size()) {
+        List<ApplicationRole> applicationRoleList = this.applicationRoleList;
+        List<String> roleNames = getRoleNames();
+        if(applicationRoleList.size() != roleNames.size()) {
             throw new IllegalArgumentException("One or more roles not found");
         }
 

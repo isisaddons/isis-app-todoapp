@@ -20,8 +20,8 @@ import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-import todoapp.dom.app.relativepriority.RelativePriorityContributions;
-import todoapp.dom.module.todoitem.ToDoItem;
+import todoapp.dom.relativepriority.RelativePriorityContributions;
+import todoapp.dom.todoitem.ToDoItem;
 
 public class ToDoAppToDoItemVetoSelectedMembersPermissions extends AbstractRoleAndPermissionsFixtureScript {
 

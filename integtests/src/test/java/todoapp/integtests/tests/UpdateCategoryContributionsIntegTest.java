@@ -28,11 +28,11 @@ import org.apache.isis.applib.services.wrapper.InvalidException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
-import todoapp.dom.module.categories.Category;
-import todoapp.dom.module.categories.Subcategory;
-import todoapp.dom.module.categories.UpdateCategoryContributions;
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItems;
+import todoapp.dom.categories.Category;
+import todoapp.dom.categories.Subcategory;
+import todoapp.dom.categories.UpdateCategoryContributions;
+import todoapp.dom.todoitem.ToDoItem;
+import todoapp.dom.todoitem.ToDoItems;
 import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
 public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoIntegTest {

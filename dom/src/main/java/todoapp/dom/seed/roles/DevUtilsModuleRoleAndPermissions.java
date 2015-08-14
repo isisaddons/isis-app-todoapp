@@ -16,7 +16,6 @@
  */
 package todoapp.dom.seed.roles;
 
-import org.isisaddons.module.devutils.DevUtilsModule;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
@@ -34,7 +33,7 @@ public class DevUtilsModuleRoleAndPermissions extends AbstractRoleAndPermissions
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                DevUtilsModule.class.getPackage().getName());
+                "org.isisaddons.module.devutils");
     }
 
 }

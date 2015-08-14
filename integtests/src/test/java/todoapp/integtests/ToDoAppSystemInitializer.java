@@ -16,12 +16,12 @@
  */
 package todoapp.integtests;
 
-import org.apache.isis.core.commons.config.IsisConfiguration;
 import org.apache.isis.core.integtestsupport.IsisSystemForTest;
-import org.apache.isis.core.runtime.persistence.PersistenceConstants;
 import org.apache.isis.core.security.authentication.AuthenticationRequestNameOnly;
 import org.apache.isis.objectstore.jdo.datanucleus.DataNucleusPersistenceMechanismInstaller;
 import org.apache.isis.objectstore.jdo.datanucleus.IsisConfigurationForJdoIntegTests;
+
+import todoapp.app.ToDoAppAppManifest;
 
 /**
  * Holds an instance of an {@link IsisSystemForTest} as a {@link ThreadLocal} on the current thread,
@@ -34,56 +34,15 @@ public class ToDoAppSystemInitializer {
     public static IsisSystemForTest initIsft() {
         IsisSystemForTest isft = IsisSystemForTest.getElseNull();
         if(isft == null) {
-            isft = new ToDoSystemBuilder().build().setUpSystem();
+            isft = IsisSystemForTest.builder()
+                    .withLoggingAt(org.apache.log4j.Level.INFO)
+                    .with(new IsisConfigurationForJdoIntegTests())
+                    .with(new DataNucleusPersistenceMechanismInstaller())
+                    .with(new ToDoAppAppManifest())
+                    .with(new AuthenticationRequestNameOnly("todoapp-admin"))
+                    .build().setUpSystem();
             IsisSystemForTest.set(isft);
         }
         return isft;
-    }
-
-    private static class ToDoSystemBuilder extends IsisSystemForTest.Builder {
-
-        public ToDoSystemBuilder() {
-            withLoggingAt(org.apache.log4j.Level.INFO);
-            with(testConfiguration());
-            with(new DataNucleusPersistenceMechanismInstaller());
-
-            with(new AuthenticationRequestNameOnly("todoapp-admin"));
-
-            // services annotated with @DomainService
-            withServicesIn(  "todoapp"
-                            ,"org.isisaddons.module.security"
-                            ,"org.isisaddons.module.audit"
-                            ,"org.isisaddons.module.command"
-                            ,"org.isisaddons.module.docx"
-                            ,"org.isisaddons.module.publishing"
-                            ,"org.isisaddons.module.sessionlogger"
-                            ,"org.isisaddons.module.settings"
-                        );
-
-        }
-
-        private static IsisConfiguration testConfiguration() {
-            final IsisConfigurationForJdoIntegTests testConfiguration = new IsisConfigurationForJdoIntegTests();
-            testConfiguration.addRegisterEntitiesPackagePrefix(
-                    "todoapp.dom.module"
-                    ,"org.isisaddons.module.security"
-                    ,"org.isisaddons.module.audit"
-                    ,"org.isisaddons.module.command"
-                    ,"org.isisaddons.module.publishing"
-                    ,"org.isisaddons.module.sessionlogger"
-                    ,"org.isisaddons.module.settings");
-
-            // enable stricter checking
-            //
-            // the consequence of this is having to call 'nextTransaction()' between most of the given/when/then's
-            // because the command2 only ever refers to the event of the originating action.
-            testConfiguration.put(PersistenceConstants.ENFORCE_SAFE_SEMANTICS, "true");
-
-            testConfiguration.put(
-                    "isis.reflector.facets.include",
-                    "org.isisaddons.metamodel.paraname8.NamedFacetOnParameterParaname8Factory");
-
-            return testConfiguration;
-        }
     }
 }

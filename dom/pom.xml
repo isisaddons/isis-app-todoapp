@@ -80,42 +80,15 @@
         </dependency>
 
         <dependency>
-            <groupId>org.isisaddons.module.audit</groupId>
-            <artifactId>isis-module-audit-dom</artifactId>
+            <groupId>org.togglz</groupId>
+            <artifactId>togglz-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.isisaddons.module.command</groupId>
-            <artifactId>isis-module-command-dom</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.isisaddons.module.devutils</groupId>
-            <artifactId>isis-module-devutils-dom</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.isisaddons.module.docx</groupId>
-            <artifactId>isis-module-docx-dom</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.isisaddons.module.security</groupId>
             <artifactId>isis-module-security-dom</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.isisaddons.module.sessionlogger</groupId>
-            <artifactId>isis-module-sessionlogger-dom</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.isisaddons.module.settings</groupId>
-            <artifactId>isis-module-settings-dom</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.isisaddons.module.publishing</groupId>
-            <artifactId>isis-module-publishing-dom</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>org.isisaddons.wicket.excel</groupId>
-            <artifactId>isis-wicket-excel-cpt</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.isisaddons.wicket.fullcalendar2</groupId>
             <artifactId>isis-wicket-fullcalendar2-cpt</artifactId>
@@ -133,17 +106,10 @@
         <dependency>
             <groupId>org.isisaddons.wicket.gmap3</groupId>
             <artifactId>isis-wicket-gmap3-cpt</artifactId>
+            <exclusions>
+            </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>ma.glasnost.orika</groupId>
-            <artifactId>orika-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.togglz</groupId>
-            <artifactId>togglz-core</artifactId>
-        </dependency>
 
     </dependencies>
 
@@ -264,6 +230,19 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+        <profile>
+            <id>axon-event-bus</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.axonframework</groupId>
+                    <artifactId>axon-core</artifactId>
+                    <version>2.4</version>
+                </dependency>
+            </dependencies>
         </profile>
     </profiles>
 

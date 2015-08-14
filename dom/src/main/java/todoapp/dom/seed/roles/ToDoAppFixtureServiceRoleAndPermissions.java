@@ -17,6 +17,7 @@
 package todoapp.dom.seed.roles;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.applib.services.fixturespec.FixtureScriptsDefault;
 
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
@@ -35,6 +36,7 @@ public class ToDoAppFixtureServiceRoleAndPermissions extends AbstractRoleAndPerm
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
+                FixtureScriptsDefault.class.getPackage().getName(),
                 "todoapp.fixture");
     }
 

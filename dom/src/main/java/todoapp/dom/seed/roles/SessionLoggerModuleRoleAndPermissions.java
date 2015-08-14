@@ -16,12 +16,9 @@
  */
 package todoapp.dom.seed.roles;
 
-
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
-import org.isisaddons.module.sessionlogger.SessionLoggerModule;
-
 
 public class SessionLoggerModuleRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
@@ -36,7 +33,7 @@ public class SessionLoggerModuleRoleAndPermissions extends AbstractRoleAndPermis
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                SessionLoggerModule.class.getPackage().getName());
+                "org.isisaddons.module.sessionlogger");
     }
 
 }

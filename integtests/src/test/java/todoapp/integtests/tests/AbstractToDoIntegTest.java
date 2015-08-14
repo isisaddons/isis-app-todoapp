@@ -25,7 +25,7 @@ import org.togglz.junit.TogglzRule;
 import org.apache.isis.core.integtestsupport.IntegrationTestAbstract;
 import org.apache.isis.core.integtestsupport.scenarios.ScenarioExecutionForIntegration;
 
-import todoapp.dom.module.featuretoggles.ToDoAppFeature;
+import todoapp.dom.ToDoAppFeature;
 import todoapp.integtests.ToDoAppSystemInitializer;
 
 public abstract class AbstractToDoIntegTest extends IntegrationTestAbstract {

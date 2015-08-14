@@ -49,10 +49,10 @@ import org.apache.isis.applib.value.Blob;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.hamcrest.CoreMatchers.containsString;
-import todoapp.dom.app.demoeventsubscriber.DemoBehaviour;
-import todoapp.dom.app.demoeventsubscriber.DemoDomainEventSubscriptions;
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItems;
+import todoapp.app.services.demoeventsubscriber.DemoBehaviour;
+import todoapp.app.services.demoeventsubscriber.DemoDomainEventSubscriptions;
+import todoapp.dom.todoitem.ToDoItem;
+import todoapp.dom.todoitem.ToDoItems;
 import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
 public class ToDoItemIntegTest extends AbstractToDoIntegTest {
@@ -624,7 +624,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // when, then
                 expectedExceptions.expectMessage(containsString("Reason: Use action to update both category and subcategory."));
-                toDoItem.setCategory(todoapp.dom.module.categories.Category.PROFESSIONAL);
+                toDoItem.setCategory(todoapp.dom.categories.Category.PROFESSIONAL);
             }
         }
 
@@ -944,7 +944,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void cannotModify() throws Exception {
 
                 // when, then
-                expectedExceptions.expectMessage("Reason: Always disabled. Identifier: todoapp.dom.module.todoitem.ToDoItem#atPath()");
+                expectedExceptions.expectMessage("Reason: Always disabled. Identifier: todoapp.dom.todoitem.ToDoItem#atPath()");
                 toDoItem.setAtPath("other");
             }
 
@@ -958,7 +958,7 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
 
                 // when, then
                 expectedExceptions.expectMessage(containsString("Reason: Use action to update both category and subcategory."));
-                toDoItem.setSubcategory(todoapp.dom.module.categories.Subcategory.CHORES);
+                toDoItem.setSubcategory(todoapp.dom.categories.Subcategory.CHORES);
             }
         }
 

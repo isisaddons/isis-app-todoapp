@@ -29,10 +29,10 @@ import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import todoapp.dom.module.categories.Category;
-import todoapp.dom.module.categories.Subcategory;
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItems;
+import todoapp.dom.categories.Category;
+import todoapp.dom.categories.Subcategory;
+import todoapp.dom.todoitem.ToDoItem;
+import todoapp.dom.todoitem.ToDoItems;
 import todoapp.integtests.fixture.ToDoItemsIntegTestFixture;
 
 public class ToDoItemsIntegTest extends AbstractToDoIntegTest {

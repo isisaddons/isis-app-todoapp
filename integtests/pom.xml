@@ -86,31 +86,23 @@
         <!-- other modules in this project -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>todoapp-fixture</artifactId>
+            <artifactId>todoapp-app</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.apache.isis.core</groupId>
             <artifactId>isis-core-unittestsupport</artifactId>
+            <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.isis.core</groupId>
             <artifactId>isis-core-integtestsupport</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.isis.core</groupId>
             <artifactId>isis-core-specsupport</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.isis.core</groupId>
-            <artifactId>isis-core-viewer-restfulobjects-rendering</artifactId>
-        </dependency>
-
-        <!-- enable -parameters support -->
-        <dependency>
-            <groupId>org.isisaddons.metamodel.paraname8</groupId>
-            <artifactId>isis-metamodel-paraname8-dom</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -128,15 +120,6 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.isis.core</groupId>
-            <artifactId>isis-core-wrapper</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.isis.core</groupId>
-            <artifactId>isis-core-runtime</artifactId>
         </dependency>
 
         <dependency>

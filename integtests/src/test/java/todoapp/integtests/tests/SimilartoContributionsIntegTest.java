@@ -28,9 +28,9 @@ import org.junit.Test;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import todoapp.dom.app.similarto.SimilarToContributions;
-import todoapp.dom.module.todoitem.ToDoItem;
-import todoapp.dom.module.todoitem.ToDoItems;
+import todoapp.dom.similarto.SimilarToContributions;
+import todoapp.dom.todoitem.ToDoItem;
+import todoapp.dom.todoitem.ToDoItems;
 import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
 public abstract class SimilartoContributionsIntegTest extends AbstractToDoIntegTest {

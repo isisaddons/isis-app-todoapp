@@ -31,7 +31,7 @@ import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
 import org.isisaddons.module.security.dom.user.ApplicationUsers;
 
-import todoapp.dom.module.todoitem.ToDoItem;
+import todoapp.dom.todoitem.ToDoItem;
 import todoapp.fixture.module.todoitem.ToDoItemComplete;
 import todoapp.fixture.module.todoitem.ToDoItemCreate;
 
@@ -56,7 +56,7 @@ public class RecreateToDoItemsForCurrentUser extends FixtureScript {
     }
     //endregion
 
-    //region > numberToCreate;
+    //region > numberToCreate
     private Integer numberToCreate;
 
     /**
@@ -130,7 +130,6 @@ public class RecreateToDoItemsForCurrentUser extends FixtureScript {
     }
     //endregion
 
-
     //region > complete (output)
     private List<ToDoItem> complete;
 
@@ -176,7 +175,10 @@ public class RecreateToDoItemsForCurrentUser extends FixtureScript {
         final String atPath = "/users/" + username;
 
         // delete
-        isisJdoSupport.executeUpdate("delete from \"todo\".\"ToDoItem\" where \"atPath\" = '" + atPath + "'");
+        isisJdoSupport.executeUpdate(
+                "DELETE FROM \"todo\".\"ToDoItemDependencies\" WHERE \"dependingId\" IN (SELECT \"id\" FROM \"todo\".\"ToDoItem\" WHERE \"atPath\" = '" + atPath + "')");
+        isisJdoSupport.executeUpdate(
+                "DELETE FROM \"todo\".\"ToDoItem\" WHERE \"atPath\" = '" + atPath + "'");
 
         //
         // create items

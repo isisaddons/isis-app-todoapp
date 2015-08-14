@@ -64,7 +64,9 @@ public class DeleteUserAndUserRolesAndToDoItems extends FixtureScript {
 
         final String atPath = UsersTenancy.TENANCY_PATH + username;
 
-        // execute
+        // delete
+        isisJdoSupport.executeUpdate(
+                "DELETE FROM \"todo\".\"ToDoItemDependencies\" WHERE \"dependingId\" IN (SELECT \"id\" FROM \"todo\".\"ToDoItem\" WHERE \"atPath\" = '" + atPath + "')");
         isisJdoSupport.executeUpdate(
                 "DELETE FROM \"todo\".\"ToDoItem\" WHERE \"atPath\" = '" + atPath + "'");
         isisJdoSupport.executeUpdate(
