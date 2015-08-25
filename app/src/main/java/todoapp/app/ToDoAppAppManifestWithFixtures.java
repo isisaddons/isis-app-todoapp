@@ -18,18 +18,13 @@
  */
 package todoapp.app;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
-import org.apache.isis.applib.AppManifest;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
-import todoapp.dom.ToDoAppDomainModule;
-import todoapp.fixture.ToDoAppFixtureModule;
 import todoapp.fixture.demo.DemoFixture;
 
 /**

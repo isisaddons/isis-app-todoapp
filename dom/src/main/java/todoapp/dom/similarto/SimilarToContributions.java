@@ -20,7 +20,6 @@ package todoapp.dom.similarto;
 
 import java.util.List;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -50,18 +49,11 @@ public class SimilarToContributions extends AbstractFactoryAndRepository {
     )
     @Action(semantics = SemanticsOf.SAFE)
     public List<ToDoItem> similarTo(final ToDoItem toDoItem) {
-        final List<ToDoItem> similarToDoItems = toDoItemRepository.findByAtPathAndCategory(currentUsersAtPath(), toDoItem.getCategory());
-        return Lists.newArrayList(Iterables.filter(similarToDoItems, excluding(toDoItem)));
+        final List<ToDoItem> similarToDoItems = toDoItemRepository.findByAtPathAndCategory(currentUsersAtPath(),
+                toDoItem.getCategory());
+        return Lists.newArrayList(Iterables.filter(similarToDoItems, $_ -> $_ != toDoItem));
     }
 
-    private static Predicate<ToDoItem> excluding(final ToDoItem toDoItem) {
-        return new Predicate<ToDoItem>() {
-            @Override
-            public boolean apply(ToDoItem input) {
-                return input != toDoItem;
-            }
-        };
-    }
     //endregion
 
     //region > helpers

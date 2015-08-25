@@ -21,18 +21,15 @@ package todoapp.fixture.demo;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.sudo.SudoService;
 
-import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
+import todoapp.fixture.scenarios.RecreateAllUsersAndRolesAndToDoItems;
 
 public class DemoFixture extends FixtureScript {
 
 
     @Override
     protected void execute(final ExecutionContext ec) {
-        sudoService.sudo("todoapp-admin", new Runnable() {
-            @Override public void run() {
-                ec.executeChild(DemoFixture.this, new RecreateToDoItemsForCurrentUser());
-            }
-        });
+        sudoService.sudo("todoapp-admin",
+                () -> ec.executeChild(DemoFixture.this, new RecreateAllUsersAndRolesAndToDoItems()));
     }
 
 
