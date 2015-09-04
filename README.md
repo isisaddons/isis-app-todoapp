@@ -156,7 +156,7 @@ The screenshot below shows accessing this REST API using a Chrome plugin:
 
 Like the Wicket viewer, the REST API is generated automatically from the domain objects (entities and view models); the screenshot above shows a representation of a `ToDoItem` instance.
 
-Apache Isis' Restful Objects viewer also (in 1.9.0-SNAPSHOT) implements enhanced content negotiation that goes beyond the RO 1.0 spec (though is discussed in a "future ideas" appendix).  Based on an XSD:
+Apache Isis' Restful Objects viewer also (in 1.9.0) implements enhanced content negotiation that goes beyond the RO 1.0 spec (though is discussed in a "future ideas" appendix).  Based on an XSD:
 
 <pre>
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
