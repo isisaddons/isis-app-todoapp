@@ -213,20 +213,6 @@
         </dependency>
          -->
 
-        <!-- 
-        mvn install:install-file -Dfile=sqljdbc4.jar \
-                                 -DgroupId=com.microsoft.sqlserver \
-                                 -DartifactId=jdbc \
-                                 -Dversion=4.0 \
-                                 -Dpackaging=jar
-         -->
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>sqljdbc4</artifactId>
-            <version>4.0</version>
-        </dependency>
-         <!--
-          -->
 
         <dependency>
           <groupId>org.lazyluke</groupId>
@@ -356,17 +342,30 @@
             </build>
         </profile>
         <profile>
-            <id>neo4j</id>
+            <id>sqlserver</id>
+            <activation>
+                <property>
+<!--
+                    <name>!skip.sqlserver</name>
+-->
+                    <name>sqlserver</name>
+                </property>
+            </activation>
             <dependencies>
+                <!--
+                mvn install:install-file -Dfile=sqljdbc4.jar \
+                                         -DgroupId=com.microsoft.sqlserver \
+                                         -DartifactId=jdbc \
+                                         -Dversion=4.0 \
+                                         -Dpackaging=jar
+                 -->
                 <dependency>
-                    <groupId>org.datanucleus</groupId>
-                    <artifactId>datanucleus-neo4j</artifactId>
-                    <version>4.0.4</version>
+                    <groupId>com.microsoft.sqlserver</groupId>
+                    <artifactId>sqljdbc4</artifactId>
+                    <version>4.0</version>
                 </dependency>
             </dependencies>
         </profile>
     </profiles>
-
-
 
 </project>
