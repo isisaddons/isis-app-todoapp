@@ -56,7 +56,8 @@ public class ToDoAppAppManifest implements AppManifest {
                 org.isisaddons.module.publishing.PublishingModule.class,
                 org.isisaddons.module.sessionlogger.SessionLoggerModule.class,
                 org.isisaddons.module.security.SecurityModule.class,
-                org.isisaddons.module.settings.SettingsModule.class
+                org.isisaddons.module.settings.SettingsModule.class,
+                org.isisaddons.wicket.gmap3.cpt.service.Gmap3ServiceModule.class
         );
     }
 
