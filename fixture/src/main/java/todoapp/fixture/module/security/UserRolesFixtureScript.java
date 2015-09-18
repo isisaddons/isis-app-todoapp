@@ -28,9 +28,9 @@ import com.google.common.collect.Lists;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import org.isisaddons.module.security.dom.role.ApplicationRole;
-import org.isisaddons.module.security.dom.role.ApplicationRoles;
+import org.isisaddons.module.security.dom.role.ApplicationRoleRepository;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
-import org.isisaddons.module.security.dom.user.ApplicationUsers;
+import org.isisaddons.module.security.dom.user.ApplicationUserRepository;
 
 import todoapp.fixture.util.Util;
 
@@ -78,18 +78,18 @@ public class UserRolesFixtureScript extends FixtureScript {
     }
     //endregion
 
-    //region > applicationRoleList (output property)
-    private List<ApplicationRole> applicationRoleList;
+    //region > applicationRoles (output property)
+    private List<ApplicationRole> applicationRoles;
 
     /**
      * The application roles corresponding to {@link #getRoleNames()}.
      */
     public List<ApplicationRole> getApplicationRoles() {
-        return applicationRoleList;
+        return applicationRoles;
     }
 
     public void setApplicationRoles(final List<ApplicationRole> applicationRoles) {
-        this.applicationRoleList = applicationRoles;
+        this.applicationRoles = applicationRoles;
     }
     //endregion
 
@@ -103,7 +103,7 @@ public class UserRolesFixtureScript extends FixtureScript {
         }
 
         // validate user
-        this.applicationUser = applicationUsers.findUserByUsername(username);
+        this.applicationUser = applicationUserRepository.findByUsername(username);
         if(this.applicationUser == null) {
             throw new IllegalArgumentException(String.format("No user with username: '%s'", username));
         }
@@ -111,13 +111,13 @@ public class UserRolesFixtureScript extends FixtureScript {
         // no defaults for roles
 
         // validate all roleNames
-        this.applicationRoleList =
+        this.applicationRoles =
                 Lists.newArrayList(
                     Iterables.filter(
                         Iterables.transform(getRoleNames(), roleNameToRole()),
                         Predicates.notNull()));
 
-        List<ApplicationRole> applicationRoleList = this.applicationRoleList;
+        List<ApplicationRole> applicationRoleList = this.applicationRoles;
         List<String> roleNames = getRoleNames();
         if(applicationRoleList.size() != roleNames.size()) {
             throw new IllegalArgumentException("One or more roles not found");
@@ -126,7 +126,7 @@ public class UserRolesFixtureScript extends FixtureScript {
         // execute
         ec.addResult(this, applicationUser.getName(), this.applicationUser);
 
-        for (ApplicationRole applicationRole : this.applicationRoleList) {
+        for (ApplicationRole applicationRole : this.applicationRoles) {
             if (applicationRole != null) {
                 this.applicationUser.addRole(applicationRole);
             }
@@ -139,18 +139,15 @@ public class UserRolesFixtureScript extends FixtureScript {
             @Nullable
             @Override
             public ApplicationRole apply(final String input) {
-                return applicationRoles.findRoleByName(input);
+                return applicationRoleRepository.findByNameCached(input);
             }
         };
     }
 
-    private ApplicationRole findRoleByName(final String roleName) {
-        return applicationRoles.findRoleByName(roleName);
-    }
 
     @javax.inject.Inject
-    private ApplicationUsers applicationUsers;
+    private ApplicationUserRepository applicationUserRepository;
     @javax.inject.Inject
-    private ApplicationRoles applicationRoles;
+    private ApplicationRoleRepository applicationRoleRepository;
 
 }

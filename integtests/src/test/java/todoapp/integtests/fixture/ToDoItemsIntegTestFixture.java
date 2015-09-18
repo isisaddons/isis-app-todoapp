@@ -20,6 +20,7 @@
 package todoapp.integtests.fixture;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+import org.apache.isis.core.unittestsupport.streams.NullPrintStream;
 
 import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
@@ -27,6 +28,7 @@ public class ToDoItemsIntegTestFixture extends FixtureScript {
 
     public ToDoItemsIntegTestFixture() {
         super(null, "integ-test");
+        withTracing(new NullPrintStream());
     }
 
     @Override

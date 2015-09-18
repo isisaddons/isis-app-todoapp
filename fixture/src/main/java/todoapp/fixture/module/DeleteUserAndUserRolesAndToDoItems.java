@@ -24,7 +24,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
 import org.isisaddons.module.security.dom.user.ApplicationUser;
-import org.isisaddons.module.security.dom.user.ApplicationUsers;
+import org.isisaddons.module.security.dom.user.ApplicationUserRepository;
 
 import todoapp.dom.seed.tenancies.UsersTenancy;
 import todoapp.fixture.util.Util;
@@ -56,7 +56,7 @@ public class DeleteUserAndUserRolesAndToDoItems extends FixtureScript {
         }
 
         // validate user
-        final ApplicationUser applicationUser = applicationUsers.findUserByUsername(username);
+        final ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
         if(applicationUser == null) {
             // nothing to do...
             return;
@@ -81,6 +81,6 @@ public class DeleteUserAndUserRolesAndToDoItems extends FixtureScript {
     private IsisJdoSupport isisJdoSupport;
 
     @javax.inject.Inject
-    private ApplicationUsers applicationUsers;
+    private ApplicationUserRepository applicationUserRepository;
 
 }

@@ -20,11 +20,11 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.value.Password;
 
 import org.isisaddons.module.security.dom.role.ApplicationRole;
-import org.isisaddons.module.security.dom.role.ApplicationRoles;
-import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
+import org.isisaddons.module.security.dom.role.ApplicationRoleRepository;
+import org.isisaddons.module.security.dom.tenancy.ApplicationTenancyRepository;
 import org.isisaddons.module.security.dom.user.AccountType;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
-import org.isisaddons.module.security.dom.user.ApplicationUsers;
+import org.isisaddons.module.security.dom.user.ApplicationUserMenu;
 
 public class CreateUserFixtureScript extends FixtureScript {
 
@@ -187,17 +187,17 @@ public class CreateUserFixtureScript extends FixtureScript {
         //
         final ApplicationUser applicationUser;
         if (accountType == AccountType.DELEGATED) {
-            applicationUser = wrap(applicationUsers).newDelegateUser(username, initialRole, enabled);
+            applicationUser = wrap(applicationUserMenu).newDelegateUser(username, initialRole, enabled);
         } else {
             final Password passwordValue = new Password(password);
-            applicationUser = wrap(applicationUsers).newLocalUser(username, passwordValue, passwordValue, initialRole, enabled, emailAddress);
+            applicationUser = wrap(applicationUserMenu).newLocalUser(username, passwordValue, passwordValue, initialRole, enabled, emailAddress);
         }
 
         // no longer required, performed automatically by subscriber...
-//        final ApplicationTenancy applicationTenancy = applicationTenancies.findTenancyByPath(tenancyPath);
+//        final ApplicationTenancy applicationTenancy = applicationTenancyRepository.findTenancyByPath(tenancyPath);
 //        if (applicationTenancy == null) {
-//            final ApplicationTenancy rootTenancy = applicationTenancies.findTenancyByPath(GlobalTenancy.TENANCY_PATH);
-//            applicationTenancies.newTenancy(username, tenancyPath, rootTenancy);
+//            final ApplicationTenancy rootTenancy = applicationTenancyRepository.findTenancyByPath(GlobalTenancy.TENANCY_PATH);
+//            applicationTenancyRepository.newTenancy(username, tenancyPath, rootTenancy);
 //        }
 //        applicationUser.setTenancy(applicationTenancy);
 
@@ -207,17 +207,17 @@ public class CreateUserFixtureScript extends FixtureScript {
     }
 
     private ApplicationRole findRoleByName(final String initialRole1) {
-        return applicationRoles.findRoleByName(initialRole1);
+        return applicationRoleRepository.findByName(initialRole1);
     }
 
     @javax.inject.Inject
-    private ApplicationUsers applicationUsers;
+    private ApplicationUserMenu applicationUserMenu;
 
     @javax.inject.Inject
-    private ApplicationRoles applicationRoles;
+    private ApplicationRoleRepository applicationRoleRepository;
 
     @javax.inject.Inject
-    private ApplicationTenancies applicationTenancies;
+    private ApplicationTenancyRepository applicationTenancyRepository;
 
 
 }

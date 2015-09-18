@@ -27,8 +27,8 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
 
 import org.isisaddons.module.security.app.user.MeService;
-import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
+import org.isisaddons.module.security.dom.tenancy.ApplicationTenancyRepository;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
 
 import todoapp.app.viewmodels.dashboard.ToDoAppDashboard;
@@ -58,7 +58,7 @@ public class TenancySwitcher extends AbstractService {
     }
 
     public List<ApplicationTenancy> choices0SwitchTenancy() {
-        return applicationTenancies.allTenancies();
+        return applicationTenancyRepository.allTenancies();
     }
 
     public ApplicationTenancy default0SwitchTenancy() {
@@ -72,7 +72,7 @@ public class TenancySwitcher extends AbstractService {
     private MeService meService;
 
     @javax.inject.Inject
-    private ApplicationTenancies applicationTenancies;
+    private ApplicationTenancyRepository applicationTenancyRepository;
 
     @javax.inject.Inject
     private ToDoAppDashboardService toDoAppDashboardService;

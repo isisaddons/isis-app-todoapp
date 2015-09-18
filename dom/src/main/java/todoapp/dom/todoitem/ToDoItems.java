@@ -42,10 +42,10 @@ import org.apache.isis.applib.services.clock.ClockService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
 import org.isisaddons.module.security.app.user.MeService;
-import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
+import org.isisaddons.module.security.dom.tenancy.ApplicationTenancyRepository;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
-import org.isisaddons.module.security.dom.user.ApplicationUsers;
+import org.isisaddons.module.security.dom.user.ApplicationUserRepository;
 
 import todoapp.dom.categories.Category;
 import todoapp.dom.categories.Subcategory;
@@ -200,7 +200,7 @@ public class ToDoItems {
         toDoItem.setCategory(category);
         toDoItem.setSubcategory(subcategory);
 
-        final ApplicationUser applicationUser = applicationUsers.findUserByUsername(username);
+        final ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
         final ApplicationTenancy applicationTenancy = applicationUser.getTenancy();
         if(applicationTenancy == null) {
             throw new IllegalStateException(String.format("No application tenancy defined for user '%s'", username));
@@ -248,13 +248,13 @@ public class ToDoItems {
     private DomainObjectContainer container;
 
     @javax.inject.Inject
-    private ApplicationTenancies applicationTenancies;
+    private ApplicationTenancyRepository applicationTenancyRepository;
 
     @javax.inject.Inject
     private MeService meService;
 
     @javax.inject.Inject
-    private ApplicationUsers applicationUsers;
+    private ApplicationUserRepository applicationUserRepository;
 
     @javax.inject.Inject
     private ClockService clockService;

@@ -26,10 +26,11 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.eventbus.EventBusService;
 
-import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
+import org.isisaddons.module.security.dom.tenancy.ApplicationTenancyRepository;
 import org.isisaddons.module.security.dom.user.ApplicationUser;
-import org.isisaddons.module.security.dom.user.ApplicationUsers;
+import org.isisaddons.module.security.dom.user.ApplicationUserMenu;
+import org.isisaddons.module.security.dom.user.ApplicationUserRepository;
 
 import todoapp.dom.seed.tenancies.UsersTenancy;
 
@@ -60,7 +61,7 @@ public class ApplicationUserAndTenancySubscriptions extends AbstractService {
     @Programmatic
     @com.google.common.eventbus.Subscribe
     @org.axonframework.eventhandling.annotation.EventHandler
-    public void on(final ApplicationUsers.NewLocalUserDomainEvent ev) {
+    public void on(final ApplicationUserMenu.NewLocalUserDomainEvent ev) {
         switch(ev.getEventPhase()) {
             case EXECUTED:
                 final ApplicationUser newUser = (ApplicationUser) ev.getReturnValue();
@@ -72,7 +73,7 @@ public class ApplicationUserAndTenancySubscriptions extends AbstractService {
     @Programmatic
     @com.google.common.eventbus.Subscribe
     @org.axonframework.eventhandling.annotation.EventHandler
-    public void on(final ApplicationUsers.NewDelegateUserDomainEvent ev) {
+    public void on(final ApplicationUserMenu.NewDelegateUserDomainEvent ev) {
         switch(ev.getEventPhase()) {
             case EXECUTED:
                 final ApplicationUser newUser = (ApplicationUser) ev.getReturnValue();
@@ -84,10 +85,10 @@ public class ApplicationUserAndTenancySubscriptions extends AbstractService {
     protected void createTenancyIfRequired(final ApplicationUser newUser) {
         final String username = newUser.getName();
         final String atPath = UsersTenancy.TENANCY_PATH + username;  // eg "/users/fred"
-        ApplicationTenancy applicationTenancy = applicationTenancies.findTenancyByName(atPath);
+        ApplicationTenancy applicationTenancy = applicationTenancyRepository.findByName(atPath);
         if(applicationTenancy == null) {
-            final ApplicationTenancy globalTenancy = applicationTenancies.findTenancyByPath(UsersTenancy.TENANCY_PATH);
-            applicationTenancy = applicationTenancies.newTenancy(username, atPath, globalTenancy);
+            final ApplicationTenancy globalTenancy = applicationTenancyRepository.findByPath(                    UsersTenancy.TENANCY_PATH);
+            applicationTenancy = applicationTenancyRepository.newTenancy(username, atPath, globalTenancy);
         }
         newUser.setTenancy(applicationTenancy);
     }
@@ -109,7 +110,7 @@ public class ApplicationUserAndTenancySubscriptions extends AbstractService {
     protected void deleteTenancyIfRequired(final ApplicationUser newUser) {
         final String username = newUser.getName();
         final String atPath = UsersTenancy.TENANCY_PATH + username;
-        final ApplicationTenancy applicationTenancy = applicationTenancies.findTenancyByPath(atPath);
+        final ApplicationTenancy applicationTenancy = applicationTenancyRepository.findByPath(atPath);
         if(applicationTenancy != null) {
             applicationTenancy.delete(true);
         }
@@ -125,7 +126,7 @@ public class ApplicationUserAndTenancySubscriptions extends AbstractService {
             case DISABLE:
                 final String path = ev.getSource().getPath();
                 final String username = path.substring(1);
-                final ApplicationUser applicationUser = applicationUsers.findUserByUsername(username);
+                final ApplicationUser applicationUser = applicationUserRepository.findByUsername(username);
                 if(applicationUser != null) {
                     ev.veto("User '%s' is associated with this application tenancy", username);
                 }
@@ -136,10 +137,10 @@ public class ApplicationUserAndTenancySubscriptions extends AbstractService {
 
     //region > injected services
     @javax.inject.Inject
-    private ApplicationTenancies applicationTenancies;
+    private ApplicationTenancyRepository applicationTenancyRepository;
 
     @javax.inject.Inject
-    private ApplicationUsers applicationUsers;
+    private ApplicationUserRepository applicationUserRepository;
 
     @javax.inject.Inject
     private DomainObjectContainer container;

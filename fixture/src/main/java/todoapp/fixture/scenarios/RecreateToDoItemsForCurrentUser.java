@@ -29,7 +29,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
 import org.isisaddons.module.security.dom.user.ApplicationUser;
-import org.isisaddons.module.security.dom.user.ApplicationUsers;
+import org.isisaddons.module.security.dom.user.ApplicationUserRepository;
 
 import todoapp.dom.todoitem.ToDoItem;
 import todoapp.fixture.module.todoitem.ToDoItemComplete;
@@ -150,7 +150,7 @@ public class RecreateToDoItemsForCurrentUser extends FixtureScript {
         final Integer numberToComplete = defaultParam("numberToComplete", ec, 2);
 
         // validate user
-        this.applicationUser = applicationUsers.findUserByUsername(username);
+        this.applicationUser = applicationUserRepository.findByUsername(username);
         if(this.applicationUser == null) {
             throw new IllegalArgumentException(String.format("No user with username: '%s'", username));
         }
@@ -216,7 +216,7 @@ public class RecreateToDoItemsForCurrentUser extends FixtureScript {
 
 
     @javax.inject.Inject
-    private ApplicationUsers applicationUsers;
+    private ApplicationUserRepository applicationUserRepository;
 
     @javax.inject.Inject
     private IsisJdoSupport isisJdoSupport;

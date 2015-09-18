@@ -21,7 +21,7 @@ package todoapp.fixture.module.todoitem;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.sudo.SudoService;
 
-import org.isisaddons.module.security.dom.user.ApplicationUsers;
+import org.isisaddons.module.security.dom.user.ApplicationUserRepository;
 
 import todoapp.dom.todoitem.ToDoItem;
 import todoapp.dom.todoitem.ToDoItems;
@@ -85,7 +85,7 @@ public class ToDoItemComplete extends FixtureScript {
     private ToDoItems toDoItems;
 
     @javax.inject.Inject
-    private ApplicationUsers applicationUsers;
+    private ApplicationUserRepository applicationUserRepository;
 
     @javax.inject.Inject
     private SudoService sudoService;

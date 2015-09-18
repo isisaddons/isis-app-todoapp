@@ -73,7 +73,7 @@ import org.apache.isis.applib.value.Blob;
 import org.apache.isis.applib.value.Clob;
 
 import org.isisaddons.module.security.app.user.MeService;
-import org.isisaddons.module.security.dom.tenancy.ApplicationTenancies;
+import org.isisaddons.module.security.dom.tenancy.ApplicationTenancyRepository;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEvent;
 import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 import org.isisaddons.wicket.gmap3.cpt.applib.Locatable;
@@ -310,7 +310,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     @javax.jdo.annotations.Column(allowsNull="false")
     @Property(
             editing = Editing.DISABLED
-            //hidden = Where.EVERYWHERE
+            //hidden = Where.EVERYWHERE // for demo purposes, so is visible in the UI
     )
     public String getAtPath() {
         return atPath;
@@ -1034,7 +1034,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     private LocationLookupService locationLookupService;
 
     @javax.inject.Inject
-    private ApplicationTenancies applicationTenancies;
+    private ApplicationTenancyRepository applicationTenancyRepository;
 
     @javax.inject.Inject
     private MeService meService;

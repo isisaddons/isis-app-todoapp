@@ -19,9 +19,7 @@ package todoapp.dom.appuser;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 
-import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancyPathEvaluator;
-import org.isisaddons.module.security.dom.user.ApplicationUser;
 
 import todoapp.dom.todoitem.ToDoItem;
 
@@ -33,25 +31,14 @@ public class ApplicationTenancyPathEvaluatorForToDoApp implements ApplicationTen
 
     @Override
     public boolean handles(final Class<?> cls) {
-        return ToDoItem.class == cls || ApplicationUser.class == cls;
+        return ToDoItem.class == cls;
     }
 
     @Override
     public String applicationTenancyPathFor(final Object domainObject) {
-        if(domainObject instanceof ToDoItem) {
-            final ToDoItem toDoItem = (ToDoItem) domainObject;
-            return toDoItem.getAtPath();
-        }
-        if(domainObject instanceof ApplicationUser) {
-            final ApplicationUser applicationUser = (ApplicationUser) domainObject;
-            final ApplicationTenancy applicationTenancy = applicationUser.getTenancy();
-            if(applicationTenancy == null) {
-                // shouldn't happen...
-                return null;
-            }
-            return applicationTenancy.getPath();
-        }
-        return null;
+        // always safe to do, per the handles(...) method earlier
+        final ToDoItem toDoItem = (ToDoItem) domainObject;
+        return toDoItem.getAtPath();
     }
 }
 
