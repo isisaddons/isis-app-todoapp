@@ -46,12 +46,12 @@
         <isis-module-settings.version>1.10.0-SNAPSHOT</isis-module-settings.version>
         <isis-module-togglz.version>1.9.0</isis-module-togglz.version>
 
-        <isis-module-devutils.version>1.9.0</isis-module-devutils.version>
+        <isis-module-devutils.version>1.10.0-SNAPSHOT</isis-module-devutils.version>
         <isis-module-docx.version>1.9.0</isis-module-docx.version>
 
         <isis-wicket-excel.version>1.9.0</isis-wicket-excel.version>
-        <isis-wicket-fullcalendar2.version>1.9.0</isis-wicket-fullcalendar2.version>
-        <isis-wicket-gmap3.version>1.9.0</isis-wicket-gmap3.version>
+        <isis-wicket-fullcalendar2.version>1.10.0-SNAPSHOT</isis-wicket-fullcalendar2.version>
+        <isis-wicket-gmap3.version>1.10.0-SNAPSHOT</isis-wicket-gmap3.version>
 
         <jbcrypt.version>0.3m</jbcrypt.version>
         <assertj-core.version>2.0.0</assertj-core.version>

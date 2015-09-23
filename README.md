@@ -373,7 +373,7 @@ Using the type-safe query approach on the other hand requires no JDOQL, but uses
 
 You can try out either implementation by commenting in/out the `@DomainService` for these two implementations.  (Apache Isis does not - yet - provide a way to switch dynamically implementations). 
     
-Type-safe queries have several advantages over JDOQL: they're type-safe (obviously!) and involve less code overall.  But there are some downsides too.  Arguably they are a little harder to understand than the free-form JDOQL string).  Perhaps more significantly, they complicate the project somewhat: the repository implementation must reside in the "down-stream" `domrepo` module, because of the dependency on the `QToDoItem` class that is only generated in the "process-classes" phase of the Maven lifecycle; ie after the code has been compiled.  
+Type-safe queries have several advantages over JDOQL: they're type-safe (obviously!) and involve less code overall.  However, they are (as of DN 4.1 at least) less expressive, and they are arguably they are a little harder to understand than the free-form JDOQL string.
 
 
 ## Feature Toggles
@@ -466,8 +466,10 @@ As noted above, the generated app is a reasonably complete application for track
 <table class="table table-striped table-bordered table-condensed">
 <tr><th>Module</th><th>Description</th></tr>
 <tr><td>todoapp</td><td>The parent (aggregator) module</td></tr>
-<tr><td>todoapp-dom</td><td>The domain object model, consisting of <tt>ToDoItem</tt> and <tt>ToDoItems</tt> domain service.  Also defines the (abstract) <tt>ToDoItemRepository</tt> repository class.</td></tr>
-<tr><td>todoapp-domrepo</td><td>Implementations of the repository class (defined in the <tt>-dom</tt> module, demonstrating queries using either JDOQL or DataNucleus' type-safe queries as a means of querying the database.</td></tr>
+<tr><td>todoapp-app</td><td>Application manifest, used for bootstrapping both the app and also integration tests.</td></tr>
+<tr><td>todoapp-canonical</td><td>Defines an XSD and code generates corresponding DTO class, for use in customized REST content negotiation.</td></tr>
+<tr><td>todoapp-dom</td><td>The domain object model, consisting of <tt>ToDoItem</tt> and <tt>ToDoItems</tt> domain service.  Also defines the <tt>ToDoItemRepository</tt> repository classes.</td></tr>
+ queries using either JDOQL or DataNucleus' type-safe queries as a means of querying the database.</td></tr>
 <tr><td>todoapp-fixture</td><td>Domain object fixtures used for initializing the system when being demo'ed or for unit testing.</td></tr>
 <tr><td>todoapp-integtests</td><td>End-to-end integration tests that exercise from the UI through to the database</td></tr>
 <tr><td>todoapp-webapp</td><td>Run as a webapp (from <tt>web.xml</tt>) using either the Wicket viewer or the RestfulObjects viewer</td></tr>

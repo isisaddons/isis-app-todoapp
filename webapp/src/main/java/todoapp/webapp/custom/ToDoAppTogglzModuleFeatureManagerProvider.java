@@ -7,9 +7,9 @@ import todoapp.dom.ToDoAppFeature;
 /**
  * Registered in META-INF/services, as per http://www.togglz.org/documentation/advanced-config.html
  */
-public class CustomTogglzModuleFeatureManagerProvider extends TogglzModuleFeatureManagerProviderAbstract {
+public class ToDoAppTogglzModuleFeatureManagerProvider extends TogglzModuleFeatureManagerProviderAbstract {
 
-    public CustomTogglzModuleFeatureManagerProvider() {
+    public ToDoAppTogglzModuleFeatureManagerProvider() {
         super(ToDoAppFeature.class);
     }
 

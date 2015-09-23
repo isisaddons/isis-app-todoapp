@@ -201,13 +201,13 @@
                         <artifactId>isis-maven-plugin</artifactId>
                         <version>${isis.version}</version>
                         <configuration>
-                            <isisConfigDir>../webapp/src/main/webapp/WEB-INF</isisConfigDir>
+                            <appManifest>todoapp.dom.ToDoAppDomManifest</appManifest>
                         </configuration>
                         <dependencies>
                             <dependency>
-                                <groupId>org.apache.isis.example.application</groupId>
-                                <artifactId>simpleapp-dom</artifactId>
-                                <version>${isis.version}</version>
+                                <groupId>${project.groupId}</groupId>
+                                <artifactId>todoapp-dom</artifactId>
+                                <version>${project.version}</version>
                             </dependency>
                             <!--
                             ... workaround to avoid conflict with plexus-default

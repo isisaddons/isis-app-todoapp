@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.apache.isis.applib.annotation.DomainService;
+import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
@@ -42,6 +43,9 @@ import todoapp.dom.seed.users.ToDoAppAdminUser;
 
 @DomainService(
         nature = NatureOfService.DOMAIN
+)
+@DomainServiceLayout(
+        menuOrder = "1100" // not visible, but determines the order initialized (must come after security module's seed service)
 )
 public class ToDoAppRolesAndPermissionsSeedService {
 
