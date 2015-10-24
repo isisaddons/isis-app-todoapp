@@ -168,15 +168,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     //region > description (property)
 
-    public static class DescriptionDomainEvent extends PropertyDomainEvent<String> {
-        public DescriptionDomainEvent(final ToDoItem source, final Identifier identifier) {
-            super(source, identifier);
-        }
-
-        public DescriptionDomainEvent(final ToDoItem source, final Identifier identifier, final String oldValue, final String newValue) {
-            super(source, identifier, oldValue, newValue);
-        }
-    }
+    public static class DescriptionDomainEvent extends PropertyDomainEvent<String> { }
 
     private String description;
 
@@ -200,18 +192,10 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     }
     //endregion
 
+
     //region > dueBy (property), Calendarable impl
 
-    public static class DueByDomainEvent extends PropertyDomainEvent<LocalDate> {
-        public DueByDomainEvent(final ToDoItem source, final Identifier identifier) {
-            super(source, identifier);
-        }
-
-        public DueByDomainEvent(final ToDoItem source, final Identifier identifier, final LocalDate oldValue, final LocalDate newValue) {
-            super(source, identifier, oldValue, newValue);
-        }
-    }
-
+    public static class DueByDomainEvent extends PropertyDomainEvent<LocalDate> { }
 
     @javax.jdo.annotations.Persistent(defaultFetchGroup="true")
     private LocalDate dueBy;
@@ -339,18 +323,10 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     //endregion
 
     //region > completed (action)
-    public static class CompletedEvent extends ToDoItem.ActionDomainEvent {
-        private static final long serialVersionUID = 1L;
-        public CompletedEvent(
-                final ToDoItem source,
-                final Identifier identifier,
-                final Object... arguments) {
-            super(source, identifier, arguments);
-        }
-    }
+    public static class CompletedDomainEvent extends ToDoItem.ActionDomainEvent { }
 
     @Action(
-            domainEvent =CompletedEvent.class,
+            domainEvent =CompletedDomainEvent.class,
             invokeOn = InvokeOn.OBJECT_AND_COLLECTION
     )
     public ToDoItem completed() {
@@ -374,15 +350,6 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     }
     // disable action dependent on state of object
     public String disableCompleted() {
-//        try {
-//            setComplete(true);
-//            final String reasonInvalidIfAny = container.validate(this);
-//            if(reasonInvalidIfAny != null) {
-//                return reasonInvalidIfAny;
-//            }
-//        } finally {
-//            setComplete(false);
-//        }
         return isComplete() ? "Already completed" : null;
     }
 
@@ -391,19 +358,10 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     //region > notYetCompleted (action)
 
-    public static class NotYetCompletedEvent extends ActionDomainEvent {
-        private static final long serialVersionUID = 1L;
-        public NotYetCompletedEvent(
-                final ToDoItem source,
-                final Identifier identifier,
-                final Object... arguments) {
-            super(source, identifier, arguments);
-        }
-    }
-
+    public static class NotYetCompletedDomainEvent extends ActionDomainEvent { }
 
     @Action(
-        domainEvent = NotYetCompletedEvent.class,
+        domainEvent = NotYetCompletedDomainEvent.class,
         invokeOn = InvokeOn.OBJECT_AND_COLLECTION
     )
     public ToDoItem notYetCompleted() {
@@ -495,16 +453,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     //region > location (property), Locatable impl
 
-    public static class LocationDomainEvent extends ToDoItem.PropertyDomainEvent<Location> {
-
-        public LocationDomainEvent(final ToDoItem source, final Identifier identifier) {
-            super(source, identifier);
-        }
-
-        public LocationDomainEvent(final ToDoItem source, final Identifier identifier, final Location oldValue, final Location newValue) {
-            super(source, identifier, oldValue, newValue);
-        }
-    }
+    public static class LocationDomainEvent extends ToDoItem.PropertyDomainEvent<Location> { }
 
     private Double locationLatitude;
     private Double locationLongitude;
@@ -534,16 +483,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     //endregion
 
     //region > attachment (property)
-    public static class AttachmentDomainEvent extends PropertyDomainEvent<Blob> {
-
-        public AttachmentDomainEvent(final ToDoItem source, final Identifier identifier) {
-            super(source, identifier);
-        }
-
-        public AttachmentDomainEvent(final ToDoItem source, final Identifier identifier, final Blob oldValue, final Blob newValue) {
-            super(source, identifier, oldValue, newValue);
-        }
-    }
+    public static class AttachmentDomainEvent extends PropertyDomainEvent<Blob> { }
 
     private Blob attachment;
     @javax.jdo.annotations.Persistent(defaultFetchGroup="false", columns = {
@@ -737,19 +677,10 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     //region > delete (action)
 
-    public static class DeletedEvent extends ToDoItem.ActionDomainEvent {
-        private static final long serialVersionUID = 1L;
-        public DeletedEvent(
-                final ToDoItem source,
-                final Identifier identifier,
-                final Object... arguments) {
-            super(source, identifier, arguments);
-        }
-    }
-
+    public static class DeletedDomainEvent extends ToDoItem.ActionDomainEvent { }
 
     @Action(
-            domainEvent = DeletedEvent.class,
+            domainEvent = DeletedDomainEvent.class,
             invokeOn = InvokeOn.OBJECT_AND_COLLECTION
     )
     public List<ToDoItem> delete() {
@@ -897,27 +828,8 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     //endregion
 
     //region > events
-
-    public static abstract class PropertyDomainEvent<T> extends ToDoAppDomainModule.PropertyDomainEvent<ToDoItem, T> {
-
-        public PropertyDomainEvent(final ToDoItem source, final Identifier identifier) {
-            super(source, identifier);
-        }
-
-        public PropertyDomainEvent(final ToDoItem source, final Identifier identifier, final T oldValue, final T newValue) {
-            super(source, identifier, oldValue, newValue);
-        }
-    }
-
-    public static abstract class ActionDomainEvent extends ToDoAppDomainModule.ActionDomainEvent<ToDoItem> {
-        private static final long serialVersionUID = 1L;
-        public ActionDomainEvent(
-                final ToDoItem source,
-                final Identifier identifier,
-                final Object... arguments) {
-            super(source, identifier, arguments);
-        }
-    }
+    public static abstract class PropertyDomainEvent<T> extends ToDoAppDomainModule.PropertyDomainEvent<ToDoItem, T> { }
+    public static abstract class ActionDomainEvent extends ToDoAppDomainModule.ActionDomainEvent<ToDoItem> { }
     //endregion
 
     //region > predicates
@@ -925,50 +837,24 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     public static class Predicates {
         
         public static Predicate<ToDoItem> thoseWithAtPath(final String currentUser) {
-            return new Predicate<ToDoItem>() {
-                @Override
-                public boolean apply(final ToDoItem toDoItem) {
-                    return Objects.equal(toDoItem.getAtPath(), UsersTenancy.TENANCY_PATH + currentUser);
-                }
-            };
+            return toDoItem -> Objects.equal(toDoItem.getAtPath(), UsersTenancy.TENANCY_PATH + currentUser);
         }
 
         public static Predicate<ToDoItem> thoseCompleted(
                 final boolean completed) {
-            return new Predicate<ToDoItem>() {
-                @Override
-                public boolean apply(final ToDoItem t) {
-                    return Objects.equal(t.isComplete(), completed);
-                }
-            };
+            return t -> Objects.equal(t.isComplete(), completed);
         }
 
         public static Predicate<ToDoItem> thoseNot(final ToDoItem toDoItem) {
-            return new Predicate<ToDoItem>() {
-                @Override
-                public boolean apply(final ToDoItem t) {
-                    return t != toDoItem;
-                }
-            };
+            return t -> t != toDoItem;
         }
 
         public static Predicate<ToDoItem> thoseCategorised(final Category category) {
-            return new Predicate<ToDoItem>() {
-                @Override
-                public boolean apply(final ToDoItem toDoItem) {
-                    return Objects.equal(toDoItem.getCategory(), category);
-                }
-            };
+            return toDoItem -> Objects.equal(toDoItem.getCategory(), category);
         }
 
-        public static Predicate<ToDoItem> thoseSubcategorised(
-                final Subcategory subcategory) {
-            return new Predicate<ToDoItem>() {
-                @Override
-                public boolean apply(final ToDoItem t) {
-                    return Objects.equal(t.getSubcategory(), subcategory);
-                }
-            };
+        public static Predicate<ToDoItem> thoseSubcategorised(final Subcategory subcategory) {
+            return t -> Objects.equal(t.getSubcategory(), subcategory);
         }
 
         public static Predicate<ToDoItem> thoseCategorised(
@@ -979,12 +865,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
         }
 
         public static Predicate<ToDoItem> thoseWithDueByDate() {
-            return new Predicate<ToDoItem>() {
-                @Override
-                public boolean apply(final ToDoItem input) {
-                    return input.getDueBy() != null;
-                }
-            };
+            return input -> input.getDueBy() != null;
         }
     }
 

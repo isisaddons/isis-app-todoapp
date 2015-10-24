@@ -177,7 +177,7 @@ public class DemoDomainEventSubscriptions {
     @Programmatic
     @com.google.common.eventbus.Subscribe
     @org.axonframework.eventhandling.annotation.EventHandler
-    public void on(final ToDoItem.CompletedEvent ev) {
+    public void on(final ToDoItem.CompletedDomainEvent ev) {
         recordEvent(ev);
         logEvent(ev);
     }

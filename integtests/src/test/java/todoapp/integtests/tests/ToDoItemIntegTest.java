@@ -208,10 +208,10 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             public void subscriberReceivesEvents() throws Exception {
 
                 // given
-                final ToDoItem.CompletedEvent[] evHolder = new ToDoItem.CompletedEvent[1];
+                final ToDoItem.CompletedDomainEvent[] evHolder = new ToDoItem.CompletedDomainEvent[1];
                 eventBusService.register(new Object() {
                     @Subscribe
-                    public void on(final ToDoItem.CompletedEvent ev) {
+                    public void on(final ToDoItem.CompletedDomainEvent ev) {
                         evHolder[0] = ev;
                     }
                 });
