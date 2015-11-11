@@ -34,7 +34,7 @@
     </prerequisites>
 
     <properties>
-        <isis.version>1.11.0-SNAPSHOT</isis.version>
+        <isis.version>1.10.0</isis.version>
 
         <isis-metamodel-paraname8.version>1.10.0-SNAPSHOT</isis-metamodel-paraname8.version>
 
