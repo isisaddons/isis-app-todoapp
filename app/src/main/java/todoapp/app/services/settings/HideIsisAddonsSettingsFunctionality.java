@@ -18,14 +18,11 @@
  */
 package todoapp.app.services.settings;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
+import org.apache.isis.applib.AbstractSubscriber;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.eventbus.AbstractDomainEvent;
-import org.apache.isis.applib.services.eventbus.EventBusService;
 
 import org.isisaddons.module.settings.SettingsModule;
 
@@ -38,21 +35,7 @@ import org.isisaddons.module.settings.SettingsModule;
  * </p>
  */
 @DomainService(nature = NatureOfService.DOMAIN)
-public class HideIsisAddonsSettingsFunctionality {
-
-    //region > postConstruct, preDestroy
-    @Programmatic
-    @PostConstruct
-    public void postConstruct() {
-        eventBusService.register(this);
-    }
-
-    @Programmatic
-    @PreDestroy
-    public void preDestroy() {
-        eventBusService.unregister(this);
-    }
-    //endregion
+public class HideIsisAddonsSettingsFunctionality extends AbstractSubscriber {
 
     @Programmatic
     @com.google.common.eventbus.Subscribe
@@ -62,10 +45,5 @@ public class HideIsisAddonsSettingsFunctionality {
             event.hide();
         }
     }
-
-    //region > injected services
-    @javax.inject.Inject
-    private EventBusService eventBusService;
-    //endregion
 
 }

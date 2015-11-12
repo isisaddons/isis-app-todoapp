@@ -18,31 +18,15 @@
  */
 package todoapp.app;
 
-import java.util.List;
-import java.util.Map;
-
-import com.google.common.collect.Lists;
-
-import org.apache.isis.applib.fixturescripts.FixtureScript;
-
-import todoapp.fixture.demo.DemoFixture;
-
-public class ToDoAppAppManifestWithFixtures extends ToDoAppAppManifest {
+public class ToDoAppAppManifestWithFixturesBypassSecurity extends ToDoAppAppManifestWithFixtures {
 
     @Override
-    public List<Class<? extends FixtureScript>> getFixtures() {
-        return Lists.newArrayList(DemoFixture.class);
+    public String getAuthenticationMechanism() {
+        return "bypass";
     }
 
     @Override
-    public Map<String, String> getConfigurationProperties() {
-        Map<String, String> props = super.getConfigurationProperties();
-        appendInstallFixturesKey(props);
-        return props;
+    public String getAuthorizationMechanism() {
+        return "bypass";
     }
-
-    protected void appendInstallFixturesKey(final Map<String, String> props) {
-        props.put("isis.persistor.datanucleus.install-fixtures", "true");
-    }
-
 }

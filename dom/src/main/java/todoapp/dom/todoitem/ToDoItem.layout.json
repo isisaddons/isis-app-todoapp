@@ -183,13 +183,22 @@
     {
         "span": 6,
         "collections": {
+            "similarTo": {
+                "collectionLayout": {
+                    "named": "Todo items that are <i>similar to</i> this one",
+                    "namedEscaped": false,
+                    "paged": 3,
+                    "render": "EAGERLY"
+                },
+                "disabled": {}
+            },
             "dependencies": {
                 "collectionLayout": {
                     "named": "Todo items that are <i>dependencies</i> of this item.",
                     "namedEscaped": false,
                     "describedAs": "Todo items that must be completed before this one",
                     "paged": 5,
-                    "render": "EAGERLY"
+                    "defaultView": "map"
                 },
                 "disabled": {},
                 "actions": {
@@ -206,15 +215,6 @@
                         }
                     }
                 }
-            },
-            "similarTo": {
-                "collectionLayout": {
-                    "named": "Todo items that are <i>similar to</i> this one",
-                    "namedEscaped": false,
-                    "paged": 3,
-                    "render": "LAZILY"
-                },
-                "disabled": {}
             }
         }
     }

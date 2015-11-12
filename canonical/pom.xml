@@ -47,6 +47,10 @@
                 </executions>
                 <configuration>
                     <removeOldOutput>true</removeOldOutput>
+                    <schemaDirectory>src/main/resources/todoapp/dto/todoitem</schemaDirectory>
+                    <schemaIncludes>
+                        <schemaInclude>todoitem.xsd</schemaInclude>
+                    </schemaIncludes>
                 </configuration>
             </plugin>
             <plugin>

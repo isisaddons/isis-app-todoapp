@@ -34,7 +34,7 @@
     </prerequisites>
 
     <properties>
-        <isis.version>1.10.0</isis.version>
+        <isis.version>1.11.0-SNAPSHOT</isis.version>
 
         <isis-metamodel-paraname8.version>1.10.0</isis-metamodel-paraname8.version>
 
@@ -56,11 +56,13 @@
         <jbcrypt.version>0.3m</jbcrypt.version>
         <assertj-core.version>2.0.0</assertj-core.version>
         <orika-core.version>1.4.5</orika-core.version>
+        <togglz.version>2.1.0.Final</togglz.version>
+
+        <lombok.version>1.16.6</lombok.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <togglz.version>2.1.0.Final</togglz.version>
     </properties>
 
     <repositories>
@@ -413,11 +415,32 @@
                 <artifactId>togglz-console</artifactId>
                 <version>${togglz.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 
 
     <profiles>
+        <profile>
+            <id>lombok</id>
+            <activation>
+                <property>
+                    <name>!skip.lombok</name>
+                </property>
+            </activation>
+            <properties>
+                <lombok.version>1.16.6</lombok.version>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.projectlombok</groupId>
+                    <artifactId>lombok</artifactId>
+                    <version>${lombok.version}</version>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+
         <profile>
             <id>m2e</id>
             <activation>
@@ -429,6 +452,7 @@
                 <directory>target-ide</directory>
             </build>
         </profile>
+
     </profiles>
 
 </project>

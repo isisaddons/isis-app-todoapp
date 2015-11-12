@@ -28,14 +28,14 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.bookmark.Bookmark;
 import org.apache.isis.applib.services.bookmark.BookmarkService;
+import org.apache.isis.schema.common.OidDto;
 import org.apache.isis.viewer.restfulobjects.applib.RepresentationType;
 import org.apache.isis.viewer.restfulobjects.rendering.service.conmap.ContentMappingService;
 
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
 import todoapp.dom.todoitem.ToDoItem;
-import todoapp.dto.module.todoitem.OidDto;
-import todoapp.dto.module.todoitem.ToDoItemDto;
+import todoapp.dto.todoitem.ToDoItemDto;
 
 @DomainService(
         nature = NatureOfService.DOMAIN
@@ -67,18 +67,23 @@ public class ToDoAppContentMappingService implements ContentMappingService {
             final RepresentationType representationType) {
 
         if(object instanceof ToDoItem) {
-            final Bookmark bookmark = bookmarkService.bookmarkFor(object);
-
-            final ToDoItemDto dto = mapperFactory.getMapperFacade().map(object, ToDoItemDto.class);
-            final OidDto oidDto = mapperFactory.getMapperFacade().map(bookmark, OidDto.class);
-
-            // manually wire together
-            dto.setOid(oidDto);
-
-            return dto;
+            return toDto((ToDoItem) object);
         }
 
         return null;
+    }
+
+    @Programmatic
+    public ToDoItemDto toDto(final ToDoItem object) {
+        final Bookmark bookmark = bookmarkService.bookmarkFor(object);
+
+        final ToDoItemDto dto = mapperFactory.getMapperFacade().map(object, ToDoItemDto.class);
+        final OidDto oidDto = mapperFactory.getMapperFacade().map(bookmark, OidDto.class);
+
+        // manually wire together
+        dto.setOid(oidDto);
+
+        return dto;
     }
 
     //region > injected services

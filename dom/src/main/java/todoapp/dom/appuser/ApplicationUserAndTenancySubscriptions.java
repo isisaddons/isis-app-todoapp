@@ -16,10 +16,7 @@
  */
 package todoapp.dom.appuser;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
-import org.apache.isis.applib.AbstractService;
+import org.apache.isis.applib.AbstractSubscriber;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
@@ -38,24 +35,12 @@ import todoapp.dom.seed.tenancies.UsersTenancy;
 @DomainService(
         nature = NatureOfService.DOMAIN
 )
-public class ApplicationUserAndTenancySubscriptions extends AbstractService {
+public class ApplicationUserAndTenancySubscriptions extends AbstractSubscriber {
 
     //region > LOG
     private final static org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(ApplicationUserAndTenancySubscriptions.class);
     //endregion
 
-    //region > postConstruct, preDestroy
-    @Programmatic
-    @PostConstruct
-    public void postConstruct() {
-        eventBusService.register(this);
-    }
-    @Programmatic
-    @PreDestroy
-    public void preDestroy() {
-        eventBusService.unregister(this);
-    }
-    //endregion
 
     //region > on NewXxxUser
     @Programmatic

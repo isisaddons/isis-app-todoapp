@@ -20,35 +20,18 @@ package todoapp.app.services.settings;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
+import org.apache.isis.applib.AbstractSubscriber;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
-import org.apache.isis.applib.services.eventbus.EventBusService;
 
 import org.isisaddons.module.settings.dom.UserSetting;
 
-@DomainService(nature = NatureOfService.DOMAIN)
-public class HideContributionForSettings {
-
-    //region > postConstruct, preDestroy
-
-    @Programmatic
-    @PostConstruct
-    public void postConstruct() {
-        eventBusService.register(this);
-    }
-
-    @Programmatic
-    @PreDestroy
-    public void preDestroy() {
-        eventBusService.unregister(this);
-    }
-    //endregion
-
+@DomainService(
+        nature = NatureOfService.DOMAIN
+)
+public class HideContributionForSettings extends AbstractSubscriber {
 
     @Programmatic
     @com.google.common.eventbus.Subscribe
@@ -70,16 +53,10 @@ public class HideContributionForSettings {
         }
     }
 
-
-    //region > injected services
     @javax.inject.Inject
     private DomainObjectContainer container;
 
     @javax.inject.Inject
-    private EventBusService eventBusService;
-
-    @javax.inject.Inject
     private ToDoAppSettingsService applicationSettingsService;
-    //endregion
 
 }

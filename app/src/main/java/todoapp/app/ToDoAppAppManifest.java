@@ -35,9 +35,6 @@ import org.isisaddons.module.security.facets.TenantedAuthorizationFacetFactory;
 import todoapp.dom.ToDoAppDomainModule;
 import todoapp.fixture.ToDoAppFixtureModule;
 
-/**
- * Bootstrap the application.
- */
 public class ToDoAppAppManifest implements AppManifest {
 
     /**
