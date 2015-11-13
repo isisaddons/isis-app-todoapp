@@ -40,7 +40,9 @@ import todoapp.dom.todoitem.ToDoItem;
 import todoapp.dom.todoitem.ToDoItemRepository;
 import todoapp.dom.todoitem.ToDoItems;
 
-@DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
+@DomainService(
+        nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY
+)
 public class SimilarToContributions extends AbstractFactoryAndRepository {
 
     //region > similarTo (contributed collection)

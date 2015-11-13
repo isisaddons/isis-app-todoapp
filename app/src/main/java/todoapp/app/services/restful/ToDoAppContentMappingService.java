@@ -21,21 +21,20 @@ package todoapp.app.services.restful;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
-import org.apache.isis.applib.services.bookmark.Bookmark;
-import org.apache.isis.applib.services.bookmark.BookmarkService;
-import org.apache.isis.schema.common.OidDto;
 import org.apache.isis.viewer.restfulobjects.applib.RepresentationType;
 import org.apache.isis.viewer.restfulobjects.rendering.service.conmap.ContentMappingService;
 
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
+import todoapp.app.viewmodels.todoitem.ToDoItemDto;
+import todoapp.dom.similarto.SimilarToContributions;
 import todoapp.dom.todoitem.ToDoItem;
-import todoapp.dto.todoitem.ToDoItemDto;
 
 @DomainService(
         nature = NatureOfService.DOMAIN
@@ -51,11 +50,6 @@ public class ToDoAppContentMappingService implements ContentMappingService {
         mapperFactory.registerClassMap(
                 mapperFactory.classMap(ToDoItem.class, ToDoItemDto.class)
                         .byDefault() // all fields are the compatible
-                        .toClassMap());
-        mapperFactory.registerClassMap(
-                mapperFactory.classMap(Bookmark.class, OidDto.class)
-                        .field("identifier", "objectIdentifier") // customized
-                        .byDefault() // all other fields are compatible
                         .toClassMap());
     }
 
@@ -74,21 +68,27 @@ public class ToDoAppContentMappingService implements ContentMappingService {
     }
 
     @Programmatic
-    public ToDoItemDto toDto(final ToDoItem object) {
-        final Bookmark bookmark = bookmarkService.bookmarkFor(object);
+    public ToDoItemDto toDto(final ToDoItem toDoItem) {
 
-        final ToDoItemDto dto = mapperFactory.getMapperFacade().map(object, ToDoItemDto.class);
-        final OidDto oidDto = mapperFactory.getMapperFacade().map(bookmark, OidDto.class);
-
+        final ToDoItemDto dto = mapperFactory.getMapperFacade().map(toDoItem, ToDoItemDto.class);
         // manually wire together
-        dto.setOid(oidDto);
+        dto.setToDoItem(toDoItem);
+
+        final List<ToDoItem> toDoItems = similarToContributions.similarTo(toDoItem);
+//        final ArrayList<ToDoItemDto> toDoItemDtos = Lists.newArrayList(
+//                Iterables.transform(toDoItems, new Function<ToDoItem, ToDoItemDto>() {
+//                    @Nullable @Override public ToDoItemDto apply(final ToDoItem toDoItem) {
+//                        return mapperFactory.getMapperFacade().map(toDoItem, ToDoItemDto.class);
+//                    }
+//                }));
+        dto.setSimilarItems(toDoItems);
 
         return dto;
     }
 
-    //region > injected services
-    @javax.inject.Inject
-    private BookmarkService bookmarkService;
-    //endregion
+
+    @Inject
+    SimilarToContributions similarToContributions;
+
 
 }

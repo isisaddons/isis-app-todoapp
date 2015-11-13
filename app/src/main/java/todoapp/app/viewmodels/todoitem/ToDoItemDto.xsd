@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema elementFormDefault="qualified" version="1.0" targetNamespace="http://viewmodels.app.todoapp/todoitem.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://isis.apache.org/schema/common">
+
+  <xs:import namespace="http://isis.apache.org/schema/common" schemaLocation="http://isis.apache.org/schema/common"/>
+
+  <xs:element name="toDoItemDto">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="toDoItem" type="ns1:oidDto"/>
+        <xs:element name="description" type="xs:string"/>
+        <xs:element name="category" type="xs:string"/>
+        <xs:element name="subcategory" type="xs:string" minOccurs="0"/>
+        <xs:element name="cost" type="xs:decimal" minOccurs="0"/>
+        <xs:element name="similarItems" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="todoItem" type="ns1:oidDto" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+

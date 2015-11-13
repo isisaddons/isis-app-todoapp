@@ -1,0 +1,90 @@
+{
+  "columns": [
+    {
+      "span": 4,
+      "memberGroups": {
+        "General": {
+          "members": {
+            "category": {
+              "propertyLayout": {
+                "named": "Category",
+                "typicalLength": 25
+              }
+            },
+            "cost": {
+              "propertyLayout": {
+                "named": "Cost",
+                "typicalLength": 10
+              }
+            },
+            "description": {
+              "propertyLayout": {
+                "named": "Description",
+                "typicalLength": 25
+              }
+            },
+            "subcategory": {
+              "propertyLayout": {
+                "named": "Subcategory",
+                "typicalLength": 25
+              }
+            },
+            "toDoItem": {
+              "propertyLayout": {
+                "named": "To Do Item"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "span": 0,
+      "memberGroups": {}
+    },
+    {
+      "span": 0,
+      "memberGroups": {}
+    },
+    {
+      "span": 8,
+      "collections": {
+        "similarItems": {
+          "collectionLayout": {
+            "named": "Similar Items",
+            "paged": 12,
+            "render": "EAGERLY"
+          }
+        }
+      }
+    }
+  ],
+  "actions": {
+    "downloadLayout": {
+      "actionLayout": {
+        "cssClass": "btn-default",
+        "cssClassFa": "fa fa-fw fa-download",
+        "named": "Download Layout",
+        "contributed": "AS_ACTION"
+      }
+    },
+    "recentActivity": {
+      "actionLayout": {
+        "cssClass": "btn-default",
+        "named": "Recent Activity"
+      }
+    },
+    "downloadXml": {
+      "actionLayout": {
+        "cssClass": "btn-default",
+        "named": "Download Xml"
+      }
+    },
+    "downloadXsd": {
+      "actionLayout": {
+        "cssClass": "btn-default",
+        "named": "Download Xsd"
+      }
+    }
+  }
+}

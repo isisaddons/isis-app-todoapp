@@ -259,7 +259,6 @@
 
     <modules>
         <module>app</module>
-        <module>canonical</module>
         <module>dom</module>
         <module>fixture</module>
         <module>integtests</module>
@@ -287,11 +286,6 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>todoapp-app</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>todoapp-canonical</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

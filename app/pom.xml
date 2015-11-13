@@ -61,6 +61,10 @@
         </dependency>
         <dependency>
             <groupId>org.apache.isis.core</groupId>
+            <artifactId>isis-core-schema</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.isis.core</groupId>
             <artifactId>isis-core-runtime</artifactId>
         </dependency>
 
