@@ -21,13 +21,11 @@ package todoapp.app.services.demoeventsubscriber;
 import java.util.EventObject;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
+import org.apache.isis.applib.AbstractSubscriber;
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.NonRecoverableException;
 import org.apache.isis.applib.RecoverableException;
@@ -42,7 +40,6 @@ import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.eventbus.CollectionDomainEvent;
-import org.apache.isis.applib.services.eventbus.EventBusService;
 import org.apache.isis.applib.services.eventbus.PropertyDomainEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 
@@ -54,8 +51,8 @@ import org.isisaddons.module.sessionlogger.dom.SessionLoggingServiceMenu;
 import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterables.transform;
 import static com.google.common.collect.Lists.newArrayList;
-import todoapp.dom.ToDoAppDomainModule;
 import todoapp.app.services.settings.ToDoAppSettingsService;
+import todoapp.dom.ToDoAppDomainModule;
 import todoapp.dom.todoitem.ToDoItem;
 
 /**
@@ -75,41 +72,10 @@ import todoapp.dom.todoitem.ToDoItem;
         menuBar = DomainServiceLayout.MenuBar.SECONDARY,
         named = "Prototyping",
         menuOrder = "500.20")
-public class DemoDomainEventSubscriptions {
+public class DemoDomainEventSubscriptions extends AbstractSubscriber {
 
     //region > LOG
     private final static org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(DemoDomainEventSubscriptions.class);
-    //endregion
-
-    //region > postConstruct, preDestroy
-
-    /**
-     * Registers this service with the {@link org.apache.isis.applib.services.eventbus.EventBusService}.
-     *
-     * <p>
-     *     Because this service is a singleton, this is called during initial bootstrap.
-     * </p>
-     */
-    @Programmatic
-    @PostConstruct
-    public void postConstruct() {
-        LOG.info("postConstruct: registering to event bus");
-        eventBusService.register(this);
-    }
-
-    /**
-     * Unregisters this service from the {@link org.apache.isis.applib.services.eventbus.EventBusService}.
-     *
-     * <p>
-     *     Because this service is a singleton, this is only done when the system is shutdown.
-     * </p>
-     */
-    @Programmatic
-    @PreDestroy
-    public void preDestroy() {
-        LOG.info("preDestroy: unregistering from event bus");
-        eventBusService.unregister(this);
-    }
     //endregion
 
     //region > subscriberBehaviour
@@ -174,7 +140,6 @@ public class DemoDomainEventSubscriptions {
     //endregion
 
     //region > on(Event) for ToDoItem-specific action events
-    @Programmatic
     @com.google.common.eventbus.Subscribe
     @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final ToDoItem.CompletedDomainEvent ev) {
@@ -397,21 +362,11 @@ public class DemoDomainEventSubscriptions {
     }
 
     private static <T extends EventObject> Function<EventObject, T> castTo(Class<T> expectedType) {
-        return new Function<EventObject, T>() {
-                    @Override
-                    public T apply(EventObject input) {
-                        return (T) input;
-                    }
-                };
+        return input -> (T) input;
     }
 
     private static <T extends EventObject> Predicate<EventObject> instanceOf(final Class<T> expectedType) {
-        return new Predicate<EventObject>() {
-            @Override
-            public boolean apply(EventObject input) {
-                return expectedType.isInstance(input);
-            }
-        };
+        return input -> expectedType.isInstance(input);
     }
 
 
@@ -471,9 +426,6 @@ public class DemoDomainEventSubscriptions {
     //region > injected services
     @javax.inject.Inject
     private DomainObjectContainer container;
-
-    @javax.inject.Inject
-    private EventBusService eventBusService;
 
     @javax.inject.Inject
     private ToDoAppSettingsService applicationSettingsService;

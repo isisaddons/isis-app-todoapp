@@ -32,7 +32,7 @@ import org.apache.isis.viewer.restfulobjects.rendering.service.conmap.ContentMap
 
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
-import todoapp.app.viewmodels.todoitem.ToDoItemDto;
+import todoapp.app.viewmodels.todoitem.v1.ToDoItemDto;
 import todoapp.dom.similarto.SimilarToContributions;
 import todoapp.dom.todoitem.ToDoItem;
 
@@ -49,7 +49,11 @@ public class ToDoAppContentMappingService implements ContentMappingService {
         mapperFactory = new DefaultMapperFactory.Builder().build();
         mapperFactory.registerClassMap(
                 mapperFactory.classMap(ToDoItem.class, ToDoItemDto.class)
-                        .byDefault() // all fields are the compatible
+                        .byDefault()
+                        .toClassMap());
+        mapperFactory.registerClassMap(
+                mapperFactory.classMap(ToDoItem.class, todoapp.app.viewmodels.todoitem.v2.ToDoItemDto.class)
+                        .byDefault()
                         .toClassMap());
     }
 
@@ -61,26 +65,32 @@ public class ToDoAppContentMappingService implements ContentMappingService {
             final RepresentationType representationType) {
 
         if(object instanceof ToDoItem) {
-            return toDto((ToDoItem) object);
+
+            return toDtoV1((ToDoItem) object);
         }
 
         return null;
     }
 
     @Programmatic
-    public ToDoItemDto toDto(final ToDoItem toDoItem) {
+    public ToDoItemDto toDtoV1(final ToDoItem toDoItem) {
 
         final ToDoItemDto dto = mapperFactory.getMapperFacade().map(toDoItem, ToDoItemDto.class);
-        // manually wire together
         dto.setToDoItem(toDoItem);
 
         final List<ToDoItem> toDoItems = similarToContributions.similarTo(toDoItem);
-//        final ArrayList<ToDoItemDto> toDoItemDtos = Lists.newArrayList(
-//                Iterables.transform(toDoItems, new Function<ToDoItem, ToDoItemDto>() {
-//                    @Nullable @Override public ToDoItemDto apply(final ToDoItem toDoItem) {
-//                        return mapperFactory.getMapperFacade().map(toDoItem, ToDoItemDto.class);
-//                    }
-//                }));
+        dto.setSimilarItems(toDoItems);
+
+        return dto;
+    }
+
+    @Programmatic
+    public todoapp.app.viewmodels.todoitem.v2.ToDoItemDto toDto2(final ToDoItem toDoItem) {
+
+        final todoapp.app.viewmodels.todoitem.v2.ToDoItemDto dto = mapperFactory.getMapperFacade().map(toDoItem, todoapp.app.viewmodels.todoitem.v2.ToDoItemDto.class);
+        dto.setToDoItem(toDoItem);
+
+        final List<ToDoItem> toDoItems = similarToContributions.similarTo(toDoItem);
         dto.setSimilarItems(toDoItems);
 
         return dto;

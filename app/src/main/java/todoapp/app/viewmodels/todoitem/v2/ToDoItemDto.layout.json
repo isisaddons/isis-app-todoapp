@@ -1,25 +1,19 @@
 {
   "columns": [
     {
-      "span": 4,
+      "span": 5,
       "memberGroups": {
         "General": {
           "members": {
-            "category": {
-              "propertyLayout": {
-                "named": "Category",
-                "typicalLength": 25
-              }
-            },
-            "cost": {
-              "propertyLayout": {
-                "named": "Cost",
-                "typicalLength": 10
-              }
-            },
             "description": {
               "propertyLayout": {
                 "named": "Description",
+                "typicalLength": 25
+              }
+            },
+            "category": {
+              "propertyLayout": {
+                "named": "Category",
                 "typicalLength": 25
               }
             },
@@ -27,6 +21,12 @@
               "propertyLayout": {
                 "named": "Subcategory",
                 "typicalLength": 25
+              }
+            },
+            "cost": {
+              "propertyLayout": {
+                "named": "Cost",
+                "typicalLength": 10
               }
             },
             "toDoItem": {
@@ -47,7 +47,7 @@
       "memberGroups": {}
     },
     {
-      "span": 8,
+      "span": 7,
       "collections": {
         "similarItems": {
           "collectionLayout": {
