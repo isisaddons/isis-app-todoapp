@@ -169,8 +169,8 @@
                                 <phase>generate-resources</phase>
                                 <configuration>
                                     <sources>
-                                        <source>src/main/java/todoapp/app/viewmodels/todoitem/v1/ToDoItemDto.java</source>
-                                        <source>src/main/java/todoapp/app/viewmodels/todoitem/v2/ToDoItemDto.java</source>
+                                        <source>${build.sourceDirectory}/todoapp/app/viewmodels/todoitem/v1/ToDoItemDto.java</source>
+                                        <source>${build.sourceDirectory}/todoapp/app/viewmodels/todoitem/v2/ToDoItemDto.java</source>
                                     </sources>
                                     <outputDirectory>${project.build.directory}/target/generated-schemas/jaxb2</outputDirectory>
                                 </configuration>
