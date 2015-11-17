@@ -163,8 +163,7 @@ corresponding DTO.  This mapping activated based on the HTTP clients' `Accept` h
 
 In Apache Isis 1.11.0-SNAPSHOT, the JAXB `@XmlRootElement` annotation is recognized as defining a view model, and so
 it makes sense to use the JAXB-annotated class as the canonical form (the framework provides the `JaxbService` to 
-generate the XSD schema from this as required).  Moreover (and unlike earlier releases) the view model/DTO can contain
-collections.  For example, we can define: 
+generate the XSD schema from this as required).  For example, we can define: 
 
     package todoapp.app.viewmodels.todoitem.v1;
     ...    
@@ -199,7 +198,7 @@ collections.  For example, we can define:
         protected BigDecimal cost;
     }
 
-Note that this uses Lombok to define getters and setters.  This DTO can then be requested directly using the `Accept` header.
+(Note that this example uses Lombok to define getters and setters).  This DTO can then be requested directly using the `Accept` header.
 
 For example, when:
 
@@ -209,7 +208,10 @@ we get a representation of:
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/202-rest-accept-xml.png)
 
-Multiple versions are also supported.  For example, if we have v2 of the DTO:
+Moreover, as of 1.11.0-SNAPSHOT (and unlike earlier releases) the view model/DTO can contain collections, and will
+transparently convert references to persistent entities into `<oid-dto>` elements.
+
+Thus, we can define v2 of the DTO:
 
     package todoapp.app.viewmodels.todoitem.v2;
     ...
@@ -237,15 +239,38 @@ Multiple versions are also supported.  For example, if we have v2 of the DTO:
         protected List<ToDoItem> similarItems = Lists.newArrayList();
     }
 
-then this can be requested using the modified header:
+which can be requested using the modified header:
 
 * Accept = `application/xml;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.app.viewmodels.todoitem.v2.ToDoItemDto`
 
-resulting in this representation:
+This results in the representation:
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/203-rest-accept-xml.png)
 
-Notice how any references to persistent entities are automatically converted into `<oid-dto>` XML elements holding the OID of the domain entity.
+Notice how the reference to the underlying `ToDoItem` and the collection of references to similar items are all 
+serialized out as `<oid-dto` references.  Also notice how the XSD namespaces are managed.  In the code, this corresponds
+to this `package-info.java` declaration:
+
+    @javax.xml.bind.annotation.XmlSchema(
+            xmlns = {
+                    @XmlNs(
+                            namespaceURI = "http://isis.apache.org/schema/common",
+                            prefix = "common"
+                    ),
+                    @XmlNs(
+                            namespaceURI = "http://viewmodels.app.todoapp/v1/todoitem",
+                            prefix = "todoitem-v1"
+                    ),
+                    @XmlNs(
+                            namespaceURI = "http://viewmodels.app.todoapp/v2/todoitem",
+                            prefix = "todoitem-v2"
+                    )
+            },
+            namespace = "http://viewmodels.app.todoapp/v2/todoitem",
+            elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED
+    )
+    package todoapp.app.viewmodels.todoitem.v2;
+    import javax.xml.bind.annotation.XmlNs;
 
 
 It is also possible to request JSON using a similar `Accept` header, but with `application/json` rather than 
