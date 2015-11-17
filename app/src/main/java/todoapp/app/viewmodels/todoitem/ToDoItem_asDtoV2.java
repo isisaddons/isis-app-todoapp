@@ -6,9 +6,9 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.services.jaxb.Dto;
+import org.apache.isis.applib.services.dto.Dto;
 
-import todoapp.app.services.restful.ToDoAppContentMappingService;
+import todoapp.app.services.restful.ContentMappingServiceForToDoItem;
 import todoapp.app.viewmodels.todoitem.v2.ToDoItemDto;
 import todoapp.dom.todoitem.ToDoItem;
 
@@ -30,11 +30,11 @@ public class ToDoItem_asDtoV2 implements Dto {
     )
     @MemberOrder(sequence = "2")
     public ToDoItemDto $$() {
-        return toDoAppContentMappingService.toDto2(toDoItem);
+        return contentMappingServiceForToDoItem.toDtoV2(toDoItem);
     }
 
     @javax.inject.Inject
-    ToDoAppContentMappingService toDoAppContentMappingService;
+    ContentMappingServiceForToDoItem contentMappingServiceForToDoItem;
 
 
 }

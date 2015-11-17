@@ -27,8 +27,6 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.services.eventbus.IconUiEvent;
 import org.apache.isis.applib.services.eventbus.TitleUiEvent;
 
-import todoapp.app.viewmodels.todoitem.v1.ToDoItemDto;
-
 @DomainService(
         nature = NatureOfService.DOMAIN
 )
@@ -45,8 +43,7 @@ public class UiEventSubscriber extends AbstractSubscriber {
         }
         if(eventSource instanceof todoapp.app.viewmodels.todoitem.v1.ToDoItemDto) {
             todoapp.app.viewmodels.todoitem.v1.ToDoItemDto dto = (todoapp.app.viewmodels.todoitem.v1.ToDoItemDto) eventSource;
-            final String underlyingTitle = container.titleOf(dto.getToDoItem());
-            event.setTitle("DTO v1 for: " + underlyingTitle);
+            event.setTitle("DTO v1 for: " + dto.getDescription());
         }
     }
 
@@ -54,11 +51,10 @@ public class UiEventSubscriber extends AbstractSubscriber {
     @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final IconUiEvent<?> event) {
         final Object eventSource = event.getSource();
-        if(eventSource instanceof ToDoItemDto) {
-            ToDoItemDto dto = (ToDoItemDto) eventSource;
+        if(eventSource instanceof todoapp.app.viewmodels.todoitem.v2.ToDoItemDto) {
+            todoapp.app.viewmodels.todoitem.v2.ToDoItemDto dto = (todoapp.app.viewmodels.todoitem.v2.ToDoItemDto) eventSource;
             final String underlyingIconName = container.iconNameOf(dto.getToDoItem());
             event.setIconName(underlyingIconName);
-
         }
     }
 

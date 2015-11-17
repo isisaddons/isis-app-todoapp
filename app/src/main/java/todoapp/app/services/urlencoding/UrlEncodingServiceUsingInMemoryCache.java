@@ -19,7 +19,7 @@ import org.apache.isis.applib.services.urlencoding.UrlEncodingService;
 @DomainServiceLayout(
         menuOrder = "" + (Integer.MAX_VALUE - 1)
 )
-public class UrlEncodingServiceUsingInMemoryCache extends UrlEncodingService {
+public class UrlEncodingServiceUsingInMemoryCache implements UrlEncodingService {
 
     private BiMap<UUID,String> cache = HashBiMap.create();
 

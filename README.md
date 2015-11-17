@@ -156,51 +156,109 @@ The screenshot below shows accessing this REST API using a Chrome plugin:
 
 Like the Wicket viewer, the REST API is generated automatically from the domain objects (entities and view models); the screenshot above shows a representation of a `ToDoItem` instance.
 
-Apache Isis' Restful Objects viewer also (in 1.9.0) implements enhanced content negotiation that goes beyond the RO 1.0 spec (though is discussed in a "future ideas" appendix).  Based on an XSD:
+Apache Isis' Restful Objects viewer also (in 1.9.0+) implements enhanced content negotiation that goes beyond the 
+RO 1.0 spec (though is discussed in a "future ideas" appendix).  We can define a DTO class, eg `ToDoItemDto`, and 
+provide an implementation of Apache Isis' `ContentMappingService` to map any `ToDoItem` domain object into this 
+corresponding DTO.  This mapping activated based on the HTTP clients' `Accept` header.
 
-<pre>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;xs:schema targetNamespace=&quot;http://module.dto.todoapp/todoitem.xsd&quot;
-    elementFormDefault=&quot;qualified&quot;
-    xmlns=&quot;http://module.dto.todoapp/todoitem.xsd&quot;
-    xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot;&gt;
+In Apache Isis 1.11.0-SNAPSHOT, the JAXB `@XmlRootElement` annotation is recognized as defining a view model, and so
+it makes sense to use the JAXB-annotated class as the canonical form (the framework provides the `JaxbService` to 
+generate the XSD schema from this as required).  Moreover (and unlike earlier releases) the view model/DTO can contain
+collections.  For example, we can define: 
 
-    &lt;xs:element name=&quot;toDoItemDto&quot;&gt;
-        &lt;xs:complexType&gt;
-            &lt;xs:sequence&gt;
-                &lt;xs:element name=&quot;oid&quot; type=&quot;oidDto&quot;/&gt;
-                &lt;xs:element name=&quot;description&quot; type=&quot;xs:string&quot; minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;/&gt;
-                &lt;xs:element name=&quot;category&quot; type=&quot;xs:string&quot; minOccurs=&quot;1&quot; maxOccurs=&quot;1&quot;/&gt;
-                &lt;xs:element name=&quot;subcategory&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;1&quot;/&gt;
-                &lt;xs:element name=&quot;cost&quot; type=&quot;xs:decimal&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;1&quot;/&gt;
-            &lt;/xs:sequence&gt;
-        &lt;/xs:complexType&gt;
-    &lt;/xs:element&gt;
+    package todoapp.app.viewmodels.todoitem.v1;
+    ...    
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(
+            namespace = "http://viewmodels.app.todoapp/v1/todoitem",
+            propOrder = {
+            "description",
+            "category",
+            "subcategory",
+            "cost"
+            }
+    )
+    @XmlRootElement(name = "toDoItemDto")
+    @DomainObjectLayout(
+            titleUiEvent = TitleUiEvent.Default.class
+    )
+    public class ToDoItemDto implements Dto {
+    
+        @XmlElement(required = true)
+        @Getter @Setter
+        protected String description;
+    
+        @XmlElement(required = true)
+        @Getter @Setter
+        protected String category;
+    
+        @Getter @Setter
+        protected String subcategory;
+    
+        @Getter @Setter
+        protected BigDecimal cost;
+    }
 
-    &lt;xs:complexType name=&quot;oidDto&quot;&gt;
-        &lt;xs:sequence&gt;
-            &lt;xs:element name=&quot;objectType&quot; type=&quot;xs:string&quot;/&gt;
-            &lt;xs:element name=&quot;objectIdentifier&quot; type=&quot;xs:string&quot;/&gt;
-        &lt;/xs:sequence&gt;
-    &lt;/xs:complexType&gt;
-&lt;/xs:schema&gt;
-</pre>
+Note that this uses Lombok to define getters and setters.  This DTO can then be requested directly using the `Accept` header.
 
-the todoapp uses a maven plugin to generate a corresponding `ToDoItemDto` class.  It also provides an implementation of Apache Isis' `ContentMappingService` that maps any `ToDoItem` domain object into this corresponding DTO.  This mapping activated based on the HTTP clients' `Accept` header.
+For example, when:
 
-For example, we get a representation of:
+* Accept = `application/xml;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.app.viewmodels.todoitem.v1.ToDoItemDto`
+
+we get a representation of:
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/202-rest-accept-xml.png)
 
-when the `Accept` header is `application/xml;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.dto.module.todoitem.ToDoItemDto`, and we get a representation of:
+Multiple versions are also supported.  For example, if we have v2 of the DTO:
+
+    package todoapp.app.viewmodels.todoitem.v2;
+    ...
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(
+            namespace = "http://viewmodels.app.todoapp/v2/todoitem",
+            propOrder = {
+                "toDoItem",
+                "similarItems"
+            }
+    )
+    @XmlRootElement(name = "toDoItemDto")
+    @DomainObjectLayout(
+            titleUiEvent = TitleUiEvent.Default.class
+    )
+    public class ToDoItemDto extends todoapp.app.viewmodels.todoitem.v1.ToDoItemDto {
+    
+        @XmlElement(required = true)
+        @Getter @Setter
+        protected ToDoItem toDoItem;
+    
+        @XmlElementWrapper
+        @XmlElement(name = "todoItem")
+        @Getter @Setter
+        protected List<ToDoItem> similarItems = Lists.newArrayList();
+    }
+
+then this can be requested using the modified header:
+
+* Accept = `application/xml;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.app.viewmodels.todoitem.v2.ToDoItemDto`
+
+resulting in this representation:
+
+![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/203-rest-accept-xml.png)
+
+Notice how any references to persistent entities are automatically converted into `<oid-dto>` XML elements holding the OID of the domain entity.
+
+
+It is also possible to request JSON using a similar `Accept` header, but with `application/json` rather than 
+`application/xml`.  Note however that translation of references to persistent entities is *not* currently supported, 
+so only v1 of the `ToDoItemDto` would be supported.  Thus, the header:
+
+* Accept = `application/json;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.app.viewmodels.todoitem.v1.ToDoItemDto`
+
+should generate a representation of:
 
 ![](https://raw.github.com/isisaddons/isis-app-todoapp/master/images/204-rest-accept-json.png)
 
-when the `Accept` header is `application/json;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.dto.module.todoitem.ToDoItemDto`.
-
 If no mapping is available, a 406 (Not Acceptable) response code is returned.
-
-NOTE: Since the `ToDoItemDto` and `OidDto`classes will be generated by the maven plugin (and put under target/classes/...etc) run a mvn clean install and re-import the project in your IDE in case you find them missing.
 
 
 ## Integration Testing Support

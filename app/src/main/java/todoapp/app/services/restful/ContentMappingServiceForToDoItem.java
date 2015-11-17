@@ -19,6 +19,7 @@
 package todoapp.app.services.restful;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
@@ -32,14 +33,13 @@ import org.apache.isis.viewer.restfulobjects.rendering.service.conmap.ContentMap
 
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
-import todoapp.app.viewmodels.todoitem.v1.ToDoItemDto;
 import todoapp.dom.similarto.SimilarToContributions;
 import todoapp.dom.todoitem.ToDoItem;
 
 @DomainService(
         nature = NatureOfService.DOMAIN
 )
-public class ToDoAppContentMappingService implements ContentMappingService {
+public class ContentMappingServiceForToDoItem implements ContentMappingService {
 
     private MapperFactory mapperFactory;
 
@@ -48,7 +48,7 @@ public class ToDoAppContentMappingService implements ContentMappingService {
     public void init() {
         mapperFactory = new DefaultMapperFactory.Builder().build();
         mapperFactory.registerClassMap(
-                mapperFactory.classMap(ToDoItem.class, ToDoItemDto.class)
+                mapperFactory.classMap(ToDoItem.class, todoapp.app.viewmodels.todoitem.v1.ToDoItemDto.class)
                         .byDefault()
                         .toClassMap());
         mapperFactory.registerClassMap(
@@ -65,31 +65,37 @@ public class ToDoAppContentMappingService implements ContentMappingService {
             final RepresentationType representationType) {
 
         if(object instanceof ToDoItem) {
-
-            return toDtoV1((ToDoItem) object);
+            for (MediaType acceptableMediaType : acceptableMediaTypes) {
+                final Map<String, String> parameters = acceptableMediaType.getParameters();
+                final String className = parameters.get("x-ro-domain-type");
+                if(todoapp.app.viewmodels.todoitem.v1.ToDoItemDto.class.getName().equals(className)) {
+                    return toDtoV1((ToDoItem) object);
+                }
+                if(todoapp.app.viewmodels.todoitem.v2.ToDoItemDto.class.getName().equals(className)) {
+                    return toDtoV2((ToDoItem) object);
+                }
+            }
         }
 
         return null;
     }
 
     @Programmatic
-    public ToDoItemDto toDtoV1(final ToDoItem toDoItem) {
+    public todoapp.app.viewmodels.todoitem.v1.ToDoItemDto toDtoV1(final ToDoItem toDoItem) {
 
-        final ToDoItemDto dto = mapperFactory.getMapperFacade().map(toDoItem, ToDoItemDto.class);
-        dto.setToDoItem(toDoItem);
-
-        final List<ToDoItem> toDoItems = similarToContributions.similarTo(toDoItem);
-        dto.setSimilarItems(toDoItems);
+        final todoapp.app.viewmodels.todoitem.v1.ToDoItemDto dto =
+                mapperFactory.getMapperFacade().map(toDoItem, todoapp.app.viewmodels.todoitem.v1.ToDoItemDto.class);
 
         return dto;
     }
 
     @Programmatic
-    public todoapp.app.viewmodels.todoitem.v2.ToDoItemDto toDto2(final ToDoItem toDoItem) {
+    public todoapp.app.viewmodels.todoitem.v2.ToDoItemDto toDtoV2(final ToDoItem toDoItem) {
 
-        final todoapp.app.viewmodels.todoitem.v2.ToDoItemDto dto = mapperFactory.getMapperFacade().map(toDoItem, todoapp.app.viewmodels.todoitem.v2.ToDoItemDto.class);
+        final todoapp.app.viewmodels.todoitem.v2.ToDoItemDto dto =
+                mapperFactory.getMapperFacade().map(toDoItem, todoapp.app.viewmodels.todoitem.v2.ToDoItemDto.class);
+
         dto.setToDoItem(toDoItem);
-
         final List<ToDoItem> toDoItems = similarToContributions.similarTo(toDoItem);
         dto.setSimilarItems(toDoItems);
 
