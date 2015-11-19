@@ -94,6 +94,12 @@ public class ToDoAppAppManifest implements AppManifest {
                 Joiner.on(",").join(
                         TenantedAuthorizationFacetFactory.class.getName(),
                         NamedFacetOnParameterParaname8Factory.class.getName()));
+        props.put("isis.services.eventbus.titleUiEvent.postForDefault", "true");
+        props.put("isis.services.eventbus.iconUiEvent.postForDefault", "true");
+        props.put("isis.services.eventbus.cssClassUiEvent.postForDefault", "true");
+        props.put("isis.services.eventbus.actionDomainEvent.postForDefault", "true");
+        props.put("isis.services.eventbus.propertyDomainEvent.postForDefault", "true");
+        props.put("isis.services.eventbus.collectionDomainEvent.postForDefault", "true");
     }
 
 }
