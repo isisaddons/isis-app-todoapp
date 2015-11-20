@@ -717,36 +717,6 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
                 toDoItem.setDescription(null);
             }
 
-            @Test
-            public void cannotUseModify() throws Exception {
-
-                expectedExceptions.expectMessage("Cannot invoke supporting method for 'Description'; use only property accessor/mutator");
-
-                // given
-                final String description = toDoItem.getDescription();
-
-                // when
-                toDoItem.modifyDescription(description + " foobar!");
-
-                // then
-                assertThat(toDoItem.getDescription()).isEqualTo(description);
-            }
-
-            @Test
-            public void cannotUseClear() throws Exception {
-
-                expectedExceptions.expectMessage("Cannot invoke supporting method for 'Description'; use only property accessor/mutator");
-
-                // given
-                final String description = toDoItem.getDescription();
-
-                // when
-                toDoItem.clearDescription();
-
-                // then
-                assertThat(toDoItem.getDescription()).isEqualTo(description);
-            }
-
 
             @Test
             public void onlyJustShortEnough() throws Exception {

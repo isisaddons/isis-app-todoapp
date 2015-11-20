@@ -48,11 +48,11 @@ public class ContentMappingServiceForToDoItem implements ContentMappingService {
     public void init() {
         mapperFactory = new DefaultMapperFactory.Builder().build();
         mapperFactory.registerClassMap(
-                mapperFactory.classMap(ToDoItem.class, todoapp.app.viewmodels.todoitem.v1.ToDoItemDto.class)
+                mapperFactory.classMap(ToDoItem.class, todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto.class)
                         .byDefault()
                         .toClassMap());
         mapperFactory.registerClassMap(
-                mapperFactory.classMap(ToDoItem.class, todoapp.app.viewmodels.todoitem.v2.ToDoItemDto.class)
+                mapperFactory.classMap(ToDoItem.class, todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto.class)
                         .byDefault()
                         .toClassMap());
     }
@@ -68,10 +68,10 @@ public class ContentMappingServiceForToDoItem implements ContentMappingService {
             for (MediaType acceptableMediaType : acceptableMediaTypes) {
                 final Map<String, String> parameters = acceptableMediaType.getParameters();
                 final String className = parameters.get("x-ro-domain-type");
-                if(todoapp.app.viewmodels.todoitem.v1.ToDoItemDto.class.getName().equals(className)) {
+                if(todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto.class.getName().equals(className)) {
                     return toDtoV1((ToDoItem) object);
                 }
-                if(todoapp.app.viewmodels.todoitem.v2.ToDoItemDto.class.getName().equals(className)) {
+                if(todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto.class.getName().equals(className)) {
                     return toDtoV2((ToDoItem) object);
                 }
             }
@@ -81,19 +81,19 @@ public class ContentMappingServiceForToDoItem implements ContentMappingService {
     }
 
     @Programmatic
-    public todoapp.app.viewmodels.todoitem.v1.ToDoItemDto toDtoV1(final ToDoItem toDoItem) {
+    public todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto toDtoV1(final ToDoItem toDoItem) {
 
-        final todoapp.app.viewmodels.todoitem.v1.ToDoItemDto dto =
-                mapperFactory.getMapperFacade().map(toDoItem, todoapp.app.viewmodels.todoitem.v1.ToDoItemDto.class);
+        final todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto dto =
+                mapperFactory.getMapperFacade().map(toDoItem, todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto.class);
 
         return dto;
     }
 
     @Programmatic
-    public todoapp.app.viewmodels.todoitem.v2.ToDoItemDto toDtoV2(final ToDoItem toDoItem) {
+    public todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto toDtoV2(final ToDoItem toDoItem) {
 
-        final todoapp.app.viewmodels.todoitem.v2.ToDoItemDto dto =
-                mapperFactory.getMapperFacade().map(toDoItem, todoapp.app.viewmodels.todoitem.v2.ToDoItemDto.class);
+        final todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto dto =
+                mapperFactory.getMapperFacade().map(toDoItem, todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto.class);
 
         dto.setToDoItem(toDoItem);
         final List<ToDoItem> toDoItems = similarToContributions.similarTo(toDoItem);

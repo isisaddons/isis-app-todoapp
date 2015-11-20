@@ -9,15 +9,15 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.dto.Dto;
 
 import todoapp.app.services.restful.ContentMappingServiceForToDoItem;
-import todoapp.app.viewmodels.todoitem.v2.ToDoItemDto;
+import todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto;
 import todoapp.dom.todoitem.ToDoItem;
 
 @Mixin
-public class ToDoItem_asDtoV2 implements Dto {
+public class ToDoItem_asDtoV1_0 implements Dto {
 
     private final ToDoItem toDoItem;
 
-    public ToDoItem_asDtoV2(final ToDoItem toDoItem) {
+    public ToDoItem_asDtoV1_0(final ToDoItem toDoItem) {
         this.toDoItem = toDoItem;
     }
 
@@ -26,11 +26,12 @@ public class ToDoItem_asDtoV2 implements Dto {
             restrictTo = RestrictTo.PROTOTYPING
     )
     @ActionLayout(
-            cssClassFa = "fa-external-link"
+            cssClassFa = "fa-external-link",
+            named = "As DTO v1.0"
     )
-    @MemberOrder(sequence = "2")
+    @MemberOrder(sequence = "1")
     public ToDoItemDto $$() {
-        return contentMappingServiceForToDoItem.toDtoV2(toDoItem);
+        return contentMappingServiceForToDoItem.toDtoV1(toDoItem);
     }
 
     @javax.inject.Inject

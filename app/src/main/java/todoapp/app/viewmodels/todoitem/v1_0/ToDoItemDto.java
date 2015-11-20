@@ -1,4 +1,4 @@
-package todoapp.app.viewmodels.todoitem.v1;
+package todoapp.app.viewmodels.todoitem.v1_0;
 
 import java.math.BigDecimal;
 
@@ -17,7 +17,7 @@ import lombok.Setter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
-        namespace = "http://viewmodels.app.todoapp/v1/todoitem",
+        namespace = "http://viewmodels.app.todoapp/v1_0/todoitem",
         propOrder = {
             "description",
             "category",

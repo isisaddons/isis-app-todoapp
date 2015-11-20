@@ -1,4 +1,4 @@
-package todoapp.app.viewmodels.todoitem.v2;
+package todoapp.app.viewmodels.todoitem.v1_1;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import todoapp.dom.todoitem.ToDoItem;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
-        namespace = "http://viewmodels.app.todoapp/v2/todoitem",
+        namespace = "http://viewmodels.app.todoapp/v1_1/todoitem",
         propOrder = {
                 "toDoItem",
                 "similarItems"
@@ -30,7 +30,7 @@ import todoapp.dom.todoitem.ToDoItem;
 @DomainObjectLayout(
         titleUiEvent = TitleUiEvent.Default.class
 )
-public class ToDoItemDto extends todoapp.app.viewmodels.todoitem.v1.ToDoItemDto {
+public class ToDoItemDto extends todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto {
 
     @XmlElement(required = true)
     @Getter @Setter

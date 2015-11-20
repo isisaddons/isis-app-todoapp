@@ -82,6 +82,8 @@ import org.isisaddons.wicket.gmap3.cpt.applib.Locatable;
 import org.isisaddons.wicket.gmap3.cpt.applib.Location;
 import org.isisaddons.wicket.gmap3.cpt.service.LocationLookupService;
 
+import lombok.Getter;
+import lombok.Setter;
 import todoapp.dom.ToDoAppDomainModule;
 import todoapp.dom.categories.Categorized;
 import todoapp.dom.categories.Category;
@@ -134,15 +136,13 @@ import todoapp.dom.seed.tenancies.UsersTenancy;
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, CalendarEventable {
 
-    //region > LOG
     /**
      * It isn't common for entities to log, but they can if required.  
-     * Isis uses slf4j API internally (with log4j as implementation), and is the recommended API to use. 
+     * Isis uses slf4j API internally (with log4j as implementation), and is the recommended API to use.
      */
     final static org.slf4j.Logger LOG = org.slf4j.LoggerFactory.getLogger(ToDoItem.class);
-    //endregion
 
-    // region > title, icon
+    // region > title, icon, cssClass
     public String title() {
 
         final TitleBuffer buf = new TitleBuffer();
@@ -165,6 +165,9 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
         return !isComplete() ? "todo" : "done";
     }
 
+    /**
+     * Provides a strikethrough for "done" items, see <code>application.css</code>.
+     */
     public String cssClass() { return iconName(); }
 
     //endregion
@@ -173,58 +176,27 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     public static class DescriptionDomainEvent extends PropertyDomainEvent<String> { }
 
-    private String description;
-
     @javax.jdo.annotations.Column(allowsNull="false", length=100)
     @Property(
         domainEvent = DescriptionDomainEvent.class,
         regexPattern = "\\w[@&:\\-\\,\\.\\+ \\w]*"
     )
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(final String description) {
-        this.description = description;
-    }
-    public void modifyDescription(final String description) {
-        setDescription(description);
-    }
-    public void clearDescription() {
-        setDescription(null);
-    }
+    @Getter @Setter
+    private String description;
     //endregion
-
 
     //region > dueBy (property), Calendarable impl
 
     public static class DueByDomainEvent extends PropertyDomainEvent<LocalDate> { }
 
     @javax.jdo.annotations.Persistent(defaultFetchGroup="true")
-    private LocalDate dueBy;
-
+    @javax.jdo.annotations.Column(allowsNull="true")
     @Property(
             domainEvent = DueByDomainEvent.class
     )
-    @javax.jdo.annotations.Column(allowsNull="true")
-    public LocalDate getDueBy() {
-        return dueBy;
-    }
+    @Getter @Setter
+    private LocalDate dueBy;
 
-    @Programmatic
-    @Override
-    public String getCalendarName() {
-        return "dueBy";
-    }
-
-    @Programmatic
-    @Override
-    public CalendarEvent toCalendarEvent() {
-        return getDueBy() != null
-                ? new CalendarEvent(
-                getDueBy().toDateTimeAtStartOfDay(), "dueBy", title())
-                : null;
-    }
 
     /**
      * Demonstrates how to perform security checks within the domain code.
@@ -239,12 +211,6 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
         return user.hasRole("realm1:noDueBy_role");
     }
 
-    public void setDueBy(final LocalDate dueBy) {
-        this.dueBy = dueBy;
-    }
-    public void clearDueBy() {
-        setDueBy(null);
-    }
     // proposed new value is validated before setting
     public String validateDueBy(final LocalDate dueBy) {
         if (dueBy == null) {
@@ -254,74 +220,63 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     }
     //endregion
 
+    //region > CalendarEventable impl
+    @Programmatic
+    @Override
+    public String getCalendarName() {
+        return "dueBy";
+    }
+
+    @Programmatic
+    @Override
+    public CalendarEvent toCalendarEvent() {
+        return getDueBy() != null
+                ? new CalendarEvent(
+                getDueBy().toDateTimeAtStartOfDay(), "dueBy", title())
+                : null;
+    }
+    //endregion
+
     //region > category and subcategory (property)
-
-    // //////////////////////////////////////
-
-    private Category category;
 
     @javax.jdo.annotations.Column(allowsNull="false")
     @Property(
             editing = Editing.DISABLED,
             editingDisabledReason = "Use action to update both category and subcategory"
     )
-    public Category getCategory() {
-        return category;
-    }
+    @Getter @Setter
+    private Category category;
 
-    public void setCategory(final Category category) {
-        this.category = category;
-    }
 
-    // //////////////////////////////////////
-
-    private Subcategory subcategory;
 
     @javax.jdo.annotations.Column(allowsNull="true")
     @Property(
             editing = Editing.DISABLED,
             editingDisabledReason = "Use action to update both category and subcategory"
     )
-    public Subcategory getSubcategory() {
-        return subcategory;
-    }
-    public void setSubcategory(final Subcategory subcategory) {
-        this.subcategory = subcategory;
-    }
+    @Getter @Setter
+    private Subcategory subcategory;
+
     //endregion
 
     //region > atPath (property)
-
-    private String atPath;
 
     @javax.jdo.annotations.Column(allowsNull="false")
     @Property(
             editing = Editing.DISABLED
             //hidden = Where.EVERYWHERE // for demo purposes, so is visible in the UI
     )
-    public String getAtPath() {
-        return atPath;
-    }
-
-    public void setAtPath(final String atPath) {
-        this.atPath = atPath;
-    }
+    @Getter @Setter
+    private String atPath;
 
     //endregion
 
     //region > complete (property)
-    private boolean complete;
-
     @Property(
         editing = Editing.DISABLED
     )
-    public boolean isComplete() {
-        return complete;
-    }
-
-    public void setComplete(final boolean complete) {
-        this.complete = complete;
-    }
+    @Getter @Setter
+    private boolean complete;
 
     //endregion
 
@@ -394,21 +349,15 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     //endregion
 
     //region > cost (property), updateCost (action)
-    private BigDecimal cost;
-
     @javax.jdo.annotations.Column(allowsNull="true", scale=2)
     @javax.validation.constraints.Digits(integer=10, fraction=2)
     @Property(
             editing = Editing.DISABLED,
             editingDisabledReason = "Update using action"
     )
-    public BigDecimal getCost() {
-        return cost;
-    }
+    @Getter @Setter
+    private BigDecimal cost;
 
-    public void setCost(final BigDecimal cost) {
-        this.cost = cost!=null?cost.setScale(2, BigDecimal.ROUND_HALF_EVEN):null;
-    }
 
     @Action(
             semantics = SemanticsOf.IDEMPOTENT
@@ -433,7 +382,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     public BigDecimal default0UpdateCost() {
         return getCost();
     }
-    
+
     // validate action arguments
     public String validateUpdateCost(final BigDecimal proposedCost) {
         if(proposedCost == null) { return null; }
@@ -442,17 +391,11 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     //endregion
 
     //region > notes (property)
-    private String notes;
-
     @javax.jdo.annotations.Column(allowsNull="true", length=400)
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(final String notes) {
-        this.notes = notes;
-    }
+    @Getter @Setter
+    private String notes;
     //endregion
+
 
     //region > location (property), Locatable impl
 
@@ -466,7 +409,6 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
             //domainEvent = LocationDomainEvent.class,
             optionality = Optionality.OPTIONAL
     )
-    @MemberOrder(sequence="3")
     public Location getLocation() {
         return locationLatitude != null && locationLongitude != null? new Location(locationLatitude, locationLongitude): null;
     }
@@ -488,7 +430,6 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     //region > attachment (property)
     public static class AttachmentDomainEvent extends PropertyDomainEvent<Blob> { }
 
-    private Blob attachment;
     @javax.jdo.annotations.Persistent(defaultFetchGroup="false", columns = {
             @javax.jdo.annotations.Column(name = "attachment_name"),
             @javax.jdo.annotations.Column(name = "attachment_mimetype"),
@@ -498,17 +439,11 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
             domainEvent = AttachmentDomainEvent.class,
             optionality = Optionality.OPTIONAL
     )
-    public Blob getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(final Blob attachment) {
-        this.attachment = attachment;
-    }
+    @Getter @Setter
+    private Blob attachment;
     //endregion
 
     //region > doc (property)
-    private Clob doc;
     @javax.jdo.annotations.Persistent(defaultFetchGroup="false", columns = {
             @javax.jdo.annotations.Column(name = "doc_name"),
             @javax.jdo.annotations.Column(name = "doc_mimetype"),
@@ -517,13 +452,8 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     @Property(
             optionality = Optionality.OPTIONAL
     )
-    public Clob getDoc() {
-        return doc;
-    }
-
-    public void setDoc(final Clob doc) {
-        this.doc = doc;
-    }
+    @Getter @Setter
+    private Clob doc;
     //endregion
 
     //region > version (derived property)

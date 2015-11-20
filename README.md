@@ -165,7 +165,7 @@ In Apache Isis 1.11.0-SNAPSHOT, the JAXB `@XmlRootElement` annotation is recogni
 it makes sense to use the JAXB-annotated class as the canonical form (the framework provides the `JaxbService` to 
 generate the XSD schema from this as required).  For example, we can define: 
 
-    package todoapp.app.viewmodels.todoitem.v1;
+    package todoapp.app.viewmodels.todoitem.v1_0;
     ...    
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(
@@ -202,7 +202,7 @@ generate the XSD schema from this as required).  For example, we can define:
 
 For example, when:
 
-* Accept = `application/xml;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.app.viewmodels.todoitem.v1.ToDoItemDto`
+* Accept = `application/xml;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto`
 
 we get a representation of:
 
@@ -213,7 +213,7 @@ transparently convert references to persistent entities into `<oid-dto>` element
 
 Thus, we can define v2 of the DTO:
 
-    package todoapp.app.viewmodels.todoitem.v2;
+    package todoapp.app.viewmodels.todoitem.v1_1;
     ...
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(
@@ -227,7 +227,7 @@ Thus, we can define v2 of the DTO:
     @DomainObjectLayout(
             titleUiEvent = TitleUiEvent.Default.class
     )
-    public class ToDoItemDto extends todoapp.app.viewmodels.todoitem.v1.ToDoItemDto {
+    public class ToDoItemDto extends todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto {
     
         @XmlElement(required = true)
         @Getter @Setter
@@ -241,7 +241,7 @@ Thus, we can define v2 of the DTO:
 
 which can be requested using the modified header:
 
-* Accept = `application/xml;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.app.viewmodels.todoitem.v2.ToDoItemDto`
+* Accept = `application/xml;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto`
 
 This results in the representation:
 
@@ -269,7 +269,7 @@ to this `package-info.java` declaration:
             namespace = "http://viewmodels.app.todoapp/v2/todoitem",
             elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED
     )
-    package todoapp.app.viewmodels.todoitem.v2;
+    package todoapp.app.viewmodels.todoitem.v1_1;
     import javax.xml.bind.annotation.XmlNs;
 
 
@@ -277,7 +277,7 @@ It is also possible to request JSON using a similar `Accept` header, but with `a
 `application/xml`.  Note however that translation of references to persistent entities is *not* currently supported, 
 so only v1 of the `ToDoItemDto` would be supported.  Thus, the header:
 
-* Accept = `application/json;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.app.viewmodels.todoitem.v1.ToDoItemDto`
+* Accept = `application/json;profile=urn:org.restfulobjects:repr-types/object;x-ro-domain-type=todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto`
 
 should generate a representation of:
 
