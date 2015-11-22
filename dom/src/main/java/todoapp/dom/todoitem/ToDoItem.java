@@ -99,6 +99,7 @@ import todoapp.dom.seed.tenancies.UsersTenancy;
 
 @javax.jdo.annotations.PersistenceCapable(
         schema = "todo",
+        table = "ToDoItem",
         identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -135,7 +136,6 @@ import todoapp.dom.seed.tenancies.UsersTenancy;
 @DomainObject(
         autoCompleteRepository = ToDoItems.class, // for drop-downs, unless autoCompleteNXxx() is present
         autoCompleteAction = "autoComplete",
-        objectType = "TODO",
         updatedLifecycleEvent = ToDoItem.UpdatedEvent.class
 )
 @DomainObjectLayout(
