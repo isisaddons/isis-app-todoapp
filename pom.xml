@@ -258,9 +258,10 @@
     </build>
 
     <modules>
-        <module>app</module>
         <module>dom</module>
         <module>fixture</module>
+        <module>app</module>
+        <module>xsd</module>
         <module>integtests</module>
         <module>webapp</module>
     </modules>

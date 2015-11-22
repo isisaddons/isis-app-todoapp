@@ -17,7 +17,6 @@ import lombok.Setter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
-        namespace = "http://viewmodels.app.todoapp/v1_0/todoitem",
         propOrder = {
             "description",
             "category",

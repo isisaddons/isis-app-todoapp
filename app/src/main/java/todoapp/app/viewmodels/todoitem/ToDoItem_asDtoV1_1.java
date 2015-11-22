@@ -8,7 +8,6 @@ import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.dto.Dto;
 
-import todoapp.app.services.restful.ContentMappingServiceForToDoItem;
 import todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto;
 import todoapp.dom.todoitem.ToDoItem;
 

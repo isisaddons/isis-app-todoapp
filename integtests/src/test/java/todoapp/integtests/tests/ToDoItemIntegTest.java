@@ -190,19 +190,6 @@ public class ToDoItemIntegTest extends AbstractToDoIntegTest {
             }
 
 
-            @Test
-            public void cannotSetPropertyDirectly() throws Exception {
-
-                // expect
-                expectedExceptions.expectMessage("Always disabled");
-
-                // when
-                toDoItem.setComplete(true);
-
-                // and then
-                final EventObject ev = toDoItemSubscriptions.mostRecentlyReceivedEvent(EventObject.class);
-                then(ev).isNull();
-            }
 
             @Test
             public void subscriberReceivesEvents() throws Exception {

@@ -142,64 +142,6 @@
             <groupId>ma.glasnost.orika</groupId>
             <artifactId>orika-core</artifactId>
         </dependency>
-
-
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>schemagen</id>
-            <activation>
-                <property>
-                    <name>schemagen</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>jaxb2-maven-plugin</artifactId>
-                        <version>2.2</version>
-                        <executions>
-                            <execution>
-                                <id>schemagen</id>
-                                <goals>
-                                    <goal>schemagen</goal>
-                                </goals>
-                                <phase>generate-resources</phase>
-                                <configuration>
-                                    <sources>
-                                        <source>${build.sourceDirectory}/todoapp/app/viewmodels/todoitem/v1/ToDoItemDto.java</source>
-                                        <source>${build.sourceDirectory}/todoapp/app/viewmodels/todoitem/v2/ToDoItemDto.java</source>
-                                    </sources>
-                                    <outputDirectory>${project.build.directory}/target/generated-schemas/jaxb2</outputDirectory>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>build-helper-maven-plugin</artifactId>
-                        <version>1.9.1</version>
-                        <executions>
-                            <execution>
-                                <id>add-source</id>
-                                <phase>generate-resources</phase>
-                                <goals>
-                                    <goal>add-resource</goal>
-                                </goals>
-                                <configuration>
-                                    <resources>
-                                        <resource>target/generated-sources/generated-schemas/jaxb2</resource>
-                                    </resources>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
 
 </project>

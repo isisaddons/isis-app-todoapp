@@ -20,7 +20,6 @@ import todoapp.dom.todoitem.ToDoItem;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
-        namespace = "http://viewmodels.app.todoapp/v1_1/todoitem",
         propOrder = {
                 "toDoItem",
                 "similarItems"

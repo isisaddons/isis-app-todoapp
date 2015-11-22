@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+  
+         http://www.apache.org/licenses/LICENSE-2.0
+         
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.isisaddons.app</groupId>
+        <artifactId>todoapp</artifactId>
+        <version>1.11.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>todoapp-xsd</artifactId>
+    <name>Isis Addons ToDoApp XSD</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>todoapp-app</artifactId>
+        </dependency>
+    </dependencies>
+
+	<profiles>
+		<profile>
+			<id>isis-xsd</id>
+			<activation>
+				<property>
+					<name>!skip.isis-xsd</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.isis.tool</groupId>
+						<artifactId>isis-maven-plugin</artifactId>
+						<version>${isis.version}</version>
+						<configuration>
+							<appManifest>todoapp.dom.ToDoAppDomManifest</appManifest>
+							<jaxbClasses>
+								<jaxbClass>todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto</jaxbClass>
+								<jaxbClass>todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto</jaxbClass>
+							</jaxbClasses>
+							<separate>false</separate>
+						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>${project.groupId}</groupId>
+								<artifactId>todoapp-dom</artifactId>
+								<version>${project.version}</version>
+							</dependency>
+							<!--
+                            ... workaround to avoid conflict with plexus-default
+                                (not sure why exclusions in the isis-maven-plugin aren't sufficient, though ...
+                            -->
+							<dependency>
+								<groupId>com.google.guava</groupId>
+								<artifactId>guava</artifactId>
+								<version>16.0.1</version>
+							</dependency>
+						</dependencies>
+						<executions>
+							<execution>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>xsd</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<version>2.5.3</version>
+						<configuration>
+							<descriptor>src/assembly/dep.xml</descriptor>
+						</configuration>
+						<executions>
+							<execution>
+								<id>create-archive</id>
+								<phase>package</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+                </plugins>
+            </build>
+		</profile>
+        <profile>
+            <id>xjc</id>
+            <activation>
+                <property>
+                    <name>!skip.xjc</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jvnet.jaxb2.maven2</groupId>
+                        <artifactId>maven-jaxb2-plugin</artifactId>
+                        <version>0.12.3</version>
+                        <executions>
+                            <execution>
+                                <id>xjc-generate</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <removeOldOutput>true</removeOldOutput>
+                            <schemaDirectory>target/generated-resources/isis-xsd/viewmodels.app.todoapp/todoitem</schemaDirectory>
+                            <schemaIncludes>
+                                <schemaInclude>v1_0/todoitem.xsd</schemaInclude>
+                                <schemaInclude>v1_1/todoitem.xsd</schemaInclude>
+                            </schemaIncludes>
+                            <catalog>src/main/resources/catalog.xml</catalog>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>1.9.1</version>
+                        <executions>
+                            <execution>
+                                <id>add-source</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>add-source</goal>
+                                </goals>
+                                <configuration>
+                                    <sources>
+                                        <source>target/generated-sources/xjc</source>
+                                    </sources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+	</profiles>
+</project>
