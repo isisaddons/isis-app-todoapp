@@ -103,7 +103,6 @@ public class ApplicationUserAndTenancySubscriptions extends AbstractSubscriber {
     //endregion
 
     //region > on DeleteTenancy
-    @Programmatic
     @com.google.common.eventbus.Subscribe
     @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final ApplicationTenancy.DeleteDomainEvent ev) {

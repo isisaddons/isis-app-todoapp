@@ -64,6 +64,13 @@ import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.security.UserMemento;
 import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
 import org.apache.isis.applib.services.eventbus.EventBusService;
+import org.apache.isis.applib.services.eventbus.ObjectCreatedEvent;
+import org.apache.isis.applib.services.eventbus.ObjectLoadedEvent;
+import org.apache.isis.applib.services.eventbus.ObjectPersistedEvent;
+import org.apache.isis.applib.services.eventbus.ObjectPersistingEvent;
+import org.apache.isis.applib.services.eventbus.ObjectRemovingEvent;
+import org.apache.isis.applib.services.eventbus.ObjectUpdatedEvent;
+import org.apache.isis.applib.services.eventbus.ObjectUpdatingEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
 import org.apache.isis.applib.services.scratchpad.Scratchpad;
 import org.apache.isis.applib.services.wrapper.HiddenException;
@@ -128,13 +135,15 @@ import todoapp.dom.seed.tenancies.UsersTenancy;
 @DomainObject(
         autoCompleteRepository = ToDoItems.class, // for drop-downs, unless autoCompleteNXxx() is present
         autoCompleteAction = "autoComplete",
-        objectType = "TODO"
+        objectType = "TODO",
+        updatedLifecycleEvent = ToDoItem.UpdatedEvent.class
 )
 @DomainObjectLayout(
         bookmarking = BookmarkPolicy.AS_ROOT
 )
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, CalendarEventable {
+
 
     /**
      * It isn't common for entities to log, but they can if required.  
@@ -623,6 +632,8 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
         final List<ToDoItem> returnList = actionInvocationContext.isLast() ? toDoItems.notYetComplete() : null;
 
+        // there's actually a bug in this method; shouldn't be returning the current object in the list if just deleted.
+        // however, ISIS-1269 transparently handles this and won't attempt to render a deleted object.
         container.removeIfNotAlready(this);
 
         container.informUser(
@@ -817,6 +828,16 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     public int compareTo(final ToDoItem other) {
         return ObjectContracts.compare(this, other, "complete,dueBy,description");
     }
+    //endregion
+
+    //region > lifecycle events
+    public static class CreatedEvent extends ObjectCreatedEvent<ToDoItem> {}
+    public static class LoadedEvent extends ObjectLoadedEvent<ToDoItem> {}
+    public static class PersistedEvent extends ObjectPersistedEvent<ToDoItem> {}
+    public static class PersistingEvent extends ObjectPersistingEvent<ToDoItem> {}
+    public static class UpdatedEvent extends ObjectUpdatedEvent<ToDoItem> {}
+    public static class UpdatingEvent extends ObjectUpdatingEvent<ToDoItem> {}
+    public static class RemovingEvent extends ObjectRemovingEvent<ToDoItem> {}
     //endregion
 
     //region > injected services

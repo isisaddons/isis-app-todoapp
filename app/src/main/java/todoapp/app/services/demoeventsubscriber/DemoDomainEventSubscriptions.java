@@ -147,19 +147,16 @@ public class DemoDomainEventSubscriptions extends AbstractSubscriber {
         logEvent(ev);
     }
 
-    @Programmatic
     @com.google.common.eventbus.Subscribe
     @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final ToDoItem.DescriptionDomainEvent ev) {
         logEvent(ev);
     }
-    @Programmatic
     @com.google.common.eventbus.Subscribe
     @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final ToDoItem.DueByDomainEvent ev) {
         logEvent(ev);
     }
-    @Programmatic
     @com.google.common.eventbus.Subscribe
     @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final ToDoItem.AttachmentDomainEvent ev) {
@@ -168,7 +165,6 @@ public class DemoDomainEventSubscriptions extends AbstractSubscriber {
     //endregion
 
     //region > on(Event) for sessionlogger, auditing, command, publishing events
-    @Programmatic
     @com.google.common.eventbus.Subscribe
     @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final SessionLoggingServiceMenu.ActionDomainEvent ev) {
