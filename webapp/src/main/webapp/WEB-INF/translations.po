@@ -1285,8 +1285,8 @@ msgid "Non Idempotent"
 msgstr ""
 
 
-#: todoapp.dom.module.todoitem.ToDoItem$DemoExceptionType#NonRecoverableException
-msgid "Nonrecoverableexception"
+#: todoapp.dom.module.todoitem.ToDoItem$DemoExceptionType#NON_RECOVERABLE_EXCEPTION
+msgid "Non Recoverable Exception"
 msgstr ""
 
 
@@ -1639,13 +1639,13 @@ msgid "Recent Sessions For User"
 msgstr ""
 
 
-#: todoapp.dom.module.todoitem.ToDoItem$DemoExceptionType#RecoverableException
-msgid "Recoverableexception"
+#: todoapp.dom.module.todoitem.ToDoItem$DemoExceptionType#RECOVERABLE_EXCEPTION
+msgid "Recoverable Exception"
 msgstr ""
 
 
-#: todoapp.dom.module.todoitem.ToDoItem$DemoExceptionType#RecoverableExceptionAutoEscalated
-msgid "Recoverableexceptionautoescalated"
+#: todoapp.dom.module.todoitem.ToDoItem$DemoExceptionType#RECOVERABLE_EXCEPTION_AUTO_ESCALATED
+msgid "Recoverable Exception Auto Escalated"
 msgstr ""
 
 

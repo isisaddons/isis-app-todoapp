@@ -676,9 +676,9 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     //region > demoException (action)
 
     static enum DemoExceptionType {
-        RecoverableException,
-        RecoverableExceptionAutoEscalated,
-        NonRecoverableException;
+        RECOVERABLE_EXCEPTION,
+        RECOVERABLE_EXCEPTION_AUTO_ESCALATED,
+        NON_RECOVERABLE_EXCEPTION;
     }
 
     @Action(
@@ -689,11 +689,11 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
             @ParameterLayout(named="Type")
             final DemoExceptionType type) {
         switch(type) {
-        case NonRecoverableException:
+        case NON_RECOVERABLE_EXCEPTION:
             throw new NonRecoverableException("Demo throwing " + type.name());
-        case RecoverableException:
+        case RECOVERABLE_EXCEPTION:
             throw new RecoverableException("Demo throwing " + type.name());
-        case RecoverableExceptionAutoEscalated:
+        case RECOVERABLE_EXCEPTION_AUTO_ESCALATED:
             try {
                 // this will trigger an exception (because category cannot be null), causing the xactn to be aborted
                 setCategory(null);
