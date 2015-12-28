@@ -287,9 +287,12 @@
             <param-value>org.apache.isis.viewer.restfulobjects.server.authentication.AuthenticationSessionStrategyBasicAuth</param-value>
         </init-param>
         <init-param>
-            <!-- what to do if no session was found; we indicate to issue a 401 basic authentication challenge -->
             <param-name>whenNoSession</param-name>
-            <param-value>basicAuthChallenge</param-value>
+            <param-value>auto</param-value>
+        </init-param>
+        <init-param>
+            <param-name>passThru</param-name>
+            <param-value>/restful/swagger</param-value>
         </init-param>
     </filter>
     <filter-mapping>
