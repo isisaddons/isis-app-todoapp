@@ -88,6 +88,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 import org.isisaddons.wicket.gmap3.cpt.applib.Locatable;
 import org.isisaddons.wicket.gmap3.cpt.applib.Location;
 import org.isisaddons.wicket.gmap3.cpt.service.LocationLookupService;
+import org.isisaddons.wicket.summernote.cpt.applib.SummernoteEditor;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -401,8 +402,12 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     //region > notes (property)
     @javax.jdo.annotations.Column(allowsNull="true", length=400)
-    @Getter @Setter
+    @Setter
     private String notes;
+    @SummernoteEditor
+    public String getNotes() {
+        return notes;
+    }
     //endregion
 
 

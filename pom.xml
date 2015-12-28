@@ -50,6 +50,7 @@
         <isis-module-docx.version>1.10.0</isis-module-docx.version>
 
         <isis-wicket-excel.version>1.10.0</isis-wicket-excel.version>
+        <isis-wicket-summernote.version>1.11.0-SNAPSHOT</isis-wicket-summernote.version>
         <isis-wicket-fullcalendar2.version>1.10.0</isis-wicket-fullcalendar2.version>
         <isis-wicket-gmap3.version>1.10.0</isis-wicket-gmap3.version>
 
@@ -375,6 +376,11 @@
                 <groupId>org.isisaddons.wicket.gmap3</groupId>
                 <artifactId>isis-wicket-gmap3-cpt</artifactId>
                 <version>${isis-wicket-gmap3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.isisaddons.wicket.summernote</groupId>
+                <artifactId>isis-wicket-summernote-cpt</artifactId>
+                <version>${isis-wicket-summernote.version}</version>
             </dependency>
 
             <dependency>
