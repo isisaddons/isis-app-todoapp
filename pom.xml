@@ -34,25 +34,25 @@
     </prerequisites>
 
     <properties>
-        <isis.version>1.11.0-SNAPSHOT</isis.version>
+        <isis.version>1.11.0</isis.version>
 
-        <isis-metamodel-paraname8.version>1.10.0</isis-metamodel-paraname8.version>
+        <isis-metamodel-paraname8.version>1.11.0</isis-metamodel-paraname8.version>
 
-        <isis-module-audit.version>1.10.0</isis-module-audit.version>
-        <isis-module-command.version>1.10.0</isis-module-command.version>
-        <isis-module-publishing.version>1.10.0</isis-module-publishing.version>
-        <isis-module-security.version>1.10.0</isis-module-security.version>
-        <isis-module-sessionlogger.version>1.10.0</isis-module-sessionlogger.version>
-        <isis-module-settings.version>1.10.0</isis-module-settings.version>
-        <isis-module-togglz.version>1.10.0</isis-module-togglz.version>
+        <isis-module-audit.version>1.11.0</isis-module-audit.version>
+        <isis-module-command.version>1.11.0</isis-module-command.version>
+        <isis-module-publishing.version>1.11.0</isis-module-publishing.version>
+        <isis-module-security.version>1.11.0</isis-module-security.version>
+        <isis-module-sessionlogger.version>1.11.0</isis-module-sessionlogger.version>
+        <isis-module-settings.version>1.11.0</isis-module-settings.version>
+        <isis-module-togglz.version>1.11.0</isis-module-togglz.version>
 
-        <isis-module-devutils.version>1.10.0</isis-module-devutils.version>
-        <isis-module-docx.version>1.10.0</isis-module-docx.version>
+        <isis-module-devutils.version>1.11.0</isis-module-devutils.version>
+        <isis-module-docx.version>1.11.0</isis-module-docx.version>
 
-        <isis-wicket-excel.version>1.10.0</isis-wicket-excel.version>
-        <isis-wicket-summernote.version>1.11.0-SNAPSHOT</isis-wicket-summernote.version>
-        <isis-wicket-fullcalendar2.version>1.10.0</isis-wicket-fullcalendar2.version>
-        <isis-wicket-gmap3.version>1.10.0</isis-wicket-gmap3.version>
+        <isis-wicket-excel.version>1.11.0</isis-wicket-excel.version>
+        <isis-wicket-summernote.version>1.11.0</isis-wicket-summernote.version>
+        <isis-wicket-fullcalendar2.version>1.11.0</isis-wicket-fullcalendar2.version>
+        <isis-wicket-gmap3.version>1.11.0</isis-wicket-gmap3.version>
 
         <jbcrypt.version>0.3m</jbcrypt.version>
         <assertj-core.version>2.0.0</assertj-core.version>
@@ -60,6 +60,7 @@
         <togglz.version>2.1.0.Final</togglz.version>
 
         <lombok.version>1.16.6</lombok.version>
+        <axon-core.version>2.4.3</axon-core.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

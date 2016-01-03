@@ -83,6 +83,26 @@
                             "scheduleExplicitly": {
                             },
                             "scheduleImplicitly": {
+                            },
+                            "exportAsXml": {
+                                "actionLayout": {
+                                    "cssClassFa": "fa fa-file-o",
+                                    "position": "PANEL"
+                                }
+                            },
+                            "duplicate": {
+                                "actionLayout": {
+                                    "named": "Clone",
+                                    "describedAs": "Create a new todo item from this one",
+                                    "cssClass": "btn-warn",
+                                    "cssClassFa": "fa fa-copy fa-lg",
+                                    "position": "PANEL"
+                                }
+                            },
+                            "recentActivity": {
+                                "actionLayout": {
+                                    "position": "PANEL"
+                                }
                             }
                         }
                     }
@@ -99,6 +119,33 @@
                         "propertyLayout": {
                             "named": "Version",
                             "hidden": "ALL_TABLES"
+                        },
+                        "actions": {
+                            "demoException": {
+                                "actionLayout": {
+                                    "position": "PANEL"
+                                }
+                            },
+                            "downloadLayout": {
+                                "actionLayout": {
+                                    "position": "PANEL"
+                                }
+                            },
+                            "downloadJdoMetadata": {
+                                "actionLayout": {
+                                    "position": "PANEL"
+                                }
+                            },
+                            "asDtoV1_1": {
+                                "actionLayout": {
+                                    "position": "PANEL_DROPDOWN"
+                                }
+                            },
+                            "asDtoV1_0": {
+                                "actionLayout": {
+                                    "position": "PANEL_DROPDOWN"
+                                }
+                            }
                         }
                     }
                 }
@@ -226,22 +273,9 @@
                 "cssClassFa": "fa fa-trash fa-lg"
             }
         },
-        "duplicate": {
-            "actionLayout": {
-                "named": "Clone",
-                "describedAs": "Create a new todo item from this one",
-                "cssClass": "btn-warn",
-                "cssClassFa": "fa fa-copy fa-lg"
-            }
-        },
         "exportToWordDoc": {
             "actionLayout": {
                 "cssClassFa": "fa fa-file-word-o"
-            }
-        },
-        "exportAsXml": {
-            "actionLayout": {
-                "cssClassFa": "fa fa-file-o"
             }
         },
         "totalCost": {}
