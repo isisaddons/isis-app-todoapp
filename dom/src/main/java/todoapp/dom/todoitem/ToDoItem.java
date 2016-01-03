@@ -630,12 +630,12 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
             domainEvent = DeletedDomainEvent.class,
             invokeOn = InvokeOn.OBJECT_AND_COLLECTION
     )
-    public List<ToDoItem> delete() {
+    public Object delete() {
 
         // obtain title first, because cannot reference object after deleted
         final String title = container.titleOf(this);
 
-        final List<ToDoItem> returnList = actionInvocationContext.isLast() ? toDoItems.notYetComplete() : null;
+        final List<ToDoItem> returnList = actionInvocationContext.getInvokedOn().isCollection() ? toDoItems.notYetComplete() : null;
 
         // there's actually a bug in this method; shouldn't be returning the current object in the list if just deleted.
         // however, ISIS-1269 transparently handles this and won't attempt to render a deleted object.
