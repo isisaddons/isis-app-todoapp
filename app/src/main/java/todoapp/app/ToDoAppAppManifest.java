@@ -50,6 +50,7 @@ public class ToDoAppAppManifest implements AppManifest {
                 org.isisaddons.module.command.CommandModule.class,
                 org.isisaddons.module.devutils.DevUtilsModule.class,
                 org.isisaddons.module.docx.DocxModule.class,
+                org.isisaddons.module.togglz.TogglzModule.class,
                 org.isisaddons.module.publishing.PublishingModule.class,
                 org.isisaddons.module.sessionlogger.SessionLoggerModule.class,
                 org.isisaddons.module.security.SecurityModule.class,

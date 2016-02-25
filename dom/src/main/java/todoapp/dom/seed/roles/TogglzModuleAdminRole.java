@@ -30,12 +30,10 @@ public class TogglzModuleAdminRole extends AbstractRoleAndPermissionsFixtureScri
 
     @Override
     protected void execute(final ExecutionContext executionContext) {
-        // no Isis permissions required.
-        // dummy called required in order to set up the role.
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                new String[]{});
+                "org.isisaddons.module.togglz.glue");
     }
 
 }
