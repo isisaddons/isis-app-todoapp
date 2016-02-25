@@ -18,86 +18,92 @@
   under the License.
 -->
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-        <title>Apache Isis&trade; TodoApp</title>
-        
-        <style type="text/css">
-body {
-    background-color: #1A467B;
-    font-family: Verdana, Helvetica, Arial;
-    font-size: 90%;
-}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Apache Isis&trade; TodoApp</title>
 
-li {
-    margin-top: 6px;
-    margin-bottom: 6px;
-}
-table {
-    border-collapse: collapse;
-}
-table, th, td {
-    border: 1px;
-    border-style: solid;
-    border-color: lightgray;
-}
-th, td {
-    padding: 10px;
-}
-#wrapper {
-    background-color: #ffffff;
-    width: 900px;
-    margin: 8px auto;
-    padding: 12px;
-}
-        </style>
-    </head>
-    <body>
-        <div id="wrapper">
-            <img alt="Isis Logo" src="about/images/isis-logo.png" />
-             
+    <style type="text/css">
+        body {
+        background-color: #1A467B;
+        font-family: Verdana, Helvetica, Arial;
+        font-size: 90%;
+        }
+
+        li {
+        margin-top: 6px;
+        margin-bottom: 6px;
+        }
+        table {
+        border-collapse: collapse;
+        }
+        table, th, td {
+        border: 1px;
+        border-style: solid;
+        border-color: lightgray;
+        }
+        th, td {
+        padding: 10px;
+        }
+        #wrapper {
+        background-color: #ffffff;
+        width: 900px;
+        margin: 8px auto;
+        padding: 12px;
+        }
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <img alt="Isis Logo" src="about/images/isis-logo.png" />
+
+    <p>
+        This app has been generated using Apache Isis'
+        <a href="http://isis.apache.org/intro/getting-started/simple%61pp-archetype.html" target="_blank">SimpleApp</a> archetype,
+        to create a purposefully minimal application that nevertheless includes fixture data, integration tests and BDD specs.
+        <br/>
+        <br/>
+        The app itself consists of a single domain class, <a href="https://github.com/apache/isis/blob/master/example/application/simple%61pp/dom/src/main/java/dom/simple/SimpleObject.java"  target="_blank"><tt>SimpleObject</tt></a>,
+        along with an equally simple (factory/repository) domain service, <a href="https://github.com/apache/isis/blob/master/example/application/simple%61pp/dom/src/main/java/dom/simple/SimpleObjects.java"  target="_blank"><tt>SimpleObjects</tt></a>.
+    </p>
+
+    <p>To access the app:</p>
+    <ul>
+        <li>
             <p>
-            <a href="http://isis.apache.org" target="_blank">Apache Isis</a>&trade; is a framework to let you rapidly develop
-            domain-driven apps in Java.  This app demonstrates a todoapp consisting of a single <code>ToDoItem</code> domain entity, integrated with a number of <a href="http://isisaddons.org" target="_blank">Isis Addons</a> modules and UI components.
-        </p>
-
-            <p>To access the app:</p>
-            <ul>
-                <li>
-                    <p>
-                        <b><a href="wicket/">wicket/</a></b>
-                    </p>
-                    <p>
-                        provides accesses to a generic UI for end-users,
-                        Isis' <a href="http://isis.apache.org/components/viewers/wicket/about.html" target="_blank">Wicket Viewer</a>.
-                        As its name suggests, this viewer is built on top of <a href="http://wicket.apache.org" target="_blank">Apache Wicket</a>&trade;.
-                    </p>
-                </li>
-                <li>
-                    <p>
-                        <b>
-                            <a href="restful/">restful/</a>
-                        </b>
-                    </p>
-                    <p>
-                        provides access to a RESTful API conformant with the
-                        <a href="http://restfulobjects.org">Restful Objects</a> spec</td>.  This is part of Isis Core.  The
-                        implementation technology is JBoss RestEasy.
-                    </p>
-                </li>
-            </ul>
-
-            <p>
-                The default user/password is <b><i>todoapp-admin/pass</i></b>, as configured in an initial seed file.
+                <b><a href="wicket/">wicket/</a></b>
             </p>
-
             <p>
-                To build your own app, while you could start with this todo app and remove/rename as required, you are
-                probably better off using the extremely minimal
-                <a href="http://isis.apache.org/intro/getting-started/simpleapp-archetype.html" target="_blank">SimpleApp</a> archetype.
-                Use this app as reference for configuring additional modules.
+                provides access to a generic UI for end-users,
+                Isis' <a href="http://isis.apache.org/components/viewers/wicket/about.html" target="_blank">Wicket Viewer</a>.
+                As its name suggests, this viewer is built on top of <a href="http://wicket.apache.org" target="_blank">Apache Wicket</a>&trade;.
             </p>
+        </li>
+        <li>
+            <p>
+                <b>
+                    <a href="swagger-ui/index.html">swagger-ui/</a>
+                </b>
+            </p>
+            <p>
+                provides access to a Swagger UI which uses a subset of the framework's automatically
+                generated <a href="restful/">RESTful API</a>.  There are three versions of the Swagger
+                spec files (that drive the UI): <a href="restful/swagger/public">public</a> (for use by
+                "third-party" apps), <a href="restful/swagger/private">private</a> (for use by internal apps),
+                and <a href="restful/swagger/prototyping">prototyping</a> (an extended version of the private
+                API).  The Swagger spec files are themselves dynamically generated and can be used to generate
+                client-side stubs.
+            </p>
+            <p>The RESTful API can return both simple representations and also richer hypermedia representations
+                that are conformant with the <a href="http://restfulobjects.org">Restful Objects</a> spec.
+                The HTTP <code>Accept</code> header is used to select which representation should be generated.
+            </p>
+        </li>
+    </ul>
 
-        </div>
-    </body>
+    <p>
+        The default user/password is <b><i>todoapp-admin/pass</i></b>.
+    </p>
+
+</div>
+</body>
 </html>

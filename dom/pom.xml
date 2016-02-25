@@ -101,8 +101,10 @@
         <dependency>
             <groupId>org.isisaddons.wicket.gmap3</groupId>
             <artifactId>isis-wicket-gmap3-cpt</artifactId>
-            <exclusions>
-            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.isisaddons.wicket.summernote</groupId>
+            <artifactId>isis-wicket-summernote-cpt</artifactId>
         </dependency>
 
 
@@ -235,7 +237,7 @@
                 <dependency>
                     <groupId>org.axonframework</groupId>
                     <artifactId>axon-core</artifactId>
-                    <version>2.4</version>
+                    <version>${axon-core.version}</version>
                 </dependency>
             </dependencies>
         </profile>

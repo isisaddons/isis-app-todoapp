@@ -88,6 +88,7 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 import org.isisaddons.wicket.gmap3.cpt.applib.Locatable;
 import org.isisaddons.wicket.gmap3.cpt.applib.Location;
 import org.isisaddons.wicket.gmap3.cpt.service.LocationLookupService;
+import org.isisaddons.wicket.summernote.cpt.applib.SummernoteEditor;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -99,6 +100,7 @@ import todoapp.dom.seed.tenancies.UsersTenancy;
 
 @javax.jdo.annotations.PersistenceCapable(
         schema = "todo",
+        table = "ToDoItem",
         identityType=IdentityType.DATASTORE)
 @javax.jdo.annotations.DatastoreIdentity(
         strategy=javax.jdo.annotations.IdGeneratorStrategy.IDENTITY,
@@ -135,7 +137,6 @@ import todoapp.dom.seed.tenancies.UsersTenancy;
 @DomainObject(
         autoCompleteRepository = ToDoItems.class, // for drop-downs, unless autoCompleteNXxx() is present
         autoCompleteAction = "autoComplete",
-        objectType = "TODO",
         updatedLifecycleEvent = ToDoItem.UpdatedEvent.class
 )
 @DomainObjectLayout(
@@ -401,8 +402,12 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     //region > notes (property)
     @javax.jdo.annotations.Column(allowsNull="true", length=400)
-    @Getter @Setter
+    @Setter
     private String notes;
+    @SummernoteEditor
+    public String getNotes() {
+        return notes;
+    }
     //endregion
 
 
@@ -671,9 +676,9 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     //region > demoException (action)
 
     static enum DemoExceptionType {
-        RecoverableException,
-        RecoverableExceptionAutoEscalated,
-        NonRecoverableException;
+        RECOVERABLE_EXCEPTION,
+        RECOVERABLE_EXCEPTION_AUTO_ESCALATED,
+        NON_RECOVERABLE_EXCEPTION;
     }
 
     @Action(
@@ -684,11 +689,11 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
             @ParameterLayout(named="Type")
             final DemoExceptionType type) {
         switch(type) {
-        case NonRecoverableException:
+        case NON_RECOVERABLE_EXCEPTION:
             throw new NonRecoverableException("Demo throwing " + type.name());
-        case RecoverableException:
+        case RECOVERABLE_EXCEPTION:
             throw new RecoverableException("Demo throwing " + type.name());
-        case RecoverableExceptionAutoEscalated:
+        case RECOVERABLE_EXCEPTION_AUTO_ESCALATED:
             try {
                 // this will trigger an exception (because category cannot be null), causing the xactn to be aborted
                 setCategory(null);

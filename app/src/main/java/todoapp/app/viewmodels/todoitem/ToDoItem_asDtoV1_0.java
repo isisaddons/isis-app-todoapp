@@ -6,13 +6,12 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.services.dto.Dto;
 
 import todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto;
 import todoapp.dom.todoitem.ToDoItem;
 
 @Mixin
-public class ToDoItem_asDtoV1_0 implements Dto {
+public class ToDoItem_asDtoV1_0 {
 
     private final ToDoItem toDoItem;
 

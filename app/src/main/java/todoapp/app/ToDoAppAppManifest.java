@@ -31,6 +31,7 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 
 import org.isisaddons.metamodel.paraname8.NamedFacetOnParameterParaname8Factory;
 import org.isisaddons.module.security.facets.TenantedAuthorizationFacetFactory;
+import org.isisaddons.wicket.summernote.cpt.applib.SummernoteEditorFacetFactory;
 
 import todoapp.dom.ToDoAppDomainModule;
 import todoapp.fixture.ToDoAppFixtureModule;
@@ -94,7 +95,9 @@ public class ToDoAppAppManifest implements AppManifest {
                 "isis.reflector.facets.include",
                 Joiner.on(",").join(
                         TenantedAuthorizationFacetFactory.class.getName(),
-                        NamedFacetOnParameterParaname8Factory.class.getName()));
+                        NamedFacetOnParameterParaname8Factory.class.getName(),
+                        SummernoteEditorFacetFactory.class.getName()
+                        ));
 //        props.put("isis.reflector.facet.domainObjectLayoutAnnotation.cssClassUiEvent.postForDefault", "true");
 //        props.put("isis.reflector.facet.domainObjectLayoutAnnotation.iconUiEvent.postForDefault", "true");
 //        props.put("isis.reflector.facet.domainObjectLayoutAnnotation.titleUiEvent.postForDefault", "true");

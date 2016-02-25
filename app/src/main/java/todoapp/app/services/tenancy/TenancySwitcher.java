@@ -43,7 +43,6 @@ import todoapp.app.viewmodels.dashboard.ToDoAppDashboardService;
 )
 public class TenancySwitcher extends AbstractService {
 
-
     //region > switchTenancy (action)
     @Action(
             semantics = SemanticsOf.IDEMPOTENT

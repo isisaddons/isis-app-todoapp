@@ -59,6 +59,11 @@ import todoapp.dom.categories.Subcategory;
 )
 public class ToDoItems {
 
+    @Programmatic
+    public String getId() {
+        return "todo.ToDoItems";
+    }
+
     //region > notYetComplete (action)
     @Action(semantics = SemanticsOf.SAFE)
     @ActionLayout(
