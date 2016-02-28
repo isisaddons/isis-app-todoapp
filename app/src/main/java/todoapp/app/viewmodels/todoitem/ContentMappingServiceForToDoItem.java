@@ -30,7 +30,6 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.viewer.restfulobjects.applib.RepresentationType;
 import org.apache.isis.viewer.restfulobjects.rendering.service.conmap.ContentMappingService;
 
-import todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_0;
 import todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_1;
 import todoapp.dom.similarto.SimilarToContributions;
 import todoapp.dom.todoitem.ToDoItem;
@@ -51,10 +50,8 @@ public class ContentMappingServiceForToDoItem implements ContentMappingService {
             for (MediaType acceptableMediaType : acceptableMediaTypes) {
                 final Map<String, String> parameters = acceptableMediaType.getParameters();
                 final String className = parameters.get("x-ro-domain-type");
-                if( matches(className,
-                        ToDoItemV1_0.class,
-                        ToDoItemV1_1.class)) {
-                    return toViewModelLatest((ToDoItem) object);
+                if( matches(className, ToDoItemV1_1.class)) {
+                    return newToDoItemV1_1((ToDoItem) object);
                 }
             }
         }
@@ -74,14 +71,16 @@ public class ContentMappingServiceForToDoItem implements ContentMappingService {
     }
 
     @Programmatic
-    public ToDoItemV1_1 toViewModelLatest(final ToDoItem toDoItem) {
+    public ToDoItemV1_1 newToDoItemV1_1(final ToDoItem toDoItem) {
 
         final ToDoItemV1_1 dto = new ToDoItemV1_1();
 
         dto.setToDoItem(toDoItem);
         dto.setCategory(nameOf(toDoItem.getCategory()));
         dto.setSubcategory(nameOf(toDoItem.getSubcategory()));
-
+        dto.setCost(toDoItem.getCost());
+        dto.setToDoItem(toDoItem);
+        dto.setSimilarItems(similarToContributions.similarTo(toDoItem));
 
         return dto;
     }

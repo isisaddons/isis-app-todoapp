@@ -310,6 +310,11 @@
                 <artifactId>todoapp-webapp</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>todoapp-xsd</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.isisaddons.metamodel.paraname8</groupId>

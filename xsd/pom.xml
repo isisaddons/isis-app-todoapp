@@ -53,7 +53,7 @@
 						<configuration>
 							<appManifest>todoapp.dom.ToDoAppDomManifest</appManifest>
 							<jaxbClasses>
-								<jaxbClass>todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_0</jaxbClass>
+								<jaxbClass>todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_1</jaxbClass>
 								<jaxbClass>todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_1</jaxbClass>
 							</jaxbClasses>
 							<separate>false</separate>

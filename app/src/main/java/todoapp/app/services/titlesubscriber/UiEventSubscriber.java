@@ -27,7 +27,6 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.services.eventbus.IconUiEvent;
 import org.apache.isis.applib.services.eventbus.TitleUiEvent;
 
-import todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_0;
 import todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_1;
 
 @DomainService(
@@ -43,8 +42,8 @@ public class UiEventSubscriber extends AbstractSubscriber {
             ToDoItemV1_1 dto = (ToDoItemV1_1) eventSource;
             final String underlyingTitle = container.titleOf(dto.getToDoItem());
             event.setTitle("DTO v1_1 for: " + underlyingTitle);
-        } else if(eventSource instanceof ToDoItemV1_0) {
-            ToDoItemV1_0 dto = (ToDoItemV1_0) eventSource;
+        } else if(eventSource instanceof ToDoItemV1_1) {
+            ToDoItemV1_1 dto = (ToDoItemV1_1) eventSource;
             event.setTitle("DTO v1_0 for: " + dto.getDescription());
         }
     }

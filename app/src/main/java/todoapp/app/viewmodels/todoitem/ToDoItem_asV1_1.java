@@ -30,7 +30,7 @@ public class ToDoItem_asV1_1 implements Dto {
     )
     @MemberOrder(sequence = "2")
     public ToDoItemV1_1 $$() {
-        return contentMappingServiceForToDoItem.toViewModelLatest(toDoItem);
+        return contentMappingServiceForToDoItem.newToDoItemV1_1(toDoItem);
     }
 
     @javax.inject.Inject
