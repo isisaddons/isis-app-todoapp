@@ -27,6 +27,9 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.services.eventbus.IconUiEvent;
 import org.apache.isis.applib.services.eventbus.TitleUiEvent;
 
+import todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_0;
+import todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_1;
+
 @DomainService(
         nature = NatureOfService.DOMAIN
 )
@@ -36,12 +39,12 @@ public class UiEventSubscriber extends AbstractSubscriber {
     @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final TitleUiEvent<?> event) {
         final Object eventSource = event.getSource();
-        if(eventSource instanceof todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto) {
-            todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto dto = (todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto) eventSource;
+        if(eventSource instanceof ToDoItemV1_1) {
+            ToDoItemV1_1 dto = (ToDoItemV1_1) eventSource;
             final String underlyingTitle = container.titleOf(dto.getToDoItem());
             event.setTitle("DTO v1_1 for: " + underlyingTitle);
-        } else if(eventSource instanceof todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto) {
-            todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto dto = (todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto) eventSource;
+        } else if(eventSource instanceof ToDoItemV1_0) {
+            ToDoItemV1_0 dto = (ToDoItemV1_0) eventSource;
             event.setTitle("DTO v1_0 for: " + dto.getDescription());
         }
     }
@@ -50,8 +53,8 @@ public class UiEventSubscriber extends AbstractSubscriber {
     @org.axonframework.eventhandling.annotation.EventHandler
     public void on(final IconUiEvent<?> event) {
         final Object eventSource = event.getSource();
-        if(eventSource instanceof todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto) {
-            todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto dto = (todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto) eventSource;
+        if(eventSource instanceof ToDoItemV1_1) {
+            ToDoItemV1_1 dto = (ToDoItemV1_1) eventSource;
             final String underlyingIconName = container.iconNameOf(dto.getToDoItem());
             event.setIconName(underlyingIconName);
         }

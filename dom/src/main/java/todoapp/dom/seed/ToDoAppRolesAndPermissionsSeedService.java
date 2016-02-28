@@ -26,6 +26,7 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
+import todoapp.dom.seed.roles.ApplibDtoRoleAndPermissions;
 import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.DevUtilsModuleRoleAndPermissions;
@@ -74,6 +75,7 @@ public class ToDoAppRolesAndPermissionsSeedService {
             executionContext.executeChild(this, new ToDoAppFixtureServiceRoleAndPermissions());
 
             executionContext.executeChild(this, new TogglzModuleAdminRole());
+            executionContext.executeChild(this, new ApplibDtoRoleAndPermissions());
             executionContext.executeChild(this, new AuditModuleRoleAndPermissions());
             executionContext.executeChild(this, new CommandModuleRoleAndPermissions());
             executionContext.executeChild(this, new SessionLoggerModuleRoleAndPermissions());

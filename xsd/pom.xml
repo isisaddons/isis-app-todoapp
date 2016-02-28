@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.isisaddons.app</groupId>
         <artifactId>todoapp</artifactId>
-        <version>1.11.0-SNAPSHOT</version>
+        <version>1.12.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>todoapp-xsd</artifactId>
@@ -53,10 +53,11 @@
 						<configuration>
 							<appManifest>todoapp.dom.ToDoAppDomManifest</appManifest>
 							<jaxbClasses>
-								<jaxbClass>todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto</jaxbClass>
-								<jaxbClass>todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto</jaxbClass>
+								<jaxbClass>todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_0</jaxbClass>
+								<jaxbClass>todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_1</jaxbClass>
 							</jaxbClasses>
 							<separate>false</separate>
+                            <commonSchemas>false</commonSchemas>
 						</configuration>
 						<dependencies>
 							<dependency>
@@ -126,11 +127,14 @@
                         </executions>
                         <configuration>
                             <removeOldOutput>true</removeOldOutput>
-                            <schemaDirectory>target/generated-resources/isis-xsd/viewmodels.app.todoapp/todoitem</schemaDirectory>
+                            <schemaDirectory>target/generated-resources/isis-xsd/viewmodels.app.todoapp</schemaDirectory>
                             <schemaIncludes>
-                                <schemaInclude>v1_0/todoitem.xsd</schemaInclude>
-                                <schemaInclude>v1_1/todoitem.xsd</schemaInclude>
+                                <schemaInclude>todoitem/v1/Dto.xsd</schemaInclude>
                             </schemaIncludes>
+                            <bindingDirectory>src/main/resources</bindingDirectory>
+                            <bindingIncludes>
+                                <bindingInclude>binding.xml</bindingInclude>
+                            </bindingIncludes>
                             <catalog>src/main/resources/catalog.xml</catalog>
                         </configuration>
                     </plugin>

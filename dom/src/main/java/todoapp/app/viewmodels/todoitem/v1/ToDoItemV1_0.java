@@ -1,4 +1,4 @@
-package todoapp.app.viewmodels.todoitem.v1_0;
+package todoapp.app.viewmodels.todoitem.v1;
 
 import java.math.BigDecimal;
 
@@ -18,6 +18,8 @@ import lombok.Setter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(
         propOrder = {
+            "majorVersion",
+            "minorVersion",
             "description",
             "category",
             "subcategory",
@@ -28,7 +30,17 @@ import lombok.Setter;
 @DomainObjectLayout(
         titleUiEvent = TitleUiEvent.Default.class
 )
-public class ToDoItemDto implements Dto {
+public class ToDoItemV1_0 implements Dto {
+
+    @XmlElement(required = true, defaultValue = "1")
+    public final String getMajorVersion() {
+        return "1";
+    }
+
+    @XmlElement(required = true, defaultValue = "0")
+    public String getMinorVersion() {
+        return "0";
+    }
 
     @XmlElement(required = true)
     @Getter @Setter

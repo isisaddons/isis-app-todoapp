@@ -21,7 +21,6 @@ package todoapp.app.viewmodels.todoitem;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.ws.rs.core.MediaType;
 
@@ -31,8 +30,8 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.viewer.restfulobjects.applib.RepresentationType;
 import org.apache.isis.viewer.restfulobjects.rendering.service.conmap.ContentMappingService;
 
-import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
+import todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_0;
+import todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_1;
 import todoapp.dom.similarto.SimilarToContributions;
 import todoapp.dom.todoitem.ToDoItem;
 
@@ -40,22 +39,6 @@ import todoapp.dom.todoitem.ToDoItem;
         nature = NatureOfService.DOMAIN
 )
 public class ContentMappingServiceForToDoItem implements ContentMappingService {
-
-    private MapperFactory mapperFactory;
-
-    @Programmatic
-    @PostConstruct
-    public void init() {
-        mapperFactory = new DefaultMapperFactory.Builder().build();
-        mapperFactory.registerClassMap(
-                mapperFactory.classMap(ToDoItem.class, todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto.class)
-                        .byDefault()
-                        .toClassMap());
-        mapperFactory.registerClassMap(
-                mapperFactory.classMap(ToDoItem.class, todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto.class)
-                        .byDefault()
-                        .toClassMap());
-    }
 
     @Programmatic
     @Override
@@ -68,11 +51,10 @@ public class ContentMappingServiceForToDoItem implements ContentMappingService {
             for (MediaType acceptableMediaType : acceptableMediaTypes) {
                 final Map<String, String> parameters = acceptableMediaType.getParameters();
                 final String className = parameters.get("x-ro-domain-type");
-                if(todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto.class.getName().equals(className)) {
-                    return toDtoV1((ToDoItem) object);
-                }
-                if(todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto.class.getName().equals(className)) {
-                    return toDtoV2((ToDoItem) object);
+                if( matches(className,
+                        ToDoItemV1_0.class,
+                        ToDoItemV1_1.class)) {
+                    return toViewModelLatest((ToDoItem) object);
                 }
             }
         }
@@ -80,28 +62,33 @@ public class ContentMappingServiceForToDoItem implements ContentMappingService {
         return null;
     }
 
-    @Programmatic
-    public todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto toDtoV1(final ToDoItem toDoItem) {
-
-        final todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto dto =
-                mapperFactory.getMapperFacade().map(toDoItem, todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto.class);
-
-        return dto;
+    private static boolean matches(
+            final String className,
+            final Class<?>... classes) {
+        for (Class<?> aClass : classes) {
+            if(aClass.getName().equals(className)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Programmatic
-    public todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto toDtoV2(final ToDoItem toDoItem) {
+    public ToDoItemV1_1 toViewModelLatest(final ToDoItem toDoItem) {
 
-        final todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto dto =
-                mapperFactory.getMapperFacade().map(toDoItem, todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto.class);
+        final ToDoItemV1_1 dto = new ToDoItemV1_1();
 
         dto.setToDoItem(toDoItem);
-        final List<ToDoItem> toDoItems = similarToContributions.similarTo(toDoItem);
-        dto.setSimilarItems(toDoItems);
+        dto.setCategory(nameOf(toDoItem.getCategory()));
+        dto.setSubcategory(nameOf(toDoItem.getSubcategory()));
+
 
         return dto;
     }
 
+    private static String nameOf(final Enum<?> e) {
+        return e != null? e.name(): null;
+    }
 
     @Inject
     SimilarToContributions similarToContributions;

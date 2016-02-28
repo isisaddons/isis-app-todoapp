@@ -1,4 +1,4 @@
-package todoapp.app.viewmodels.todoitem.v1_1;
+package todoapp.app.viewmodels.todoitem.v1;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import com.google.common.collect.Lists;
@@ -29,7 +30,13 @@ import todoapp.dom.todoitem.ToDoItem;
 @DomainObjectLayout(
         titleUiEvent = TitleUiEvent.Default.class
 )
-public class ToDoItemDto extends todoapp.app.viewmodels.todoitem.v1_0.ToDoItemDto {
+public class ToDoItemV1_1 extends ToDoItemV1_0 {
+
+    @Override
+    @XmlTransient
+    public String getMinorVersion() {
+        return "1";
+    }
 
     @XmlElement(required = true)
     @Getter @Setter

@@ -8,15 +8,15 @@ import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.dto.Dto;
 
-import todoapp.app.viewmodels.todoitem.v1_1.ToDoItemDto;
+import todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_1;
 import todoapp.dom.todoitem.ToDoItem;
 
 @Mixin
-public class ToDoItem_asDtoV1_1 implements Dto {
+public class ToDoItem_asV1_1 implements Dto {
 
     private final ToDoItem toDoItem;
 
-    public ToDoItem_asDtoV1_1(final ToDoItem toDoItem) {
+    public ToDoItem_asV1_1(final ToDoItem toDoItem) {
         this.toDoItem = toDoItem;
     }
 
@@ -29,8 +29,8 @@ public class ToDoItem_asDtoV1_1 implements Dto {
             named = "As DTO v1.1"
     )
     @MemberOrder(sequence = "2")
-    public ToDoItemDto $$() {
-        return contentMappingServiceForToDoItem.toDtoV2(toDoItem);
+    public ToDoItemV1_1 $$() {
+        return contentMappingServiceForToDoItem.toViewModelLatest(toDoItem);
     }
 
     @javax.inject.Inject

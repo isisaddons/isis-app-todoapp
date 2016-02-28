@@ -22,6 +22,7 @@ import org.isisaddons.module.security.dom.user.AccountType;
 import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureScript;
 import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
 
+import todoapp.dom.seed.roles.ApplibDtoRoleAndPermissions;
 import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.DevUtilsModuleRoleAndPermissions;
@@ -47,6 +48,7 @@ public class ToDoAppAdminUser extends AbstractUserAndRolesFixtureScript {
                 ToDoAppAdminUserTenancy.TENANCY_PATH, AccountType.LOCAL,
                 Arrays.asList(IsisModuleSecurityAdminRoleAndPermissions.ROLE_NAME,
                               TogglzModuleAdminRole.ROLE_NAME,
+                              ApplibDtoRoleAndPermissions.ROLE_NAME,
                               AuditModuleRoleAndPermissions.ROLE_NAME,
                               CommandModuleRoleAndPermissions.ROLE_NAME,
                               SessionLoggerModuleRoleAndPermissions.ROLE_NAME,
