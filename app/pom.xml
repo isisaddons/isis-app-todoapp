@@ -77,10 +77,6 @@
             <artifactId>isis-module-command-dom</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.isisaddons.module.devutils</groupId>
-            <artifactId>isis-module-devutils-dom</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.isisaddons.module.docx</groupId>
             <artifactId>isis-module-docx-dom</artifactId>
         </dependency>

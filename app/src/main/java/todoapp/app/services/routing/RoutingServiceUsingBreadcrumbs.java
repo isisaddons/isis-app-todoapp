@@ -8,10 +8,12 @@ import javax.inject.Inject;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.datanucleus.enhancement.Persistable;
 
+import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.services.homepage.HomePageProviderService;
+import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 import org.apache.isis.applib.services.routing.RoutingServiceDefault;
 import org.apache.isis.core.metamodel.adapter.ObjectAdapter;
 import org.apache.isis.viewer.wicket.model.models.EntityModel;
@@ -34,6 +36,9 @@ public class RoutingServiceUsingBreadcrumbs extends RoutingServiceDefault {
             return original;
         }
 
+        // ensure that any persisted objects have been deleted.
+        container.flush();
+
         final BreadcrumbModelProvider  wicketSession = (BreadcrumbModelProvider) AuthenticatedWebSession.get();
         final BreadcrumbModel breadcrumbModel = wicketSession.getBreadcrumbModel();
 
@@ -52,5 +57,9 @@ public class RoutingServiceUsingBreadcrumbs extends RoutingServiceDefault {
 
     @Inject
     HomePageProviderService homePageProviderService;
+    @Inject
+    DomainObjectContainer container;
+    @Inject
+    IsisJdoSupport isisJdoSupport;
 
 }

@@ -23,9 +23,11 @@ import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureSc
 import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
 
 import todoapp.dom.seed.roles.ApplibDtoRoleAndPermissions;
+import todoapp.dom.seed.roles.ApplibMixinsRoleAndPermissions;
 import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.DevUtilsModuleRoleAndPermissions;
+import todoapp.dom.seed.roles.PersistableMixinsRoleAndPermissions;
 import todoapp.dom.seed.roles.PublishingModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
@@ -57,7 +59,9 @@ public class ToDoAppAdminUser extends AbstractUserAndRolesFixtureScript {
                               DevUtilsModuleRoleAndPermissions.ROLE_NAME,
                               ToDoAppRegularRoleAndPermissions.ROLE_NAME,
                               ToDoAppFixtureServiceRoleAndPermissions.ROLE_NAME,
-                              TranslationServicePoMenuRoleAndPermissions.ROLE_NAME
+                              TranslationServicePoMenuRoleAndPermissions.ROLE_NAME,
+                              PersistableMixinsRoleAndPermissions.ROLE_NAME,
+                              ApplibMixinsRoleAndPermissions.ROLE_NAME
                         ));
     }
 

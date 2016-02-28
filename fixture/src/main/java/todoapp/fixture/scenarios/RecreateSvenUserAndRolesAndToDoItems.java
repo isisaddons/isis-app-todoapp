@@ -20,8 +20,10 @@ import java.util.Arrays;
 
 import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
 
+import todoapp.dom.seed.roles.ApplibMixinsRoleAndPermissions;
 import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
+import todoapp.dom.seed.roles.PersistableMixinsRoleAndPermissions;
 import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
@@ -53,14 +55,16 @@ public class RecreateSvenUserAndRolesAndToDoItems extends CreateUserFixtureScrip
         // setup roles
         ec.executeChild(this, new UserRolesFixtureScript() {{
             setRoleNames(Arrays.asList(
-                    // security admin
                     IsisModuleSecurityAdminRoleAndPermissions.ROLE_NAME,
                     ToDoAppRegularRoleAndPermissions.ROLE_NAME,
                     ToDoAppFixtureServiceRoleAndPermissions.ROLE_NAME,
                     AuditModuleRoleAndPermissions.ROLE_NAME,
                     CommandModuleRoleAndPermissions.ROLE_NAME,
                     SessionLoggerModuleRoleAndPermissions.ROLE_NAME,
-                    SettingsModuleRoleAndPermissions.ROLE_NAME));
+                    SettingsModuleRoleAndPermissions.ROLE_NAME,
+                    PersistableMixinsRoleAndPermissions.ROLE_NAME,
+                    ApplibMixinsRoleAndPermissions.ROLE_NAME
+            ));
         }});
 
         // create items

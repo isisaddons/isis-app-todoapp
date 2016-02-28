@@ -108,34 +108,15 @@
                     }
                 }
             },
-            "Misc": {
+            "Metadata": {
                 "members": {
+                    "datanucleusId": {},
+                    "datanucleusVersion": {},
                     "atPath": {
                         "propertyLayout": {
                             "hidden": "NOWHERE"
-                        }
-                    },
-                    "versionSequence": {
-                        "propertyLayout": {
-                            "named": "Version",
-                            "hidden": "ALL_TABLES"
                         },
                         "actions": {
-                            "demoException": {
-                                "actionLayout": {
-                                    "position": "PANEL"
-                                }
-                            },
-                            "downloadLayout": {
-                                "actionLayout": {
-                                    "position": "PANEL"
-                                }
-                            },
-                            "downloadJdoMetadata": {
-                                "actionLayout": {
-                                    "position": "PANEL"
-                                }
-                            },
                             "asDtoV1_1": {
                                 "actionLayout": {
                                     "position": "PANEL_DROPDOWN"
@@ -188,6 +169,11 @@
                                     "named": "Update",
                                     "cssClassFa": "fa fa-dollar"
                                 }
+                            },
+                            "demoException": {
+                                "actionLayout": {
+                                    "position": "PANEL"
+                                }
                             }
                         }
                     },
@@ -228,7 +214,7 @@
         "span": 0
     },
     {
-        "span": 6,
+        "span": 12,
         "collections": {
             "similarTo": {
                 "collectionLayout": {

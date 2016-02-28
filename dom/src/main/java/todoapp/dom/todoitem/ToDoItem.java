@@ -27,7 +27,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.jdo.JDOHelper;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 import javax.validation.constraints.Digits;
@@ -88,7 +87,6 @@ import org.isisaddons.wicket.fullcalendar2.cpt.applib.CalendarEventable;
 import org.isisaddons.wicket.gmap3.cpt.applib.Locatable;
 import org.isisaddons.wicket.gmap3.cpt.applib.Location;
 import org.isisaddons.wicket.gmap3.cpt.service.LocationLookupService;
-import org.isisaddons.wicket.summernote.cpt.applib.SummernoteEditor;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -283,7 +281,8 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     //region > complete (property)
     @Property(
-        editing = Editing.DISABLED
+        editing = Editing.DISABLED,
+        editingDisabledReason = "Use actions to change status"
     )
     @Getter @Setter
     private boolean complete;
@@ -404,7 +403,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     @javax.jdo.annotations.Column(allowsNull="true", length=400)
     @Setter
     private String notes;
-    @SummernoteEditor
+    //@SummernoteEditor // causing an issue :-(
     public String getNotes() {
         return notes;
     }
@@ -468,12 +467,6 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     )
     @Getter @Setter
     private Clob doc;
-    //endregion
-
-    //region > version (derived property)
-    public Long getVersionSequence() {
-        return (Long) JDOHelper.getVersion(this);
-    }
     //endregion
 
     //region > dependencies (property), add (action), remove (action)

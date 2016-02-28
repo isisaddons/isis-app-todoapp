@@ -377,13 +377,13 @@ msgid "Class"
 msgstr ""
 
 
-#: org.isisaddons.module.security.app.feature.ApplicationClass#className
-#: org.isisaddons.module.security.app.feature.ApplicationClassAction#className
-#: org.isisaddons.module.security.app.feature.ApplicationClassCollection#className
-#: org.isisaddons.module.security.app.feature.ApplicationClassMember#className
-#: org.isisaddons.module.security.app.feature.ApplicationClassProperty#className
-#: org.isisaddons.module.security.app.feature.ApplicationFeatureViewModel#className
-#: org.isisaddons.module.security.app.feature.ApplicationPackage#className
+#: org.isisaddons.module.security.app.feature.ApplicationClass#name
+#: org.isisaddons.module.security.app.feature.ApplicationClassAction#name
+#: org.isisaddons.module.security.app.feature.ApplicationClassCollection#name
+#: org.isisaddons.module.security.app.feature.ApplicationClassMember#name
+#: org.isisaddons.module.security.app.feature.ApplicationClassProperty#name
+#: org.isisaddons.module.security.app.feature.ApplicationFeatureViewModel#name
+#: org.isisaddons.module.security.app.feature.ApplicationPackage#name
 msgid "Class Name"
 msgstr ""
 
@@ -1696,7 +1696,7 @@ msgid "Result Bookmark"
 msgstr ""
 
 
-#: org.apache.isis.applib.fixturescripts.FixtureResult#className
+#: org.apache.isis.applib.fixturescripts.FixtureResult#name
 msgid "Result class"
 msgstr ""
 

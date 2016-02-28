@@ -27,9 +27,11 @@ import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
 
 import todoapp.dom.seed.roles.ApplibDtoRoleAndPermissions;
+import todoapp.dom.seed.roles.ApplibMixinsRoleAndPermissions;
 import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.DevUtilsModuleRoleAndPermissions;
+import todoapp.dom.seed.roles.PersistableMixinsRoleAndPermissions;
 import todoapp.dom.seed.roles.TogglzModuleAdminRole;
 import todoapp.dom.seed.roles.PublishingModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
@@ -84,6 +86,8 @@ public class ToDoAppRolesAndPermissionsSeedService {
             executionContext.executeChild(this, new DevUtilsModuleRoleAndPermissions());
 
             executionContext.executeChild(this, new TranslationServicePoMenuRoleAndPermissions());
+            executionContext.executeChild(this, new PersistableMixinsRoleAndPermissions());
+            executionContext.executeChild(this, new ApplibMixinsRoleAndPermissions());
 
             executionContext.executeChild(this, new ToDoAppAdminUserTenancy());
             executionContext.executeChild(this, new ToDoAppAdminUser());

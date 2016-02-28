@@ -46,7 +46,6 @@
         <isis-module-settings.version>1.11.0</isis-module-settings.version>
         <isis-module-togglz.version>1.11.0</isis-module-togglz.version>
 
-        <isis-module-devutils.version>1.11.0</isis-module-devutils.version>
         <isis-module-docx.version>1.11.0</isis-module-docx.version>
 
         <isis-wicket-excel.version>1.11.0</isis-wicket-excel.version>
@@ -330,11 +329,6 @@
                 <groupId>org.isisaddons.module.command</groupId>
                 <artifactId>isis-module-command-dom</artifactId>
                 <version>${isis-module-command.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.isisaddons.module.devutils</groupId>
-                <artifactId>isis-module-devutils-dom</artifactId>
-                <version>${isis-module-devutils.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.isisaddons.module.security</groupId>
