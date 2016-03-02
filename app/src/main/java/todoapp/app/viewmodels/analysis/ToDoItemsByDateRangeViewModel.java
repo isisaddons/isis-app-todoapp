@@ -101,24 +101,24 @@ public class ToDoItemsByDateRangeViewModel
     
     private DateRange dateRangeFor(final ToDoItem t) {
         if(t.getDueBy() == null) {
-            return DateRange.Unknown;
+            return DateRange.UNKNOWN;
         }
         final DateTime dueBy = t.getDueBy().toDateTimeAtStartOfDay();
         final DateTime today = clockService.now().toDateTimeAtStartOfDay();
         
         if(dueBy.isBefore(today)) {
-            return DateRange.OverDue;
+            return DateRange.OVERDUE;
         }
         if(dueBy.isBefore(today.plusDays(1))) {
-            return DateRange.Today;
+            return DateRange.TODAY;
         }
         if(dueBy.isBefore(today.plusDays(2))) {
-            return DateRange.Tomorrow;
+            return DateRange.TOMORROW;
         }
         if(dueBy.isBefore(today.plusDays(7))) {
-            return DateRange.ThisWeek;
+            return DateRange.THIS_WEEK;
         }
-        return DateRange.Later;
+        return DateRange.LATER;
     }
     //endregion
 

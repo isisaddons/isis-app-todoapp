@@ -72,12 +72,12 @@ public class ToDoItemAnalysisMenu {
     //region > byDateRange (action)
 
     public enum DateRange {
-        OverDue,
-        Today,
-        Tomorrow,
-        ThisWeek,
-        Later,
-        Unknown,
+        OVERDUE,
+        TODAY,
+        TOMORROW,
+        THIS_WEEK,
+        LATER,
+        UNKNOWN,
     }
 
     @ActionLayout(
