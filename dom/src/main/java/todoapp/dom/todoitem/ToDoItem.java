@@ -778,6 +778,8 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     public static class Predicates {
         
+        private Predicates () {}
+        
         public static Predicate<ToDoItem> thoseWithAtPath(final String currentUser) {
             return toDoItem -> Objects.equal(toDoItem.getAtPath(), UsersTenancy.TENANCY_PATH + currentUser);
         }

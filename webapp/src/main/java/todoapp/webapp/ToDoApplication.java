@@ -147,8 +147,7 @@ public class ToDoApplication extends IsisWicketApplication {
         try {
             final List<String> readLines = Resources.readLines(
                     Resources.getResource(contextClass, resourceName), Charset.defaultCharset());
-            final String aboutText = Joiner.on("\n").join(readLines);
-            return aboutText;
+            return Joiner.on("\n").join(readLines);
         } catch (final IOException e) {
             return "This is a Todo app";
         }
