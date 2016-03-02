@@ -129,8 +129,8 @@ public class UserRolesFixtureScript extends FixtureScript {
         for (ApplicationRole applicationRole : this.applicationRoles) {
             if (applicationRole != null) {
                 this.applicationUser.addRole(applicationRole);
+                ec.addResult(this, applicationRole.getName(), applicationRole);
             }
-            ec.addResult(this, applicationRole.getName(), applicationRole);
         }
     }
 
