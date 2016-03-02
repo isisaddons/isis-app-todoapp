@@ -38,9 +38,11 @@ import todoapp.dom.todoitem.ToDoItems;
 @DomainObject(nature = Nature.VIEW_MODEL)
 public class ToDoAppDashboard {
 
+    private static final String DASHBOARD = "Dashboard";
+
     //region > identification in the UI
     public String title() {
-        return "Dashboard";
+        return DASHBOARD;
     }
     //endregion
 

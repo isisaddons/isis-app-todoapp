@@ -38,6 +38,7 @@ public class ToDoItemCreate extends FixtureScript {
 
     public static final String DESCRIPTION_BUY_STAMPS = "Buy stamps";
     public static final String DESCRIPTION_WRITE_BLOG_POST = "Write blog post";
+    private static final int NBR_CANNED = 12;
 
 
     private Object[][] canned() {
@@ -58,7 +59,7 @@ public class ToDoItemCreate extends FixtureScript {
     }
 
     public static int numberCanned() {
-        return 12; // keep in step with canned() !!
+        return NBR_CANNED; // keep in step with canned() !!
     }
 
     //region > index (required)
