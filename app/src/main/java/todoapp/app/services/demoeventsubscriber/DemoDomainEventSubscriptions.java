@@ -215,17 +215,15 @@ public class DemoDomainEventSubscriptions extends AbstractSubscriber {
         recordEvent(ev);
         switch(ev.getEventPhase()) {
             case HIDE:
-                if(getSubscriberBehaviour() == DemoBehaviour.UPDATE_COST_ACTION_HIDE) {
-                    if(ev.getIdentifier().getMemberName().equals("updateCost")) {
-                        ev.hide();
-                    }
+                if(getSubscriberBehaviour() == DemoBehaviour.UPDATE_COST_ACTION_HIDE && 
+                        ev.getIdentifier().getMemberName().equals("updateCost")) {
+                    ev.hide();
                 }
                 break;
             case DISABLE:
-                if(getSubscriberBehaviour() == DemoBehaviour.UPDATE_COST_ACTION_DISABLE) {
-                    if(ev.getIdentifier().getMemberName().equals("updateCost")) {
-                        ev.disable("ToDoItemSubscriptions says: updateCost action disabled!");
-                    }
+                if(getSubscriberBehaviour() == DemoBehaviour.UPDATE_COST_ACTION_DISABLE && 
+                        ev.getIdentifier().getMemberName().equals("updateCost")) {
+                    ev.disable("ToDoItemSubscriptions says: updateCost action disabled!");
                 }
                 break;
             case VALIDATE:
@@ -237,7 +235,6 @@ public class DemoDomainEventSubscriptions extends AbstractSubscriber {
             case EXECUTING:
                 break;
             case EXECUTED:
-                final Object source = ev.getSource();
                 //container.is
                 //LOG.info("Received ActionDomainEvent, " + source.toString() + ", invoked " + ev.getIdentifier().getMemberName());
                 onExecutedThrowExceptionIfSet(ev);
