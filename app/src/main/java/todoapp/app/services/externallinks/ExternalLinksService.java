@@ -38,7 +38,7 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 )
 public class ExternalLinksService {
 
-    public static enum ExternalLink {
+    public enum ExternalLink {
         ISIS_DOCUMENTATION("Apache Isis docs", "http://isis.apache.org/documentation.html"),
         PROJECT_ON_GITHUB("Project source code on Github", "https://github.com/apache/isis/tree/master/example/application/todoapp/");
         
