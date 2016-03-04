@@ -58,7 +58,7 @@ public class ToDoAppPrototypingExtensions {
     public Object recreateToDoItemsThenOpenDashboard() {
         final FixtureScript fs = fixtureScripts.findFixtureScriptFor(
                 RecreateToDoItemsForCurrentUser.class);
-        final List<FixtureResult> unusedResults = fs.run(null);
+        fs.run(null);
         return toDoAppDashboardService.lookup();
     }
 
