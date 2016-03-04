@@ -54,8 +54,7 @@ public class ToDoAppSettingsService {
     @MemberOrder(sequence = "10")
     public List<ApplicationSettingJdo> listAllSettings() {
         // downcast using raw list
-        final List applicationSettings = applicationSettingsService.listAll();
-        return applicationSettings;
+        return (List) applicationSettingsService.listAll();
     }
     //endregion
 
@@ -63,8 +62,7 @@ public class ToDoAppSettingsService {
     @Programmatic
     public List<UserSettingJdo> listAllSettings(final String user) {
         // downcast using raw list
-        final List userSettings = userSettingsService.listAllFor(user);
-        return userSettings;
+        return  (List) userSettingsService.listAllFor(user);
     }
     //endregion
 

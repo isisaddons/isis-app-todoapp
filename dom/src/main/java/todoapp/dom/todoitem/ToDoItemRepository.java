@@ -38,11 +38,9 @@ import todoapp.dom.ToDoAppFeature;
 public class ToDoItemRepository {
 
     ToDoItemRepositoryImpl getToDoItemRepositoryImpl() {
-        final ToDoItemRepositoryImpl toDoItemRepository =
-                ToDoAppFeature.useTypeSafeQueries.isActive()
-                        ? toDoItemRepositoryImplUsingTypesafeQueries
-                        : toDoItemRepositoryImplUsingJdoql;
-        return toDoItemRepository;
+        return ToDoAppFeature.useTypeSafeQueries.isActive()
+                ? toDoItemRepositoryImplUsingTypesafeQueries
+                : toDoItemRepositoryImplUsingJdoql;
     }
 
     @Programmatic
