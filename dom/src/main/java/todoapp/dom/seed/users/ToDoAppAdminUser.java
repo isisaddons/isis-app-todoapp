@@ -22,18 +22,19 @@ import org.isisaddons.module.security.dom.user.AccountType;
 import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureScript;
 import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
 
-import todoapp.dom.seed.roles.ApplibDtoRoleAndPermissions;
-import todoapp.dom.seed.roles.ApplibMixinsRoleAndPermissions;
+import todoapp.dom.seed.roles.ApacheIsisApplibDtoRoleAndPermissions;
+import todoapp.dom.seed.roles.ApacheIsisApplibMixinsRoleAndPermissions;
+import todoapp.dom.seed.roles.ApacheIsisMetadataMenuRoleAndPermissions;
+import todoapp.dom.seed.roles.ApacheIsisPersistableMixinsRoleAndPermissions;
 import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.PersistableMixinsRoleAndPermissions;
 import todoapp.dom.seed.roles.PublishingModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
 import todoapp.dom.seed.roles.ToDoAppRegularRoleAndPermissions;
 import todoapp.dom.seed.roles.TogglzModuleAdminRole;
-import todoapp.dom.seed.roles.TranslationServicePoMenuRoleAndPermissions;
+import todoapp.dom.seed.roles.ApacheIsisTranslationServicePoMenuRoleAndPermissions;
 import todoapp.dom.seed.tenancies.ToDoAppAdminUserTenancy;
 import todoapp.dom.seed.tenancies.UsersTenancy;
 
@@ -48,18 +49,22 @@ public class ToDoAppAdminUser extends AbstractUserAndRolesFixtureScript {
         super(USER_NAME, PASSWORD, null,
                 ToDoAppAdminUserTenancy.TENANCY_PATH, AccountType.LOCAL,
                 Arrays.asList(IsisModuleSecurityAdminRoleAndPermissions.ROLE_NAME,
-                              TogglzModuleAdminRole.ROLE_NAME,
-                              ApplibDtoRoleAndPermissions.ROLE_NAME,
+
                               AuditModuleRoleAndPermissions.ROLE_NAME,
                               CommandModuleRoleAndPermissions.ROLE_NAME,
+                              PublishingModuleRoleAndPermissions.ROLE_NAME,
                               SessionLoggerModuleRoleAndPermissions.ROLE_NAME,
                               SettingsModuleRoleAndPermissions.ROLE_NAME,
-                              PublishingModuleRoleAndPermissions.ROLE_NAME,
+                              TogglzModuleAdminRole.ROLE_NAME,
+
                               ToDoAppRegularRoleAndPermissions.ROLE_NAME,
                               ToDoAppFixtureServiceRoleAndPermissions.ROLE_NAME,
-                              TranslationServicePoMenuRoleAndPermissions.ROLE_NAME,
-                              PersistableMixinsRoleAndPermissions.ROLE_NAME,
-                              ApplibMixinsRoleAndPermissions.ROLE_NAME
+
+                              ApacheIsisTranslationServicePoMenuRoleAndPermissions.ROLE_NAME,
+                              ApacheIsisApplibDtoRoleAndPermissions.ROLE_NAME,
+                              ApacheIsisMetadataMenuRoleAndPermissions.ROLE_NAME,
+                              ApacheIsisPersistableMixinsRoleAndPermissions.ROLE_NAME,
+                              ApacheIsisApplibMixinsRoleAndPermissions.ROLE_NAME
                         ));
     }
 

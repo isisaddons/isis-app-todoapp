@@ -16,16 +16,18 @@
  */
 package todoapp.dom.seed.roles;
 
+import org.apache.isis.core.metamodel.services.metamodel.MetadataMenu;
+
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-public class ApplibMixinsRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
+public class ApacheIsisMetadataMenuRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
-    public static final String ROLE_NAME = "applib-mixins-user";
+    public static final String ROLE_NAME = "metadata-menu-user";
 
-    public ApplibMixinsRoleAndPermissions() {
-        super(ROLE_NAME, "User access to applib (metadata) mixins");
+    public ApacheIsisMetadataMenuRoleAndPermissions() {
+        super(ROLE_NAME, "User access to metadata menu");
     }
 
     @Override
@@ -33,7 +35,7 @@ public class ApplibMixinsRoleAndPermissions extends AbstractRoleAndPermissionsFi
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                "org.apache.isis.applib");
+                MetadataMenu.class.getPackage().getName());
     }
 
 }

@@ -16,18 +16,16 @@
  */
 package todoapp.dom.seed.roles;
 
-import org.apache.isis.core.runtime.services.i18n.po.TranslationServicePoMenu;
-
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-public class TranslationServicePoMenuRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
+public class ApacheIsisApplibMixinsRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
-    public static final String ROLE_NAME = "translation-service-admin";
+    public static final String ROLE_NAME = "applib-mixins-user";
 
-    public TranslationServicePoMenuRoleAndPermissions() {
-        super(ROLE_NAME, "Admin access to translation service");
+    public ApacheIsisApplibMixinsRoleAndPermissions() {
+        super(ROLE_NAME, "User access to applib (metadata) mixins");
     }
 
     @Override
@@ -35,7 +33,7 @@ public class TranslationServicePoMenuRoleAndPermissions extends AbstractRoleAndP
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                TranslationServicePoMenu.class.getPackage().getName());
+                "org.apache.isis.applib");
     }
 
 }

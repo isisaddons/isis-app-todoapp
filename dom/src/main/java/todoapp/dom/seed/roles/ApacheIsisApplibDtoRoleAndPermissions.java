@@ -22,11 +22,11 @@ import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-public class ApplibDtoRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
+public class ApacheIsisApplibDtoRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
     public static final String ROLE_NAME = "todoapp-applib-dto-user";
 
-    public ApplibDtoRoleAndPermissions() {
+    public ApacheIsisApplibDtoRoleAndPermissions() {
         super(ROLE_NAME, "User access to applib DTO mixins");
     }
 

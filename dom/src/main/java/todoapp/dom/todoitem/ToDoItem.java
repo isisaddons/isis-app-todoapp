@@ -43,18 +43,14 @@ import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.NonRecoverableException;
 import org.apache.isis.applib.RecoverableException;
 import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.BookmarkPolicy;
 import org.apache.isis.applib.annotation.Collection;
-import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
-import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.InvokeOn;
 import org.apache.isis.applib.annotation.InvokedOn;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
-import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.RestrictTo;
@@ -136,9 +132,6 @@ import todoapp.dom.seed.tenancies.UsersTenancy;
         autoCompleteRepository = ToDoItems.class, // for drop-downs, unless autoCompleteNXxx() is present
         autoCompleteAction = "autoComplete",
         updatedLifecycleEvent = ToDoItem.UpdatedEvent.class
-)
-@DomainObjectLayout(
-        bookmarking = BookmarkPolicy.AS_ROOT
 )
 @XmlJavaTypeAdapter(PersistentEntityAdapter.class)
 public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, CalendarEventable {
@@ -494,7 +487,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     //private SortedSet<ToDoItem> dependencies = new TreeSet<>();  // not compatible with neo4j (as of DN v3.2.3)
 
     @Collection()
-    @CollectionLayout(/*sortedBy = DependenciesComparator.class*/) // not compatible with neo4j (as of DN v3.2.3)
+    // @CollectionLayout(sortedBy = DependenciesComparator.class) // not compatible with neo4j (as of DN v3.2.3)
     public Set<ToDoItem> getDependencies() {
         return dependencies;
     }
@@ -510,9 +503,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
         getDependencies().remove(toDoItem);
     }
 
-    public ToDoItem add(
-            @ParameterLayout(typicalLength = 20)
-            final ToDoItem toDoItem) {
+    public ToDoItem add(final ToDoItem toDoItem) {
         // By wrapping the call, Isis will detect that the collection is modified
         // and it will automatically send CollectionInteractionEvents to the Event Bus.
         // ToDoItemSubscriptions is a demo subscriber to this event
@@ -545,9 +536,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
         return null;
     }
 
-    public ToDoItem remove(
-            @ParameterLayout(typicalLength = 20)
-            final ToDoItem toDoItem) {
+    public ToDoItem remove(final ToDoItem toDoItem) {
         // By wrapping the call, Isis will detect that the collection is modified
         // and it will automatically send a CollectionInteractionEvent to the Event Bus.
         // ToDoItemSubscriptions is a demo subscriber to this event
@@ -679,7 +668,6 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
             restrictTo = RestrictTo.PROTOTYPING
     )
     public void demoException(
-            @ParameterLayout(named="Type")
             final DemoExceptionType type) {
         switch(type) {
         case NON_RECOVERABLE_EXCEPTION:

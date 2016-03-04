@@ -34,3 +34,12 @@ tr.done {
     color: #d3d3d3;
 }
 
+.custom-width-100 ul,
+.custom-width-100 ul li,
+.custom-width-100 ul li a.btn {
+    width: 100%;
+}
+
+.custom-padding-top-20 {
+    padding-top: 20px;
+}

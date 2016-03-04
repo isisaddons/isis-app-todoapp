@@ -16,18 +16,18 @@
  */
 package todoapp.dom.seed.roles;
 
-import org.apache.isis.core.metamodel.services.jdosupport.Persistable_datanucleusId;
+import org.apache.isis.core.runtime.services.i18n.po.TranslationServicePoMenu;
 
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-public class PersistableMixinsRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
+public class ApacheIsisTranslationServicePoMenuRoleAndPermissions extends AbstractRoleAndPermissionsFixtureScript {
 
-    public static final String ROLE_NAME = "persistable-mixins-user";
+    public static final String ROLE_NAME = "translation-service-admin";
 
-    public PersistableMixinsRoleAndPermissions() {
-        super(ROLE_NAME, "User access to persistable (metadata) mixins");
+    public ApacheIsisTranslationServicePoMenuRoleAndPermissions() {
+        super(ROLE_NAME, "Admin access to translation service");
     }
 
     @Override
@@ -35,7 +35,7 @@ public class PersistableMixinsRoleAndPermissions extends AbstractRoleAndPermissi
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                Persistable_datanucleusId.class.getPackage().getName());
+                TranslationServicePoMenu.class.getPackage().getName());
     }
 
 }
