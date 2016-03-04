@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:grid xsi:schemaLocation="http://isis.apache.org/applib/layout/component http://isis.apache.org/applib/layout/component/component.xsd" xmlns="http://isis.apache.org/applib/layout/component" xmlns:ns2="http://isis.apache.org/applib/layout/grid/bootstrap3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <ns2:row>
+        <ns2:col span="12" unreferencedActions="true">
+            <domainObject/>
+        </ns2:col>
+    </ns2:row>
+    <ns2:row>
+        <ns2:col span="6">
+            <fieldSet name="General" id="general" unreferencedProperties="true"/>
+            <fieldSet name="Metadata" id="metadata"/>
+        </ns2:col>
+        <ns2:col span="6">
+            <fieldSet name="Priority" id="priority"/>
+            <fieldSet name="Other" id="other"/>
+        </ns2:col>
+        <ns2:col span="12" unreferencedCollections="true"/>
+    </ns2:row>
+</ns2:grid>

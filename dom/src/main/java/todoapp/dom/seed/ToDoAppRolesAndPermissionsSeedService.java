@@ -30,7 +30,6 @@ import todoapp.dom.seed.roles.ApplibDtoRoleAndPermissions;
 import todoapp.dom.seed.roles.ApplibMixinsRoleAndPermissions;
 import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.DevUtilsModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.PersistableMixinsRoleAndPermissions;
 import todoapp.dom.seed.roles.TogglzModuleAdminRole;
 import todoapp.dom.seed.roles.PublishingModuleRoleAndPermissions;
@@ -83,7 +82,6 @@ public class ToDoAppRolesAndPermissionsSeedService {
             executionContext.executeChild(this, new SessionLoggerModuleRoleAndPermissions());
             executionContext.executeChild(this, new SettingsModuleRoleAndPermissions());
             executionContext.executeChild(this, new PublishingModuleRoleAndPermissions());
-            executionContext.executeChild(this, new DevUtilsModuleRoleAndPermissions());
 
             executionContext.executeChild(this, new TranslationServicePoMenuRoleAndPermissions());
             executionContext.executeChild(this, new PersistableMixinsRoleAndPermissions());
