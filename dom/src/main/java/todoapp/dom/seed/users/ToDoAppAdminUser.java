@@ -26,7 +26,6 @@ import todoapp.dom.seed.roles.ApplibDtoRoleAndPermissions;
 import todoapp.dom.seed.roles.ApplibMixinsRoleAndPermissions;
 import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.DevUtilsModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.PersistableMixinsRoleAndPermissions;
 import todoapp.dom.seed.roles.PublishingModuleRoleAndPermissions;
 import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
@@ -56,7 +55,6 @@ public class ToDoAppAdminUser extends AbstractUserAndRolesFixtureScript {
                               SessionLoggerModuleRoleAndPermissions.ROLE_NAME,
                               SettingsModuleRoleAndPermissions.ROLE_NAME,
                               PublishingModuleRoleAndPermissions.ROLE_NAME,
-                              DevUtilsModuleRoleAndPermissions.ROLE_NAME,
                               ToDoAppRegularRoleAndPermissions.ROLE_NAME,
                               ToDoAppFixtureServiceRoleAndPermissions.ROLE_NAME,
                               TranslationServicePoMenuRoleAndPermissions.ROLE_NAME,
