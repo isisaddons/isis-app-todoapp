@@ -72,7 +72,7 @@ public class ToDoItemAnalysisMenu {
     //region > byDateRange (action)
 
     public enum DateRange {
-        OVERDUE,
+        OVER_DUE,
         TODAY,
         TOMORROW,
         THIS_WEEK,

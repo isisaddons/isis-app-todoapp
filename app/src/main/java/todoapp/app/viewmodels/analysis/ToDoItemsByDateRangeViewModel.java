@@ -107,7 +107,7 @@ public class ToDoItemsByDateRangeViewModel
         final DateTime today = clockService.now().toDateTimeAtStartOfDay();
         
         if(dueBy.isBefore(today)) {
-            return DateRange.OVERDUE;
+            return DateRange.OVER_DUE;
         }
         if(dueBy.isBefore(today.plusDays(1))) {
             return DateRange.TODAY;
