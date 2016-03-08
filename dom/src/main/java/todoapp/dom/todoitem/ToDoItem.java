@@ -651,7 +651,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
             restrictTo = RestrictTo.PROTOTYPING
     )
     public URL openSourceCodeOnGithub() throws MalformedURLException {
-        return new URL("https://github.com/apache/isis/tree/master/example/application/todoapp/dom/src/main/java/dom/todo/ToDoItem.java");
+        return new URL("https://github.com/isisaddons/isis-app-todoapp/blob/master/dom/src/main/java/todoapp/dom/todoitem/ToDoItem.java");
     }
     //endregion
 

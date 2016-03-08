@@ -16,7 +16,8 @@
  */
 package todoapp.dom.seed.roles;
 
-import org.apache.isis.core.metamodel.services.metamodel.MetadataMenu;
+
+import org.apache.isis.applib.services.layout.LayoutServiceMenu;
 
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
@@ -35,7 +36,7 @@ public class ApacheIsisMetadataMenuRoleAndPermissions extends AbstractRoleAndPer
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                MetadataMenu.class.getPackage().getName());
+                LayoutServiceMenu.class.getPackage().getName());
     }
 
 }

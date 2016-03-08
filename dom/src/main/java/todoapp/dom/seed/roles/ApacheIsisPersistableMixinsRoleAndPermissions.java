@@ -16,7 +16,7 @@
  */
 package todoapp.dom.seed.roles;
 
-import org.apache.isis.core.metamodel.services.jdosupport.Persistable_datanucleusId;
+import org.apache.isis.core.metamodel.services.jdosupport.Persistable_datanucleusIdLong;
 
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
@@ -35,7 +35,7 @@ public class ApacheIsisPersistableMixinsRoleAndPermissions extends AbstractRoleA
         newPackagePermissions(
                 ApplicationPermissionRule.ALLOW,
                 ApplicationPermissionMode.CHANGING,
-                Persistable_datanucleusId.class.getPackage().getName());
+                Persistable_datanucleusIdLong.class.getPackage().getName());
     }
 
 }
