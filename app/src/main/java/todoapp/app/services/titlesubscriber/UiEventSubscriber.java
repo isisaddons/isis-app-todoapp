@@ -42,9 +42,6 @@ public class UiEventSubscriber extends AbstractSubscriber {
             ToDoItemV1_1 dto = (ToDoItemV1_1) eventSource;
             final String underlyingTitle = container.titleOf(dto.getToDoItem());
             event.setTitle("DTO v1_1 for: " + underlyingTitle);
-        } else if(eventSource instanceof ToDoItemV1_1) {
-            ToDoItemV1_1 dto = (ToDoItemV1_1) eventSource;
-            event.setTitle("DTO v1_0 for: " + dto.getDescription());
         }
     }
 

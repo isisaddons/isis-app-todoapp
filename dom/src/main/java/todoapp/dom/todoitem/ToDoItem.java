@@ -657,7 +657,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     //region > demoException (action)
 
-    static enum DemoExceptionType {
+    enum DemoExceptionType {
         RECOVERABLE_EXCEPTION,
         RECOVERABLE_EXCEPTION_AUTO_ESCALATED,
         NON_RECOVERABLE_EXCEPTION;
