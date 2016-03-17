@@ -43,3 +43,21 @@ tr.done {
 .custom-padding-top-20 {
     padding-top: 20px;
 }
+
+.ToDoAppDashboard .notYetComplete th.description {
+    width: 40%;
+}
+
+.ToDoAppDashboard .notYetComplete th.cost,
+.ToDoAppDashboard .notYetComplete td.cost {
+    display: none;
+}
+.ToDoAppDashboard .complete th.cost,
+.ToDoAppDashboard .complete td.cost {
+    display: none;
+}
+
+.ToDoAppDashboard .title-column th.cost,
+.ToDoAppDashboard .complete td.cost {
+    display: none;
+}

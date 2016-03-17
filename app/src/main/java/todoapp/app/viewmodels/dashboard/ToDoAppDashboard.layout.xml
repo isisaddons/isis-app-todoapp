@@ -5,7 +5,12 @@
             <ns2:domainObject/>
             <row>
                 <col span="12" cssClass="custom-width-100">
-                    <ns2:action id="recentActivity"/>
+                    <ns2:action id="exportToWordDoc"/>
+                </col>
+            </row>
+            <row>
+                <col span="12" cssClass="custom-width-100">
+                    <ns2:action id="exportAsXml"/>
                 </col>
             </row>
             <row>
@@ -15,19 +20,20 @@
             </row>
             <row>
                 <col span="12" cssClass="custom-width-100">
-                    <ns2:action id="exportToWordDoc"/>
+                    <ns2:action id="rebuildMetamodel"/>
                 </col>
             </row>
             <row>
                 <col span="12" cssClass="custom-width-100">
-                    <ns2:action id="exportAsXml"/>
+                    <ns2:action id="recentActivity"/>
                 </col>
             </row>
         </col>
         <col span="5" unreferencedCollections="true" cssClass="custom-padding-top-20">
-            <ns2:collection id="notYetComplete" defaultView="table" paged="20"/>
+            <ns2:collection id="notYetComplete" defaultView="calendar"/>
         </col>
         <col span="5" cssClass="custom-padding-top-20">
+            <ns2:collection id="notYetComplete" defaultView="table" paged="5"/>
             <ns2:collection id="complete" defaultView="table"/>
         </col>
         <col span="0">

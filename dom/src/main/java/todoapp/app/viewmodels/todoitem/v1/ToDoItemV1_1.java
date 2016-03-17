@@ -12,7 +12,9 @@ import javax.xml.bind.annotation.XmlType;
 
 import com.google.common.collect.Lists;
 
+import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
+import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.services.dto.Dto;
 import org.apache.isis.applib.services.eventbus.TitleUiEvent;
 
@@ -34,6 +36,9 @@ import todoapp.dom.todoitem.ToDoItem;
         }
 )
 @XmlRootElement(name = "toDoItemDto")
+@DomainObject(
+        editing = Editing.DISABLED
+)
 @DomainObjectLayout(
         titleUiEvent = TitleUiEvent.Default.class
 )

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bs3:grid xsi:schemaLocation="http://isis.apache.org/applib/layout/component http://isis.apache.org/applib/layout/component/component.xsd http://isis.apache.org/applib/layout/grid/bootstrap3 http://isis.apache.org/applib/layout/grid/bootstrap3/bootstrap3.xsd" xmlns:bs3="http://isis.apache.org/applib/layout/grid/bootstrap3" xmlns:c="http://isis.apache.org/applib/layout/component" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bs3:row>
+        <bs3:col span="12" unreferencedActions="true">
+            <c:domainObject/>
+        </bs3:col>
+    </bs3:row>
+    <bs3:row>
+        <bs3:col span="5">
+            <c:fieldSet name="Versioning">
+                <c:action id="recentActivity" hidden="EVERYWHERE"/>
+                <c:action id="downloadXml" position="PANEL_DROPDOWN"/>
+                <c:action id="downloadXsd" position="PANEL_DROPDOWN"/>
+                <c:action id="downloadLayoutXml" position="PANEL_DROPDOWN"/>
+                <c:property id="majorVersion"/>
+                <c:property id="minorVersion"/>
+            </c:fieldSet>
+            <c:fieldSet name="Data" unreferencedProperties="true">
+                <c:property id="description"/>
+                <c:property id="category"/>
+                <c:property id="subcategory"/>
+                <c:property id="cost"/>
+            </c:fieldSet>
+            <c:fieldSet name="Backing entity">
+                <c:property id="toDoItem"/>
+            </c:fieldSet>
+        </bs3:col>
+        <bs3:col span="7" unreferencedCollections="true">
+            <c:collection id="similarItems" defaultView="table"/>
+        </bs3:col>
+    </bs3:row>
+</bs3:grid>

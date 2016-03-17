@@ -27,8 +27,7 @@ import javax.ws.rs.core.MediaType;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
-import org.apache.isis.viewer.restfulobjects.applib.RepresentationType;
-import org.apache.isis.viewer.restfulobjects.rendering.service.conmap.ContentMappingService;
+import org.apache.isis.applib.conmap.ContentMappingService;
 
 import todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_1;
 import todoapp.dom.similarto.SimilarToContributions;
@@ -43,8 +42,7 @@ public class ContentMappingServiceForToDoItem implements ContentMappingService {
     @Override
     public Object map(
             final Object object,
-            final List<MediaType> acceptableMediaTypes,
-            final RepresentationType representationType) {
+            final List<MediaType> acceptableMediaTypes) {
 
         if(object instanceof ToDoItem) {
             for (MediaType acceptableMediaType : acceptableMediaTypes) {
@@ -76,6 +74,7 @@ public class ContentMappingServiceForToDoItem implements ContentMappingService {
         final ToDoItemV1_1 dto = new ToDoItemV1_1();
 
         dto.setToDoItem(toDoItem);
+        dto.setDescription(toDoItem.getDescription());
         dto.setCategory(nameOf(toDoItem.getCategory()));
         dto.setSubcategory(nameOf(toDoItem.getSubcategory()));
         dto.setCost(toDoItem.getCost());
@@ -91,6 +90,5 @@ public class ContentMappingServiceForToDoItem implements ContentMappingService {
 
     @Inject
     SimilarToContributions similarToContributions;
-
 
 }

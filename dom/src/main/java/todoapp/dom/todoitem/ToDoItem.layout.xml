@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <bs3:grid xsi:schemaLocation="http://isis.apache.org/applib/layout/component http://isis.apache.org/applib/layout/component/component.xsd http://isis.apache.org/applib/layout/grid/bootstrap3 http://isis.apache.org/applib/layout/grid/bootstrap3/bootstrap3.xsd" xmlns:bs3="http://isis.apache.org/applib/layout/grid/bootstrap3" xmlns:c="http://isis.apache.org/applib/layout/component" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
     <bs3:row>
         <bs3:col span="12" unreferencedActions="true">
-            <c:domainObject bookmarking="AS_ROOT"/>
+            <c:domainObject bookmarking="AS_ROOT">
+                <c:named>To-Do item</c:named>
+            </c:domainObject>
         </bs3:col>
     </bs3:row>
     <bs3:row>
@@ -63,6 +66,7 @@
                             <c:fieldSet name="Metadata" id="metadata">
                                 <c:action id="recentActivity"/>
                                 <c:action id="downloadLayoutXml" position="PANEL_DROPDOWN"/>
+                                <c:action id="invalidateMetamodel" position="PANEL_DROPDOWN"/>
                                 <c:action id="downloadJdoMetadata" position="PANEL_DROPDOWN"/>
                                 <c:property id="datanucleusIdLong"/>
                                 <c:property id="datanucleusVersionLong"/>
@@ -88,7 +92,7 @@
                 <bs3:tab name="Similar to">
                     <bs3:row>
                         <bs3:col span="12">
-                            <c:collection defaultView="table" id="similarTo"/>
+                            <c:collection defaultView="table" id="similarTo" paged="2"/>
                         </bs3:col>
                     </bs3:row>
                 </bs3:tab>
