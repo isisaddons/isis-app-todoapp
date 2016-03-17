@@ -45,19 +45,36 @@ tr.done {
 }
 
 .ToDoAppDashboard .notYetComplete th.description {
-    width: 40%;
+    width: 30%;
 }
 
 .ToDoAppDashboard .notYetComplete th.cost,
 .ToDoAppDashboard .notYetComplete td.cost {
     display: none;
 }
+.ToDoAppDashboard .notYetComplete th.dueBy,
+.ToDoAppDashboard .notYetComplete td.dueBy {
+    display: none;
+}
 .ToDoAppDashboard .complete th.cost,
 .ToDoAppDashboard .complete td.cost {
+    display: none;
+}
+.ToDoAppDashboard .complete th.dueBy,
+.ToDoAppDashboard .complete td.dueBy {
     display: none;
 }
 
 .todoapp-dom-todoitem-ToDoItem td.title-column {
     background-color: aliceblue;
-    margin: 3px;
+}
+
+
+.standaloneCollectionPage .todoapp-dom-todoitem-ToDoItem .collectionContentsAsAjaxTablePanel table.contents thead th.title-column {
+    width: 20%;
+}
+
+.standaloneCollectionPage .todoapp-dom-todoitem-ToDoItem th.description,
+.standaloneCollectionPage .todoapp-dom-todoitem-ToDoItem td.description {
+    display: none;
 }

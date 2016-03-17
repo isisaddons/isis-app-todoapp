@@ -22,11 +22,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.security.RoleMemento;
 import org.apache.isis.applib.security.UserMemento;
 import org.apache.isis.applib.services.actinvoc.ActionInvocationContext;
 import org.apache.isis.applib.services.eventbus.EventBusService;
+import org.apache.isis.applib.services.user.UserService;
 import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2;
 import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2.Mode;
 
@@ -55,7 +55,7 @@ public abstract class ToDoItemTest {
     public static class Properties extends ToDoItemTest {
 
         @Mock
-        DomainObjectContainer mockContainer;
+        UserService mockUserService;
 
         public static class DueBy extends Properties {
 
@@ -63,11 +63,11 @@ public abstract class ToDoItemTest {
             public void hiddenForNoDueByRole() {
                 final UserMemento userWithRole = new UserMemento("user", new RoleMemento("realm1:noDueBy_role"));
                 context.checking(new Expectations() {{
-                    allowing(mockContainer).getUser();
+                    allowing(mockUserService).getUser();
                     will(returnValue(userWithRole));
                 }});
 
-                toDoItem.container = mockContainer;
+                toDoItem.userService = mockUserService;
 
                 assertThat(toDoItem.hideDueBy()).isTrue();
             }
@@ -76,11 +76,11 @@ public abstract class ToDoItemTest {
             public void notHiddenWithoutRole() {
                 final UserMemento userWithRole = new UserMemento("user", new RoleMemento("realm1:someOtherRole"));
                 context.checking(new Expectations() {{
-                    allowing(mockContainer).getUser();
+                    allowing(mockUserService).getUser();
                     will(returnValue(userWithRole));
                 }});
 
-                toDoItem.container = mockContainer;
+                toDoItem.userService = mockUserService;
 
                 assertThat(toDoItem.hideDueBy()).isFalse();
             }

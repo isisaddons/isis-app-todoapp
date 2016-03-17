@@ -38,7 +38,6 @@ import com.google.common.collect.Ordering;
 
 import org.joda.time.LocalDate;
 
-import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.Identifier;
 import org.apache.isis.applib.NonRecoverableException;
 import org.apache.isis.applib.RecoverableException;
@@ -67,9 +66,14 @@ import org.apache.isis.applib.services.eventbus.ObjectRemovingEvent;
 import org.apache.isis.applib.services.eventbus.ObjectUpdatedEvent;
 import org.apache.isis.applib.services.eventbus.ObjectUpdatingEvent;
 import org.apache.isis.applib.services.i18n.TranslatableString;
+import org.apache.isis.applib.services.message.MessageService;
+import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.scratchpad.Scratchpad;
+import org.apache.isis.applib.services.title.TitleService;
+import org.apache.isis.applib.services.user.UserService;
 import org.apache.isis.applib.services.wrapper.HiddenException;
 import org.apache.isis.applib.services.wrapper.WrapperFactory;
+import org.apache.isis.applib.services.xactn.TransactionService;
 import org.apache.isis.applib.util.ObjectContracts;
 import org.apache.isis.applib.util.TitleBuffer;
 import org.apache.isis.applib.value.Blob;
@@ -208,7 +212,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
      * </p>
      */
     public boolean hideDueBy() {
-        final UserMemento user = container.getUser();
+        final UserMemento user = userService.getUser();
         return user.hasRole("realm1:noDueBy_role");
     }
 
@@ -233,7 +237,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     public CalendarEvent toCalendarEvent() {
         return getDueBy() != null
                 ? new CalendarEvent(
-                getDueBy().toDateTimeAtStartOfDay(), "dueBy", title())
+                getDueBy().toDateTimeAtStartOfDay(), "dueBy", titleService.titleOf(this))
                 : null;
     }
     //endregion
@@ -368,7 +372,8 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
             @Parameter(optionality = Optionality.OPTIONAL)
             @Digits(integer = 10, fraction = 2)
             final BigDecimal newCost) {
-        LOG.debug("%s: cost updated: %s -> %s", container.titleOf(this), getCost(), newCost);
+        final String titleOf = titleService.titleOf(this);
+        LOG.debug("%s: cost updated: %s -> %s", titleOf, getCost(), newCost);
 
         // just to simulate a long-running action
         try {
@@ -615,15 +620,15 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     public Object delete() {
 
         // obtain title first, because cannot reference object after deleted
-        final String title = container.titleOf(this);
+        final String title = titleService.titleOf(this);
 
         final List<ToDoItem> returnList = actionInvocationContext.getInvokedOn().isCollection() ? toDoItems.notYetComplete() : null;
 
         // there's actually a bug in this method; shouldn't be returning the current object in the list if just deleted.
         // however, ISIS-1269 transparently handles this and won't attempt to render a deleted object.
-        container.removeIfNotAlready(this);
+        repositoryService.remove(this);
 
-        container.informUser(
+        messageService.informUser(
                 TranslatableString.tr("Deleted {title}", "title", title), this.getClass(), "delete");
 
         return returnList;
@@ -678,7 +683,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
             try {
                 // this will trigger an exception (because category cannot be null), causing the xactn to be aborted
                 setCategory(null);
-                container.flush();
+                transactionService.flushTransaction();
             } catch(final Exception e) {
                 // it's a programming mistake to throw only a recoverable exception here, because of the xactn's state.
                 // the framework should instead auto-escalate this to a non-recoverable exception
@@ -830,7 +835,19 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     //region > injected services
     @javax.inject.Inject
-    DomainObjectContainer container;
+    MessageService messageService;
+
+    @javax.inject.Inject
+    TransactionService transactionService;
+
+    @javax.inject.Inject
+    RepositoryService repositoryService;
+
+    @javax.inject.Inject
+    TitleService titleService;
+
+    @javax.inject.Inject
+    UserService userService;
 
     @javax.inject.Inject
     ToDoItems toDoItems;
