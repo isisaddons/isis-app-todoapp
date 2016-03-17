@@ -57,7 +57,7 @@ tr.done {
     display: none;
 }
 
-.ToDoAppDashboard .title-column th.cost,
-.ToDoAppDashboard .complete td.cost {
-    display: none;
+.todoapp-dom-todoitem-ToDoItem td.title-column {
+    background-color: aliceblue;
+    margin: 3px;
 }
