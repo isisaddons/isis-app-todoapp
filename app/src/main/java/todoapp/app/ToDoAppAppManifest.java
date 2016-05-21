@@ -99,7 +99,7 @@ public class ToDoAppAppManifest implements AppManifest {
                         ));
 //        props.put("isis.reflector.facet.domainObjectLayoutAnnotation.cssClassUiEvent.postForDefault", "true");
 //        props.put("isis.reflector.facet.domainObjectLayoutAnnotation.iconUiEvent.postForDefault", "true");
-//        props.put("isis.reflector.facet.domainObjectLayoutAnnotation.titleUiEvent.postForDefault", "true");
+//        props.put("isis.reflector.facet.domainObjectLayoutAnnotation.titleEvent.postForDefault", "true");
 //        props.put("isis.reflector.facet.actionAnnotation.domainEvent.postForDefault", "true");
 //        props.put("isis.reflector.facet.collectionAnnotation.domainEvent.postForDefault", "true");
 //        props.put("isis.reflector.facet.propertyAnnotation.domainEvent.postForDefault", "true");

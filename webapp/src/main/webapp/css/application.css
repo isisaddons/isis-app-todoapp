@@ -65,9 +65,11 @@ tr.done {
     display: none;
 }
 
+/*
 .todoapp-dom-todoitem-ToDoItem td.title-column {
     background-color: aliceblue;
 }
+*/
 
 
 .standaloneCollectionPage .todoapp-dom-todoitem-ToDoItem .collectionContentsAsAjaxTablePanel table.contents thead th.title-column {
@@ -77,4 +79,8 @@ tr.done {
 .standaloneCollectionPage .todoapp-dom-todoitem-ToDoItem th.description,
 .standaloneCollectionPage .todoapp-dom-todoitem-ToDoItem td.description {
     display: none;
+}
+.standaloneCollectionPage .todoapp-dom-todoitem-ToDoItem .collectionContentsAsAjaxTablePanel th.title-column,
+.standaloneCollectionPage .todoapp-dom-todoitem-ToDoItem .collectionContentsAsAjaxTablePanel  td.title-column {
+    text-align: left;
 }

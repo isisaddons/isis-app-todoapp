@@ -514,28 +514,14 @@ Switch into the root directory of the app, and simply use:
 
 The `todoapp` app generates a single WAR file, configured to run both the [Wicket viewer](../../components/viewers/wicket/about.html) and the [Restful Objects viewer](../../components/viewers/wicket/about.html).  The app also configures the [JDO Objectstore](../../components/objectstores/jdo/about.html) to use an in-memory HSQLDB connection.
 
-Once you've built the app, you can run the WAR in a variety of ways.
-
-The recommended approach when getting started is to run the self-hosting version of the WAR, allowing Apache Isis to run as a standalone app; for example:
-
-    java -jar webapp/target/todoapp-webapp-1.0-SNAPSHOT-jetty-console.jar
-
-This can also be accomplished using an embedded Ant target provided in the build script:
-
-    mvn -P self-host antrun:run
-
-The first is to simply deploying the generated WAR (`webapp/target/todoapp-webapp-1.0-SNAPSHOT.war`) to a servlet container.
-
-Alternatively, you could run the WAR in a Maven-hosted Jetty instance, though you need to `cd` into the `webapp` module:
+Once you've built the app, you can run the WAR in a Maven-hosted Jetty instance:
 
     cd webapp
     mvn jetty:run -D jetty.port=9090
 
 In the above, we've passed in a property to indicate a different port from the default port (8080).
 
-Note that if you use `mvn jetty:run`, then the context path changes; check the console output (eg [http://localhost:9090/todoapp-webapp](http://localhost:9090/todoapp-webapp)).
-
-Finally, you can also run the app by deploying to a standalone servlet container such as [Tomcat](http://tomcat.apache.org).
+You can also of course run the app by deploying to a standalone servlet container such as [Tomcat](http://tomcat.apache.org).
 
 ## Using the App
 

@@ -16,7 +16,6 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.services.dto.Dto;
-import org.apache.isis.applib.services.eventbus.TitleUiEvent;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +39,7 @@ import todoapp.dom.todoitem.ToDoItem;
         editing = Editing.DISABLED
 )
 @DomainObjectLayout(
-        titleUiEvent = TitleUiEvent.Default.class
+//        titleUiEvent = TitleUiEvent.Default.class
 )
 public class ToDoItemV1_1 implements Dto {
 

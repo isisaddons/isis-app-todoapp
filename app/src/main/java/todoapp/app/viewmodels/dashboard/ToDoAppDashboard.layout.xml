@@ -15,17 +15,22 @@
             </row>
             <row>
                 <col span="12" cssClass="custom-width-100">
-                    <ns2:action id="downloadLayoutXml"/>
+                    <ns2:action id="downloadLayoutXml" hidden="EVERYWHERE"/>
                 </col>
             </row>
             <row>
                 <col span="12" cssClass="custom-width-100">
-                    <ns2:action id="rebuildMetamodel"/>
+                    <ns2:action id="rebuildMetamodel" hidden="EVERYWHERE"/>
                 </col>
             </row>
             <row>
                 <col span="12" cssClass="custom-width-100">
-                    <ns2:action id="recentActivity"/>
+                    <ns2:action id="clearHints" hidden="EVERYWHERE"/>
+                </col>
+            </row>
+            <row>
+                <col span="12" cssClass="custom-width-100">
+                    <ns2:action id="recentActivity" hidden="EVERYWHERE"/>
                 </col>
             </row>
         </col>
