@@ -2,7 +2,7 @@ package todoapp.webapp;
 
 import java.util.concurrent.Callable;
 
-import org.apache.isis.core.metamodel.services.ServicesInjectorSpi;
+import org.apache.isis.core.metamodel.services.ServicesInjector;
 import org.apache.isis.core.runtime.system.context.IsisContext;
 import org.apache.isis.core.runtime.system.persistence.PersistenceSession;
 
@@ -88,7 +88,7 @@ public class UserSettingsThemeProvider implements ActiveThemeProvider {
 
     // //////////////////////////////////////
 
-    protected ServicesInjectorSpi getServicesInjector() {
+    protected ServicesInjector getServicesInjector() {
         return getPersistenceSession().getServicesInjector();
     }
 
