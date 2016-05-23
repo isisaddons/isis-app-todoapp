@@ -51,7 +51,7 @@
 						<artifactId>isis-maven-plugin</artifactId>
 						<version>${isis.version}</version>
 						<configuration>
-							<appManifest>todoapp.dom.ToDoAppDomManifest</appManifest>
+							<appManifest>todoapp.app.ToDoAppAppManifest</appManifest>
 							<jaxbClasses>
 								<jaxbClass>todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_1</jaxbClass>
 							</jaxbClasses>
@@ -61,7 +61,7 @@
 						<dependencies>
 							<dependency>
 								<groupId>${project.groupId}</groupId>
-								<artifactId>todoapp-dom</artifactId>
+								<artifactId>todoapp-app</artifactId>
 								<version>${project.version}</version>
 							</dependency>
 							<!--
@@ -73,6 +73,15 @@
 								<artifactId>guava</artifactId>
 								<version>19.0</version>
 							</dependency>
+                            <!--
+                              JDBC drivers
+                              (for jdo objectstore)
+                              -->
+                            <dependency>
+                                <groupId>org.hsqldb</groupId>
+                                <artifactId>hsqldb</artifactId>
+                                <version>2.3.3</version>
+                            </dependency>
 						</dependencies>
 						<executions>
 							<execution>

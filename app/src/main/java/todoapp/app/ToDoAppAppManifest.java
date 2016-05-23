@@ -97,12 +97,22 @@ public class ToDoAppAppManifest implements AppManifest {
                         NamedFacetOnParameterParaname8Factory.class.getName(),
                         SummernoteEditorFacetFactory.class.getName()
                         ));
-//        props.put("isis.reflector.facet.domainObjectLayoutAnnotation.cssClassUiEvent.postForDefault", "true");
-//        props.put("isis.reflector.facet.domainObjectLayoutAnnotation.iconUiEvent.postForDefault", "true");
-//        props.put("isis.reflector.facet.domainObjectLayoutAnnotation.titleEvent.postForDefault", "true");
-//        props.put("isis.reflector.facet.actionAnnotation.domainEvent.postForDefault", "true");
-//        props.put("isis.reflector.facet.collectionAnnotation.domainEvent.postForDefault", "true");
-//        props.put("isis.reflector.facet.propertyAnnotation.domainEvent.postForDefault", "true");
+
+        props.put("isis.persistor.datanucleus.impl.datanucleus.schema.autoCreateAll","true");
+        props.put("isis.persistor.datanucleus.impl.datanucleus.schema.validateTables","true");
+        props.put("isis.persistor.datanucleus.impl.datanucleus.schema.validateConstraints","true");
+
+        props.put("isis.persistor.datanucleus.impl.datanucleus.persistenceByReachabilityAtCommit","false");
+        props.put("isis.persistor.datanucleus.impl.datanucleus.identifier.case","MixedCase");
+
+        props.put("isis.persistor.datanucleus.impl.datanucleus.cache.level2.type","none");
+        props.put("isis.persistor.datanucleus.impl.datanucleus.cache.level2.mode","ENABLE_SELECTIVE");
+
+        props.put("isis.persistor.datanucleus.impl.javax.jdo.option.ConnectionDriverName","org.hsqldb.jdbcDriver");
+        props.put("isis.persistor.datanucleus.impl.javax.jdo.option.ConnectionURL","jdbc:hsqldb:mem:test");
+        props.put("isis.persistor.datanucleus.impl.javax.jdo.option.ConnectionUserName","sa");
+        props.put("isis.persistor.datanucleus.impl.javax.jdo.option.ConnectionPassword","");
+
     }
 
 }
