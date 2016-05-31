@@ -29,7 +29,6 @@ import javax.xml.transform.stream.StreamSource;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.bookmark.BookmarkService;
 import org.apache.isis.applib.services.jaxb.JaxbService;
 
@@ -46,8 +45,6 @@ public class ToDoItemDtoIntegTest extends AbstractToDoIntegTest {
     @Inject
     BookmarkService bookmarkService;
     @Inject
-    FixtureScripts fixtureScripts;
-    @Inject
     ToDoItems toDoItems;
     @Inject
     JaxbService jaxbService;
@@ -62,7 +59,7 @@ public class ToDoItemDtoIntegTest extends AbstractToDoIntegTest {
 
         final List<ToDoItem> all = toDoItems.notYetComplete();
         toDoItem = all.get(0);
-        nextTransaction();
+        transactionService.nextTransaction();
     }
 
     ToDoItem_asV1_1 mixin;
@@ -91,8 +88,8 @@ public class ToDoItemDtoIntegTest extends AbstractToDoIntegTest {
 
         assertThat(dto.getCategory()).isEqualTo(vm.getCategory());
         assertThat(dto.getSubcategory()).isEqualTo(vm.getSubcategory());
-        assertThat(dto.getToDoItem().getObjectIdentifier()).isEqualTo(bookmarkService.bookmarkFor(toDoItem).getIdentifier());
-        assertThat(dto.getToDoItem().getObjectType()).isEqualTo(bookmarkService.bookmarkFor(toDoItem).getObjectType());
+        assertThat(dto.getToDoItem().getId()).isEqualTo(bookmarkService.bookmarkFor(toDoItem).getIdentifier());
+        assertThat(dto.getToDoItem().getType()).isEqualTo(bookmarkService.bookmarkFor(toDoItem).getObjectType());
         assertThat(dto.getDescription()).isEqualTo(vm.getDescription());
         assertThat(dto.getSimilarItems().getTodoItem().size()).isEqualTo(vm.getSimilarItems().size());
     }

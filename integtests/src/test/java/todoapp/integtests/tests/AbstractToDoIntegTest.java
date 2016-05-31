@@ -18,10 +18,16 @@
  */
 package todoapp.integtests.tests;
 
+import javax.inject.Inject;
+
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.togglz.junit.TogglzRule;
 
+import org.apache.isis.applib.fixturescripts.FixtureScripts;
+import org.apache.isis.applib.services.repository.RepositoryService;
+import org.apache.isis.applib.services.title.TitleService;
+import org.apache.isis.applib.services.xactn.TransactionService;
 import org.apache.isis.core.integtestsupport.IntegrationTestAbstract;
 import org.apache.isis.core.integtestsupport.scenarios.ScenarioExecutionForIntegration;
 
@@ -41,5 +47,17 @@ public abstract class AbstractToDoIntegTest extends IntegrationTestAbstract {
         // instantiating will install onto ThreadLocal
         new ScenarioExecutionForIntegration();
     }
+
+    @Inject
+    protected TitleService titleService;
+
+    @Inject
+    protected RepositoryService repositoryService;
+
+    @Inject
+    protected FixtureScripts fixtureScripts;
+
+    @Inject
+    protected TransactionService transactionService;
 
 }

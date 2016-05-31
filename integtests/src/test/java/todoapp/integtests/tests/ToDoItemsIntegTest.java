@@ -25,9 +25,6 @@ import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.apache.isis.applib.DomainObjectContainer;
-import org.apache.isis.applib.fixturescripts.FixtureScripts;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import todoapp.dom.categories.Category;
 import todoapp.dom.categories.Subcategory;
@@ -37,10 +34,6 @@ import todoapp.integtests.fixture.ToDoItemsIntegTestFixture;
 
 public class ToDoItemsIntegTest extends AbstractToDoIntegTest {
 
-    @Inject
-    DomainObjectContainer container;
-    @Inject
-    FixtureScripts fixtureScripts;
     @Inject
     ToDoItems toDoItems;
 
@@ -74,22 +67,23 @@ public class ToDoItemsIntegTest extends AbstractToDoIntegTest {
         public void complete_and_notYetComplete() throws Exception {
 
             // given
-            List<ToDoItem> notYetCompleteItems = wrap(toDoItems).notYetComplete();
-            final ToDoItem toDoItem = wrap(notYetCompleteItems.get(0));
-            nextTransaction();
+            List<ToDoItem> notYetCompleteBefore = wrap(toDoItems).notYetComplete();
+            ToDoItem toDoItem = notYetCompleteBefore.get(0);
+            transactionService.nextTransaction();
 
             // when
-            toDoItem.completed();
-            nextTransaction();
+            wrap(toDoItem).completed();
+            transactionService.nextTransaction();
 
             // then
-            assertThat(wrap(toDoItems).notYetComplete()).hasSize(notYetCompletedSize-1);
+            List<ToDoItem> notYetCompleteAfter = wrap(toDoItems).notYetComplete();
+            assertThat(notYetCompleteAfter).hasSize(notYetCompletedSize-1);
             assertThat(wrap(toDoItems).complete()).hasSize(completedSize+1);
-            nextTransaction();
+            transactionService.nextTransaction();
 
             // and when
-            toDoItem.notYetCompleted();
-            nextTransaction();
+            wrap(toDoItem).notYetCompleted();
+            transactionService.nextTransaction();
 
             // then
             assertThat(wrap(toDoItems).notYetComplete()).hasSize(notYetCompletedSize);
@@ -109,24 +103,24 @@ public class ToDoItemsIntegTest extends AbstractToDoIntegTest {
 
             // given
             int size = wrap(toDoItems).notYetComplete().size();
-            nextTransaction();
+            transactionService.nextTransaction();
 
             // when
             final ToDoItem newToDo = toDoItems.newToDo("new todo", Category.PROFESSIONAL, Subcategory.OPEN_SOURCE, null, null);
-            nextTransaction();
+            transactionService.nextTransaction();
 
             // then
             assertThat(newToDo.getDescription()).isEqualTo("new todo");
             assertThat(newToDo.getCategory()).isEqualTo(Category.PROFESSIONAL);
             assertThat(wrap(toDoItems).notYetComplete()).hasSize(size+1);
-            assertThat(container.isPersistent(newToDo)).isTrue();
-            assertThat(container.isPersistent(wrap(newToDo))).isTrue();
+            assertThat(repositoryService.isPersistent(newToDo)).isTrue();
+            assertThat(repositoryService.isPersistent(wrap(newToDo))).isTrue();
 
-            nextTransaction();
+            transactionService.nextTransaction();
 
             // when
             wrap(newToDo).delete();
-            nextTransaction();
+            transactionService.nextTransaction();
 
             // then
             assertThat(wrap(toDoItems).notYetComplete()).hasSize(size);

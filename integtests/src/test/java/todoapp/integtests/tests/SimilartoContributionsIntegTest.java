@@ -25,8 +25,6 @@ import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.apache.isis.applib.fixturescripts.FixtureScripts;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import todoapp.dom.similarto.SimilarToContributions;
 import todoapp.dom.todoitem.ToDoItem;
@@ -44,13 +42,9 @@ public abstract class SimilartoContributionsIntegTest extends AbstractToDoIntegT
     }
 
     @Inject
-    FixtureScripts fixtureScripts;
-    @Inject
     ToDoItems toDoItems;
     @Inject
     SimilarToContributions similarToContributions;
-
-    SimilarToContributions similarToContributionsWrapped;
 
     ToDoItem toDoItem;
 
@@ -59,8 +53,6 @@ public abstract class SimilartoContributionsIntegTest extends AbstractToDoIntegT
 
         toDoItem = wrap(fixtureScript.getToDoItems().get(0));
         assertThat(toDoItem).isNotNull();
-
-        similarToContributionsWrapped = wrap(similarToContributions);
     }
 
     public static class Collections {
@@ -71,7 +63,7 @@ public abstract class SimilartoContributionsIntegTest extends AbstractToDoIntegT
             public void happyCase() throws Exception {
 
                 // when
-                List<ToDoItem> similarItems = similarToContributionsWrapped.similarTo(toDoItem);
+                List<ToDoItem> similarItems = wrap(similarToContributions).similarTo(toDoItem);
 
                 // then
                 assertThat(similarItems).hasSize(6);

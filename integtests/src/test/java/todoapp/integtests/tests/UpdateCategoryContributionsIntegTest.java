@@ -23,7 +23,6 @@ import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.apache.isis.applib.fixturescripts.FixtureScripts;
 import org.apache.isis.applib.services.wrapper.InvalidException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,15 +43,10 @@ public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoI
         fixtureScript = new RecreateToDoItemsForCurrentUser();
         fixtureScripts.runFixtureScript(fixtureScript, null);
     }
-
-    @Inject
-    FixtureScripts fixtureScripts;
     @Inject
     ToDoItems toDoItems;
     @Inject
     UpdateCategoryContributions updateCategoryContributions;
-
-    UpdateCategoryContributions updateCategoryContributionsWrapped;
 
     ToDoItem toDoItem;
 
@@ -61,8 +55,6 @@ public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoI
 
         toDoItem = wrap(fixtureScript.getToDoItems().get(0));
         assertThat(toDoItem).isNotNull();
-
-        updateCategoryContributionsWrapped = wrap(updateCategoryContributions);
     }
 
     public static class Actions {
@@ -72,14 +64,14 @@ public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoI
             public void happyCase() throws Exception {
 
                 // when
-                updateCategoryContributionsWrapped.updateCategory(toDoItem, Category.PROFESSIONAL, Subcategory.CONSULTING);
+                wrap(updateCategoryContributions).updateCategory(toDoItem, Category.PROFESSIONAL, Subcategory.CONSULTING);
 
                 // then
                 assertThat(toDoItem.getCategory()).isEqualTo(Category.PROFESSIONAL);
                 assertThat(toDoItem.getSubcategory()).isEqualTo(Subcategory.CONSULTING);
 
                 // when
-                updateCategoryContributionsWrapped.updateCategory(toDoItem, Category.DOMESTIC, Subcategory.CHORES);
+                wrap(updateCategoryContributions).updateCategory(toDoItem, Category.DOMESTIC, Subcategory.CHORES);
 
                 // then
                 assertThat(toDoItem.getCategory()).isEqualTo(Category.DOMESTIC);
@@ -93,14 +85,14 @@ public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoI
                 // when, then
                 expectedExceptions.expect(InvalidException.class);
                 expectedExceptions.expectMessage("'Category' is mandatory");
-                updateCategoryContributionsWrapped.updateCategory(toDoItem, null, Subcategory.CHORES);
+                wrap(updateCategoryContributions).updateCategory(toDoItem, null, Subcategory.CHORES);
             }
 
             @Test
             public void subcategoryCanBeNull() throws Exception {
 
                 // when, then
-                updateCategoryContributionsWrapped.updateCategory(toDoItem, Category.PROFESSIONAL, null);
+                wrap(updateCategoryContributions).updateCategory(toDoItem, Category.PROFESSIONAL, null);
             }
 
             @Test
@@ -108,7 +100,7 @@ public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoI
 
                 // when, then
                 expectedExceptions.expectMessage(containsString("Invalid subcategory"));
-                updateCategoryContributionsWrapped.updateCategory(toDoItem, Category.PROFESSIONAL, Subcategory.CHORES);
+                wrap(updateCategoryContributions).updateCategory(toDoItem, Category.PROFESSIONAL, Subcategory.CHORES);
             }
         }
 
