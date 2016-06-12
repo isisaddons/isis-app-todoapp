@@ -18,7 +18,6 @@ package todoapp.integtests;
 
 import org.apache.isis.core.integtestsupport.IsisSystemForTest;
 import org.apache.isis.core.security.authentication.AuthenticationRequestNameOnly;
-import org.apache.isis.objectstore.jdo.datanucleus.DataNucleusPersistenceMechanismInstaller;
 import org.apache.isis.objectstore.jdo.datanucleus.IsisConfigurationForJdoIntegTests;
 
 import todoapp.app.ToDoAppAppManifest;
@@ -37,10 +36,10 @@ public class ToDoAppSystemInitializer {
             isft = IsisSystemForTest.builder()
                     .withLoggingAt(org.apache.log4j.Level.INFO)
                     .with(new IsisConfigurationForJdoIntegTests())
-                    .with(new DataNucleusPersistenceMechanismInstaller())
                     .with(new ToDoAppAppManifest())
                     .with(new AuthenticationRequestNameOnly("todoapp-admin"))
-                    .build().setUpSystem();
+                    .build()
+                    .setUpSystem();
             IsisSystemForTest.set(isft);
         }
         return isft;

@@ -6,6 +6,7 @@ import org.apache.isis.core.metamodel.services.ServicesInjector;
 import org.apache.isis.core.runtime.system.context.IsisContext;
 import org.apache.isis.core.runtime.system.persistence.PersistenceSession;
 
+import org.apache.isis.core.runtime.system.session.IsisSessionFactory;
 import org.isisaddons.module.settings.dom.UserSetting;
 import org.isisaddons.module.settings.dom.UserSettingsService;
 import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
@@ -31,35 +32,31 @@ public class UserSettingsThemeProvider implements ActiveThemeProvider {
 
     @Override
     public ITheme getActiveTheme() {
-        if(IsisContext.getSpecificationLoader().isInitialized()) {
-            final String themeName = IsisContext.doInSession(new Callable<String>() {
-                @Override
-                public String call() throws Exception {
-                    final Class<UserSettingsService> serviceClass = UserSettingsService.class;
-                    final UserSettingsService userSettingsService = lookupService(serviceClass);
-                    final UserSetting activeTheme = userSettingsService.find(IsisContext.getAuthenticationSession().getUserName(), ACTIVE_THEME);
-                    return activeTheme != null ? activeTheme.valueAsString() : null;
-                }
+        if(getIsisSessionFactory().getSpecificationLoader().isInitialized()) {
+            final String themeName = getIsisSessionFactory().doInSession(() -> {
+                final Class<UserSettingsService> serviceClass = UserSettingsService.class;
+                final UserSettingsService userSettingsService = lookupService(serviceClass);
+                final UserSetting activeTheme = userSettingsService.find(getIsisSessionFactory().getCurrentSession().getAuthenticationSession().getUserName(), ACTIVE_THEME);
+                return activeTheme != null ? activeTheme.valueAsString() : null;
             });
             return themeFor(themeName);
         }
         return new SessionThemeProvider().getActiveTheme();
+    }IsisSessionFactory getIsisSessionFactory() {
+        return IsisContext.getSessionFactory();
     }
 
     @Override
     public void setActiveTheme(final String themeName) {
-        IsisContext.doInSession(new Runnable() {
-            @Override
-            public void run() {
-                final String currentUsrName = IsisContext.getAuthenticationSession().getUserName();
+        getIsisSessionFactory().doInSession(() -> {
+            final String currentUsrName = getIsisSessionFactory().getCurrentSession().getAuthenticationSession().getUserName();
 
-                final UserSettingsServiceRW userSettingsService = getServicesInjector().lookupService(UserSettingsServiceRW.class);
-                final UserSettingJdo activeTheme = (UserSettingJdo) userSettingsService.find(currentUsrName, ACTIVE_THEME);
-                if(activeTheme != null) {
-                    activeTheme.updateAsString(themeName);
-                } else {
-                    userSettingsService.newString(currentUsrName, ACTIVE_THEME, "Active Bootstrap theme for user", themeName);
-                }
+            final UserSettingsServiceRW userSettingsService = getServicesInjector().lookupService(UserSettingsServiceRW.class);
+            final UserSettingJdo activeTheme = (UserSettingJdo) userSettingsService.find(currentUsrName, ACTIVE_THEME);
+            if(activeTheme != null) {
+                activeTheme.updateAsString(themeName);
+            } else {
+                userSettingsService.newString(currentUsrName, ACTIVE_THEME, "Active Bootstrap theme for user", themeName);
             }
         });
     }
@@ -89,11 +86,7 @@ public class UserSettingsThemeProvider implements ActiveThemeProvider {
     // //////////////////////////////////////
 
     protected ServicesInjector getServicesInjector() {
-        return getPersistenceSession().getServicesInjector();
-    }
-
-    protected PersistenceSession getPersistenceSession() {
-        return IsisContext.getPersistenceSession();
+        return getIsisSessionFactory().getServicesInjector();
     }
 
 
