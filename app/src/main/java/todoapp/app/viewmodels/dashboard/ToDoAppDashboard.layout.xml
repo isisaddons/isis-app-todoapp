@@ -30,7 +30,7 @@
             </row>
             <row>
                 <col span="12" cssClass="custom-width-100">
-                    <ns2:action id="recentActivity" hidden="EVERYWHERE"/>
+                    <ns2:action id="recentAuditEntries" hidden="EVERYWHERE"/>
                 </col>
             </row>
         </col>
