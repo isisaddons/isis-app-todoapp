@@ -16,33 +16,19 @@
  */
 package todoapp.dom.seed;
 
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.DomainServiceLayout;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.fixturescripts.FixtureScripts;
-
-import todoapp.dom.seed.roles.ApacheIsisApplibDtoRoleAndPermissions;
-import todoapp.dom.seed.roles.ApacheIsisApplibMixinsRoleAndPermissions;
-import todoapp.dom.seed.roles.ApacheIsisMetadataMenuRoleAndPermissions;
-import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.ApacheIsisPersistableMixinsRoleAndPermissions;
-import todoapp.dom.seed.roles.TogglzModuleAdminRole;
-import todoapp.dom.seed.roles.PublishingModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
-import todoapp.dom.seed.roles.ToDoAppRegularRoleAndPermissions;
-import todoapp.dom.seed.roles.ToDoAppToDoItemVetoSelectedMembersPermissions;
-import todoapp.dom.seed.roles.ApacheIsisTranslationServicePoMenuRoleAndPermissions;
+import todoapp.dom.seed.roles.*;
 import todoapp.dom.seed.tenancies.ToDoAppAdminUserTenancy;
 import todoapp.dom.seed.tenancies.UsersTenancy;
 import todoapp.dom.seed.users.ToDoAppAdminUser;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
 @DomainService(
         nature = NatureOfService.DOMAIN
@@ -88,6 +74,7 @@ public class ToDoAppRolesAndPermissionsSeedService {
             executionContext.executeChild(this, new ApacheIsisApplibMixinsRoleAndPermissions());
             executionContext.executeChild(this, new ApacheIsisMetadataMenuRoleAndPermissions());
             executionContext.executeChild(this, new ApacheIsisTranslationServicePoMenuRoleAndPermissions());
+            executionContext.executeChild(this, new ApacheIsisViewerWicketMixinsRoleAndPermissions());
 
             executionContext.executeChild(this, new ToDoAppAdminUserTenancy());
             executionContext.executeChild(this, new ToDoAppAdminUser());

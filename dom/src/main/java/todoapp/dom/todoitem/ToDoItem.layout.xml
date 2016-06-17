@@ -65,6 +65,7 @@
                         <bs3:col span="6">
                             <c:fieldSet name="Metadata" id="metadata">
                                 <c:action id="recentActivity"/>
+                                <c:action id="recentAuditEntries"/>
                                 <c:action id="downloadLayoutXml" position="PANEL_DROPDOWN"/>
                                 <c:action id="invalidateMetamodel" position="PANEL_DROPDOWN"/>
                                 <c:action id="downloadJdoMetadata" position="PANEL_DROPDOWN"/>

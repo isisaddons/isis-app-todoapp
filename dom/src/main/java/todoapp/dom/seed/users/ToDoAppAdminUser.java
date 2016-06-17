@@ -16,27 +16,14 @@
  */
 package todoapp.dom.seed.users;
 
-import java.util.Arrays;
-
 import org.isisaddons.module.security.dom.user.AccountType;
 import org.isisaddons.module.security.seed.scripts.AbstractUserAndRolesFixtureScript;
 import org.isisaddons.module.security.seed.scripts.IsisModuleSecurityAdminRoleAndPermissions;
-
-import todoapp.dom.seed.roles.ApacheIsisApplibDtoRoleAndPermissions;
-import todoapp.dom.seed.roles.ApacheIsisApplibMixinsRoleAndPermissions;
-import todoapp.dom.seed.roles.ApacheIsisMetadataMenuRoleAndPermissions;
-import todoapp.dom.seed.roles.ApacheIsisPersistableMixinsRoleAndPermissions;
-import todoapp.dom.seed.roles.AuditModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.CommandModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.PublishingModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.SessionLoggerModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.SettingsModuleRoleAndPermissions;
-import todoapp.dom.seed.roles.ToDoAppFixtureServiceRoleAndPermissions;
-import todoapp.dom.seed.roles.ToDoAppRegularRoleAndPermissions;
-import todoapp.dom.seed.roles.TogglzModuleAdminRole;
-import todoapp.dom.seed.roles.ApacheIsisTranslationServicePoMenuRoleAndPermissions;
+import todoapp.dom.seed.roles.*;
 import todoapp.dom.seed.tenancies.ToDoAppAdminUserTenancy;
 import todoapp.dom.seed.tenancies.UsersTenancy;
+
+import java.util.Arrays;
 
 public class ToDoAppAdminUser extends AbstractUserAndRolesFixtureScript {
 
@@ -64,7 +51,9 @@ public class ToDoAppAdminUser extends AbstractUserAndRolesFixtureScript {
                               ApacheIsisApplibDtoRoleAndPermissions.ROLE_NAME,
                               ApacheIsisMetadataMenuRoleAndPermissions.ROLE_NAME,
                               ApacheIsisPersistableMixinsRoleAndPermissions.ROLE_NAME,
-                              ApacheIsisApplibMixinsRoleAndPermissions.ROLE_NAME
+                              ApacheIsisApplibMixinsRoleAndPermissions.ROLE_NAME,
+
+                              ApacheIsisViewerWicketMixinsRoleAndPermissions.ROLE_NAME
                         ));
     }
 
