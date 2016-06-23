@@ -133,7 +133,7 @@ import todoapp.dom.seed.tenancies.UsersTenancy;
                     + "   && description.indexOf(:description) >= 0")
 })
 @DomainObject(
-        autoCompleteRepository = ToDoItems.class, // for drop-downs, unless autoCompleteNXxx() is present
+        autoCompleteRepository = ToDoItems.class, // for drop-downs, unless autoCompleteNXxx() or choicesNXxx() present
         autoCompleteAction = "autoComplete",
         updatedLifecycleEvent = ToDoItem.UpdatedEvent.class
 )

@@ -185,7 +185,7 @@ public class ToDoItems {
     //endregion
 
     //region > autoComplete (programmatic)
-    @Programmatic // not part of metamodel
+    @Programmatic // doesn't need to be part of metamodel
     public List<ToDoItem> autoComplete(final String description) {
         return toDoItemRepository.findByAtPathAndDescriptionContains(currentUsersAtPath(), description);
     }

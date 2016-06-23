@@ -1,12 +1,9 @@
 package todoapp.webapp;
 
-import java.util.concurrent.Callable;
-
 import org.apache.isis.core.metamodel.services.ServicesInjector;
 import org.apache.isis.core.runtime.system.context.IsisContext;
-import org.apache.isis.core.runtime.system.persistence.PersistenceSession;
-
 import org.apache.isis.core.runtime.system.session.IsisSessionFactory;
+
 import org.isisaddons.module.settings.dom.UserSetting;
 import org.isisaddons.module.settings.dom.UserSettingsService;
 import org.isisaddons.module.settings.dom.UserSettingsServiceRW;
@@ -15,7 +12,6 @@ import org.isisaddons.module.settings.dom.jdo.UserSettingJdo;
 import de.agilecoders.wicket.core.settings.ActiveThemeProvider;
 import de.agilecoders.wicket.core.settings.IBootstrapSettings;
 import de.agilecoders.wicket.core.settings.ITheme;
-import de.agilecoders.wicket.core.settings.SessionThemeProvider;
 import de.agilecoders.wicket.core.settings.ThemeProvider;
 
 public class UserSettingsThemeProvider implements ActiveThemeProvider {
@@ -32,16 +28,13 @@ public class UserSettingsThemeProvider implements ActiveThemeProvider {
 
     @Override
     public ITheme getActiveTheme() {
-        if(getIsisSessionFactory().getSpecificationLoader().isInitialized()) {
-            final String themeName = getIsisSessionFactory().doInSession(() -> {
-                final Class<UserSettingsService> serviceClass = UserSettingsService.class;
-                final UserSettingsService userSettingsService = lookupService(serviceClass);
-                final UserSetting activeTheme = userSettingsService.find(getIsisSessionFactory().getCurrentSession().getAuthenticationSession().getUserName(), ACTIVE_THEME);
-                return activeTheme != null ? activeTheme.valueAsString() : null;
-            });
-            return themeFor(themeName);
-        }
-        return new SessionThemeProvider().getActiveTheme();
+        final String themeName = getIsisSessionFactory().doInSession(() -> {
+            final Class<UserSettingsService> serviceClass = UserSettingsService.class;
+            final UserSettingsService userSettingsService = lookupService(serviceClass);
+            final UserSetting activeTheme = userSettingsService.find(getIsisSessionFactory().getCurrentSession().getAuthenticationSession().getUserName(), ACTIVE_THEME);
+            return activeTheme != null ? activeTheme.valueAsString() : null;
+        });
+        return themeFor(themeName);
     }IsisSessionFactory getIsisSessionFactory() {
         return IsisContext.getSessionFactory();
     }
