@@ -21,7 +21,7 @@ package todoapp.dom.categories;
 import todoapp.dom.todoitem.ToDoItem;
 
 /**
- * Enables {@link UpdateCategoryContributions#updateCategory(Categorized, Category, Subcategory)} to be contributed to
+ * Enables {@link Categorized_updateCategory#$$(Category, Subcategory)} to be contributed to
  * both the {@link ToDoItem} (entity).
  */
 public interface Categorized {

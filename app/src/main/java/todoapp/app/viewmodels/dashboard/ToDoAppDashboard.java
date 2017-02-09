@@ -31,7 +31,7 @@ import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.value.Blob;
 
 import todoapp.app.services.export.ExportToWordService;
-import todoapp.dom.relativepriority.RelativePriorityContributions;
+import todoapp.dom.relativepriority.RelativePriorityService;
 import todoapp.dom.todoitem.ToDoItem;
 import todoapp.dom.todoitem.ToDoItems;
 
@@ -50,7 +50,7 @@ public class ToDoAppDashboard {
             editing = Editing.DISABLED
     )
     @CollectionLayout(
-            sortedBy = RelativePriorityContributions.Comparator.class
+            sortedBy = RelativePriorityService.Comparator.class
     )
     public List<ToDoItem> getNotYetComplete() {
         return toDoItems.notYetCompleteNoUi();
@@ -73,7 +73,7 @@ public class ToDoAppDashboard {
     public Blob exportToWordDoc() {
 
         final List items = getNotYetComplete();
-        Collections.sort(items, relativePriorityContributions.comparator());
+        Collections.sort(items, relativePriorityService.comparator());
         return toDoItemsExportService.exportToWordDoc(items);
     }
     //endregion
@@ -86,7 +86,7 @@ public class ToDoAppDashboard {
     private ExportToWordService toDoItemsExportService;
 
     @javax.inject.Inject
-    private RelativePriorityContributions relativePriorityContributions;
+    private RelativePriorityService relativePriorityService;
 
     //endregion
 

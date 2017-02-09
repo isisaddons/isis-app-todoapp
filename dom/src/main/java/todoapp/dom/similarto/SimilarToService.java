@@ -23,14 +23,9 @@ import java.util.List;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import org.apache.isis.applib.AbstractFactoryAndRepository;
-import org.apache.isis.applib.annotation.Action;
-import org.apache.isis.applib.annotation.ActionLayout;
-import org.apache.isis.applib.annotation.Contributed;
 import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.NatureOfService;
-import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.services.queryresultscache.QueryResultsCache;
+import org.apache.isis.applib.annotation.Programmatic;
 
 import org.isisaddons.module.security.app.user.MeService;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
@@ -41,15 +36,11 @@ import todoapp.dom.todoitem.ToDoItemRepository;
 import todoapp.dom.todoitem.ToDoItems;
 
 @DomainService(
-        nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY
+        nature = NatureOfService.DOMAIN
 )
-public class SimilarToContributions extends AbstractFactoryAndRepository {
+public class SimilarToService {
 
-    //region > similarTo (contributed collection)
-    @ActionLayout(
-            contributed = Contributed.AS_ASSOCIATION
-    )
-    @Action(semantics = SemanticsOf.SAFE)
+    @Programmatic
     public List<ToDoItem> similarTo(final ToDoItem toDoItem) {
         final List<ToDoItem> similarToDoItems = toDoItemRepository.findByAtPathAndCategory(currentUsersAtPath(),
                 toDoItem.getCategory());
@@ -79,9 +70,6 @@ public class SimilarToContributions extends AbstractFactoryAndRepository {
 
     @javax.inject.Inject
     private MeService meService;
-
-    @javax.inject.Inject
-    private QueryResultsCache queryResultsCache;
     //endregion
 
 }

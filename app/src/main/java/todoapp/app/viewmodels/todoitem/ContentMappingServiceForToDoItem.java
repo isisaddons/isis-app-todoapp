@@ -30,7 +30,7 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.conmap.ContentMappingService;
 
 import todoapp.app.viewmodels.todoitem.v1.ToDoItemV1_1;
-import todoapp.dom.similarto.SimilarToContributions;
+import todoapp.dom.similarto.SimilarToService;
 import todoapp.dom.todoitem.ToDoItem;
 
 @DomainService(
@@ -79,7 +79,7 @@ public class ContentMappingServiceForToDoItem implements ContentMappingService {
         dto.setSubcategory(nameOf(toDoItem.getSubcategory()));
         dto.setCost(toDoItem.getCost());
         dto.setToDoItem(toDoItem);
-        dto.setSimilarItems(similarToContributions.similarTo(toDoItem));
+        dto.setSimilarItems(similarToService.similarTo(toDoItem));
 
         return dto;
     }
@@ -89,6 +89,6 @@ public class ContentMappingServiceForToDoItem implements ContentMappingService {
     }
 
     @Inject
-    SimilarToContributions similarToContributions;
+    SimilarToService similarToService;
 
 }

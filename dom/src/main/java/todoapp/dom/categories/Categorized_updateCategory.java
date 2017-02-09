@@ -20,61 +20,47 @@ package todoapp.dom.categories;
 
 import java.util.List;
 
-import org.apache.isis.applib.AbstractFactoryAndRepository;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
-import org.apache.isis.applib.annotation.DomainService;
-import org.apache.isis.applib.annotation.NatureOfService;
+import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.services.queryresultscache.QueryResultsCache;
 
-import todoapp.dom.todoitem.ToDoItems;
+@Mixin
+public class Categorized_updateCategory {
 
-@DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
-public class UpdateCategoryContributions extends AbstractFactoryAndRepository {
+    private final Categorized categorized;
 
-    //region > updateCategory (contributed action)
+    public Categorized_updateCategory(final Categorized categorized) {
+        this.categorized = categorized;
+    }
+
 
     @ActionLayout(
             describedAs = "Update category and subcategory"
     )
     @Action(semantics = SemanticsOf.IDEMPOTENT)
-    public Categorized updateCategory(
-            final Categorized item,
+    public Categorized $$(
             final Category category,
             final @Parameter(optionality = Optionality.OPTIONAL) Subcategory subcategory) {
-        item.setCategory(category);
-        item.setSubcategory(subcategory);
-        return item;
+        categorized.setCategory(category);
+        categorized.setSubcategory(subcategory);
+        return categorized;
     }
-    public Category default1UpdateCategory(
-            final Categorized item) {
-        return item != null? item.getCategory(): null;
+    public Category default0$$() {
+        return categorized != null? categorized.getCategory(): null;
     }
-    public Subcategory default2UpdateCategory(
-            final Categorized item) {
-        return item != null? item.getSubcategory(): null;
+    public Subcategory default1$$() {
+        return categorized != null? categorized.getSubcategory(): null;
     }
 
-    public List<Subcategory> choices2UpdateCategory(
-            final Categorized item, final Category category) {
+    public List<Subcategory> choices1$$(final Category category) {
         return Subcategory.listFor(category);
     }
     
-    public String validateUpdateCategory(
-            final Categorized item, final Category category, final Subcategory subcategory) {
+    public String validate$$(
+            final Category category, final Subcategory subcategory) {
         return Subcategory.validate(category, subcategory);
     }
-    //endregion
-
-    //region > injected services
-    @javax.inject.Inject
-    private ToDoItems toDoItems;
-
-    @javax.inject.Inject
-    private QueryResultsCache queryResultsCache;
-    //endregion
-
 }

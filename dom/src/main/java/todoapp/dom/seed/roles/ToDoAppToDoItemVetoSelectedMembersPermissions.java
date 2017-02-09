@@ -20,7 +20,7 @@ import org.isisaddons.module.security.dom.permission.ApplicationPermissionMode;
 import org.isisaddons.module.security.dom.permission.ApplicationPermissionRule;
 import org.isisaddons.module.security.seed.scripts.AbstractRoleAndPermissionsFixtureScript;
 
-import todoapp.dom.relativepriority.RelativePriorityContributions;
+import todoapp.dom.relativepriority.RelativePriorityService;
 import todoapp.dom.todoitem.ToDoItem;
 
 public class ToDoAppToDoItemVetoSelectedMembersPermissions extends AbstractRoleAndPermissionsFixtureScript {
@@ -43,7 +43,7 @@ public class ToDoAppToDoItemVetoSelectedMembersPermissions extends AbstractRoleA
         newMemberPermissions(
                 ApplicationPermissionRule.VETO,
                 ApplicationPermissionMode.VIEWING,
-                RelativePriorityContributions.class,
+                RelativePriorityService.class,
                 "relativePriority", "next", "previous"
         );
     }

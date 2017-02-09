@@ -26,12 +26,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import todoapp.dom.similarto.SimilarToContributions;
+import todoapp.dom.similarto.SimilarToService;
 import todoapp.dom.todoitem.ToDoItem;
 import todoapp.dom.todoitem.ToDoItems;
 import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
-public abstract class SimilartoContributionsIntegTest extends AbstractToDoIntegTest {
+public abstract class SimilarToService_IntegTest extends AbstractToDoIntegTest {
 
     RecreateToDoItemsForCurrentUser fixtureScript;
 
@@ -44,7 +44,7 @@ public abstract class SimilartoContributionsIntegTest extends AbstractToDoIntegT
     @Inject
     ToDoItems toDoItems;
     @Inject
-    SimilarToContributions similarToContributions;
+    SimilarToService similarToService;
 
     ToDoItem toDoItem;
 
@@ -57,18 +57,16 @@ public abstract class SimilartoContributionsIntegTest extends AbstractToDoIntegT
 
     public static class Collections {
 
-        public static class SimilarTo extends SimilartoContributionsIntegTest {
+        public static class SimilarTo extends SimilarToService_IntegTest {
 
             @Test
             public void happyCase() throws Exception {
-
                 // when
-                List<ToDoItem> similarItems = wrap(similarToContributions).similarTo(toDoItem);
+                List<ToDoItem> similarItems = similarToService.similarTo(toDoItem);
 
                 // then
-                assertThat(similarItems).hasSize(6);
+                assertThat(similarItems).hasSize(7);
             }
-
         }
     }
 

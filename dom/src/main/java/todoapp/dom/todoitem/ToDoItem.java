@@ -52,6 +52,7 @@ import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.Property;
+import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
@@ -291,6 +292,7 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
 
     @Action(
             domainEvent =CompletedDomainEvent.class,
+            publishing = Publishing.ENABLED,
             invokeOn = InvokeOn.OBJECT_AND_COLLECTION
     )
     public ToDoItem completed() {

@@ -18,8 +18,6 @@
  */
 package todoapp.integtests.tests;
 
-import javax.inject.Inject;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,14 +25,13 @@ import org.apache.isis.applib.services.wrapper.InvalidException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
+import todoapp.dom.categories.Categorized_updateCategory;
 import todoapp.dom.categories.Category;
 import todoapp.dom.categories.Subcategory;
-import todoapp.dom.categories.UpdateCategoryContributions;
 import todoapp.dom.todoitem.ToDoItem;
-import todoapp.dom.todoitem.ToDoItems;
 import todoapp.fixture.scenarios.RecreateToDoItemsForCurrentUser;
 
-public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoIntegTest {
+public abstract class Categorized_updateCategory_IntegTest extends AbstractToDoIntegTest {
 
     RecreateToDoItemsForCurrentUser fixtureScript;
 
@@ -43,35 +40,35 @@ public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoI
         fixtureScript = new RecreateToDoItemsForCurrentUser();
         fixtureScripts.runFixtureScript(fixtureScript, null);
     }
-    @Inject
-    ToDoItems toDoItems;
-    @Inject
-    UpdateCategoryContributions updateCategoryContributions;
 
     ToDoItem toDoItem;
 
     @Before
     public void setUp() throws Exception {
 
-        toDoItem = wrap(fixtureScript.getToDoItems().get(0));
+        toDoItem = fixtureScript.getToDoItems().get(0);
         assertThat(toDoItem).isNotNull();
     }
 
+    Categorized_updateCategory mixin() {
+        return mixin(Categorized_updateCategory.class, toDoItem);
+    }
+
     public static class Actions {
-        public static class UpdateCategory extends UpdateCategoryContributionsIntegTest {
+        public static class UpdateCategory extends Categorized_updateCategory_IntegTest {
 
             @Test
             public void happyCase() throws Exception {
 
                 // when
-                wrap(updateCategoryContributions).updateCategory(toDoItem, Category.PROFESSIONAL, Subcategory.CONSULTING);
+                wrap(mixin()).$$(Category.PROFESSIONAL, Subcategory.CONSULTING);
 
                 // then
                 assertThat(toDoItem.getCategory()).isEqualTo(Category.PROFESSIONAL);
                 assertThat(toDoItem.getSubcategory()).isEqualTo(Subcategory.CONSULTING);
 
                 // when
-                wrap(updateCategoryContributions).updateCategory(toDoItem, Category.DOMESTIC, Subcategory.CHORES);
+                wrap(mixin()).$$(Category.DOMESTIC, Subcategory.CHORES);
 
                 // then
                 assertThat(toDoItem.getCategory()).isEqualTo(Category.DOMESTIC);
@@ -81,29 +78,26 @@ public abstract class UpdateCategoryContributionsIntegTest extends AbstractToDoI
 
             @Test
             public void categoryCannotBeNull() throws Exception {
-
-                // when, then
+                // expect
                 expectedExceptions.expect(InvalidException.class);
                 expectedExceptions.expectMessage("'Category' is mandatory");
-                wrap(updateCategoryContributions).updateCategory(toDoItem, null, Subcategory.CHORES);
+                // when
+                wrap(mixin()).$$(null, Subcategory.CHORES);
             }
 
             @Test
             public void subcategoryCanBeNull() throws Exception {
-
                 // when, then
-                wrap(updateCategoryContributions).updateCategory(toDoItem, Category.PROFESSIONAL, null);
+                wrap(mixin()).$$(Category.PROFESSIONAL, null);
             }
 
             @Test
             public void subcategoryMustBelongToCategory() throws Exception {
-
-                // when, then
+                // expect
                 expectedExceptions.expectMessage(containsString("Invalid subcategory"));
-                wrap(updateCategoryContributions).updateCategory(toDoItem, Category.PROFESSIONAL, Subcategory.CHORES);
+                // when
+                wrap(mixin()).$$(Category.PROFESSIONAL, Subcategory.CHORES);
             }
         }
-
     }
-
 }
