@@ -19,7 +19,6 @@
 package todoapp.fixture.module.todoitem;
 
 import java.math.BigDecimal;
-import java.util.concurrent.Callable;
 
 import org.joda.time.LocalDate;
 
@@ -132,14 +131,11 @@ public class ToDoItemCreate extends FixtureScript {
         final BigDecimal cost = (BigDecimal) objects[4];
 
         toDoItem = sudoService.sudo(username,
-                new Callable<ToDoItem>() {
-                    @Override
-                    public ToDoItem call() {
-                        final ToDoItem toDoItem = wrap(toDoItems).newToDo(
-                                description, category, subcategory, dueBy, cost);
-                        wrap(toDoItem).setLocation(new Location(51.5172 + random(-0.05, +0.05), 0.1182 + random(-0.05, +0.05)));
-                        return toDoItem;
-                    }
+                () -> {
+                    final ToDoItem toDoItem = wrap(toDoItems).newToDo(
+                            description, category, subcategory, dueBy, cost);
+                    toDoItem.setLocation(new Location(51.5172 + random(-0.05, +0.05), 0.1182 + random(-0.05, +0.05)));
+                    return toDoItem;
                 });
 
         ec.addResult(this, toDoItem);

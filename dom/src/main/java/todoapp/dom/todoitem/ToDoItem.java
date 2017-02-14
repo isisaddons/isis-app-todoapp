@@ -185,7 +185,8 @@ public class ToDoItem implements Categorized, Comparable<ToDoItem>, Locatable, C
     @javax.jdo.annotations.Column(allowsNull="false", length=100)
     @Property(
         domainEvent = DescriptionDomainEvent.class,
-        regexPattern = "\\w[@&:\\-\\,\\.\\+ \\w]*"
+        regexPattern = "\\w[@&:\\-\\,\\.\\+ \\w]*",
+            editing = Editing.ENABLED
     )
     @Getter @Setter
     private String description;
