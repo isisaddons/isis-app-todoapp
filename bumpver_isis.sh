@@ -7,9 +7,9 @@ fi
 
 # edit parent pom.xml
 echo "editing parent pom.xml"
-cat pom.xml | sed "s/<isis.version>.*</<isis.version>$VERSION</" > pom.xml.$$.sed
-mv pom.xml.$$.sed pom.xml
+echo mvn versions:update-parent "-DparentVersion=[${VERSION}]"
+mvn versions:update-parent "-DparentVersion=[${VERSION}]"
 
 echo "Committing changes"
-git commit -am "bumping isis.version to $VERSION"
+git commit -am "bumping incode-parent (isis) version to $VERSION"
 
