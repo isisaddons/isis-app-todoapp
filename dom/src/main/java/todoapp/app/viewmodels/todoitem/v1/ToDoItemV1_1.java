@@ -43,12 +43,16 @@ import todoapp.dom.todoitem.ToDoItem;
 )
 public class ToDoItemV1_1 implements Dto {
 
+    private static final String MAJOR_VERSION = "1";
+
+    private static final String MINOR_VERSION = "1";
+
     /**
      * Matches the namespace version.  Bump only if there is a breaking change in the serialized XML.
      */
     @XmlElement(required = true, defaultValue = "1")
     public final String getMajorVersion() {
-        return "1";
+        return MAJOR_VERSION;
     }
 
     /**
@@ -56,7 +60,7 @@ public class ToDoItemV1_1 implements Dto {
      */
     @XmlElement(required = true, defaultValue = "1")
     public String getMinorVersion() {
-        return "1";
+        return MINOR_VERSION;
     }
 
     @XmlElement(required = true)

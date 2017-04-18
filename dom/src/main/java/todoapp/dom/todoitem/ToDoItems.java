@@ -24,7 +24,6 @@ import java.util.List;
 import com.google.common.base.Predicates;
 
 import org.joda.time.LocalDate;
-
 import org.apache.isis.applib.DomainObjectContainer;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.ActionLayout;
@@ -40,7 +39,6 @@ import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.clock.ClockService;
 import org.apache.isis.applib.services.i18n.TranslatableString;
-
 import org.isisaddons.module.security.app.user.MeService;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancy;
 import org.isisaddons.module.security.dom.tenancy.ApplicationTenancyRepository;
@@ -59,9 +57,11 @@ import todoapp.dom.categories.Subcategory;
 )
 public class ToDoItems {
 
+    private static final String TODO_ITEMS = "todo.ToDoItems";
+
     @Programmatic
     public String getId() {
-        return "todo.ToDoItems";
+        return TODO_ITEMS;
     }
 
     //region > notYetComplete (action)

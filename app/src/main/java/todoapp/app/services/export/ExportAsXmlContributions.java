@@ -34,6 +34,8 @@ import todoapp.dom.todoitem.ToDoItem;
 @DomainService(nature = NatureOfService.VIEW_CONTRIBUTIONS_ONLY)
 public class ExportAsXmlContributions extends AbstractFactoryAndRepository {
 
+    private static final String TODO = "todo";
+
     // region > exportAsXml for ToDoItem (action)
     @Action(semantics = SemanticsOf.SAFE)
     public Clob exportAsXml(
@@ -57,7 +59,7 @@ public class ExportAsXmlContributions extends AbstractFactoryAndRepository {
     }
 
     public String default1ExportAsXml(final ToDoItem toDoItem) {
-        return "todo";
+        return TODO;
     }
     //endregion
 
@@ -85,7 +87,7 @@ public class ExportAsXmlContributions extends AbstractFactoryAndRepository {
     }
 
     public String default1ExportAsXml(final ToDoAppDashboard dashboard) {
-        return "todo";
+        return TODO;
     }
     //endregion
 
