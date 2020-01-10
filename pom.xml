@@ -51,7 +51,7 @@
         <isis-module-security.version>1.13.0</isis-module-security.version>
         <isis-module-sessionlogger.version>1.13.0</isis-module-sessionlogger.version>
         <isis-module-settings.version>1.13.0</isis-module-settings.version>
-        <isis-module-togglz.version>1.13.0</isis-module-togglz.version>
+        <isis-module-togglz.version>1.13.1</isis-module-togglz.version>
 
         <isis-module-docx.version>1.13.0</isis-module-docx.version>
 
