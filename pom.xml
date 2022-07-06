@@ -60,7 +60,7 @@
         <isis-wicket-fullcalendar2.version>1.13.0</isis-wicket-fullcalendar2.version>
         <isis-wicket-gmap3.version>1.13.0</isis-wicket-gmap3.version>
 
-        <jbcrypt.version>0.3m</jbcrypt.version>
+        <jbcrypt.version>0.4</jbcrypt.version>
         <assertj-core.version>2.0.0</assertj-core.version>
         <togglz.version>2.1.0.Final</togglz.version>
 
