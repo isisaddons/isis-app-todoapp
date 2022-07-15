@@ -62,7 +62,7 @@
 
         <jbcrypt.version>0.3m</jbcrypt.version>
         <assertj-core.version>2.0.0</assertj-core.version>
-        <togglz.version>2.1.0.Final</togglz.version>
+        <togglz.version>2.9.4</togglz.version>
 
         <lombok.version>1.16.6</lombok.version>
         <axon-core.version>2.4.3</axon-core.version>
