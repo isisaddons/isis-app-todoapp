@@ -61,7 +61,7 @@
         <isis-wicket-gmap3.version>1.13.0</isis-wicket-gmap3.version>
 
         <jbcrypt.version>0.3m</jbcrypt.version>
-        <assertj-core.version>2.0.0</assertj-core.version>
+        <assertj-core.version>3.27.7</assertj-core.version>
         <togglz.version>2.1.0.Final</togglz.version>
 
         <lombok.version>1.16.6</lombok.version>
